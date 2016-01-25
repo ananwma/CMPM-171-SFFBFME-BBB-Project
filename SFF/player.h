@@ -10,6 +10,7 @@ class Player{
     int roundWins;
     String state;
     Move currentMove;
+	int currentMoveFrame;
     int inputBuffer;
     boolean canCancel;
     // currentSprite;
