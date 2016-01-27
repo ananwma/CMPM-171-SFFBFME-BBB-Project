@@ -8,83 +8,36 @@
 #include <list>
 
 #include "input.h"
+#define NOTE_ON 144
 
 
 using namespace std;
-using noteTable = map<vector<int>, int>;
 
-/*unsigned long hashing_func(vector<int> key) {
-	cout << "Hashing called";
-	unsigned int hash = 0;
-	for (unsigned int n : notes)
-		sum_of_elems += (2 << n);
-	return hash;
-}*/
-/*noteTable table(hashing_func) = {
-	{ { 60,64,67 }, C_MAJOR }
+list<int> notes;
+vector<HMIDIIN> activeDevices;
 
-};*/
-
-struct chord {
-	int notearray[4];
-	
-	void insert(int note) {
-		for (int n : notearray) {
-
-		}
+[event_receiver(native)]
+class EventRecieverTest 
+{
+public:
+	void doMove(std::list<int> &notes) {
+		// For now this just prints the list of notes pressed down
+		for (auto i = notes.begin(); i != notes.end(); ++i)
+			cout << *i << ' ';
+		cout << endl;
+	}
+	void onKeysUp() {}
+	void hookEvent(InputHandler* inputHandler) {
+		__hook(&InputHandler::onNoteDown, inputHandler, &EventRecieverTest::doMove);
+	}
+	void unhookEvent(InputHandler* inputHandler) {
+		__unhook(&InputHandler::onNoteDown, inputHandler, &EventRecieverTest::doMove);
 	}
 };
 
-int simultaneous = 0;
-list<int> notes;
-
-
-int CALLBACK MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2) {
-	if (wMsg == MIM_DATA) {
-		// Get last 3 bytes of the DWORD containing midi data. Byte 1 is never used, byte 2 is the note,
-		// byte 3 is the velocity, and byte 4 is the status.
-		int byte2 = (dwParam1 >> 16) & 0xFF;
-		int byte3 = (dwParam1 >> 8) & 0xFF;
-		int byte4 = dwParam1 & 0xFF;
-		if (byte4 == NOTE_ON) {
-			simultaneous = 1;
-			if (byte2 != 0 && simultaneous > 0) {
-				notes.push_back(byte3);
-			}
-		}
-		else if ((simultaneous > 0) && (byte4 == 248 || byte4 == 254)) {
-			simultaneous--;
-		}
-		else if (simultaneous == 0) {
-			int sum_of_elems = 1;
-			if (!notes.empty()) {
-				notes.sort();
-				for (auto i = notes.begin(); i != notes.end(); ++i)
-					cout << *i << ' ';
-				cout << endl;
-				for (int n : notes)
-					sum_of_elems += (n*n);
-				cout << "sum: " << sum_of_elems << endl;
-				//cout << table.count(notes);
-				notes.clear();
-			}
-		}
-		//if (!notes.empty()) {
-		//	for (auto i = notes.begin(); i != notes.end(); ++i)
-		//		cout << *i << ' ';
-		//	cout << endl;
-		//}
-	}
-	else if (wMsg != MM_MIM_OPEN && wMsg != MM_MIM_CLOSE) {
-		cerr << "Unexpected MIDI message recieved: " << wMsg << endl;
-		exit(EXIT_FAILURE);
-	}
-	return 0;
-}
-
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
@@ -94,21 +47,52 @@ int main()
 	freopen("CONOUT$", "w", stderr);
 
 	MIDIINCAPS device_capabilities;
-	cout << midiInGetNumDevs() << endl;
-	for (int dev_num = 0; dev_num < midiInGetNumDevs(); dev_num++) {
-		midiInGetDevCaps(dev_num, &device_capabilities, sizeof device_capabilities);
-		cout << device_capabilities.wMid;
-	}
+	//cout << midiInGetNumDevs() << endl;
+	//for (int dev_num = 0; dev_num < midiInGetNumDevs(); dev_num++) {
+	//	midiInGetDevCaps(dev_num, &device_capabilities, sizeof device_capabilities);
+	//	cout << device_capabilities.wMid;
+	//}
 
 	int numDevs = midiInGetNumDevs();
-
+	cout << endl << "Num Devs: " << numDevs << endl;
 	HMIDIIN midi_device_handle;
-	midiInOpen(&midi_device_handle, 0, (DWORD_PTR)(void*)MidiInProc, 0, CALLBACK_FUNCTION);
-	midiInStart(midi_device_handle);
+	HMIDIIN midi_device_handle2;
+
+	//Testing functor
+	//midiFunctor mf = midiFunctor();
+	//int address = &mf;
+
+	// Open devices and push handles on to vector
+	vector<HMIDIIN> devices;
+	/*for (int i = 0; i < midiInGetNumDevs(); i++) {
+		HMIDIIN device;
+		cout<<midiInOpen(&device, i, (DWORD_PTR)mf, 0, CALLBACK_FUNCTION);
+		cout<<midiInStart(device);
+		devices.push_back(device);
+	}*/
 
 
+	InputHandler  inputHandler = InputHandler();
+	InputHandler  inputHandler2 = InputHandler();
+	inputHandler.prepareDevice();
+	inputHandler2.prepareDevice();
+	MIDIINCAPS caps;
+	//midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
 
+	EventRecieverTest test;
+	test.hookEvent(&inputHandler);
 
+	// SFML Stuff
+	sf::Texture texture;
+	if (!texture.loadFromFile("sprites/bach_default.png"))
+	{
+		cerr << "Error loading texture" << endl;
+		system("PAUSE");
+		return EXIT_FAILURE;
+	}
+	texture.setSmooth(true);
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
 
 	while (window.isOpen())
 	{
@@ -121,6 +105,8 @@ int main()
 
 		window.clear();
 		window.draw(shape);
+		sprite.move(sf::Vector2f(0.1, 0));
+		window.draw(sprite);
 		window.display();
 	}
 
