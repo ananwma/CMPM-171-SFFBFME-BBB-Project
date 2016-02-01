@@ -1,7 +1,5 @@
-#include "stdafx.h"
+
 #include <SFML/Graphics.hpp>
-#include <windows.h>
-#include <mmsystem.h>
 #include <iostream>
 #include <vector>
 #include <map>
