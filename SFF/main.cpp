@@ -24,10 +24,21 @@ int main(int, char const**)
 {
     bool character_select_flag = false;
     bool fight_flag = false;
+    sf::String character = "";
     
     sf::CircleShape shape(50);
     shape.setFillColor(sf::Color(100, 250, 50));
     shape.setPosition(80, 1030);
+    
+    sf::RectangleShape bach(sf::Vector2f(50, 50));
+    bach.setFillColor(sf::Color(0, 250, 0));
+    bach.setPosition(80, 1030);
+    
+    sf::RectangleShape opponent(sf::Vector2f(50,50));
+    opponent.setFillColor(sf::Color(0, 0, 250));
+    opponent.setPosition(1000, 1030);
+    
+    sf::Sprite ryu;
     
     // Create the main window
     sf::RenderWindow window(sf::VideoMode(1600, 1200), "SFML window");
@@ -104,26 +115,62 @@ int main(int, char const**)
         
         // Draw overlay
         
-        if(character_select_flag == true){
+        if(character_select_flag){
 
             sf::Vector2f right(1350.0f,0.0f);
             
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
                 //shape.move(shape.getPosition() + right);
                 shape.move(1350,0);
+                if(shape.getPosition().x>=1600)     shape.setPosition(80, 1030);
             }
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
                 character_select_flag = false;
                 fight_flag = true;
                 if(shape.getPosition().x == 80){
                     printf("bach");
+                    character = "bach";
                 }
                 else if(shape.getPosition().x == 1430){
                     printf("chopin");
+                    character = "chopin";
                 }
             }
             
            window.draw(shape);
+           window.draw(opponent);
+        }
+        
+        if(fight_flag){
+            sf::Vector2f right(10.0f,0.0f);
+            if(character == "bach"){
+                
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                    if(bach.getPosition().x+25==opponent.getPosition().x-25){
+                        printf("collided");
+                    }
+                    else{
+                        bach.move(10,0);
+                    }
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                    bach.move(-10,0);
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+
+                }
+                
+                window.draw(bach);
+                window.draw(opponent);
+            }
+            if(character == "chopin"){
+                
+                sf::CircleShape chopin(50);
+                chopin.setFillColor(sf::Color(250, 0, 0));
+                chopin.setPosition(80, 1030);
+                window.draw(chopin);
+                window.draw(opponent);
+            }
         }
 
         // Draw the string
