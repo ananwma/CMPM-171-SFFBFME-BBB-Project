@@ -8,6 +8,9 @@
 #include <list>
 
 #include "input.h"
+#include "GameStateManager.h"
+#include "FightState.h"
+#include "PauseState.h"
 #define NOTE_ON 144
 
 
@@ -17,30 +20,34 @@ list<int> notes;
 vector<HMIDIIN> activeDevices;
 
 [event_receiver(native)]
-class EventRecieverTest 
+class TestEventReceiver 
 {
 public:
-	void doMove(std::list<int> &notes) {
+	void init() {
+		sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+		sf::CircleShape shape(100.f);
+		shape.setFillColor(sf::Color::Green);
+	}
+	void recieveKeysDown(std::list<int> &notes) {
 		// For now this just prints the list of notes pressed down
 		for (auto i = notes.begin(); i != notes.end(); ++i)
 			cout << *i << ' ';
 		cout << endl;
 	}
-	void onKeysUp() {}
+	void recieveKeysUp() {}
 	void hookEvent(InputHandler* inputHandler) {
-		__hook(&InputHandler::onNoteDown, inputHandler, &EventRecieverTest::doMove);
+		__hook(&InputHandler::sendKeysDown, inputHandler, &TestEventReceiver::recieveKeysDown);
 	}
 	void unhookEvent(InputHandler* inputHandler) {
-		__unhook(&InputHandler::onNoteDown, inputHandler, &EventRecieverTest::doMove);
+		__unhook(&InputHandler::sendKeysDown, inputHandler, &TestEventReceiver::recieveKeysDown);
 	}
 };
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
-
+	//sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	//sf::CircleShape shape(100.f);
+	//shape.setFillColor(sf::Color::Green);
 	// Get a console for debugging with cout
 	AllocConsole();
 	freopen("CONOUT$", "w", stdout);
@@ -79,8 +86,8 @@ int main()
 	MIDIINCAPS caps;
 	//midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
 
-	EventRecieverTest test;
-	test.hookEvent(&inputHandler);
+	//TestEventReceiver test;
+	//test.hookEvent(&inputHandler2);
 
 	// SFML Stuff
 	sf::Texture texture;
@@ -94,7 +101,7 @@ int main()
 	sf::Sprite sprite;
 	sprite.setTexture(texture);
 
-	while (window.isOpen())
+	/*while (window.isOpen())
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -108,7 +115,12 @@ int main()
 		sprite.move(sf::Vector2f(0.1, 0));
 		window.draw(sprite);
 		window.display();
-	}
+	}*/
 
+	GameStateManager gsm;
+	state_ptr fight_state_ptr(new FightState(&gsm, &inputHandler2));
+	gsm.runState(fight_state_ptr);
+	state_ptr pause_state_ptr(new PauseState(&gsm, &inputHandler2));
+	gsm.runState(pause_state_ptr);
 	return 0;
 }

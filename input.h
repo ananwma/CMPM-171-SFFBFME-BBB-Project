@@ -139,7 +139,7 @@ public:
 	int prepareDevice();
 	int testv;
 
-	__event void onNoteDown(std::list<int> &notes);
+	__event void sendKeysDown(std::list<int> &notes);
 
 private:
 	//std::vector<HMIDIIN> deviceHandles;

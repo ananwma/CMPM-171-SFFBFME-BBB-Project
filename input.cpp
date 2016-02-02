@@ -30,13 +30,14 @@ InputHandler::InputHandler() {
 void InputHandler::parseMidiData(DWORD dwParam1, DWORD dwParam2, DWORD dwInstance) {
 	// Get last 3 bytes of the DWORD containing midi data. Byte 1 is never used, byte 2 is the note,
 	// byte 3 is the velocity, and byte 4 is the status.
+
 	int byte2 = (dwParam1 >> 16) & 0xFF;
 	int byte3 = (dwParam1 >> 8) & 0xFF;
 	int byte4 = dwParam1 & 0xFF;
 	if (byte4 == NOTE_ON) {
 		if (byte2 != 0) {
 			notes.push_back(byte3);
-			onNoteDown(notes);
+			sendKeysDown(notes);
 		}
 		else
 			notes.pop_back();
@@ -79,5 +80,3 @@ int InputHandler::prepareDevice() {
 	//simultaneous = 0;
 	return 0;
 }
-
-
