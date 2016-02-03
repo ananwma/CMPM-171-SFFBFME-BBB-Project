@@ -14,5 +14,4 @@ public:
 private:
 	bool state_is_running;
 	std::stack<GameState*> state_stack;
-
 };

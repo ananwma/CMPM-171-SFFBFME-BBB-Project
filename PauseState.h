@@ -9,6 +9,7 @@ public:
 	virtual void update();
 	virtual void draw();
 	virtual void recieveKeysDown(std::list<int> &notes);
+	virtual void unhookEvent();
 private:
 	GameStateManager *gsm;
 	InputHandler *inputHandler;

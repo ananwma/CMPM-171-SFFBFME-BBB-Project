@@ -10,6 +10,7 @@ public:
 	virtual void update();
 	virtual void draw();
 	virtual void recieveKeysDown(std::list<int> &notes);
+	virtual void unhookEvent();
 	//Need function (possibly dtor) to unhook event
 
 private:

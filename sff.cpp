@@ -145,6 +145,6 @@ int main()
 	gsm.runState(psp);
 	delete fsp;
 	delete psp;
-	//_CrtDumpMemoryLeaks();
+	_CrtDumpMemoryLeaks();
 	return 0;
 }

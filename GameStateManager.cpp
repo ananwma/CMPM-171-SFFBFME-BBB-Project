@@ -15,6 +15,7 @@ void GameStateManager::runState(GameState* state) {
 		state->update();
 		state->draw();
 	}
+	state->unhookEvent();
 }
 
 // Might have to handle unhooking events here

@@ -18,4 +18,7 @@ public:
 	virtual void update() = 0;
 	virtual void draw() = 0;
 	virtual void recieveKeysDown(std::list<int> &notes) = 0;
+
+	//Need seperate function because you cannot unhook events within the functions which receive events
+	virtual void unhookEvent() = 0;
 };

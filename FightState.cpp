@@ -16,6 +16,7 @@ FightState::FightState(GameStateManager *_gsm, InputHandler *_inputHandler, sf::
 
 void FightState::init() {
 	shape.setFillColor(sf::Color::Green);
+	__unhook(&InputHandler::sendKeysDown, inputHandler, &GameState::recieveKeysDown);
 	__hook(&InputHandler::sendKeysDown, inputHandler, &GameState::recieveKeysDown);
 }
 
@@ -32,4 +33,8 @@ void FightState::draw() {
 void FightState::recieveKeysDown(list<int> &notes) {
 	cout << " recieve1 ";
 	gsm->stopState(this);
+}
+
+void FightState::unhookEvent() {
+	__unhook(&InputHandler::sendKeysDown, inputHandler, &GameState::recieveKeysDown);
 }
