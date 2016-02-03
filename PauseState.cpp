@@ -8,29 +8,29 @@
 using namespace std;
 
 // Some globals for testing
-sf::RenderWindow window2(sf::VideoMode(200, 200), "SFML works!");
 sf::CircleShape shape2(100.f);
 
-PauseState::PauseState(GameStateManager *_gsm, InputHandler *inputHandler) : gsm(_gsm) {
-	__hook(&InputHandler::sendKeysDown, inputHandler, &GameState::recieveKeysDown);
+PauseState::PauseState(GameStateManager *_gsm, InputHandler *_inputHandler, sf::RenderWindow *_window) : gsm(_gsm), inputHandler(_inputHandler), window(_window) {
+	
 }
 
 
 void PauseState::init() {
-
+	__hook(&InputHandler::sendKeysDown, inputHandler, &GameState::recieveKeysDown);
 	shape2.setFillColor(sf::Color::Red);
 }
 
 void PauseState::update() {
-	cout << "State #2" << endl;
+	//cout << "State #2" << endl;
 }
 
 void PauseState::draw() {
-	window2.clear();
-	window2.draw(shape2);
-	window2.display();
+	window->clear();
+	window->draw(shape2);
+	window->display();
 }
 
 void PauseState::recieveKeysDown(list<int> &notes) {
-	gsm->stopState(state_ptr(this));
+	cout << " recieve2 ";
+	gsm->stopState(this);
 }

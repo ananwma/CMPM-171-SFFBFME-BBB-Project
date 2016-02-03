@@ -7,6 +7,12 @@
 #include <map>
 #include <list>
 
+//DEBUG
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+//DEBUG
+
 #include "input.h"
 #include "GameStateManager.h"
 #include "FightState.h"
@@ -41,6 +47,13 @@ public:
 	void unhookEvent(InputHandler* inputHandler) {
 		__unhook(&InputHandler::sendKeysDown, inputHandler, &TestEventReceiver::recieveKeysDown);
 	}
+};
+
+struct context {
+	InputHandler input_handler;
+	GameStateManager game_state_manager;
+	sf::RenderWindow* window;
+
 };
 
 int main()
@@ -91,7 +104,7 @@ int main()
 
 	// SFML Stuff
 	sf::Texture texture;
-	if (!texture.loadFromFile("sprites/bach_default.png"))
+	/*if (!texture.loadFromFile("sprites/bach_default.png"))
 	{
 		cerr << "Error loading texture" << endl;
 		system("PAUSE");
@@ -99,7 +112,7 @@ int main()
 	}
 	texture.setSmooth(true);
 	sf::Sprite sprite;
-	sprite.setTexture(texture);
+	sprite.setTexture(texture);*/
 
 	/*while (window.isOpen())
 	{
@@ -117,10 +130,21 @@ int main()
 		window.display();
 	}*/
 
+	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	context c;
 	GameStateManager gsm;
-	state_ptr fight_state_ptr(new FightState(&gsm, &inputHandler2));
-	gsm.runState(fight_state_ptr);
-	state_ptr pause_state_ptr(new PauseState(&gsm, &inputHandler2));
-	gsm.runState(pause_state_ptr);
+	c.game_state_manager = gsm;
+	c.input_handler = inputHandler2;
+	c.window = &window;
+
+	state_ptr fight_state_ptr(new FightState(&gsm, &inputHandler2, &window));
+	FightState *fsp = new FightState(&gsm, &inputHandler2, &window);
+	gsm.runState(fsp);
+	//state_ptr pause_state_ptr(new PauseState(&gsm, &inputHandler2));
+	PauseState *psp = new PauseState(&gsm, &inputHandler2, &window);
+	gsm.runState(psp);
+	delete fsp;
+	delete psp;
+	//_CrtDumpMemoryLeaks();
 	return 0;
 }

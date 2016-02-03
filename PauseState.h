@@ -4,11 +4,13 @@
 
 class PauseState : public GameState {
 public:
-	explicit PauseState(GameStateManager*, InputHandler*);
+	explicit PauseState(GameStateManager*, InputHandler*, sf::RenderWindow*);
 	virtual void init();
 	virtual void update();
 	virtual void draw();
 	virtual void recieveKeysDown(std::list<int> &notes);
 private:
 	GameStateManager *gsm;
+	InputHandler *inputHandler;
+	sf::RenderWindow *window;
 };
