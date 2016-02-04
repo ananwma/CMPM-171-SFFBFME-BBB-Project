@@ -1,22 +1,36 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "Move.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
 #include <string>
-#include <vector>
+#include "Character.h"
 
 using namespace std;
 
-class Character
+class Player
 {
 public:
-	enum possibleMoves { Idle, Walk, Jump, Attack, Hurt };
-	possibleMoves currentMove;
-	int currentMoveFrame;
-	string spritesheet;
-	vector <Move> moveList;
-	//sf::Vector2i source(0, Idle);
-	Character();
-	Character(vector<Move> moveList_n, string spritesheet_url);
-	~Character();
+	bool isMoveValid();
+
+
+	Character currentCharacter;
+
+	int x;
+	int y;
+	int health;
+	int meter;
+	int roundWins;
+	string state;
+	sf::Texture pTexture;
+	sf::Sprite pImage;
+	//Move currentMove;
+	
+	int inputBuffer;
+	bool canCancel;
+	// currentSprite;
+	int currentFrame;
+	Player(Character, int, int);
+	~Player();
+	
 };
 
