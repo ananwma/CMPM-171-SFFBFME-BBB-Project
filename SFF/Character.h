@@ -9,8 +9,8 @@ using namespace std;
 class Character
 {
 public:
-	enum possibleMoves { Idle, Walk, Jump, Attack, Hurt };
-	possibleMoves currentMove;
+	//enum possibleMoves { Idle, Walk, Jump, Attack, Hurt };
+	int currentMove;
 	int currentMoveFrame;
 	string spritesheet;
 	vector <Move> moveList;

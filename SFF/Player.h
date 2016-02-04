@@ -23,12 +23,14 @@ public:
 	string state;
 	sf::Texture pTexture;
 	sf::Sprite pImage;
+	sf::RectangleShape hitboxes_v;
+	sf::RectangleShape hurtboxes_v;
 	//Move currentMove;
 	
 	int inputBuffer;
 	bool canCancel;
 	// currentSprite;
-	int currentFrame;
+	//int currentFrame;
 	Player(Character, int, int);
 	~Player();
 	

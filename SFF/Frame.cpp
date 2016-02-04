@@ -6,7 +6,7 @@
 Frame::Frame() {
 
 }
-Frame::Frame(vector <sf::IntRect> hitboxes_n, vector <sf::IntRect> hurtboxes_n, vector <sf::RectangleShape> hitboxes_vn, vector <sf::RectangleShape> hurtboxes_vn)
+Frame::Frame(vector <sf::FloatRect> hitboxes_n, vector <sf::FloatRect> hurtboxes_n, vector <sf::RectangleShape> hitboxes_vn, vector <sf::RectangleShape> hurtboxes_vn)
 {
 	hitboxes = hitboxes_n;
 	hitboxes_v = hitboxes_vn;
