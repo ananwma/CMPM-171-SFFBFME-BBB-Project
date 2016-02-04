@@ -1,18 +1,22 @@
-class Player{
-    void executeMove();
-    void checkDead();
-    boolean isMoveValid(); 
-    
-    
-    Character character;
-    int health;
-    int meter;
-    int roundWins;
-    String state;
-    Move currentMove;
+#pragma once
+#include <SFML/Graphics.hpp>
+#include "Move.h"
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Character
+{
+public:
+	enum possibleMoves { Idle, Walk, Jump, Attack, Hurt };
+	possibleMoves currentMove;
 	int currentMoveFrame;
-    int inputBuffer;
-    boolean canCancel;
-    // currentSprite;
-    int currentFrame;
-}
+	string spritesheet;
+	vector <Move> moveList;
+	//sf::Vector2i source(0, Idle);
+	Character();
+	Character(vector<Move> moveList_n, string spritesheet_url);
+	~Character();
+};
+
