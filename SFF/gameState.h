@@ -1,19 +1,18 @@
-class gameState
-{
+#pragma once
+#include <list>
+#include <SFML/Graphics.hpp>
+
+// Abstract base class to make gamestates from
+[event_receiver(native)]
+class GameState {
 public:
-  virtual void Init() = 0;
-  virtual void Cleanup() = 0;
 
-  virtual void Pause() = 0;
-  virtual void Resume() = 0;
+	// To be implemented in various state classes
+	virtual void init() = 0;
+	virtual void update() = 0;
+	virtual void draw() = 0;
+	virtual void recieveKeysDown(std::list<int> &notes) = 0;
 
-  virtual void HandleEvents(gameEngine* game) = 0;
-  virtual void Update(gameEngine* game) = 0;
-  virtual void Draw(gameEngine* game) = 0;
-
-  void ChangeState(gameEngine* game, gameState* state) {
-    game->ChangeState(state);
-  }
-
-  protected: gameState() { }
+	// Can probably be defined here, most likely will be the same in all states
+	virtual void unhookEvent() = 0;
 };

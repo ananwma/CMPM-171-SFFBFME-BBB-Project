@@ -1,10 +1,13 @@
-#pragma once
 
+
+#include <list>
 #include <vector>
 #include <windows.h>
 #include <mmsystem.h>
 
+// Some midi data signals
 #define NOTE_ON 144
+#define NOTE_OFF 128
 
 #define A_NATURAL 0
 #define A_SHARP 1
@@ -115,19 +118,28 @@
 #define GS_MINOR_6 105
 #define GS_MINOR_64 106
 #define GS_MINOR_7 107
-
+#pragma once
+[event_source(native)]
 class InputHandler
 {
 public: 
-	HMIDIIN midi_device_handle;
-	//midiInOpen(&midi_device_handle, 0, (DWORD_PTR)(void*)MidiInProc, 0, CALLBACK_FUNCTION);
+	// Constructors etc.
+	InputHandler() = default;
+	InputHandler(const InputHandler&) = delete;
+	InputHandler(InputHandler&&) = delete;
+	InputHandler& operator= (const InputHandler&) = default;
+	InputHandler& operator= (InputHandler&&) = default;
+	~InputHandler() = default;
 
-	//midiInStart(midi_device_handle);
+	// Opens device
+	int prepareDevices();
+
+	// Event function, has no implementation
+	__event void sendKeysDown(std::list<int> &notes);
 
 private:
-	std::vector<HMIDIIN> deviceHandles;
-	int numDevices;
-	std::vector<int> data;
-	bool simultaneous = false;
-	//int CALLBACK MidiInProc(HMIDIIN, UINT, DWORD, DWORD, DWORD)
+	std::vector<HMIDIIN> devices;
+	std::list<int> notes;
+	void parseMidiData(DWORD dwParam1, DWORD dwParam2, DWORD dwInstance);
+	static void CALLBACK MidiInProc(HMIDIIN, UINT, DWORD_PTR, DWORD, DWORD);
 };
