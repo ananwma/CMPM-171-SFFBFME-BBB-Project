@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
 #include <stdio.h>
@@ -5,28 +6,180 @@
 #include <time.h>
 #include <string>
 #include <vector>
+#include <mmsystem.h>
+#include <map>
+#include <list>
 
+//DEBUG
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+//DEBUG
+
+#include "input.h"
+#include "GameStateManager.h"
+#include "FightState.h"
+#include "PauseState.h"
 #include "Player.h"
 
+#include "test.h"
+
+#define NOTE_ON 144
 using namespace std;
 
+list<int> notes;
+vector<HMIDIIN> activeDevices;
 
+[event_receiver(native)]
+class TestEventReceiver
+{
+public:
+	void init() {
+		//sf::RenderWindow window(sf::VideoMode(800, 600), "SFML works!");
+		//sf::CircleShape shape(100.f);
+		//shape.setFillColor(sf::Color::Green);
+	}
+	void recieveKeysDown(std::list<int> &notes) {
+		// For now this just prints the list of notes pressed down
+		/*for (auto i = notes.begin(); i != notes.end(); ++i)
+			cout << *i << ' ';
+		cout << endl;*/
+	}
+	void recieveKeysUp() {}
+	void hookEvent(InputHandler* inputHandler) {
+		__hook(&InputHandler::sendKeysDown, inputHandler, &TestEventReceiver::recieveKeysDown);
+	}
+	void unhookEvent(InputHandler* inputHandler) {
+		__unhook(&InputHandler::sendKeysDown, inputHandler, &TestEventReceiver::recieveKeysDown);
+	}
+};
+
+struct context {
+	InputHandler input_handler;
+	GameStateManager game_state_manager;
+	sf::RenderWindow* window;
+
+};
 
 
 int main()
 {
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+
+	//sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	//sf::CircleShape shape(100.f);
+	//shape.setFillColor(sf::Color::Green);
+	// Get a console for debugging with cout
+
+	MIDIINCAPS device_capabilities;
+	//cout << midiInGetNumDevs() << endl;
+	//for (int dev_num = 0; dev_num < midiInGetNumDevs(); dev_num++) {
+	//	midiInGetDevCaps(dev_num, &device_capabilities, sizeof device_capabilities);
+	//	cout << device_capabilities.wMid;
+	//}
+
+	int numDevs = midiInGetNumDevs();
+	//cout << endl << "Num Devs: " << numDevs << endl;
+	HMIDIIN midi_device_handle;
+	HMIDIIN midi_device_handle2;
+
+	//Testing functor
+	//midiFunctor mf = midiFunctor();
+	//int address = &mf;
+
+	// Open devices and push handles on to vector
+	vector<HMIDIIN> devices;
+	/*for (int i = 0; i < midiInGetNumDevs(); i++) {
+	HMIDIIN device;
+	cout<<midiInOpen(&device, i, (DWORD_PTR)mf, 0, CALLBACK_FUNCTION);
+	cout<<midiInStart(device);
+	devices.push_back(device);
+	}*/
+
+
+	InputHandler  inputHandler = InputHandler();
+	InputHandler  inputHandler2 = InputHandler();
+	inputHandler.prepareDevice();
+	inputHandler2.prepareDevice();
+	MIDIINCAPS caps;
+	//midiInGetDevCaps(i, &caps, sizeof(MIDIINCAPS));
+
+	//TestEventReceiver test;
+	//test.hookEvent(&inputHandler2);
+
+	// SFML Stuff
+	sf::Texture texture;
+	/*if (!texture.loadFromFile("sprites/bach_default.png"))
+	{
+	cerr << "Error loading texture" << endl;
+	system("PAUSE");
+	return EXIT_FAILURE;
+	}
+	texture.setSmooth(true);
+	sf::Sprite sprite;
+	sprite.setTexture(texture);*/
+
+	/*while (window.isOpen())
+	{
+	sf::Event event;
+	while (window.pollEvent(event))
+	{
+	if (event.type == sf::Event::Closed)
+	window.close();
+	}
+
+	window.clear();
+	window.draw(shape);
+	sprite.move(sf::Vector2f(0.1, 0));
+	window.draw(sprite);
+	window.display();
+	}*/
+
+	//test t;
+	//t.testing();
+
+	//end of input
+
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "Super Fugue Fighter");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	//sf::CircleShape shape(100.f);
+	//shape.setFillColor(sf::Color::Green);
 	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
 	sf::Clock clock;
 
+
+	//input 
+	//sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	/*context c;
+	GameStateManager gsm;
+	c.game_state_manager = gsm;
+	c.input_handler = inputHandler2;
+	c.window = &window;
+
+	state_ptr fight_state_ptr(new FightState(&gsm, &inputHandler2, &window));
+	FightState *fsp = new FightState(&gsm, &inputHandler2, &window);
+	gsm.runState(fsp);
+	//state_ptr pause_state_ptr(new PauseState(&gsm, &inputHandler2));
+	PauseState *psp = new PauseState(&gsm, &inputHandler2, &window);
+	gsm.runState(psp);
+	delete fsp;
+	delete psp;
+	_CrtDumpMemoryLeaks();
+	return 0;*/
+	//end input
+
+
 	//create Bach and his moves, from frames up
-	int player1start_x = 300;
-	int player1start_y = 1000;
+	float player1start_x = 1000.0f;
+	float player1start_y = 1000.0f;
+
+
 	int spriteWidth = 68;
 	int spriteHeight = 105;
-	
+
+	//move to frame?
+
 	//idle frame 1 hitboxes
 	vector <sf::FloatRect> idle1_hit;
 	idle1_hit.push_back(sf::FloatRect());
@@ -110,6 +263,9 @@ int main()
 	//hurt frames list
 	vector <Frame> bach_hurt;
 	//moves list
+
+	//move to moves?
+
 	vector <Move> bachMoves;
 	bachMoves.push_back(Move(bach_idle));
 	bachMoves.push_back(Move(bach_walk));
@@ -121,8 +277,15 @@ int main()
 
 	//enum bachPossibleMoves { Idle, Walk, Jump, Attack, Hurt };
 	//sf::Vector2i source(0, Idle);
-	
+
 	Player player1(bach, player1start_x, player1start_y);
+
+	player1.pImage.setPosition(100, 500);
+
+	bool jumping = false;
+	bool falling = false;
+	bool walking = false;
+	bool facing_right = false;
 
 	while (window.isOpen())
 	{
@@ -133,30 +296,43 @@ int main()
 			case sf::Event::Closed:
 				window.close();
 				break;
-
-
 			}
-
-
-
-
 		}
+		if (jumping) {
+			if (player1.pImage.getPosition().y <= 400) {
+				jumping = false;
+				falling = true;
+			}
+			else {
+				player1.pImage.move(0, -1.000000000f);
+			}
+		}
+		if (falling) {
+			if (player1.pImage.getPosition().y >= 500) {
+				falling = false;
+			}
+			else {
+				player1.pImage.move(0, 1.000000000f);
+			}
+		}
+
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			//right
 			player1.currentCharacter.currentMove = 1;
 			player1.currentCharacter.currentMoveFrame = 0;
-			player1.pImage.move(0.1000000, 0);
+			player1.pImage.move(0.1000000f, 0);
 		}
-
-
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			//left 
 			player1.currentCharacter.currentMove = 1;
-			player1.pImage.move(-0.10000000, 0);
+			player1.pImage.move(-0.10000000f, 0);
 			player1.currentCharacter.currentMoveFrame = 0;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+			//jump
+			if(!jumping && !falling) jumping = true;
 			player1.currentCharacter.currentMove = 2;
 			player1.currentCharacter.currentMoveFrame = 0;
-			player1.pImage.move(0, 0.100000000);
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
 			player1.currentCharacter.currentMove = 3;
@@ -166,7 +342,7 @@ int main()
 			player1.currentCharacter.currentMove = 4;
 			player1.currentCharacter.currentMoveFrame = 0;
 		}
-		std::cout << clock.getElapsedTime().asSeconds() << std::endl;
+		//std::cout << clock.getElapsedTime().asSeconds() << std::endl;
 		//find move based on input read, if0 state allows it and is different from currentMove:
 		//set player1.currentMove, set player1.currentMoveFrame to 0
 		//else player1.currentMoveFrame++
@@ -185,7 +361,8 @@ int main()
 		//player1Image.setTextureRect(sf::IntRect(player1.currentMoveFrame * spriteWidth, player1.currentMove.spriteRow * spriteHeight, spriteWidth, SpriteHeight));
 		player1.pImage.setTextureRect(sf::IntRect(player1.currentCharacter.currentMoveFrame * spriteWidth, player1.currentCharacter.currentMove * spriteHeight, spriteWidth, spriteHeight));
 
-		
+		cout << (player1.pImage.getPosition().y) << endl;
+
 		//window.draw(shape);
 		window.draw(player1.pImage);
 		window.draw(player1.hitboxes_v);
