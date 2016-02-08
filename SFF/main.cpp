@@ -141,8 +141,9 @@ int main()
 	//t.testing();
 
 	//end of input
-
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "Super Fugue Fighter");
+	int window_width = 1080;
+	int window_height = 720;
+	sf::RenderWindow window(sf::VideoMode(window_width, window_height), "Super Fugue Fighter");
 	//sf::CircleShape shape(100.f);
 	//shape.setFillColor(sf::Color::Green);
 	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
@@ -174,6 +175,8 @@ int main()
 	float player1start_x = 1000.0f;
 	float player1start_y = 1000.0f;
 
+	float player2start_x = 1000.0f;
+	float player2start_y = 1000.0f;
 
 	int spriteWidth = 68;
 	int spriteHeight = 105;
@@ -279,8 +282,10 @@ int main()
 	//sf::Vector2i source(0, Idle);
 
 	Player player1(bach, player1start_x, player1start_y);
+	Player player2(bach, player2start_x, player2start_y);
 
 	player1.pImage.setPosition(100, 500);
+	player2.pImage.setPosition(800, 500);
 
 	bool jumping = false;
 	bool falling = false;
@@ -298,13 +303,17 @@ int main()
 				break;
 			}
 		}
+
+		if (player1.pImage.getPosition().x < player2.pImage.getPosition().x) facing_right = true;
+		else facing_right = false;
+
 		if (jumping) {
 			if (player1.pImage.getPosition().y <= 400) {
 				jumping = false;
 				falling = true;
 			}
 			else {
-				player1.pImage.move(0, -1.000000000f);
+				player1.pImage.move(0, -0.500000000f);
 			}
 		}
 		if (falling) {
@@ -312,21 +321,29 @@ int main()
 				falling = false;
 			}
 			else {
-				player1.pImage.move(0, 1.000000000f);
+				player1.pImage.move(0, 0.500000000f);
 			}
 		}
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 			//right
-			player1.currentCharacter.currentMove = 1;
-			player1.currentCharacter.currentMoveFrame = 0;
-			player1.pImage.move(0.1000000f, 0);
+			if ((player1.pImage.getPosition().x + spriteWidth / 2 >= player2.pImage.getPosition().x - spriteWidth / 2 && facing_right) || player1.pImage.getPosition().x + spriteWidth / 2 >= window_width) {
+			}
+			else{
+				player1.currentCharacter.currentMove = 1;
+				player1.currentCharacter.currentMoveFrame = 0;
+				player1.pImage.move(0.500000f, 0);
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 			//left 
-			player1.currentCharacter.currentMove = 1;
-			player1.pImage.move(-0.10000000f, 0);
-			player1.currentCharacter.currentMoveFrame = 0;
+			if ((player1.pImage.getPosition().x + spriteWidth / 2 <= player2.pImage.getPosition().x - spriteWidth / 2 && !facing_right) || player1.pImage.getPosition().x <= 0) {
+			}
+			else{
+				player1.currentCharacter.currentMove = 1;
+				player1.pImage.move(-0.5000000f, 0);
+				player1.currentCharacter.currentMoveFrame = 0;
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 			//jump
@@ -360,13 +377,16 @@ int main()
 		//set player1.currentMove to idle 
 		//player1Image.setTextureRect(sf::IntRect(player1.currentMoveFrame * spriteWidth, player1.currentMove.spriteRow * spriteHeight, spriteWidth, SpriteHeight));
 		player1.pImage.setTextureRect(sf::IntRect(player1.currentCharacter.currentMoveFrame * spriteWidth, player1.currentCharacter.currentMove * spriteHeight, spriteWidth, spriteHeight));
-
-		cout << (player1.pImage.getPosition().y) << endl;
+		player2.pImage.setTextureRect(sf::IntRect(player2.currentCharacter.currentMoveFrame * spriteWidth, player2.currentCharacter.currentMove * spriteHeight, spriteWidth, spriteHeight));
+		cout << (player1.pImage.getPosition().x) << endl;
 
 		//window.draw(shape);
 		window.draw(player1.pImage);
 		window.draw(player1.hitboxes_v);
 		window.draw(player1.hurtboxes_v);
+
+		window.draw(player2.pImage);
+
 		window.display();
 		window.clear(sf::Color(0,200,0,255));
 	}
