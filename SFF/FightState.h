@@ -2,11 +2,13 @@
 
 #include "GameState.h"
 #include "Game.h"
+#include "Player.h"
 
 class FightState : public GameState {
 public:
 	// CTOR
 	explicit FightState(Game&);
+	~FightState();
 
 	// Main game loop functions
 	virtual void init();
@@ -23,4 +25,12 @@ private:
 
 	// True if state is currently being ran
 	bool running;
+
+	int player1start_x;
+	int player1start_y;
+	int spriteWidth;
+	int spriteHeight;
+	Player *player1;
+	sf::Clock clock;
+	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
 };
