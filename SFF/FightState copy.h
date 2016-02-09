@@ -3,10 +3,10 @@
 #include "GameState.h"
 #include "Game.h"
 
-class PauseState : public GameState {
+class FightState : public GameState {
 public:
 	// CTOR
-	explicit PauseState(Game&);
+	explicit FightState(Game&);
 
 	// Main game loop functions
 	virtual void init();

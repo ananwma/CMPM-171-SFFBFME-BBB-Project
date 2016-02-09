@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #pragma once
 
 #include "GameState.h"
@@ -34,3 +35,31 @@ private:
 	sf::Clock clock;
 	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
 };
+=======
+#pragma once
+
+#include "GameState.h"
+#include "Game.h"
+
+class FightState : public GameState {
+public:
+	// CTOR
+	explicit FightState(Game&);
+
+	// Main game loop functions
+	virtual void init();
+	virtual void update();
+	virtual void draw();
+
+	// Input and event handling
+	virtual void recieveKeysDown(std::list<int> &notes);
+	virtual void unhookEvent();
+
+private:
+	// Reference to Game struct containing window, input handler, and game state manager
+	Game &game;
+
+	// True if state is currently being ran
+	bool running;
+};
+>>>>>>> 983ee90ddea54528ced48ceba30b80a0d8236b75
