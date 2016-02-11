@@ -32,7 +32,7 @@ int main()
 	shared_ptr<InputHandler> inputHandler(new InputHandler());
 	inputHandler->prepareDevices();
 	GameStateManager gsm;
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Super Fugue Fighter");
 	Game game(gsm, inputHandler, window);
 
 	// Run the first state
