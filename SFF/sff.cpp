@@ -9,10 +9,14 @@
 //DEBUG
 
 #include "input.h"
+#include "PlayerSelectState.h"
 #include "GameStateManager.h"
 #include "FightState.h"
 #include "PauseState.h"
 #include "Game.h"
+
+//tmp
+#include "Player.h"
 
 using namespace std;
 
@@ -36,7 +40,9 @@ int main()
 	Game game(gsm, inputHandler, window);
 
 	// Run the first state
-	FightState fsp(game);
-	gsm.runState(fsp);
+	//PlayerSelectState pss(game);
+	//gsm.runState(pss)
+	FightState fs(game);
+	gsm.runState(fs);
 	return 0;
 }

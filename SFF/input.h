@@ -134,12 +134,11 @@ public:
 	// Opens device
 	int prepareDevices();
 
-	// Event function, has no implementation
-	__event void sendKeysDown(std::list<int> &notes);
-
+	// Event functions, has no implementation
+	__event void sendKeysDown(std::list<int>&, int);
 private:
 	std::vector<HMIDIIN> devices;
 	std::list<int> notes;
-	void parseMidiData(DWORD dwParam1, DWORD dwParam2, DWORD dwInstance);
+	void parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2, DWORD dwInstance);
 	static void CALLBACK MidiInProc(HMIDIIN, UINT, DWORD_PTR, DWORD, DWORD);
 };

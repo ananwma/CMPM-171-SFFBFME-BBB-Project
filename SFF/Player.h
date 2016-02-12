@@ -4,34 +4,48 @@
 #include <iostream>
 #include <string>
 #include "Character.h"
+#include "Move.h"
 
 using namespace std;
+enum direction { FORWARDS, BACKWARDS };
 
 class Player
 {
+private:
+	//Character* character;
 public:
+	Character* character;
 	bool isMoveValid();
+	void setCharacter(Character*);
 
-
-	Character currentCharacter;
-
-	int x;
-	int y;
+	float xpos;
+	float ypos;
 	int health;
 	int meter;
 	int roundWins;
+	int playerId;
 	string state;
 	sf::Texture pTexture;
 	sf::Sprite pImage;
 	sf::RectangleShape hitboxes_v;
 	sf::RectangleShape hurtboxes_v;
+
 	//Move currentMove;
 	
 	int inputBuffer;
 	bool canCancel;
 	// currentSprite;
 	//int currentFrame;
-	Player(Character, int, int);
+
+	void doMove(int);
+	void walk(direction);
+	void updateAnimFrame();
+	Move getCurrentMove();
+	Frame getCurrentFrame();
+	int getCurrentMoveNum();
+	int getCurrentFrameNum();
+
+	Player();
 	~Player();
 	
 };

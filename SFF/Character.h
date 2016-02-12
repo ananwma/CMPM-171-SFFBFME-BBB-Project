@@ -3,20 +3,25 @@
 #include "Move.h"
 #include <string>
 #include <vector>
+#include <unordered_map>
 
-using namespace std;
+using BoxVec = vector<sf::FloatRect>;
+using FrameVec = vector<Frame>;
+enum Moves { IDLE, WALK, JUMP, HITSTUN, JAB, STRONG, FIERCE, SHRT, FORWARD, ROUNDHOUSE, GRAB };
 
-class Character
-{
+class Character {
+friend class Player;
+protected:
+	int width;
+	int height;
+	float walkspeed;
+	sf::Texture spritesheet;
 public:
-	//enum possibleMoves { Idle, Walk, Jump, Attack, Hurt };
+	sf::Sprite sprite;
 	int currentMove;
 	int currentMoveFrame;
-	string spritesheet;
-	vector <Move> moveList;
-	//sf::Vector2i source(0, Idle);
-	Character();
-	Character(vector<Move> moveList_n, string spritesheet_url);
-	~Character();
+	unordered_map <int, Move> moveList;
+
+	virtual void initMoves() = 0;
 };
 

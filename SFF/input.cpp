@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void InputHandler::parseMidiData(DWORD dwParam1, DWORD dwParam2, DWORD dwInstance) {
+void InputHandler::parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2, DWORD dwInstance) {
 
 	// Get last 3 bytes of the DWORD containing midi data. Byte 1 is never used, byte 2 is the note,
 	// byte 3 is the velocity, and byte 4 is the status.
@@ -18,7 +18,7 @@ void InputHandler::parseMidiData(DWORD dwParam1, DWORD dwParam2, DWORD dwInstanc
 	if (byte4 == NOTE_ON) {
 		if (byte2 != 0) {
 			notes.push_back(byte3);
-			sendKeysDown(notes);
+			sendKeysDown(notes, (int)hMidiIn);
 		}
 		else
 			notes.pop_back();
@@ -44,7 +44,7 @@ void InputHandler::MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, 
 	list<int> notes;
 	if (wMsg == MIM_DATA) {
 		// Call non-static member function
-		pThis->parseMidiData(dwParam1, dwParam2, dwInstance);
+		pThis->parseMidiData(hMidiIn, dwParam1, dwParam2, dwInstance);
 	}
 	else if (wMsg != MM_MIM_OPEN && wMsg != MM_MIM_CLOSE) {
 		cerr << "Unexpected MIDI message recieved: " << wMsg << endl;

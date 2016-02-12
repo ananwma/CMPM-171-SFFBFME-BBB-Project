@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 
 #include "GameState.h"
 #include "Game.h"
@@ -14,7 +15,7 @@ public:
 	virtual void draw();
 
 	// Input and event handling
-	virtual void recieveKeysDown(std::list<int> &notes);
+	virtual void recieveKeysDown(std::list<int>&, int);
 	virtual void unhookEvent();
 
 private:
