@@ -6,10 +6,12 @@
 using namespace std;
 
 Bach::Bach() {
+
+	//438 x 540
 	width = 68;
 	height = 105;
 	walkspeed = 0.1f;
-	if (!spritesheet.loadFromFile("sprites/Ryu.png")) {
+	if (!spritesheet.loadFromFile("Ryu.png")) {
 		cerr << "Missing file sprites/Ryu.png!\n";
 		exit(EXIT_FAILURE);
 	}

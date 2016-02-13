@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 //DEBUG
-#include <vld.h>
+//#include <vld.h>
 //DEBUG
 
 #include "input.h"
@@ -36,7 +36,7 @@ int main()
 	shared_ptr<InputHandler> inputHandler(new InputHandler());
 	inputHandler->prepareDevices();
 	GameStateManager gsm;
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Super Fugue Fighter");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "Super Fugue Fighter");
 	Game game(gsm, inputHandler, window);
 
 	// Run the first state

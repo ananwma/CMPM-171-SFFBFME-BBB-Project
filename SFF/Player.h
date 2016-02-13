@@ -24,6 +24,7 @@ public:
 	int meter;
 	int roundWins;
 	int playerId;
+	bool facing_right;
 	string state;
 	sf::Texture pTexture;
 	sf::Sprite pImage;

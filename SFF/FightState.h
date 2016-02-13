@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "Game.h"
 #include "Player.h"
+#include "Collision.h"
 
 class FightState : public GameState {
 public:
@@ -26,11 +27,17 @@ private:
 	// True if state is currently being ran
 	bool running;
 
+	Collision *collision;
 	int player1start_x;
-	int player1start_y;
+	int player1start_y;	
+	bool jumping;
+	bool falling;
+	bool walking;
+	bool facing_right;
 	int spriteWidth;
 	int spriteHeight;
 	Player *player1;
+	Player *player2;
 	sf::Clock clock;
 	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
 

@@ -12,11 +12,11 @@ enum Moves { IDLE, WALK, JUMP, HITSTUN, JAB, STRONG, FIERCE, SHRT, FORWARD, ROUN
 class Character {
 friend class Player;
 protected:
-	int width;
-	int height;
 	float walkspeed;
 	sf::Texture spritesheet;
 public:
+	int width;
+	int height;
 	sf::Sprite sprite;
 	int currentMove;
 	int currentMoveFrame;
