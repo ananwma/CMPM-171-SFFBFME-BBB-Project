@@ -4,7 +4,7 @@
 
 #include "FightState.h"
 #include "PauseState.h"
-
+#include "AssetManager.h"
 // tmp
 #include "Collision.h"
 #include "CharacterBach.h"
@@ -14,11 +14,15 @@ using namespace std;
 // Some globals for testing
 FightState::FightState(Game &_game) : game(_game) { }
 
+bool p1_move_right = false;
+bool p1_move_left = false;
+
 void FightState::init() {//create Bach and his moves, from frames up
 	int player1start_x = 300;
 	int player1start_y = 400;
 	int player2start_x = 300;
 	int player2start_y = 400;
+	int window_width = 1280;
 	bool facing_right = true;
 	jumping = false;
 	falling = false;
@@ -29,10 +33,14 @@ void FightState::init() {//create Bach and his moves, from frames up
 
 	collision = new Collision();
 
-	cout << game.playerOne.playerId << endl;
-	cout << game.playerTwo.playerId << endl;
+
+	sf::Sprite background;
+	sf::Texture texture;
+	if (!texture.loadFromFile("cute_image.jpg"));
+	background.setTexture(texture);
 	running = true;
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::recieveKeysDown);
+	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &FightState::recieveKeysUp);
 
 	// Later move this to character selection state
 	Bach* bach = new Bach();
@@ -55,6 +63,7 @@ void FightState::init() {//create Bach and his moves, from frames up
 }
 
 void FightState::update() {
+
 	//cout << "State #1" << endl;
 	if (!running) {
 		PauseState pauseState(game);
@@ -130,6 +139,13 @@ void FightState::update() {
 	else {
 		game.playerOne.character->currentMove = IDLE;
 	}
+
+	if (p1_move_right) {
+		collision->move_right(game.playerOne, game.playerTwo, window_width);
+	}
+	if (p1_move_left) {
+		collision->move_left(game.playerOne, game.playerTwo);
+	}
 	//std::cout << clock.getElapsedTime().asSeconds() << std::endl;
 	//find move based on input read, if0 state allows it and is different from currentMove:
 	//set player1.currentMove, set player1.currentMoveFrame to 0
@@ -159,6 +175,7 @@ void FightState::update() {
 
 void FightState::draw() {
 	game.window.clear(sf::Color(0, 200, 100, 255));
+	//game.window.draw(background); 
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
 	drawBoxes(game.playerOne, 1, 1);
@@ -188,12 +205,30 @@ void FightState::drawBoxes(Player player, bool hit, bool hurt) {
 
 // Everything here is run on its own thread!
 void FightState::recieveKeysDown(list<int> &notes, int playerId) {
-	cout << " recieve1 " << endl;
-	running = false;
+	//cout << " recieve1 " << endl;
+	for (auto i : notes) {
+		if (i == 48) {
+			p1_move_left = true;
+		}
+		if (i == 52) {
+			if (!jumping && !falling) jumping = true;
+		}
+		if (i == 55) {
+			p1_move_right = true;
+		}
+	}
+	//running = false;
+}
+
+void FightState::recieveKeysUp(list<int> &notes, int playerId) {
+		cout << "endmove" << endl;
+		p1_move_left = false;
+		p1_move_right = false;
 }
 
 void FightState::unhookEvent() {
 	__unhook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::recieveKeysDown);
+	__unhook(&InputHandler::sendKeysUp, game.inputHandler.get(), &FightState::recieveKeysUp);
 }
 
 FightState::~FightState() {

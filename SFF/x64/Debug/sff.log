@@ -1,12 +1,4 @@
 ﻿  FightState.cpp
-\\psf\home\documents\visual studio 2015\projects\sff\sff\fightstate.cpp(54): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Collision.cpp
-\\psf\home\documents\visual studio 2015\projects\sff\sff\collision.cpp(13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\psf\home\documents\visual studio 2015\projects\sff\sff\collision.cpp(15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\psf\home\documents\visual studio 2015\projects\sff\sff\collision.cpp(20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\psf\home\documents\visual studio 2015\projects\sff\sff\collision.cpp(22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  sff.cpp
-  PlayerSelectState.cpp
+\\psf\home\documents\visual studio 2015\projects\sff\sff\fightstate.cpp(62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\psf\home\documents\visual studio 2015\projects\sff\sff\fightstate.cpp(39): warning C4390: ';': empty controlled statement found; is this the intent?
   sff.vcxproj -> \\psf\Home\Documents\Visual Studio 2015\Projects\sff\x64\Debug\sff.exe

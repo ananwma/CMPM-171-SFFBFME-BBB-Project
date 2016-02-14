@@ -21,9 +21,12 @@ void InputHandler::parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2
 			sendKeysDown(notes, (int)hMidiIn);
 		}
 		else
-			notes.pop_back();
+			sendKeysUp(notes, (int)hMidiIn);
+			if (!notes.empty())
+				notes.pop_back();
 	} 
 	else if (byte4 == NOTE_OFF) {
+		sendKeysUp(notes, (int)hMidiIn);
 		notes.pop_back();
 	}
 

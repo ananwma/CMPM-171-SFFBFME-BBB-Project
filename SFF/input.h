@@ -136,6 +136,7 @@ public:
 
 	// Event functions, has no implementation
 	__event void sendKeysDown(std::list<int>&, int);
+	__event void sendKeysUp(std::list<int>&, int);
 private:
 	std::vector<HMIDIIN> devices;
 	std::list<int> notes;

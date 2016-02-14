@@ -18,6 +18,7 @@ public:
 
 	// Input and event handling
 	virtual void recieveKeysDown(std::list<int> &notes, int);
+	void recieveKeysUp(std::list<int> &notes, int);
 	virtual void unhookEvent();
 
 private:
