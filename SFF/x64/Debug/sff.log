@@ -1,4 +1,1 @@
-﻿  FightState.cpp
-\\psf\home\documents\visual studio 2015\projects\sff\sff\fightstate.cpp(62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-\\psf\home\documents\visual studio 2015\projects\sff\sff\fightstate.cpp(39): warning C4390: ';': empty controlled statement found; is this the intent?
-  sff.vcxproj -> \\psf\Home\Documents\Visual Studio 2015\Projects\sff\x64\Debug\sff.exe
+﻿  sff.vcxproj -> \\psf\Home\Documents\CMPM-171-SFFBFME-BBB-Project GH\SFF\x64\Debug\sff.exe
