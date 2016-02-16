@@ -4,10 +4,11 @@
 
 #include "FightState.h"
 #include "PauseState.h"
-#include "AssetManager.h"
 // tmp
 #include "Collision.h"
 #include "CharacterBach.h"
+#include "AssetManager.h"
+#include "ConcertHallStage.h"
 
 using namespace std;
 
@@ -22,7 +23,7 @@ void FightState::init() {//create Bach and his moves, from frames up
 	int player1start_y = 400;
 	int player2start_x = 300;
 	int player2start_y = 400;
-	int window_width = 1280;
+	int window_width = 1920;
 	bool facing_right = true;
 	jumping = false;
 	falling = false;
@@ -31,17 +32,14 @@ void FightState::init() {//create Bach and his moves, from frames up
 	spriteWidth = 68;
 	spriteHeight = 105;
 
-	collision = new Collision();
-
-
-	sf::Sprite background;
-	sf::Texture texture;
-	if (!texture.loadFromFile("cute_image.jpg"));
-	background.setTexture(texture);
+  
 	running = true;
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::recieveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &FightState::recieveKeysUp);
 
+	game.currentScreen.setStage(chstage);
+	game.currentScreen.stage.sprite.move(-200, 0);
+	game.currentScreen.stage.window_offset = 200;
 	// Later move this to character selection state
 	Bach* bach = new Bach();
 	game.playerOne.setCharacter(bach);
@@ -83,6 +81,7 @@ void FightState::update() {
 
 	collision->flip_sprites(game.playerOne, game.playerTwo);
 
+	//collision->check_jump(game.playerOne, game.playerTwo);
 
 	if (jumping) {
 		if (game.playerOne.character->sprite.getPosition().y <= 300) {
@@ -90,7 +89,7 @@ void FightState::update() {
 			falling = true;
 		}
 		else {
-			game.playerOne.character->sprite.move(0, -0.500000000f);
+			game.playerOne.character->sprite.move(0, -2.500000000f);
 		}
 	}
 
@@ -100,25 +99,27 @@ void FightState::update() {
 		}
 		else if ((game.playerOne.character->sprite.getPosition().x + (spriteWidth / 2)) >= (game.playerTwo.character->sprite.getPosition().x - (spriteWidth / 2)) && (game.playerOne.character->sprite.getPosition().x + (spriteWidth / 2)) <= (game.playerTwo.character->sprite.getPosition().x + (spriteWidth / 2)) && ((game.playerOne.character->sprite.getPosition().y + spriteWidth / 2) >= (game.playerTwo.character->sprite.getPosition().y - spriteWidth / 2))) {
 			float move_left = (game.playerOne.character->sprite.getPosition().x + (spriteWidth / 2)) - (game.playerTwo.character->sprite.getPosition().x - (spriteWidth / 2));
-			game.playerOne.character->sprite.move(-move_left, 0.500000000f);
+			game.playerOne.character->sprite.move(-move_left, 2.500000000f);
 		}
 		else if ((game.playerOne.character->sprite.getPosition().x - (spriteWidth / 2)) >= (game.playerTwo.character->sprite.getPosition().x - (spriteWidth / 2)) && (game.playerOne.character->sprite.getPosition().x - (spriteWidth / 2)) <= (game.playerTwo.character->sprite.getPosition().x + (spriteWidth / 2)) && ((game.playerOne.character->sprite.getPosition().y + spriteWidth / 2) >= (game.playerTwo.character->sprite.getPosition().y - spriteWidth / 2))) {
 			float move_right = (game.playerTwo.character->sprite.getPosition().x + (spriteWidth / 2)) - (game.playerOne.character->sprite.getPosition().x - (spriteWidth / 2));
-			game.playerOne.character->sprite.move(move_right, 0.500000000f);
+			game.playerOne.character->sprite.move(move_right, 2.500000000f);
 		}
 		else {
-			game.playerOne.character->sprite.move(0, 0.500000000f);
+			game.playerOne.character->sprite.move(0, 2.500000000f);
 		}
 	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		//game.playerOne.walk(FORWARDS);
-		collision->move_right(game.playerOne, game.playerTwo, window_width);
+		collision->move_right(game.playerOne, game.playerTwo, window_width, game.currentScreen);
 	}
 
 
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		//game.playerOne.walk(BACKWARDS);
-		collision->move_left(game.playerOne, game.playerTwo);
+		collision->move_left(game.playerOne, game.playerTwo, game.currentScreen);
+		//game.current_screen.move_camera_left(game.current_screen.stage, p1, p2);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		game.playerOne.character->currentMove = JUMP;
@@ -141,10 +142,10 @@ void FightState::update() {
 	}
 
 	if (p1_move_right) {
-		collision->move_right(game.playerOne, game.playerTwo, window_width);
+		collision->move_right(game.playerOne, game.playerTwo, window_width, game.currentScreen);
 	}
 	if (p1_move_left) {
-		collision->move_left(game.playerOne, game.playerTwo);
+		collision->move_left(game.playerOne, game.playerTwo, game.currentScreen);
 	}
 	//std::cout << clock.getElapsedTime().asSeconds() << std::endl;
 	//find move based on input read, if0 state allows it and is different from currentMove:
@@ -175,7 +176,7 @@ void FightState::update() {
 
 void FightState::draw() {
 	game.window.clear(sf::Color(0, 200, 100, 255));
-	//game.window.draw(background); 
+	game.window.draw(game.currentScreen.stage.sprite);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
 	drawBoxes(game.playerOne, 1, 1);

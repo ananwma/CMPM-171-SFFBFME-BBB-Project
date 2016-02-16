@@ -4,6 +4,8 @@
 #include "Game.h"
 #include "Player.h"
 #include "Collision.h"
+#include "AssetManager.h"
+#include "ConcertHallStage.h"
 
 class FightState : public GameState {
 public:
@@ -28,6 +30,8 @@ private:
 	// True if state is currently being ran
 	bool running;
 
+	ConcertHallStage chstage;
+	AssetManager *am;
 	Collision *collision;
 	int player1start_x;
 	int player1start_y;	
