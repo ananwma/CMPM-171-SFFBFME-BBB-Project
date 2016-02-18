@@ -1,1 +1,6 @@
-﻿  sff.vcxproj -> \\psf\Home\Documents\CMPM-171-SFFBFME-BBB-Project GH\SFF\x64\Debug\sff.exe
+﻿  Collision.cpp
+\\psf\home\documents\cmpm-171-sffbfme-bbb-project gh\sff\collision.cpp(13): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\psf\home\documents\cmpm-171-sffbfme-bbb-project gh\sff\collision.cpp(15): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\psf\home\documents\cmpm-171-sffbfme-bbb-project gh\sff\collision.cpp(20): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+\\psf\home\documents\cmpm-171-sffbfme-bbb-project gh\sff\collision.cpp(22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  sff.vcxproj -> \\psf\Home\Documents\CMPM-171-SFFBFME-BBB-Project GH\SFF\x64\Debug\sff.exe

@@ -29,7 +29,7 @@ void Collision::flip_sprites(Player &p1, Player &p2) {
 //****************************************
 
 void Collision::move_right(Player &p1, Player &p2, int window_width, AssetManager &current_screen) {
-	if (((p1.character->sprite.getPosition().x + p1.character->width) >= (p2.character->sprite.getPosition().x)) && p1.facing_right && ((p1.character->sprite.getPosition().y + p1.character->height / 2) >= (p2.character->sprite.getPosition().y - p2.character->height / 2))) {
+	if (((p1.character->sprite.getPosition().x + 1.5*p1.character->width) >= (p2.character->sprite.getPosition().x)) && p1.facing_right && ((p1.character->sprite.getPosition().y + p1.character->height / 2) >= (p2.character->sprite.getPosition().y - p2.character->height / 2))) {
 	}
 	
 	else {
@@ -45,7 +45,7 @@ void Collision::move_right(Player &p1, Player &p2, int window_width, AssetManage
 }
 
 void Collision::move_left(Player &p1, Player &p2, AssetManager &current_screen) {
-	if (((p1.character->sprite.getPosition().x) <= (p2.character->sprite.getPosition().x + p2.character->width)) && !p1.facing_right && ((p1.character->sprite.getPosition().y + p1.character->height / 2) >= (p2.character->sprite.getPosition().y - p2.character->height / 2))) {
+	if (((p1.character->sprite.getPosition().x) <= (p2.character->sprite.getPosition().x + p2.character->width*1.5)) && !p1.facing_right && ((p1.character->sprite.getPosition().y + p1.character->height / 2) >= (p2.character->sprite.getPosition().y - p2.character->height / 2))) {
 	}
 	else {
 		if (((p1.character->sprite.getPosition().x) <= 0)) {
