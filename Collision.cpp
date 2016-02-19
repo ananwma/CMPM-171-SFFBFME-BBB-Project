@@ -8,11 +8,19 @@ Collision::Collision()
 }
 
 void Collision::flip_sprites(Player &p1, Player &p2) {
-	if (p1.xpos < p2.xpos && p1.side == RIGHT) {
-		p1.side = LEFT;
+	if ((p1.character->sprite.getPosition().x < p2.character->sprite.getPosition().x) && !p1.facing_right) {
+		p1.character->sprite.scale(-1, 1);
+		p1.character->sprite.move(-p1.character->width, 1);
+		p2.character->sprite.scale(-1, 1);
+		p2.character->sprite.move(p2.character->width, 1);
+		p1.facing_right = true;
 	}
-	else if (p1.xpos > p2.xpos && p1.side == LEFT) {
-		p1.side = RIGHT;
+	else if ((p1.character->sprite.getPosition().x > p2.character->sprite.getPosition().x) && p1.facing_right) {
+		p1.character->sprite.scale(-1, 1);
+		p1.character->sprite.move(p1.character->width, 1);
+		p2.character->sprite.scale(-1, 1);
+		p2.character->sprite.move(-p2.character->width, 1);
+		p1.facing_right = false;
 	}
 }
 
@@ -21,11 +29,11 @@ void Collision::flip_sprites(Player &p1, Player &p2) {
 //****************************************
 
 void Collision::move_right(Player &p1, Player &p2, int window_width, AssetManager &current_screen) {
-	if (((p1.character->sprite.getPosition().x + p1.getSpriteWidth()) >= (p2.character->sprite.getPosition().x)) && p1.side == RIGHT && ((p1.character->sprite.getPosition().y + p1.getSpriteHeight() / 2) >= (p2.character->sprite.getPosition().y - p2.getSpriteHeight() / 2))) {
+	if (((p1.character->sprite.getPosition().x + 1.5*p1.character->width) >= (p2.character->sprite.getPosition().x)) && p1.facing_right && ((p1.character->sprite.getPosition().y + p1.character->height / 2) >= (p2.character->sprite.getPosition().y - p2.character->height / 2))) {
 	}
 	
 	else {
-		if (((p1.character->sprite.getPosition().x + p1.getSpriteWidth()) >= window_width)) {
+		if (((p1.character->sprite.getPosition().x + p1.character->width) >= window_width)) {
 			current_screen.move_camera_right(current_screen.stage, p1, p2);
 		}
 		else {
@@ -37,7 +45,7 @@ void Collision::move_right(Player &p1, Player &p2, int window_width, AssetManage
 }
 
 void Collision::move_left(Player &p1, Player &p2, AssetManager &current_screen) {
-	if (((p1.character->sprite.getPosition().x) <= (p2.character->sprite.getPosition().x + p2.getSpriteWidth())) && (p1.side == LEFT) && ((p1.character->sprite.getPosition().y + p1.getSpriteHeight() / 2) >= (p2.character->sprite.getPosition().y - p2.getSpriteHeight() / 2))) {
+	if (((p1.character->sprite.getPosition().x) <= (p2.character->sprite.getPosition().x + p2.character->width*1.5)) && !p1.facing_right && ((p1.character->sprite.getPosition().y + p1.character->height / 2) >= (p2.character->sprite.getPosition().y - p2.character->height / 2))) {
 	}
 	else {
 		if (((p1.character->sprite.getPosition().x) <= 0)) {

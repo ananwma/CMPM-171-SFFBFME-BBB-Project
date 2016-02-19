@@ -5,9 +5,8 @@
 
 ConcertHallStage::ConcertHallStage()
 {
-	if (!texture.loadFromFile("backgrounds/background.png")) {
-		std::cerr << "Could not find image file!\n";
-		exit(EXIT_FAILURE);
+	if (!texture.loadFromFile("cute_image.jpg")) {
+		//exit(EXIT_FAILURE);
 	}
 	sprite.setTexture(texture);
 	window_limit = 200;

@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "Collision.h"
+#include "AssetManager.h"
 #include "ConcertHallStage.h"
 
 class FightState : public GameState {
@@ -18,11 +19,9 @@ public:
 	virtual void draw();
 
 	// Input and event handling
-	virtual void receiveKeysDown(int, int);
-	virtual void receiveKeysUp(int, int);
+	virtual void recieveKeysDown(std::list<int> &notes, int);
+	void recieveKeysUp(std::list<int> &notes, int);
 	virtual void unhookEvent();
-
-	void processInput(Player&, vector<bool>&);
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager
@@ -31,19 +30,21 @@ private:
 	// True if state is currently being ran
 	bool running;
 
+	ConcertHallStage chstage;
+	AssetManager *am;
+	Collision *collision;
 	int player1start_x;
-	int player1start_y;
+	int player1start_y;	
+	bool jumping;
+	bool falling;
+	bool walking;
+	bool facing_right;
 	int spriteWidth;
 	int spriteHeight;
 	Player *player1;
+	Player *player2;
 	sf::Clock clock;
-	sf::Clock inputClock;
-	vector<bool> inputP1;
-	vector<bool> inputP2;
-	Collision collision;
-	ConcertHallStage chstage;
 	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
-	void checkBoxes(Player&, Player&);
-	void checkMoveBoxes(Player&, Player&);
-	void drawBoxes(Player&, bool, bool);
+
+	void drawBoxes(Player, bool, bool);
 };

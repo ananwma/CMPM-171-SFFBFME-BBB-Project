@@ -13,7 +13,7 @@ PauseState::PauseState(Game &_game) : game(_game) { }
 
 void PauseState::init() {
 	running = true;
-	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &PauseState::receiveKeysDown);
+	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &PauseState::recieveKeysDown);
 	shape2.setFillColor(sf::Color::Red);
 }
 
@@ -28,11 +28,10 @@ void PauseState::draw() {
 }
 
 // Everything here is run on its own thread!
-void PauseState::receiveKeysDown(int note, int playerId) {
+void PauseState::recieveKeysDown(std::list<int>& notes, int playerId) {
 	game.gsm.stopState(*this);
 }
 
 void PauseState::unhookEvent() {
-	cout << "Pause events unhooked\n";
-	__unhook(&InputHandler::sendKeysDown, game.inputHandler.get(), &PauseState::receiveKeysDown);
+	__unhook(&InputHandler::sendKeysDown, game.inputHandler.get(), &PauseState::recieveKeysDown);
 }

@@ -7,21 +7,20 @@
 
 using BoxVec = vector<sf::FloatRect>;
 using FrameVec = vector<Frame>;
-
-// fix ordering of this later
-enum Moves { HITSTUN, BLOCK, STRONG, JAB, IDLE, WALK, FIERCE, JUMP, FORWARD, ROUNDHOUSE, GRAB };
+enum Moves { IDLE, WALK, JUMP, HITSTUN, JAB, STRONG, FIERCE, SHRT, FORWARD, ROUNDHOUSE, GRAB };
 
 class Character {
 friend class Player;
 protected:
+	float walkspeed;
+	sf::Texture spritesheet;
+public:
 	int width;
 	int height;
-	float walkspeed;
-public:
 	sf::Sprite sprite;
 	int currentMove;
 	int currentMoveFrame;
-	unordered_map <int, Move*> moveList;
+	unordered_map <int, Move> moveList;
 
 	virtual void initMoves() = 0;
 };

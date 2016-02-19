@@ -11,13 +11,12 @@ PlayerSelectState::PlayerSelectState(Game &_game) : game(_game) { }
 
 void PlayerSelectState::init() {
 	running = true;
-	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
+	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::recieveKeysDown);
 	cout << "__Player 1 press a key__" << endl;
 }
 
 void PlayerSelectState::update() {
 	if (!running) {
-		unhookEvent();
 		FightState fightState(game);
 		game.gsm.stopState(*this, &fightState);
 	}
@@ -28,8 +27,8 @@ void PlayerSelectState::draw() {
 }
 
 // Everything here is run on its own thread!
-void PlayerSelectState::receiveKeysDown(int note, int playerId) {
-	if (game.playerOne.playerId != -1 && playerId != game.playerOne.playerId) {
+void PlayerSelectState::recieveKeysDown(std::list<int>& notes, int playerId) {
+	if (game.playerOne.playerId != -1 /*&& playerId != game.playerOne.playerId*/) {
 		game.playerTwo.playerId = playerId;
 		running = false;
 	}
@@ -40,6 +39,5 @@ void PlayerSelectState::receiveKeysDown(int note, int playerId) {
 }
 
 void PlayerSelectState::unhookEvent() {
-	cout << "PlayerSelectState events unhooked\n";
-	__unhook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
+	__unhook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::recieveKeysDown);
 }
