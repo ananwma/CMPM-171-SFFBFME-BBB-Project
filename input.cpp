@@ -17,26 +17,29 @@ void InputHandler::parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2
 	int byte4 = dwParam1 & 0xFF;
 	if (byte4 == NOTE_ON) {
 		if (byte2 != 0) {
-			notes.push_back(byte3);
-			sendKeysDown(notes, (int)hMidiIn);
+			//notes.push_back(byte3);
+			//send as int
+			sendKeysDown(byte3, (int)hMidiIn);
 		}
-		else
-			sendKeysUp(notes, (int)hMidiIn);
-			if (!notes.empty())
-				notes.pop_back();
+		else {
+			sendKeysUp(byte3, (int)hMidiIn);
+			//if (!notes.empty())
+				//notes.pop_back();
+		}
 	} 
 	else if (byte4 == NOTE_OFF) {
-		sendKeysUp(notes, (int)hMidiIn);
-		notes.pop_back();
+		sendKeysUp(byte3, (int)hMidiIn);
+		//if (!notes.empty()) 
+			//notes.pop_back();
 	}
 
-	if (!notes.empty()) {
+	/*if (!notes.empty()) {
 		for (auto i : notes) {
 			cout << i;
 		}
-		cout << endl;
+		cout << endl;*/
 	//	onNoteDown(notes);
-	}
+	//}
 }
 
 void InputHandler::MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, DWORD dwParam1, DWORD dwParam2) {
@@ -50,7 +53,7 @@ void InputHandler::MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, 
 		pThis->parseMidiData(hMidiIn, dwParam1, dwParam2, dwInstance);
 	}
 	else if (wMsg != MM_MIM_OPEN && wMsg != MM_MIM_CLOSE) {
-		cerr << "Unexpected MIDI message recieved: " << wMsg << endl;
+		cerr << "Unexpected MIDI message received: " << wMsg << endl;
 		exit(EXIT_FAILURE);
 	}
 }

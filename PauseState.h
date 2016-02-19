@@ -15,7 +15,8 @@ public:
 	virtual void draw();
 
 	// Input and event handling
-	virtual void recieveKeysDown(std::list<int>&, int);
+	virtual void receiveKeysDown(int, int);
+	virtual void receiveKeysUp(int, int) {};
 	virtual void unhookEvent();
 
 private:

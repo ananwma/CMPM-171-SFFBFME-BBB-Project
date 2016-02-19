@@ -24,6 +24,7 @@ void GameStateManager::stopState(GameState&) {
 	state_is_running = false;
 }
 
+//unhook events in here?
 void GameStateManager::stopState(GameState &stateStop, GameState *stateRun) {
 	state_stack.pop();
 	state_is_running = false;

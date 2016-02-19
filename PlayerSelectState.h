@@ -4,6 +4,8 @@
 #include "GameState.h"
 #include "Game.h"
 
+/* State for initializng MIDI devices and assigning devices to players */
+
 class PlayerSelectState : public GameState {
 public:
 	// CTOR
@@ -15,7 +17,8 @@ public:
 	virtual void draw();
 
 	// Input and event handling
-	virtual void recieveKeysDown(std::list<int>&, int);
+	virtual void receiveKeysDown(int, int);
+	virtual void receiveKeysUp(int, int) {};
 	virtual void unhookEvent();
 
 private:

@@ -4,11 +4,8 @@
 #include "input.h"
 #include "GameStateManager.h"
 #include "Player.h"
-#include "AssetManager.h"
 #include <SFML/Graphics.hpp>
-
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 600
+#include "AssetManager.h"
 
 // Struct for data we want shared between states
 // GameStateManager and RenderWindow are references instead of pointers because they should never be reinitialized.

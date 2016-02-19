@@ -7,25 +7,37 @@
 #include "Move.h"
 
 using namespace std;
-enum direction { FORWARDS, BACKWARDS };
+enum direction { LEFT, RIGHT, NEUTRAL };
 
-class Player
-{
+class Player {
 private:
 	//Character* character;
 public:
+	// No copying!
+	Player(const Player&) = delete;
+	Player(Player&&) = delete;
 	Character* character;
 	bool isMoveValid();
 	void setCharacter(Character*);
-
+	void setPosition(float, float);
+	void jump(direction dir);
 	float xpos;
 	float ypos;
+	float xvel;
+	float yvel;
+	float xacc;
+	float yacc;
+
+	//Need to keep track of where the player has moved to update hitboxes
+	float deltaX;
+	float deltaY;
 	int health;
 	int meter;
 	int roundWins;
 	int playerId;
-	bool facing_right;
-	string state;
+	direction side;
+	state state;
+	bool colliding;
 	sf::Texture pTexture;
 	sf::Sprite pImage;
 	sf::RectangleShape hitboxes_v;
@@ -41,10 +53,14 @@ public:
 	void doMove(int);
 	void walk(direction);
 	void updateAnimFrame();
-	Move getCurrentMove();
-	Frame getCurrentFrame();
+	void updatePhysics();
+	Move* getCurrentMove();
+	Frame& getCurrentFrame();
 	int getCurrentMoveNum();
 	int getCurrentFrameNum();
+	float getSpriteHeight();
+	float getSpriteWidth();
+
 
 	Player();
 	~Player();
