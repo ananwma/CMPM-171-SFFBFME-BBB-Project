@@ -1,8 +1,1 @@
-﻿  sff.cpp
-c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-  PlayerSelectState.cpp
-  Generating Code...
-  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe
+﻿  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe

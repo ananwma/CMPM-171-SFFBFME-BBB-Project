@@ -90,6 +90,21 @@
     <ClInclude Include="BachStrong.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraControl.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ConcertHallStage.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -127,6 +142,21 @@
     </ClCompile>
     <ClCompile Include="FightState.cpp">
       <Filter>GameStates\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraControl.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="ConcertHallStage.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage.cpp">
+      <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
