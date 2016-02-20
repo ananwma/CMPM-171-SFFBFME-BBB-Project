@@ -23,6 +23,7 @@ public:
 	virtual void unhookEvent();
 
 	void processInput(Player&, vector<bool>&);
+	int test;
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager
