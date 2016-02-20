@@ -38,6 +38,11 @@ private:
 	Player *player1;
 	sf::Clock clock;
 	sf::Clock inputClock;
+	sf::Clock metronome;
+	bool onBeat;
+	int intOnBeat;
+	int beat;
+	int beatThreshold;
 	vector<bool> inputP1;
 	vector<bool> inputP2;
 	Collision collision;
