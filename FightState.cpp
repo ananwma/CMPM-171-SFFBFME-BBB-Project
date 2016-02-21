@@ -33,6 +33,12 @@ void FightState::init() {
 	game.currentScreen.stage.sprite.move(-200, 0);
 	game.currentScreen.stage.window_offset = 200;
 
+	// Beat is in milliseconds, 1000 = 1 beat every 1 second
+	beat = 1000;
+	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
+	beatThreshold = 200;
+
+
 	// Later move this to character selection state
 	Bach* bach = new Bach();
 	Bach* bach2 = new Bach();
@@ -65,8 +71,14 @@ void FightState::update() {
 		}
 	}
 
+	onBeat = false;
+	if ((metronome.getElapsedTime().asMilliseconds() % beat) < beatThreshold || (metronome.getElapsedTime().asMilliseconds() % beat) > beat - beatThreshold) {
+		onBeat = true;
+	}
+
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
+
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 
@@ -226,14 +238,16 @@ void FightState::processInput(Player& player, vector<bool>& input) {
 		input.at(52) = false;
 	}
 
-	if (input.at(60)) {
+	if (input.at(60) && onBeat) {
 		player.doMove(JAB);
-		input.at(60) = false;
+		
 	}
 	if (input.at(62)) {
 		player.doMove(STRONG);
 		input.at(62) = false;
 	}
+	cout << onBeat;
+	input.at(60) = false;
 }
 
 // Everything here is run on its own thread!
