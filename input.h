@@ -1,9 +1,8 @@
-
-
-#include <list>
 #include <vector>
+#include <map>
 #include <windows.h>
 #include <mmsystem.h>
+#include <mmreg.h>
 
 // Some midi data signals
 #define NOTE_ON 144
@@ -134,12 +133,17 @@ public:
 	// Opens device
 	int prepareDevices();
 
+	// Method for adjusting output volume, takes value 0-127
+	void setVolume(unsigned int);
+
 	// Event functions, has no implementation
 	__event void sendKeysDown(int, int);
 	__event void sendKeysUp(int, int);
 private:
-	std::vector<HMIDIIN> devices;
-	std::list<int> notes;
+	// Map of handles to device ID's
+	std::map<int, int> device_map;
+	//std::vector<int> notes;
 	void parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2, DWORD dwInstance);
+	HMIDIOUT midout;
 	static void CALLBACK MidiInProc(HMIDIIN, UINT, DWORD_PTR, DWORD, DWORD);
 };

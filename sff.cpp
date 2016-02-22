@@ -29,8 +29,8 @@ int main()
 	freopen("CONOUT$", "w", stderr);
 	
 	// View number of connected devices (useful for debugging)
-	int numDevs = midiInGetNumDevs();
-	cout << endl << "Num Devs: " << numDevs << endl;
+	cout << endl << "Num Input Devs: " << midiInGetNumDevs() << endl;
+	cout << endl << "Num Output Devs: " << midiOutGetNumDevs() << endl;
 
 	// Initialize the main window, input handler, and gamestate manager
 	shared_ptr<InputHandler> inputHandler(new InputHandler());

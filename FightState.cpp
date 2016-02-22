@@ -75,6 +75,9 @@ void FightState::update() {
 	if ((metronome.getElapsedTime().asMilliseconds() % beat) < beatThreshold || (metronome.getElapsedTime().asMilliseconds() % beat) > beat - beatThreshold) {
 		onBeat = true;
 	}
+	if (metronome.getElapsedTime().asMilliseconds() % beat == 0) {
+		cout << "beat" << endl;
+	}
 
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
@@ -246,7 +249,7 @@ void FightState::processInput(Player& player, vector<bool>& input) {
 		player.doMove(STRONG);
 		input.at(62) = false;
 	}
-	cout << onBeat;
+	//cout << onBeat;
 	input.at(60) = false;
 }
 
