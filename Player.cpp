@@ -28,6 +28,7 @@ Player::Player()
 	yacc = 0.098f;
 	state = NONE;
 	colliding = false;
+	canCancel = false;
 }
 
 void Player::setCharacter(Character* c) {
@@ -49,6 +50,21 @@ void Player::doMove(int move) {
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
 	}
+	else if(state == ATTACKING && canCancel && moveCancelable(character->currentMove, move)){
+		character->currentMove = move;
+		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
+		character->currentMoveFrame = 0;
+		state = getCurrentMove()->state;
+	}
+}
+
+bool Player::moveCancelable(int currMove, int newMove) {
+	for (int i = 0; i < character->moveList.at(currMove)->cancelMoves.size(); i++){
+		if (newMove == character->moveList.at(currMove)->cancelMoves.at(i)) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void Player::walk(direction dir) {
@@ -95,6 +111,7 @@ void Player::updateAnimFrame() {
 		character->currentMoveFrame = 0;
 		if (state == ATTACKING || state == HITSTUN_STATE || state == AIRBORNE) {
 			character->currentMove = IDLE;
+			canCancel = false;
 			character->sprite.setTexture(character->moveList.at(IDLE)->spritesheet);
 			state = NONE;
 		}

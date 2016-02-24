@@ -5,6 +5,7 @@ class BachJab : public Move {
 public:
 	BachJab();
 	virtual void initFrames();
+	virtual void initCancelMoves();
 };
 
 BachJab::BachJab() {
@@ -46,4 +47,10 @@ void BachJab::initFrames() {
 	frameVector.push_back(Frame(hit, hurt));
 	hit.clear();
 	hurt.clear();
+}
+
+void BachJab::initCancelMoves() {
+	cancelMoves.push_back(JAB);
+	cancelMoves.push_back(STRONG);
+
 }

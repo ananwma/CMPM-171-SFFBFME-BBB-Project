@@ -26,6 +26,7 @@ void Bach::initMoves() {
 	BachIdle* idle = new BachIdle;
 	BachHitstun* hitstun = new BachHitstun;
 	jab->initFrames();
+	jab->initCancelMoves();
 	idle->initFrames();
 	hitstun->initFrames();
 	strong->initFrames();

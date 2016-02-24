@@ -51,6 +51,7 @@ public:
 	//int currentFrame;
 
 	void doMove(int);
+	bool moveCancelable(int, int);
 	void walk(direction);
 	void updateAnimFrame();
 	void updatePhysics();

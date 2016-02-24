@@ -23,7 +23,7 @@ protected:
 	int damage;
 	int deltax;
 	int deltay;
-	vector<Move> cancelMoves;
+	vector<int> cancelMoves;
 	state state;
 };
 
