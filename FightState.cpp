@@ -78,6 +78,8 @@ void FightState::update() {
 	}
 	if (metronome.getElapsedTime().asMilliseconds() % beat == 0) {
 		cout << "beat" << endl;
+		cout << "player1: " << game.playerOne.canCancel << endl;
+		cout << "player2: " << game.playerTwo.canCancel << endl;
 	}
 
 	processInput(game.playerOne, inputP1);
@@ -202,6 +204,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 					attacker.lastMoveHit = true;
 				}
 				defender.doMove(HITSTUN);
+				attacker.canCancel = true;
 				return;
 			}
 		}
@@ -257,8 +260,9 @@ void FightState::processInput(Player& player, vector<bool>& input) {
 		input.at(52) = false;
 	}
 
-	if (input.at(60) && onBeat) {
+	if (input.at(60)) {
 		player.doMove(JAB);
+		input.at(60) = false;
 		
 	}
 	if (input.at(62)) {
@@ -266,7 +270,7 @@ void FightState::processInput(Player& player, vector<bool>& input) {
 		input.at(62) = false;
 	}
 	//cout << onBeat;
-	input.at(60) = false;
+	
 }
 
 // Everything here is run on its own thread!
