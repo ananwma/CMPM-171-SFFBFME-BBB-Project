@@ -1,3 +1,51 @@
-﻿  stdafx.cpp
-  sff.cpp
-sfml-graphics-d.lib(sfml-graphics-d-2.dll) : fatal error LNK1112: module machine type 'x64' conflicts with target machine type 'X86'
+﻿Build started 2/23/2016 6:30:26 PM.
+     1>Project "C:\Users\mhgunnin\Source\Repos\CMPM-171-SFFBFME-BBB-Project\sff.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\Michael\Desktop\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yc"stdafx.h" /Fp"Debug\sff.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\Users\Michael\Desktop\SFML-2.3.2\include" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\sff.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt AssetManager.cpp CameraControl.cpp Character.cpp CharacterBach.cpp Collision.cpp ConcertHallStage.cpp FightState.cpp Frame.cpp GameStateManager.cpp input.cpp Move.cpp PauseState.cpp Player.cpp PlayerSelectState.cpp sff.cpp Stage.cpp
+         Stage.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\stage.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         sff.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\sff.cpp(5): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         PlayerSelectState.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         Player.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         PauseState.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         Move.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\move.cpp(2): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         input.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\input.cpp(64): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\input.cpp(71): warning C4018: '<': signed/unsigned mismatch
+         GameStateManager.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         Frame.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\frame.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         FightState.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(1): warning C4603: 'NOMINMAX': macro is not defined or definition is different after precompiled header use
+         c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(1): note: Add macro to precompiled header instead of defining here
+         c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(2): note: use of precompiled header
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         ConcertHallStage.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\stage.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         Collision.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         CharacterBach.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         Character.cpp
+         CameraControl.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+         AssetManager.cpp
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(3): warning C4627: '#include <string>': skipped when looking for precompiled header use
+         c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(3): note: Add directive to 'stdafx.h' or rebuild precompiled header
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(4): warning C4627: '#include <vector>': skipped when looking for precompiled header use
+         c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(4): note: Add directive to 'stdafx.h' or rebuild precompiled header
+     1>c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\assetmanager.h(2): fatal error C1083: Cannot open include file: 'SFML/graphics.hpp': No such file or directory
+         Generating Code...
+     1>Done Building Project "C:\Users\mhgunnin\Source\Repos\CMPM-171-SFFBFME-BBB-Project\sff.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:04.56

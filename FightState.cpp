@@ -6,6 +6,7 @@
 
 #include "FightState.h"
 #include "PauseState.h"
+#include "ResultsState.h"
 
 // tmp
 #include "CharacterBach.h"
@@ -127,6 +128,17 @@ void FightState::update() {
 	collision.flip_sprites(game.playerOne, game.playerTwo);
 	collision.flip_sprites(game.playerTwo, game.playerOne);
 
+	if (game.playerOne.health <= 0) {
+		game.playerTwo.roundWins++;
+		ResultsState results(game);
+		game.gsm.stopState(*this, &results);
+	}
+	else if (game.playerTwo.health <= 0) {
+		game.playerOne.roundWins++;
+		ResultsState results(game);
+		game.gsm.stopState(*this, &results);
+	}
+
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
@@ -185,6 +197,10 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			}
 			if (offsetHit.intersects(offsetHurt)) {
 				cout << "hit!" << endl;
+				if (!attacker.lastMoveHit) {
+					defender.health -= attacker.getCurrentMove()->getDamage();
+					attacker.lastMoveHit = true;
+				}
 				defender.doMove(HITSTUN);
 				return;
 			}

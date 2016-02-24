@@ -28,10 +28,12 @@ Player::Player()
 	yacc = 0.098f;
 	state = NONE;
 	colliding = false;
+	lastMoveHit = false;
 }
 
 void Player::setCharacter(Character* c) {
 	character = c;
+	health = character->health;
 	side = LEFT;
 }
 
@@ -44,6 +46,7 @@ void Player::setPosition(float x, float y) {
 
 void Player::doMove(int move) {
 	if (state != ATTACKING && state != HITSTUN_STATE) {
+		lastMoveHit = false;
 		character->currentMove = move;
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;

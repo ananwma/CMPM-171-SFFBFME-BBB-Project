@@ -15,7 +15,7 @@ BachStrong::BachStrong() {
 	// Number of animation frames
 	frameCount = 3;
 	// Damage
-	damage = 69;
+	damage = 50;
 	// Change in position on move
 	deltax = 0;
 	deltay = 0;

@@ -16,6 +16,7 @@ public:
 	//~Move() = default;
 	virtual void initFrames() = 0;
 	virtual int getFrameCount() { return frameCount; };
+	virtual int getDamage() { return damage; };
 protected:
 	sf::Texture spritesheet;
 	int frameCount;

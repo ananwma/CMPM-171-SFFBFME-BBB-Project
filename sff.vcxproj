@@ -182,6 +182,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSelectState.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResultsState.h" />
     <ClInclude Include="sff.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
@@ -198,10 +199,10 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="Move.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSelectState.cpp" />
+    <ClCompile Include="ResultsState.cpp" />
     <ClCompile Include="sff.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -105,6 +105,9 @@
     <ClInclude Include="Stage.h">
       <Filter>sff headers</Filter>
     </ClInclude>
+    <ClInclude Include="ResultsState.h">
+      <Filter>GameStates\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -123,9 +126,6 @@
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>sff source</Filter>
-    </ClCompile>
-    <ClCompile Include="Move.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="CharacterBach.cpp">
@@ -157,6 +157,9 @@
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultsState.cpp">
+      <Filter>GameStates\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
