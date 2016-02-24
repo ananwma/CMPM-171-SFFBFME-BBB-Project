@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Collision.h"
 #include "ConcertHallStage.h"
+#include <SFML/Audio.hpp>
 
 class FightState : public GameState {
 public:
@@ -38,6 +39,7 @@ private:
 	Player *player1;
 	sf::Clock clock;
 	sf::Clock inputClock;
+	sf::Clock metronomeSoundTimer;
 	sf::Clock metronome;
 	bool onBeat;
 	int intOnBeat;
@@ -51,4 +53,7 @@ private:
 	void checkBoxes(Player&, Player&);
 	void checkMoveBoxes(Player&, Player&);
 	void drawBoxes(Player&, bool, bool);
+
+	sf::SoundBuffer metronomeSoundBuffer;
+	sf::Sound metronomeSound;
 };
