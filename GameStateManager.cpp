@@ -5,6 +5,8 @@
 #include "GameStateManager.h"
 #include "GameState.h"
 
+#define UPDATERATE 6
+
 using namespace std;
 
 void GameStateManager::runState(GameState &state) {
@@ -13,7 +15,10 @@ void GameStateManager::runState(GameState &state) {
 	state_stack.push(&state);
 	state.init();
 	while (state_is_running) {
-		state.update();
+		if (updateClock.getElapsedTime().asMilliseconds() > UPDATERATE) {
+			state.update();
+			updateClock.restart();
+		}
 		state.draw();
 	}
 	state.unhookEvent();

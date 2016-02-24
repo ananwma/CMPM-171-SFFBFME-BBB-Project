@@ -25,4 +25,5 @@ private:
 	bool state_is_running;
 	std::stack<GameState*> state_stack;
 	std::unique_ptr<GameState> currentState;
+	sf::Clock updateClock;
 };
