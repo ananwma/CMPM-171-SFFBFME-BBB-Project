@@ -5,6 +5,7 @@ class BachHitstun : public Move {
 public:
 	BachHitstun();
 	virtual void initFrames();
+	virtual void initCancelMoves() {};
 };
 
 BachHitstun::BachHitstun() {

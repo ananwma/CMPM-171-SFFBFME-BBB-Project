@@ -5,6 +5,7 @@ class MOVENAME : public Move {
 public:
 	MOVENAME();
 	virtual void initFrames();
+	virtual void initCancelMoves();
 };
 
 MOVENAME::MOVENAME() {
@@ -27,4 +28,8 @@ void MOVENAME::initFrames() {
 	BoxVec hit;
 	BoxVec hurt;
 	/****PASTE GENERATED CODE HERE****/
+}
+
+void MOVENAME::initCancelMoves() {
+
 }

@@ -203,8 +203,8 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 					defender.health -= attacker.getCurrentMove()->getDamage();
 					attacker.lastMoveHit = true;
 				}
-				defender.doMove(HITSTUN);
 				attacker.canCancel = true;
+				defender.doMove(HITSTUN);
 				return;
 			}
 		}
@@ -260,17 +260,16 @@ void FightState::processInput(Player& player, vector<bool>& input) {
 		input.at(52) = false;
 	}
 
-	if (input.at(60)) {
+	if (input.at(60)/* && onBeat */) {
 		player.doMove(JAB);
 		input.at(60) = false;
-		
 	}
 	if (input.at(62)) {
 		player.doMove(STRONG);
 		input.at(62) = false;
 	}
 	//cout << onBeat;
-	
+	//input.at(60) = false;
 }
 
 // Everything here is run on its own thread!

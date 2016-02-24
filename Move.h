@@ -15,6 +15,7 @@ public:
 	//Move() = default;
 	//~Move() = default;
 	virtual void initFrames() = 0;
+	virtual void initCancelMoves() = 0;
 	virtual int getFrameCount() { return frameCount; };
 	virtual int getDamage() { return damage; };
 protected:

@@ -5,6 +5,7 @@ class BachStrong : public Move {
 public:
 	BachStrong();
 	virtual void initFrames();
+	virtual void initCancelMoves() {};
 };
 
 BachStrong::BachStrong() {

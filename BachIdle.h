@@ -5,6 +5,7 @@ class BachIdle : public Move {
 public:
 	BachIdle();
 	virtual void initFrames();
+	virtual void initCancelMoves() {};
 };
 
 BachIdle::BachIdle() {
