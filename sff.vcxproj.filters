@@ -60,15 +60,6 @@
     <ClInclude Include="input.h">
       <Filter>sff headers</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterBach.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachJab.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachIdle.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="PauseState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
@@ -83,12 +74,6 @@
     </ClInclude>
     <ClInclude Include="PlayerSelectState.h">
       <Filter>GameStates\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="BachHitstun.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachStrong.h">
-      <Filter>Bach</Filter>
     </ClInclude>
     <ClInclude Include="AssetManager.h">
       <Filter>sff headers</Filter>
@@ -105,8 +90,25 @@
     <ClInclude Include="Stage.h">
       <Filter>sff headers</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="BachHitstun.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachIdle.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachJab.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachStrong.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBach.h">
+      <Filter>Bach</Filter>
+=======
     <ClInclude Include="ResultsState.h">
       <Filter>GameStates\Headers</Filter>
+>>>>>>> bcd27a87e3083e188990137b3f73257d18ef2631
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,8 +130,13 @@
     <ClCompile Include="Player.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="Move.cpp">
+      <Filter>sff source</Filter>
+=======
     <ClCompile Include="CharacterBach.cpp">
       <Filter>Bach</Filter>
+>>>>>>> bcd27a87e3083e188990137b3f73257d18ef2631
     </ClCompile>
     <ClCompile Include="PauseState.cpp">
       <Filter>GameStates\Source</Filter>
@@ -158,8 +165,13 @@
     <ClCompile Include="Stage.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="CharacterBach.cpp">
+      <Filter>Bach</Filter>
+=======
     <ClCompile Include="ResultsState.cpp">
       <Filter>GameStates\Source</Filter>
+>>>>>>> bcd27a87e3083e188990137b3f73257d18ef2631
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
