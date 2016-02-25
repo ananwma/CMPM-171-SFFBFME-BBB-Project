@@ -38,6 +38,7 @@ public:
 	direction side;
 	state state;
 	bool colliding;
+	bool lastMoveHit;
 	sf::Texture pTexture;
 	sf::Sprite pImage;
 	sf::RectangleShape hitboxes_v;

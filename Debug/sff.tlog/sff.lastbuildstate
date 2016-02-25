@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
 Debug|Win32|C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\|
+=======
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit
+Debug|Win32|C:\Users\mhgunnin\Source\Repos\CMPM-171-SFFBFME-BBB-Project\|
+>>>>>>> bcd27a87e3083e188990137b3f73257d18ef2631

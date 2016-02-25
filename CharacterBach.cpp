@@ -13,6 +13,7 @@ Bach::Bach() {
 	width = 438;
 	height = 548;
 	walkspeed = 1.0f;
+	health = 1000;
 }
 
 void Bach::walk() {

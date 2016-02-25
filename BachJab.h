@@ -16,7 +16,7 @@ BachJab::BachJab() {
 	// Number of animation frames
 	frameCount = 5;
 	// Damage
-	damage = 69;
+	damage = 20;
 	// Change in position on move
 	deltax = 0;
 	deltay = 0;

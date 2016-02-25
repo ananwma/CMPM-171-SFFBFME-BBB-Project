@@ -2,10 +2,10 @@
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 #include "FightState.h"
 #include "PauseState.h"
+#include "ResultsState.h"
 
 // tmp
 #include "CharacterBach.h"
@@ -38,7 +38,6 @@ void FightState::init() {
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 200;
 
-
 	// Later move this to character selection state
 	Bach* bach = new Bach();
 	Bach* bach2 = new Bach();
@@ -53,6 +52,14 @@ void FightState::init() {
 	game.playerTwo.character->currentMoveFrame = 0;	
 	game.playerTwo.setPosition(400, 100);
 	game.playerTwo.side = RIGHT;
+	
+	// Possibly move this to asset manager in future
+	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
+		cerr << "Could not load sound!\n";
+		exit(EXIT_FAILURE);
+	}
+	metronomeSound.setBuffer(metronomeSoundBuffer);
+
 }
 
 void FightState::update() {
@@ -75,10 +82,12 @@ void FightState::update() {
 	if ((metronome.getElapsedTime().asMilliseconds() % beat) < beatThreshold || (metronome.getElapsedTime().asMilliseconds() % beat) > beat - beatThreshold) {
 		onBeat = true;
 	}
-	if (metronome.getElapsedTime().asMilliseconds() % beat == 0) {
+	if (metronomeSoundTimer.getElapsedTime().asMilliseconds() > beat) {
 		cout << "beat" << endl;
-		cout << "player1: " << game.playerOne.canCancel << endl;
-		cout << "player2: " << game.playerTwo.canCancel << endl;
+		metronomeSoundTimer.restart();
+		//cout << "player1: " << game.playerOne.canCancel << endl;
+		//cout << "player2: " << game.playerTwo.canCancel << endl;
+		//metronomeSound.play();
 	}
 
 	processInput(game.playerOne, inputP1);
@@ -128,6 +137,17 @@ void FightState::update() {
 
 	collision.flip_sprites(game.playerOne, game.playerTwo);
 	collision.flip_sprites(game.playerTwo, game.playerOne);
+
+	if (game.playerOne.health <= 0) {
+		game.playerTwo.roundWins++;
+		ResultsState results(game);
+		game.gsm.stopState(*this, &results);
+	}
+	else if (game.playerTwo.health <= 0) {
+		game.playerOne.roundWins++;
+		ResultsState results(game);
+		game.gsm.stopState(*this, &results);
+	}
 
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
@@ -187,8 +207,12 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			}
 			if (offsetHit.intersects(offsetHurt)) {
 				cout << "hit!" << endl;
-				defender.doMove(HITSTUN);
+				if (!attacker.lastMoveHit) {
+					defender.health -= attacker.getCurrentMove()->getDamage();
+					attacker.lastMoveHit = true;
+				}
 				attacker.canCancel = true;
+				defender.doMove(HITSTUN);
 				return;
 			}
 		}
@@ -244,17 +268,16 @@ void FightState::processInput(Player& player, vector<bool>& input) {
 		input.at(52) = false;
 	}
 
-	if (input.at(60)) {
+	if (input.at(60) && onBeat ) {
 		player.doMove(JAB);
-		input.at(60) = false;
-		
+		//input.at(60) = false;
 	}
 	if (input.at(62)) {
 		player.doMove(STRONG);
 		input.at(62) = false;
 	}
 	//cout << onBeat;
-	
+	input.at(60) = false;
 }
 
 // Everything here is run on its own thread!

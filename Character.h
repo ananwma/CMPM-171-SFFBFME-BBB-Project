@@ -17,6 +17,7 @@ protected:
 	int width;
 	int height;
 	float walkspeed;
+	int health;
 public:
 	sf::Sprite sprite;
 	int currentMove;
