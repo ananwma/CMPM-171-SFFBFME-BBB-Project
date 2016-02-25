@@ -82,9 +82,9 @@ void FightState::update() {
 	if ((metronome.getElapsedTime().asMilliseconds() % beat) < beatThreshold || (metronome.getElapsedTime().asMilliseconds() % beat) > beat - beatThreshold) {
 		onBeat = true;
 	}
-	if (metronomeSoundTimer.getElapsedTime().asMilliseconds() > beat) {
+	if (metronome.getElapsedTime().asMilliseconds() > beat) {
 		cout << "beat" << endl;
-		metronomeSoundTimer.restart();
+		metronome.restart();
 		metronomeSound.play();
 	}
 	//cout << onBeat;
