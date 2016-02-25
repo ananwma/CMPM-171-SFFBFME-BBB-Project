@@ -14,7 +14,7 @@ BachJab::BachJab() {
 		exit(EXIT_FAILURE);
 	}
 	// Number of animation frames
-	frameCount = 3;
+	frameCount = 5;
 	// Damage
 	damage = 69;
 	// Change in position on move
@@ -44,6 +44,18 @@ void BachJab::initFrames() {
 	hit.push_back(sf::FloatRect(162, 75, 293, 114));
 	hurt.push_back(sf::FloatRect(110, 277, 235, 246));
 	hurt.push_back(sf::FloatRect(78, 17, 173, 280));
+	frameVector.push_back(Frame(hit, hurt));
+	hit.clear();
+	hurt.clear();
+	/***FRAME 4***/
+	hurt.push_back(sf::FloatRect(139, 289, 223, 239));
+	hurt.push_back(sf::FloatRect(125, 3, 226, 292));
+	frameVector.push_back(Frame(hit, hurt));
+	hit.clear();
+	hurt.clear();
+	/***FRAME 5***/
+	hurt.push_back(sf::FloatRect(108, 296, 253, 223));
+	hurt.push_back(sf::FloatRect(114, 9, 247, 288));
 	frameVector.push_back(Frame(hit, hurt));
 	hit.clear();
 	hurt.clear();
