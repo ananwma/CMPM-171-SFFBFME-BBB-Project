@@ -1,3 +1,46 @@
+<<<<<<< HEAD
+﻿  stdafx.cpp
+  Stage.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\stage.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  sff.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\sff.cpp(5): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  PlayerSelectState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Player.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  PauseState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Move.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\move.cpp(2): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+  input.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(64): warning C4018: '<': signed/unsigned mismatch
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(71): warning C4018: '<': signed/unsigned mismatch
+  GameStateManager.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Frame.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\frame.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  FightState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(1): warning C4603: 'NOMINMAX': macro is not defined or definition is different after precompiled header use
+  c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(1): note: Add macro to precompiled header instead of defining here
+  c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(2): note: use of precompiled header
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ConcertHallStage.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\stage.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Collision.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  CharacterBach.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Character.cpp
+  CameraControl.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  AssetManager.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(3): warning C4627: '#include <string>': skipped when looking for precompiled header use
+  c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(3): note: Add directive to 'stdafx.h' or rebuild precompiled header
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(4): warning C4627: '#include <vector>': skipped when looking for precompiled header use
+  c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(4): note: Add directive to 'stdafx.h' or rebuild precompiled header
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.h(2): fatal error C1083: Cannot open include file: 'SFML/graphics.hpp': No such file or directory
+  Generating Code...
+=======
 ﻿Build started 2/23/2016 6:30:26 PM.
      1>Project "C:\Users\mhgunnin\Source\Repos\CMPM-171-SFFBFME-BBB-Project\sff.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -49,3 +92,4 @@
 Build FAILED.
 
 Time Elapsed 00:00:04.56
+>>>>>>> bcd27a87e3083e188990137b3f73257d18ef2631
