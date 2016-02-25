@@ -37,7 +37,6 @@ int main()
 	inputHandler->prepareDevices();
 	GameStateManager gsm;
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Super Fugue Fighter");
-	window.setFramerateLimit(60);
 	Game game(gsm, inputHandler, window);
 
 	// Run the first state

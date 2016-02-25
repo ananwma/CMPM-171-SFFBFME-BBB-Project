@@ -13,8 +13,9 @@ class Player {
 private:
 	//Character* character;
 public:
-	// No copy constructor
+	// No copying!
 	Player(const Player&) = delete;
+	Player(Player&&) = delete;
 	Character* character;
 	bool isMoveValid();
 	void setCharacter(Character*);
@@ -51,7 +52,6 @@ public:
 	//int currentFrame;
 
 	void doMove(int);
-	void getHit(Move*);
 	bool moveCancelable(int, int);
 	void walk(direction);
 	void updateAnimFrame();
