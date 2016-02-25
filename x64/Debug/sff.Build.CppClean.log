@@ -5,6 +5,7 @@ c:\users\mhgunnin\source\repos\sff\x64\debug\stdafx.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\assetmanager.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\cameracontrol.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\character.obj
+c:\users\mhgunnin\source\repos\sff\x64\debug\characterbach.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\collision.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\concerthallstage.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\fightstate.obj
@@ -17,6 +18,16 @@ c:\users\mhgunnin\source\repos\sff\x64\debug\playerselectstate.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\resultsstate.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\sff.obj
 c:\users\mhgunnin\source\repos\sff\x64\debug\stage.obj
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.ilk
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.exe
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.pdb
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.res
 c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\cl.command.1.tlog
 c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\cl.read.1.tlog
 c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\cl.write.1.tlog
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\link.command.1.tlog
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\link.read.1.tlog
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\link.write.1.tlog
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\rc.command.1.tlog
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\rc.read.1.tlog
+c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\rc.write.1.tlog
