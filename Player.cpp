@@ -49,6 +49,7 @@ void Player::doMove(int move) {
 	if (state != ATTACKING && state != HITSTUN_STATE) {
 		lastMoveHit = false;
 		character->currentMove = move;
+		getCurrentMove()->setHitFalse();
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
@@ -58,7 +59,24 @@ void Player::doMove(int move) {
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
+	}
 }
+
+void Player::getHit(Move *move) {
+	//if (state != BLOCKING) {
+		character->currentMove = HITSTUN;
+		character->currentMoveFrame = 0;
+		character->sprite.setTexture(character->moveList.at(HITSTUN)->spritesheet);
+		state = HITSTUN_STATE;
+		health -= move->damage;
+	//}
+	/*else {
+		character->currentMove = BLOCKSTUN;
+		character->currentMoveFrame = 0;
+		character->sprite.setTexture(character->moveList.at(BLOCKSTUN)->spritesheet);
+		state = BLOCKSTUN_STATE;
+		health -= move->damage;
+	}*/
 }
 
 bool Player::moveCancelable(int currMove, int newMove) {
@@ -115,8 +133,10 @@ void Player::updateAnimFrame() {
 		if (state == ATTACKING || state == HITSTUN_STATE || state == AIRBORNE) {
 			character->currentMove = IDLE;
 			canCancel = false;
+			getCurrentFrame().hit = false; 
 			character->sprite.setTexture(character->moveList.at(IDLE)->spritesheet);
-			state = NONE;
+			if (state != AIRBORNE)
+				state = NONE;
 		}
 	}
 	if (side == LEFT) {

@@ -18,6 +18,7 @@ public:
 	virtual void initCancelMoves() = 0;
 	virtual int getFrameCount() { return frameCount; };
 	virtual int getDamage() { return damage; };
+	void setHitFalse() { for (auto &i : frameVector) i.hit = false; }
 protected:
 	sf::Texture spritesheet;
 	int frameCount;
