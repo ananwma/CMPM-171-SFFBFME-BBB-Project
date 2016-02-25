@@ -15,10 +15,10 @@ void GameStateManager::runState(GameState &state) {
 	state_stack.push(&state);
 	state.init();
 	while (state_is_running) {
-		if (updateClock.getElapsedTime().asMilliseconds() > UPDATERATE) {
+		//if (updateClock.getElapsedTime().asMicroseconds() > UPDATERATE) {
 			state.update();
-			updateClock.restart();
-		}
+			//updateClock.restart();
+		//}
 		state.draw();
 	}
 	state.unhookEvent();
