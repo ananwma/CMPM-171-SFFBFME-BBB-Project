@@ -60,15 +60,6 @@
     <ClInclude Include="input.h">
       <Filter>sff headers</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterBach.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachJab.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachIdle.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="PauseState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
@@ -84,12 +75,6 @@
     <ClInclude Include="PlayerSelectState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="BachHitstun.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachStrong.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="AssetManager.h">
       <Filter>sff headers</Filter>
     </ClInclude>
@@ -104,6 +89,21 @@
     </ClInclude>
     <ClInclude Include="Stage.h">
       <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachHitstun.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachIdle.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachJab.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachStrong.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterBach.h">
+      <Filter>Bach</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,9 +127,6 @@
     </ClCompile>
     <ClCompile Include="Move.cpp">
       <Filter>sff source</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterBach.cpp">
-      <Filter>Bach</Filter>
     </ClCompile>
     <ClCompile Include="PauseState.cpp">
       <Filter>GameStates\Source</Filter>
@@ -157,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="Stage.cpp">
       <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterBach.cpp">
+      <Filter>Bach</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
