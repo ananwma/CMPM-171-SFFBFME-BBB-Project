@@ -85,10 +85,9 @@ void FightState::update() {
 	if (metronomeSoundTimer.getElapsedTime().asMilliseconds() > beat) {
 		cout << "beat" << endl;
 		metronomeSoundTimer.restart();
-		//cout << "player1: " << game.playerOne.canCancel << endl;
-		//cout << "player2: " << game.playerTwo.canCancel << endl;
-		//metronomeSound.play();
+		metronomeSound.play();
 	}
+	//cout << onBeat;
 
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
@@ -204,15 +203,15 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			else if (defender.side == RIGHT) {
 				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
 				offsetHurt = tmp;
+				int x;
 			}
 			if (offsetHit.intersects(offsetHurt)) {
-				cout << "hit!" << endl;
-				if (!attacker.lastMoveHit) {
-					defender.health -= attacker.getCurrentMove()->getDamage();
-					attacker.lastMoveHit = true;
+				if (!attacker.getCurrentFrame().hit) {
+					cout << "hit!" << endl;
+					defender.getHit(attacker.getCurrentMove());
+					attacker.getCurrentFrame().hit = true;
 				}
 				attacker.canCancel = true;
-				defender.doMove(HITSTUN);
 				return;
 			}
 		}
@@ -222,7 +221,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 void FightState::drawBoxes(Player& player, bool hit, bool hurt) {
 	// Anan's super secret math formula
 	sf::Vector2f v = player.character->sprite.getPosition();
-	Frame frame = player.getCurrentFrame();
+	Frame &frame = player.getCurrentFrame();
 	if (hit) {
 		for (auto box : frame.hitboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
