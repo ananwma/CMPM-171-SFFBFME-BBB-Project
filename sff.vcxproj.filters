@@ -108,6 +108,9 @@
     <ClInclude Include="ResultsState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -160,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="ResultsState.cpp">
       <Filter>GameStates\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

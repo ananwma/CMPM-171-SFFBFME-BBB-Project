@@ -27,6 +27,7 @@ MOVENAME::MOVENAME() {
 void MOVENAME::initFrames() {
 	BoxVec hit;
 	BoxVec hurt;
+   BoxVec clip;
 	/****PASTE GENERATED CODE HERE****/
 }
 

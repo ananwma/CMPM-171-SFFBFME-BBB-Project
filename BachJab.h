@@ -14,7 +14,7 @@ BachJab::BachJab() {
 		exit(EXIT_FAILURE);
 	}
 	// Number of animation frames
-	frameCount = 5;
+	frameCount = 4;
 	// Damage
 	damage = 20;
 	// Change in position on move
@@ -27,38 +27,43 @@ BachJab::BachJab() {
 void BachJab::initFrames() {
 	BoxVec hit;
 	BoxVec hurt;
+	BoxVec clip;
 	/***FRAME 1***/
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	hurt.push_back(sf::FloatRect(139, 289, 223, 239));
 	hurt.push_back(sf::FloatRect(125, 3, 226, 292));
-	frameVector.push_back(Frame(hit, hurt));
+	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
+	clip.clear();
 	/***FRAME 2***/
+	hit.push_back(sf::FloatRect(172, 97, 197, 108));
+	clip.push_back(sf::FloatRect(130, 98, 175, 394));
 	hurt.push_back(sf::FloatRect(108, 296, 253, 223));
 	hurt.push_back(sf::FloatRect(114, 9, 247, 288));
-	frameVector.push_back(Frame(hit, hurt));
+	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
+	clip.clear();
 	/***FRAME 3***/
-	hurt.push_back(sf::FloatRect(178, 55, 210, 227));
-	hit.push_back(sf::FloatRect(162, 75, 293, 114));
+	clip.push_back(sf::FloatRect(125, 111, 161, 408));
+	hurt.push_back(sf::FloatRect(171, 53, 259, 227));
+	hit.push_back(sf::FloatRect(162, 75, 273, 114));
 	hurt.push_back(sf::FloatRect(110, 277, 235, 246));
 	hurt.push_back(sf::FloatRect(78, 17, 173, 280));
-	frameVector.push_back(Frame(hit, hurt));
+	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
+	clip.clear();
 	/***FRAME 4***/
-	hurt.push_back(sf::FloatRect(139, 289, 223, 239));
-	hurt.push_back(sf::FloatRect(125, 3, 226, 292));
-	frameVector.push_back(Frame(hit, hurt));
+	clip.push_back(sf::FloatRect(138, 108, 166, 405));
+	hurt.push_back(sf::FloatRect(114, 307, 242, 176));
+	hurt.push_back(sf::FloatRect(154, 181, 166, 173));
+	hurt.push_back(sf::FloatRect(108, 12, 196, 243));
+	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
-	/***FRAME 5***/
-	hurt.push_back(sf::FloatRect(108, 296, 253, 223));
-	hurt.push_back(sf::FloatRect(114, 9, 247, 288));
-	frameVector.push_back(Frame(hit, hurt));
-	hit.clear();
-	hurt.clear();
+	clip.clear();
 }
 
 void BachJab::initCancelMoves() {

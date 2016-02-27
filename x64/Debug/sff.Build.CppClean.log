@@ -1,33 +1,34 @@
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.pch
-c:\users\mhgunnin\source\repos\sff\x64\debug\vc140.pdb
-c:\users\mhgunnin\source\repos\sff\x64\debug\vc140.idb
-c:\users\mhgunnin\source\repos\sff\x64\debug\stdafx.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\assetmanager.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\cameracontrol.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\character.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\characterbach.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\collision.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\concerthallstage.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\fightstate.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\frame.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\gamestatemanager.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\input.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\pausestate.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\player.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\playerselectstate.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\resultsstate.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\stage.obj
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.ilk
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.exe
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.pdb
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.res
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\cl.command.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\cl.read.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\cl.write.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\link.command.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\link.read.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\link.write.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\rc.command.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\rc.read.1.tlog
-c:\users\mhgunnin\source\repos\sff\x64\debug\sff.tlog\rc.write.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.pch
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\vc140.pdb
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\vc140.idb
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\stdafx.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\assetmanager.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\cameracontrol.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\character.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\characterbach.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\collision.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\concerthallstage.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\fightstate.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\frame.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\gamestatemanager.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\input.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\pausestate.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\player.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\playerselectstate.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\resultsstate.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\stage.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\physics.obj
+c:\users\michael\source\repos\super fugue fighter\sff\x64\debug\sff.ilk
+c:\users\michael\source\repos\super fugue fighter\sff\x64\debug\sff.exe
+c:\users\michael\source\repos\super fugue fighter\sff\x64\debug\sff.pdb
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.res
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\cl.command.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\cl.read.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\cl.write.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\link.command.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\link.read.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\link.write.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\rc.command.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\rc.read.1.tlog
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.tlog\rc.write.1.tlog

@@ -4,6 +4,8 @@
 
 #define INIT_XPOS 20
 #define INIT_YPOS 400
+#define GRAVITY 0.98f
+#define GROUND 100
 
 
 Player::Player()
@@ -24,8 +26,9 @@ Player::Player()
 	xvel = 0.0f;
 	yvel = 0.0f;
 	xacc = 0.0f;
+	yacc = 0.0f;
 	// Gravity
-	yacc = 0.098f;
+	//yacc = 1.0f;
 	state = NONE;
 	colliding = false;
 	canCancel = false;
@@ -48,6 +51,7 @@ void Player::setPosition(float x, float y) {
 void Player::doMove(int move) {
 	if (state != ATTACKING && state != HITSTUN_STATE) {
 		lastMoveHit = false;
+		xvel = 0;
 		character->currentMove = move;
 		getCurrentMove()->setHitFalse();
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
@@ -112,15 +116,15 @@ void Player::jump(direction dir) {
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = AIRBORNE;
 		if (dir == LEFT) {
-			yvel = -10.5f;
-			xvel = 2.5;
+			yvel = -character->jumpY;
+			xvel = character->jumpX;
 		}
 		if (dir == RIGHT) {
-			yvel = -10.5f;
-			xvel = -2.5;
+			yvel = -character->jumpY;
+			xvel = -character->jumpX;
 		}
 		if (dir == NEUTRAL) {
-			yvel = -10.5f;
+			yvel = -character->jumpY;
 		}
 	}
 }
@@ -159,13 +163,24 @@ void Player::updateAnimFrame() {
 }
 
 void Player::updatePhysics() {
-	xpos += xvel;
-	ypos += yvel;
+	//Add acceleration to velocity
 	xvel += xacc;
 	yvel += yacc;
+	//Update positions based on velocity
+	xpos += xvel;
+	ypos += yvel;
 
-	// If on ground
-	if (ypos >= 100) {
+	//Add gravitational acceleration if airborne
+	if (state == AIRBORNE) {
+		yvel += GRAVITY;
+		if (ypos > GROUND) {
+			yvel = 0.0f;
+			state = NONE;
+		}
+	}
+
+
+	/*if (ypos >= 100) {
 		ypos = 100;
 		yvel = 0;
 		if (state == AIRBORNE) {
@@ -177,9 +192,9 @@ void Player::updatePhysics() {
 		character->sprite.setPosition(xpos, 100);
 	}
 	else
-		state = AIRBORNE;
+		state = AIRBORNE;*/
 
-	character->sprite.move(xvel, yvel);
+	character->sprite.setPosition(xpos, ypos);
 }
 
 int Player::getCurrentMoveNum() {

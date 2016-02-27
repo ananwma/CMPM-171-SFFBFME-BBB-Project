@@ -6,7 +6,6 @@
 #include "FightState.h"
 #include "PauseState.h"
 #include "ResultsState.h"
-
 // tmp
 #include "CharacterBach.h"
 
@@ -79,47 +78,25 @@ void FightState::update() {
 	}
 
 	onBeat = false;
-	if ((metronome.getElapsedTime().asMilliseconds() % beat) < beatThreshold || (metronome.getElapsedTime().asMilliseconds() % beat) > beat - beatThreshold) {
+	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
 		onBeat = true;
 	}
 	if (metronome.getElapsedTime().asMilliseconds() > beat) {
-		cout << "beat" << endl;
+		//cout << "beat" << endl;
 		metronome.restart();
 		metronomeSound.play();
 	}
-	//cout << onBeat;
-
+	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
 
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		game.playerOne.walk(LEFT);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		game.playerOne.walk(RIGHT);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		game.playerOne.doMove(JUMP);
-		game.playerOne.character->currentMoveFrame = 0;
-		game.playerOne.pImage.move(0.0f, 0.100000000f);
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J)) {
-		game.playerOne.character->currentMove = JAB;
-		game.playerOne.character->currentMoveFrame = 0;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		game.playerOne.character->currentMove = HITSTUN;
-		game.playerOne.character->currentMoveFrame = 0;
-	}
-	else {
-		game.playerOne.character->currentMove = IDLE;
-	}*/
-
-	game.playerOne.updatePhysics();
-	game.playerTwo.updatePhysics();
+	//game.playerOne.updatePhysics();
+	//game.playerTwo.updatePhysics();
+	physics.update(game.playerOne);
+	physics.update(game.playerTwo);
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
 
 	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
@@ -160,23 +137,20 @@ void FightState::draw() {
 	game.window.draw(game.currentScreen.stage.sprite);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
-	drawBoxes(game.playerOne, 1, 1);
-	drawBoxes(game.playerTwo, 1, 1);
+	//drawBoxes(game.playerOne, 1, 1, 1);
+	//drawBoxes(game.playerTwo, 1, 1, 1);
 	game.window.display();
 }
 
-void FightState::checkMoveBoxes(Player& p1, Player& p2) {
-	sf::FloatRect movebox1 = p1.getCurrentFrame().hurtboxes.at(0);
-	sf::FloatRect movebox2 = p2.getCurrentFrame().hurtboxes.at(0);
-	sf::FloatRect offsetMoveBox1(movebox1.left + p1.xpos, movebox1.top + p1.ypos, movebox1.width, movebox1.height);
-	sf::FloatRect offsetMoveBox2(movebox2.left + p2.xpos, movebox2.top + p2.ypos, movebox2.width, movebox2.height);
-	//if (offsetMoveBox1.intersects(offsetMoveBox2)) {
-		//p2.xvel = p1.xvel;
-		//p2.colliding = true;
-		//p1.colliding = true;
-	//}
-	//else
-		//p2.colliding = false;
+void FightState::checkClipBoxes(Player& p1, Player& p2) {
+	sf::FloatRect clipbox1 = p1.getCurrentFrame().hurtboxes.at(0);
+	sf::FloatRect clipbox2 = p2.getCurrentFrame().hurtboxes.at(0);
+	sf::FloatRect offsetClipBox1(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
+	sf::FloatRect offsetClipBox2(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
+	if (offsetClipBox1.intersects(offsetClipBox2)) {
+		if ((p1.xvel<0) == (p2.xvel<0))
+			p2.xvel = p1.xvel;
+	}
 }
 
 void FightState::checkBoxes(Player& attacker, Player& defender) {
@@ -203,7 +177,6 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			else if (defender.side == RIGHT) {
 				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
 				offsetHurt = tmp;
-				int x;
 			}
 			if (offsetHit.intersects(offsetHurt)) {
 				if (!attacker.getCurrentFrame().hit) {
@@ -218,7 +191,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 	}
 }
 
-void FightState::drawBoxes(Player& player, bool hit, bool hurt) {
+void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	// Anan's super secret math formula
 	sf::Vector2f v = player.character->sprite.getPosition();
 	Frame &frame = player.getCurrentFrame();
@@ -245,14 +218,27 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt) {
 			drawRect.setFillColor(sf::Color(40, 200, 40, 120));
 			game.window.draw(drawRect);
 		}
+		if (clip) {
+			for (auto box : frame.clipboxes) {
+				sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
+				sf::Vector2f v = player.character->sprite.getPosition();
+				if (player.side == LEFT)
+					drawRect.setPosition(v.x + box.left, v.y + box.top);
+				else
+					drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
+				drawRect.setFillColor(sf::Color(200, 200, 40, 120));
+				game.window.draw(drawRect);
+			}
+		}
 	}
 }
 
 void FightState::processInput(Player& player, vector<bool>& input) {
-	if (input.at(48)) 
+	if (input.at(48))
 		player.walk(RIGHT);
-	if (input.at(55))
+	else if (input.at(55))
 		player.walk(LEFT);
+	else player.xvel = 0;
 
 	if (input.at(52) && input.at(48)) {
 		player.jump(RIGHT);

@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Collision.h"
 #include "ConcertHallStage.h"
+#include "Physics.h"
 #include <SFML/Audio.hpp>
 
 class FightState : public GameState {
@@ -49,10 +50,13 @@ private:
 	vector<bool> inputP2;
 	Collision collision;
 	ConcertHallStage chstage;
-	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
+	// Should fine tune these numbers at some point
+	float frameCounter = 0, switchFrame = 60, frameSpeed = 500;
 	void checkBoxes(Player&, Player&);
-	void checkMoveBoxes(Player&, Player&);
-	void drawBoxes(Player&, bool, bool);
+	void checkClipBoxes(Player&, Player&);
+	void drawBoxes(Player&, bool, bool, bool);
+	int input;
+	Physics physics;
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;

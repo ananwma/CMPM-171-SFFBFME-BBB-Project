@@ -14,12 +14,20 @@ void GameStateManager::runState(GameState &state) {
 	state_is_running = true;
 	state_stack.push(&state);
 	state.init();
+	sf::Clock clock;
+	sf::Time accumulator = sf::Time::Zero;
+	sf::Time ups = sf::seconds(1.f / 60.f);
 	while (state_is_running) {
-		//if (updateClock.getElapsedTime().asMilliseconds() > UPDATERATE) {
+		while (accumulator > ups) {
+			//if (updateClock.getElapsedTime().asMilliseconds() > UPDATERATE) {
+			accumulator -= ups;
 			state.update();
-			state.draw();
 			//updateClock.restart();
 		//}
+		}
+
+		state.draw();
+		accumulator += clock.restart();
 	}
 	state.unhookEvent();
 }

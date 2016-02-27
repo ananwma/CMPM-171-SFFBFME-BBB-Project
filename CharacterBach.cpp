@@ -12,7 +12,9 @@ using namespace std;
 Bach::Bach() {
 	width = 438;
 	height = 548;
-	walkspeed = 1.0f;
+	walkspeed = 8.0f;
+	jumpX = 8.0f;
+	jumpY = 35.0f;
 	health = 1000;
 }
 

@@ -27,10 +27,13 @@ BachIdle::BachIdle() {
 void BachIdle::initFrames() {
 	BoxVec hit;
 	BoxVec hurt;
+	BoxVec clip;
 	/***FRAME 1***/
+	clip.push_back(sf::FloatRect(155, 96, 148, 423));
 	hurt.push_back(sf::FloatRect(139, 289, 233, 239));
 	hurt.push_back(sf::FloatRect(125, 3, 226, 292));
-	frameVector.push_back(Frame(hit, hurt));
+	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
+	clip.clear();
 }

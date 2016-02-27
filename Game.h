@@ -7,7 +7,7 @@
 #include "AssetManager.h"
 #include <SFML/Graphics.hpp>
 
-#define WINDOW_WIDTH 1280
+#define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 600
 
 // Struct for data we want shared between states
