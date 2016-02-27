@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 //DEBUG
-#include <vld.h>
+//#include <vld.h>
 //DEBUG
 
 #include "input.h"

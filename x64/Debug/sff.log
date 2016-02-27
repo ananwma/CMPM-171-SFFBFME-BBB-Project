@@ -1,1 +1,4 @@
-﻿
+﻿  Player.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(190): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(193): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe

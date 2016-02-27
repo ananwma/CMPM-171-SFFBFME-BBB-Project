@@ -251,9 +251,9 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt) {
 
 void FightState::processInput(Player& player, vector<bool>& input) {
 	if (input.at(48)) 
-		player.walk(RIGHT);
-	if (input.at(55))
 		player.walk(LEFT);
+	if (input.at(55))
+		player.walk(RIGHT);
 
 	if (input.at(52) && input.at(48)) {
 		player.jump(RIGHT);
