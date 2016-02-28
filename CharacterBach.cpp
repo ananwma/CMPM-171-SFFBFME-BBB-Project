@@ -14,6 +14,7 @@ Bach::Bach() {
 	height = 548;
 	walkspeed = 1.0f;
 	health = 1000;
+	wall_offset = 100;
 }
 
 void Bach::walk() {

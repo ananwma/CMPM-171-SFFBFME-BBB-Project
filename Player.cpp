@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Character.h"
 #include "Player.h"
-
+#define WALL_WIDTH 1280
 #define INIT_XPOS 20
 #define INIT_YPOS 400
 
@@ -78,12 +78,16 @@ void Player::walk(direction dir) {
 		if (dir == LEFT) {
 			//character->sprite.move(character->walkspeed, 0);
 			//xpos += character->walkspeed;
-			xvel = character->walkspeed;
+			if (!(character->sprite.getPosition().x + character->wall_offset <= 0)) {
+				xvel = -character->walkspeed;
+			}
 		}
 		else if (dir == RIGHT) {
 			//character->sprite.move(-character->walkspeed, 0);
 			//xpos -= character->walkspeed;
-			xvel = -character->walkspeed;
+			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) {
+				xvel = character->walkspeed;
+			}
 		}
 	}
 }
@@ -159,9 +163,11 @@ void Player::updatePhysics() {
 	else
 		state = AIRBORNE;
 
+	if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE) {
+		xvel = 0;
+	}
 	character->sprite.move(xvel, yvel);
 }
-
 int Player::getCurrentMoveNum() {
 	return character->currentMove;
 }

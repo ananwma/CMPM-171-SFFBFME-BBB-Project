@@ -19,6 +19,7 @@ protected:
 	float walkspeed;
 	int health;
 public:
+	int wall_offset;
 	sf::Sprite sprite;
 	int currentMove;
 	int currentMoveFrame;
