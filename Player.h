@@ -31,8 +31,8 @@ public:
 	//Need to keep track of where the player has moved to update hitboxes
 	float deltaX;
 	float deltaY;
-	int health;
-	int meter;
+	float health;
+	float meter;
 	int roundWins;
 	int playerId;
 	direction side;

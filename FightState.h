@@ -24,6 +24,12 @@ public:
 	virtual void unhookEvent();
 
 	void processInput(Player&, vector<bool>&);
+	sf::View camera_view;
+	sf::View HUD;
+	sf::RectangleShape player_1_HP;
+	sf::RectangleShape player_2_HP;
+	sf::RectangleShape player_1_meter;
+	sf::RectangleShape player_2_meter;
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager

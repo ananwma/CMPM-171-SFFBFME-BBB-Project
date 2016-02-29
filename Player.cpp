@@ -19,6 +19,7 @@ Player::Player()
 	//currentMoveFrame = 0;
 	//x = start_x;
 	//y = start_y;
+	meter = 1000.0f;
 	xpos = INIT_XPOS;
 	ypos = INIT_YPOS;
 	xvel = 0.0f;
@@ -78,14 +79,14 @@ void Player::walk(direction dir) {
 		if (dir == LEFT) {
 			//character->sprite.move(character->walkspeed, 0);
 			//xpos += character->walkspeed;
-			if (!(character->sprite.getPosition().x + character->wall_offset <= 0)) {
+			if (!(character->sprite.getPosition().x + character->wall_offset <= -200)) {
 				xvel = -character->walkspeed;
 			}
 		}
 		else if (dir == RIGHT) {
 			//character->sprite.move(-character->walkspeed, 0);
 			//xpos -= character->walkspeed;
-			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) {
+			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH+200)) {
 				xvel = character->walkspeed;
 			}
 		}

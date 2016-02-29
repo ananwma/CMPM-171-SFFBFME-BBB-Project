@@ -16,9 +16,9 @@ friend class Player;
 protected:
 	int width;
 	int height;
-	float walkspeed;
 	int health;
 public:
+	float walkspeed;
 	int wall_offset;
 	sf::Sprite sprite;
 	int currentMove;

@@ -11,7 +11,7 @@ ConcertHallStage::ConcertHallStage()
 	}
 	sprite.setTexture(texture);
 	window_limit = 200;
-	window_offset = 0;
+	window_offset = 200;
 }
 
 
