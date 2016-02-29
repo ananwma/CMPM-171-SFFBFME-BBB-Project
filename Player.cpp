@@ -33,6 +33,9 @@ Player::Player()
 	colliding = false;
 	canCancel = false;
 	lastMoveHit = false;
+	left = false;
+	jumping = false;
+	right = false;
 }
 
 void Player::setCharacter(Character* c) {
@@ -49,9 +52,9 @@ void Player::setPosition(float x, float y) {
 }
 
 void Player::doMove(int move) {
-	if (state != ATTACKING && state != HITSTUN_STATE) {
-		lastMoveHit = false;
-		xvel = 0;
+	if (state != ATTACKING && state != HITSTUN_STATE && state != AIRBORNE) {
+		if (state == WALKING)
+			xvel = 0;
 		character->currentMove = move;
 		getCurrentMove()->setHitFalse();
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
@@ -97,12 +100,13 @@ void Player::walk(direction dir) {
 	if (state != ATTACKING && state != HITSTUN_STATE && state != AIRBORNE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
-		if (dir == LEFT) {
+		state = WALKING;
+		if (dir == RIGHT) {
 			//character->sprite.move(character->walkspeed, 0);
 			//xpos += character->walkspeed;
 			xvel = character->walkspeed;
 		}
-		else if (dir == RIGHT) {
+		else if (dir == LEFT) {
 			//character->sprite.move(-character->walkspeed, 0);
 			//xpos -= character->walkspeed;
 			xvel = -character->walkspeed;
@@ -115,11 +119,11 @@ void Player::jump(direction dir) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = AIRBORNE;
-		if (dir == LEFT) {
+		if (dir == RIGHT) {
 			yvel = -character->jumpY;
 			xvel = character->jumpX;
 		}
-		if (dir == RIGHT) {
+		if (dir == LEFT) {
 			yvel = -character->jumpY;
 			xvel = -character->jumpX;
 		}
@@ -169,12 +173,13 @@ void Player::updatePhysics() {
 	//Update positions based on velocity
 	xpos += xvel;
 	ypos += yvel;
-
 	//Add gravitational acceleration if airborne
 	if (state == AIRBORNE) {
 		yvel += GRAVITY;
-		if (ypos > GROUND) {
+		if (ypos + yvel > GROUND) {
+			ypos = GROUND;
 			yvel = 0.0f;
+			xvel = 0.0f;
 			state = NONE;
 		}
 	}

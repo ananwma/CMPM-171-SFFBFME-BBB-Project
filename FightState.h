@@ -5,7 +5,6 @@
 #include "Player.h"
 #include "Collision.h"
 #include "ConcertHallStage.h"
-#include "Physics.h"
 #include <SFML/Audio.hpp>
 
 class FightState : public GameState {
@@ -24,7 +23,7 @@ public:
 	virtual void receiveKeysUp(int, int);
 	virtual void unhookEvent();
 
-	void processInput(Player&, vector<bool>&);
+	void processInput(Player&, vector<int>&);
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager
@@ -39,15 +38,16 @@ private:
 	int spriteHeight;
 	Player *player1;
 	sf::Clock clock;
-	sf::Clock inputClock;
-	sf::Clock metronomeSoundTimer;
 	sf::Clock metronome;
 	bool onBeat;
 	int intOnBeat;
 	int beat;
 	int beatThreshold;
-	vector<bool> inputP1;
-	vector<bool> inputP2;
+	vector<int> inputP1;
+	vector<int> inputP2;
+	vector<int> inputBuffer;
+	sf::Clock inputClock;
+	bool inputOpen = false;
 	Collision collision;
 	ConcertHallStage chstage;
 	// Should fine tune these numbers at some point
@@ -55,8 +55,6 @@ private:
 	void checkBoxes(Player&, Player&);
 	void checkClipBoxes(Player&, Player&);
 	void drawBoxes(Player&, bool, bool, bool);
-	int input;
-	Physics physics;
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;

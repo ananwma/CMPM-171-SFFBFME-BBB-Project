@@ -179,7 +179,6 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="PauseState.h" />
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSelectState.h" />
     <ClInclude Include="Resource.h" />
@@ -201,7 +200,6 @@
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="PauseState.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSelectState.cpp" />
     <ClCompile Include="ResultsState.cpp" />

@@ -23,10 +23,10 @@ void FightState::init() {
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 
 	// Initialize input vectors, 127 possible midi notes
-	for (int i = 0; i < 127; i++) {
-		inputP1.push_back(false);
-		inputP2.push_back(false);
-	}
+	//for (int i = 0; i < 127; i++) {
+	//	inputP1.push_back(false);
+	//	inputP2.push_back(false);
+	//}
 
 	game.currentScreen.setStage(chstage);
 	game.currentScreen.stage.sprite.move(-200, 0);
@@ -92,11 +92,11 @@ void FightState::update() {
 
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
+	checkClipBoxes(game.playerOne, game.playerTwo);
+	checkClipBoxes(game.playerTwo, game.playerOne);
 
-	//game.playerOne.updatePhysics();
-	//game.playerTwo.updatePhysics();
-	physics.update(game.playerOne);
-	physics.update(game.playerTwo);
+	game.playerOne.updatePhysics();
+	game.playerTwo.updatePhysics();
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
 
 	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
@@ -137,14 +137,14 @@ void FightState::draw() {
 	game.window.draw(game.currentScreen.stage.sprite);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
-	//drawBoxes(game.playerOne, 1, 1, 1);
-	//drawBoxes(game.playerTwo, 1, 1, 1);
+	drawBoxes(game.playerOne, 0, 0, 1);
+	drawBoxes(game.playerTwo, 0, 0, 1);
 	game.window.display();
 }
 
 void FightState::checkClipBoxes(Player& p1, Player& p2) {
-	sf::FloatRect clipbox1 = p1.getCurrentFrame().hurtboxes.at(0);
-	sf::FloatRect clipbox2 = p2.getCurrentFrame().hurtboxes.at(0);
+	sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
+	sf::FloatRect clipbox2 = p2.getCurrentFrame().clipboxes.at(0);
 	sf::FloatRect offsetClipBox1(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
 	sf::FloatRect offsetClipBox2(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
 	if (offsetClipBox1.intersects(offsetClipBox2)) {
@@ -218,29 +218,68 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 			drawRect.setFillColor(sf::Color(40, 200, 40, 120));
 			game.window.draw(drawRect);
 		}
-		if (clip) {
-			for (auto box : frame.clipboxes) {
-				sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-				sf::Vector2f v = player.character->sprite.getPosition();
-				if (player.side == LEFT)
-					drawRect.setPosition(v.x + box.left, v.y + box.top);
-				else
-					drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
-				drawRect.setFillColor(sf::Color(200, 200, 40, 120));
-				game.window.draw(drawRect);
-			}
+	}
+	if (clip) {
+		for (auto box : frame.clipboxes) {
+			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
+			sf::Vector2f v = player.character->sprite.getPosition();
+			if (player.side == LEFT)
+				drawRect.setPosition(v.x + box.left, v.y + box.top);
+			else
+				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
+			drawRect.setFillColor(sf::Color(200, 200, 40, 120));
+			game.window.draw(drawRect);
 		}
 	}
 }
 
-void FightState::processInput(Player& player, vector<bool>& input) {
-	if (input.at(48))
+void FightState::processInput(Player& player, vector<int>& input) {
+	if (player.left && player.jumping && player.right) {
+		player.jump(NEUTRAL);
+	}
+	else if (!player.left && player.jumping && player.right) {
+		player.jump(RIGHT);
+	}
+	else if (player.left && !player.jumping && player.right) {
+		player.doMove(IDLE);
+	}
+	else if (player.left && player.jumping && !player.right) {
+		player.jump(LEFT);
+	}
+	else if (!player.left && !player.jumping && player.right) {
 		player.walk(RIGHT);
-	else if (input.at(55))
+	}
+	else if (player.left && !player.jumping && !player.right) {
 		player.walk(LEFT);
-	else player.xvel = 0;
-
-	if (input.at(52) && input.at(48)) {
+	}
+	else if (!player.left && player.jumping && !player.right) {
+		player.jump(NEUTRAL);
+	}
+	else if (!player.left && !player.jumping && !player.right) {
+		player.doMove(IDLE);
+	}
+	
+	if (!input.empty()) {
+		if (!inputOpen)
+			inputClock.restart();
+		inputOpen = true;
+		if (inputClock.getElapsedTime().asMilliseconds() > 10) {
+			for (auto i : input) {
+				cout << i << ", ";
+			}
+			cout << endl;
+			input.clear();
+			inputOpen = false;
+		}
+	}
+	
+	/*if (input.at(48)) {
+		player.walk(RIGHT);
+	}
+	else if (input.at(55)) {
+		player.walk(LEFT);
+	}
+	else if (input.at(52) && input.at(48)) {
 		player.jump(RIGHT);
 		input.at(52) = false;
 	}
@@ -252,35 +291,70 @@ void FightState::processInput(Player& player, vector<bool>& input) {
 		player.jump(LEFT);
 		input.at(52) = false;
 	}
-
-	if (input.at(60) && onBeat ) {
+	else if (input.at(60) && onBeat ) {
 		player.doMove(JAB);
 		//input.at(60) = false;
 	}
-	if (input.at(62)) {
+	else if (input.at(62)) {
 		player.doMove(STRONG);
 		input.at(62) = false;
 	}
+	else {
+		if (player.state == NONE)
+			player.doMove(IDLE);
+	}
 	//cout << onBeat;
-	input.at(60) = false;
+	input.at(60) = false;*/
 }
 
 // Everything here is run on its own thread!
 // Might need to look into a more efficient way of processing input
 void FightState::receiveKeysDown(int note, int playerId) {
-	if (playerId == game.playerOne.playerId)
-		inputP1.at(note) = true;
-	else if (playerId == game.playerTwo.playerId)
-		inputP2.at(note) = true;
+	if (playerId == game.playerOne.playerId) {
+		// Movement keys
+		if (note == 48) game.playerOne.left = true;
+		else if (note == 52) game.playerOne.jumping = true;
+		else if (note == 55) game.playerOne.right = true;
+		// Attack keys
+		else {
+			// Change this to a buffer
+			inputP1.push_back(note);
+		}
+	}
+	else if (playerId == game.playerTwo.playerId) {
+		// Movement keys
+		if (note == 48) game.playerTwo.left = true;
+		else if (note == 52) game.playerTwo.jumping = true;
+		else if (note == 55) game.playerTwo.right = true;
+		// Attack keys
+		else {
+			//inputP2.at(note) = true;
+		}
+	}
 }
 
 void FightState::receiveKeysUp(int note, int playerId) {
-	if (playerId == game.playerOne.playerId)
-		inputP1.at(note) = false;
-	else if (playerId == game.playerTwo.playerId)
-		inputP2.at(note) = false;
+	if (playerId == game.playerOne.playerId) {
+		// Movement keys
+		if (note == 48) game.playerOne.left = false;
+		else if (note == 52) game.playerOne.jumping = false;
+		else if (note == 55) game.playerOne.right = false;
+		// Attack keys
+		else {
+			//inputP1.at(note) = false;
+		}
+	}
+	else if (playerId == game.playerTwo.playerId) {
+		// Movement keys
+		if (note == 48) game.playerTwo.left = false;
+		else if (note == 52) game.playerTwo.jumping = false;
+		else if (note == 55) game.playerTwo.right = false;
+		// Attack keys 
+		else {
+			//inputP2.at(note) = false;
+		}
+	}
 }
-
 
 void FightState::unhookEvent() {
 	cout << "FightState events unhooked\n";

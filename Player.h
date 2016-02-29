@@ -20,6 +20,7 @@ public:
 	void setCharacter(Character*);
 	void setPosition(float, float);
 	void jump(direction dir);
+	bool left, jumping, right;
 	float xpos;
 	float ypos;
 	float xvel;
