@@ -23,13 +23,13 @@ public:
 	virtual void receiveKeysUp(int, int);
 	virtual void unhookEvent();
 
-	void processInput(Player&, vector<bool>&);
 	sf::View camera_view;
 	sf::View HUD;
 	sf::RectangleShape player_1_HP;
 	sf::RectangleShape player_2_HP;
 	sf::RectangleShape player_1_meter;
 	sf::RectangleShape player_2_meter;
+	void processInput(Player&, vector<int>&);
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager
@@ -44,21 +44,23 @@ private:
 	int spriteHeight;
 	Player *player1;
 	sf::Clock clock;
-	sf::Clock inputClock;
-	sf::Clock metronomeSoundTimer;
 	sf::Clock metronome;
 	bool onBeat;
 	int intOnBeat;
 	int beat;
 	int beatThreshold;
-	vector<bool> inputP1;
-	vector<bool> inputP2;
+	vector<int> inputP1;
+	vector<int> inputP2;
+	vector<int> inputBuffer;
+	sf::Clock inputClock;
+	bool inputOpen = false;
 	Collision collision;
 	ConcertHallStage chstage;
-	float frameCounter = 0, switchFrame = 100, frameSpeed = 500;
+	// Should fine tune these numbers at some point
+	float frameCounter = 0, switchFrame = 60, frameSpeed = 500;
 	void checkBoxes(Player&, Player&);
-	void checkMoveBoxes(Player&, Player&);
-	void drawBoxes(Player&, bool, bool);
+	void checkClipBoxes(Player&, Player&);
+	void drawBoxes(Player&, bool, bool, bool);
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;

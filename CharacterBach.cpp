@@ -6,13 +6,16 @@
 #include "BachIdle.h"
 #include "BachHitstun.h"
 #include "BachStrong.h"
+#include "BachShoryuken.h"
 
 using namespace std;
 
 Bach::Bach() {
 	width = 438;
 	height = 548;
-	walkspeed = 1.0f;
+	walkspeed = 8.0f;
+	jumpX = 8.0f;
+	jumpY = 35.0f;
 	health = 1000;
 	wall_offset = 100;
 }
@@ -27,15 +30,18 @@ void Bach::initMoves() {
 	BachStrong* strong = new BachStrong;
 	BachIdle* idle = new BachIdle;
 	BachHitstun* hitstun = new BachHitstun;
+	BachShoryuken* srk = new BachShoryuken;
 	jab->initFrames();
 	jab->initCancelMoves();
 	idle->initFrames();
 	hitstun->initFrames();
 	strong->initFrames();
+	srk->initFrames();
 	moveList[JAB] = jab;
 	moveList[IDLE] = idle;
 	moveList[WALK] = idle;
 	moveList[JUMP] = idle;
 	moveList[HITSTUN] = hitstun;
 	moveList[STRONG] = strong;
+	moveList[CMAJ] = srk;
 }

@@ -18,13 +18,18 @@ public:
 	virtual void initCancelMoves() = 0;
 	virtual int getFrameCount() { return frameCount; };
 	virtual int getDamage() { return damage; };
+	void setHitFalse() { for (auto &i : frameVector) i.hit = false; }
 protected:
 	sf::Texture spritesheet;
 	int frameCount;
 	vector<Frame> frameVector;
 	int damage;
-	int deltax;
-	int deltay;
+	float velX = 0;
+	float velY = 0;
+	float accX = 0;
+	float accY = 0;
+	float pushX = 0;
+	float pushY = 0;
 	vector<int> cancelMoves;
 	state state;
 };

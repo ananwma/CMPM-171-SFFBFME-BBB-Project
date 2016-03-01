@@ -9,13 +9,15 @@ using BoxVec = vector<sf::FloatRect>;
 using FrameVec = vector<Frame>;
 
 // fix ordering of this later
-enum Moves { HITSTUN, BLOCK, STRONG, JAB, IDLE, WALK, FIERCE, JUMP, FORWARD, ROUNDHOUSE, GRAB };
+enum Moves { HITSTUN, BLOCK, STRONG, JAB, IDLE, WALK, FIERCE, JUMP, FORWARD, ROUNDHOUSE, GRAB, CMAJ };
 
 class Character {
 friend class Player;
 protected:
 	int width;
 	int height;
+	float jumpX;
+	float jumpY;
 	int health;
 public:
 	float walkspeed;
