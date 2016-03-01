@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 
+#include <bitset>
+
 #include "FightState.h"
 #include "PauseState.h"
 #include "ResultsState.h"
@@ -148,8 +150,13 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 	sf::FloatRect offsetClipBox1(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
 	sf::FloatRect offsetClipBox2(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
 	if (offsetClipBox1.intersects(offsetClipBox2)) {
-		if ((p1.xvel<0) == (p2.xvel<0))
-			p2.xvel = p1.xvel;
+		if (p2.state == WALKING) {
+			// If velocities ahve opposite signs
+			if ((p1.xvel < 0) == (p2.xvel < 0)) {
+				p2.xvel = 0;
+				p1.xvel = 0;
+			}
+		}
 	}
 }
 
@@ -234,6 +241,7 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 }
 
 void FightState::processInput(Player& player, vector<int>& input) {
+	// Handle every possible combination of movement keys
 	if (player.left && player.jumping && player.right) {
 		player.jump(NEUTRAL);
 	}
@@ -260,55 +268,54 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	}
 	
 	if (!input.empty()) {
-		if (!inputOpen)
+		if (!inputOpen) {
 			inputClock.restart();
+		}
 		inputOpen = true;
 		if (inputClock.getElapsedTime().asMilliseconds() > 10) {
-			for (auto i : input) {
-				cout << i << ", ";
-			}
-			cout << endl;
-			input.clear();
 			inputOpen = false;
+			/* This code is kind of hard to read; each note starting at 60 (Middle C) is
+			   left shifted its distance away from middle C, ie C is 1, D is 10, E is 100,
+			   and so on. These numbers are OR'd together to make something like 10010001,
+			   which represents a C Major triad. To handle octaves, the number is right shifted
+			   12 times again and again until there are at most eleven trailing 0's in the 
+			   binary number. When that happens, we know the octave has been normalized. */
+			if (input.size() < 5) {
+				DWORD_PTR acc = 0;
+				// Don't use an iterator on input vector
+				for (int i = 0; i < input.size(); i++) {
+					int shift = input.at(i);
+					DWORD_PTR note = 1;
+					if (shift > 59) {
+						shift -= 60;
+						note = note << shift;
+					}
+					acc |= note;
+				}
+				input.clear();
+				while (!(acc & 0xFFF)) acc = acc >> 12;
+				bitset<64> bin(acc);
+				cout << hex << acc << endl;
+				if (onBeat) {
+					if (acc == C_NATURAL) {
+						player.doMove(JAB);
+					}
+					else if (acc == D_NATURAL) {
+						player.doMove(STRONG);
+					}
+					else if (acc == F_NATURAL) {
+						player.doMove(STRONG);
+					}
+				}
+			}
+			else {
+				input.clear();
+			}
 		}
 	}
-	
-	/*if (input.at(48)) {
-		player.walk(RIGHT);
-	}
-	else if (input.at(55)) {
-		player.walk(LEFT);
-	}
-	else if (input.at(52) && input.at(48)) {
-		player.jump(RIGHT);
-		input.at(52) = false;
-	}
-	else if (input.at(52) && !input.at(48) && !input.at(55)) {
-		player.jump(NEUTRAL);
-		input.at(52) = false;
-	}
-	else if (input.at(55) && input.at(52)) {
-		player.jump(LEFT);
-		input.at(52) = false;
-	}
-	else if (input.at(60) && onBeat ) {
-		player.doMove(JAB);
-		//input.at(60) = false;
-	}
-	else if (input.at(62)) {
-		player.doMove(STRONG);
-		input.at(62) = false;
-	}
-	else {
-		if (player.state == NONE)
-			player.doMove(IDLE);
-	}
-	//cout << onBeat;
-	input.at(60) = false;*/
 }
 
 // Everything here is run on its own thread!
-// Might need to look into a more efficient way of processing input
 void FightState::receiveKeysDown(int note, int playerId) {
 	if (playerId == game.playerOne.playerId) {
 		// Movement keys
@@ -317,7 +324,6 @@ void FightState::receiveKeysDown(int note, int playerId) {
 		else if (note == 55) game.playerOne.right = true;
 		// Attack keys
 		else {
-			// Change this to a buffer
 			inputP1.push_back(note);
 		}
 	}
@@ -328,7 +334,7 @@ void FightState::receiveKeysDown(int note, int playerId) {
 		else if (note == 55) game.playerTwo.right = true;
 		// Attack keys
 		else {
-			//inputP2.at(note) = true;
+			inputP2.push_back(note);
 		}
 	}
 }
