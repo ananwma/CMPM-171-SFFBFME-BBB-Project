@@ -18,8 +18,7 @@ BachJab::BachJab() {
 	// Damage
 	damage = 20;
 	// Change in position on move
-	deltax = 0;
-	deltay = 0;
+
 	// State move puts player in
 	state = ATTACKING;
 }

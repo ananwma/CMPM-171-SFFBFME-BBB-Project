@@ -18,8 +18,7 @@ BachStrong::BachStrong() {
 	// Damage
 	damage = 50;
 	// Change in position on move
-	deltax = 0;
-	deltay = 0;
+
 	// State move puts player in
 	state = ATTACKING;
 }

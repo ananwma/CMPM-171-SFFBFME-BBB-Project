@@ -108,6 +108,9 @@
     <ClInclude Include="ResultsState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="BachShoryuken.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

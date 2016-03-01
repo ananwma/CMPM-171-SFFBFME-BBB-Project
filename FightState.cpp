@@ -144,42 +144,54 @@ void FightState::draw() {
 	game.window.display();
 }
 
+//Change some copies to moves in future
 void FightState::checkClipBoxes(Player& p1, Player& p2) {
-	sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
-	sf::FloatRect clipbox2 = p2.getCurrentFrame().clipboxes.at(0);
-	sf::FloatRect offsetClipBox1(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-	sf::FloatRect offsetClipBox2(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-	if (offsetClipBox1.intersects(offsetClipBox2)) {
-		// Set vel of player not walking to player that is walking
-		if (p1.state == WALKING && p2.state != WALKING) {
-			if (p1.xvel > 0 && p1.side == LEFT)
-				p2.xvel = p1.xvel;
-			else if (p1.xvel < 0 && p1.side == RIGHT)
-				p2.xvel = p1.xvel;
-		}
-		else if (p2.state == WALKING && p1.state != WALKING) {
-			if (p2.xvel > 0 && p2.side == LEFT)
-				p1.xvel = p2.xvel;
-			else if (p2.xvel < 0 && p2.side == RIGHT)
-				p1.xvel = p2.xvel;
-		}
-		// Set vel to 0 if both walking and velocities have oposite signs
-		else if (p1.state == WALKING && p2.state == WALKING) {
-			if ((p1.xvel > 0) != (p2.xvel > 0)) {
-				p2.xvel = 0;
-				p1.xvel = 0;
+	if (!p1.getCurrentFrame().clipboxes.empty() && !p2.getCurrentFrame().clipboxes.empty()) {
+		sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
+		sf::FloatRect clipbox2 = p2.getCurrentFrame().clipboxes.at(0);
+		sf::FloatRect offsetClipBox1;
+		sf::FloatRect offsetClipBox2;
+		if (p1.side == LEFT)
+			offsetClipBox1 = sf::FloatRect(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
+		else if (p1.side == RIGHT)
+			offsetClipBox1 = sf::FloatRect(p1.xpos - clipbox1.width - clipbox1.left + p1.getSpriteWidth(), clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
+		if (p2.side == LEFT)
+			offsetClipBox2 = sf::FloatRect(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
+		else if (p2.side == RIGHT)
+			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
+		sf::FloatRect intersectBox;
+		if (offsetClipBox1.intersects(offsetClipBox2)) {
+			// Set vel of player not walking to player that is walking
+			if (p1.state == WALKING && p2.state != WALKING) {
+				if (p1.xvel > 0 && p1.side == LEFT)
+					p2.xvel = p1.xvel;
+				else if (p1.xvel < 0 && p1.side == RIGHT)
+					p2.xvel = p1.xvel;
 			}
-		}	
+			else if (p2.state == WALKING && p1.state != WALKING) {
+				if (p2.xvel > 0 && p2.side == LEFT)
+					p1.xvel = p2.xvel;
+				else if (p2.xvel < 0 && p2.side == RIGHT)
+					p1.xvel = p2.xvel;
+			}
+			// Set vel to 0 if both walking and velocities have oposite signs
+			else if (p1.state == WALKING && p2.state == WALKING) {
+				if ((p1.xvel > 0) != (p2.xvel > 0)) {
+					p2.xvel = 0;
+					p1.xvel = 0;
+				}
+			}
 
-		// this part isnt ideal but good enough for demo
-		else if (p1.state != WALKING && p2.state != WALKING) {
-			if (p1.side == LEFT) {
-				p1.xvel = -10;
-				p2.xvel = 10;
-			}
-			else if (p2.side == RIGHT) {
-				p1.xvel = 10;
-				p2.xvel = -10;
+			// this part isnt ideal but good enough for demo
+			else if (p1.state != WALKING && p2.state != WALKING) {
+				if (p1.side == LEFT) {
+					//p1.xvel = p2.xvel;
+					p2.xvel = 10;
+				}
+				else if (p2.side == RIGHT) {
+					//p1.xvel = p2.xvel;
+					p2.xvel = -10;
+				}
 			}
 		}
 	}
@@ -330,6 +342,9 @@ void FightState::processInput(Player& player, vector<int>& input) {
 					}
 					else if (acc == F_NATURAL) {
 						player.doMove(STRONG);
+					}
+					else if (acc == C_MAJOR) {
+						player.doMove(CMAJ);
 					}
 				}
 			}

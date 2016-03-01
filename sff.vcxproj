@@ -165,6 +165,7 @@
     <ClInclude Include="BachHitstun.h" />
     <ClInclude Include="BachIdle.h" />
     <ClInclude Include="BachJab.h" />
+    <ClInclude Include="BachShoryuken.h" />
     <ClInclude Include="BachStrong.h" />
     <ClInclude Include="CameraControl.h" />
     <ClInclude Include="Character.h" />

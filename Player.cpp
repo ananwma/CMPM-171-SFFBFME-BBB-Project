@@ -62,6 +62,7 @@ void Player::doMove(int move) {
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
+		yvel = getCurrentMove()->velY;
 	}
 	else if(state == ATTACKING && canCancel && moveCancelable(character->currentMove, move)){
 		character->currentMove = move;
@@ -78,6 +79,9 @@ void Player::getHit(Move *move) {
 		character->sprite.setTexture(character->moveList.at(HITSTUN)->spritesheet);
 		state = HITSTUN_STATE;
 		health -= move->damage;
+		xvel = move->velX;
+		yvel = move->velY;
+		if (yvel < 0 || ypos < GROUND) state = AIRBORNE;
 	//}
 	/*else {
 		character->currentMove = BLOCKSTUN;
@@ -176,7 +180,7 @@ void Player::updatePhysics() {
 	xpos += xvel;
 	ypos += yvel;
 	//Add gravitational acceleration if airborne
-	if (state == AIRBORNE) {
+	if (ypos < GROUND) {
 		yvel += GRAVITY;
 		if (ypos + yvel > GROUND) {
 			ypos = GROUND;

@@ -24,8 +24,12 @@ protected:
 	int frameCount;
 	vector<Frame> frameVector;
 	int damage;
-	int deltax;
-	int deltay;
+	float velX = 0;
+	float velY = 0;
+	float accX = 0;
+	float accY = 0;
+	float pushX = 0;
+	float pushY = 0;
 	vector<int> cancelMoves;
 	state state;
 };
