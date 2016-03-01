@@ -170,6 +170,18 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 				p1.xvel = 0;
 			}
 		}	
+
+		// this part isnt ideal but good enough for demo
+		else if (p1.state != WALKING && p2.state != WALKING) {
+			if (p1.side == LEFT) {
+				p1.xvel = -10;
+				p2.xvel = 10;
+			}
+			else if (p2.side == RIGHT) {
+				p1.xvel = 10;
+				p2.xvel = -10;
+			}
+		}
 	}
 }
 
