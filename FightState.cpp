@@ -91,11 +91,11 @@ void FightState::update() {
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
-
+	//cout << "P1 vel: " << game.playerOne.xvel << endl << "P2 vel: " << game.playerTwo.xvel << endl << endl;
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
-	checkClipBoxes(game.playerTwo, game.playerOne);
+	//checkClipBoxes(game.playerTwo, game.playerOne);
 
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
@@ -150,13 +150,26 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 	sf::FloatRect offsetClipBox1(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
 	sf::FloatRect offsetClipBox2(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
 	if (offsetClipBox1.intersects(offsetClipBox2)) {
-		if (p2.state == WALKING) {
-			// If velocities ahve opposite signs
-			if ((p1.xvel < 0) == (p2.xvel < 0)) {
+		// Set vel of player not walking to player that is walking
+		if (p1.state == WALKING && p2.state != WALKING) {
+			if (p1.xvel > 0 && p1.side == LEFT)
+				p2.xvel = p1.xvel;
+			else if (p1.xvel < 0 && p1.side == RIGHT)
+				p2.xvel = p1.xvel;
+		}
+		else if (p2.state == WALKING && p1.state != WALKING) {
+			if (p2.xvel > 0 && p2.side == LEFT)
+				p1.xvel = p2.xvel;
+			else if (p2.xvel < 0 && p2.side == RIGHT)
+				p1.xvel = p2.xvel;
+		}
+		// Set vel to 0 if both walking and velocities have oposite signs
+		else if (p1.state == WALKING && p2.state == WALKING) {
+			if ((p1.xvel > 0) != (p2.xvel > 0)) {
 				p2.xvel = 0;
 				p1.xvel = 0;
 			}
-		}
+		}	
 	}
 }
 

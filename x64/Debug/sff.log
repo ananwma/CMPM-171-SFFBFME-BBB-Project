@@ -1,30 +1,5 @@
-﻿Build started 2/29/2016 7:34:32 PM.
-     1>Project "C:\Users\mhgunnin\Source\Repos\sfffff\sff.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\mhgunnin\Desktop\SFML-2.3.2\include" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /sdl- /Od /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt FightState.cpp
-         FightState.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\mhgunnin\Source\Repos\sfffff\x64\Debug\sff.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\mhgunnin\Desktop\SFML-2.3.2\lib" /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win64" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-main-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" Winmm.lib vld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-main-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" Winmm.lib vld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\mhgunnin\Source\Repos\sfffff\x64\Debug\sff.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\mhgunnin\Source\Repos\sfffff\x64\Debug\sff.lib" /MACHINE:X64 x64\Debug\sff.res
-         x64\Debug\AssetManager.obj
-         x64\Debug\CameraControl.obj
-         x64\Debug\Character.obj
-         x64\Debug\CharacterBach.obj
-         x64\Debug\Collision.obj
-         x64\Debug\ConcertHallStage.obj
-         x64\Debug\FightState.obj
-         x64\Debug\Frame.obj
-         x64\Debug\GameStateManager.obj
-         x64\Debug\input.obj
-         x64\Debug\PauseState.obj
-         x64\Debug\Player.obj
-         x64\Debug\PlayerSelectState.obj
-         x64\Debug\ResultsState.obj
-         x64\Debug\sff.obj
-         x64\Debug\Stage.obj
-         x64\Debug\stdafx.obj
-         sff.vcxproj -> C:\Users\mhgunnin\Source\Repos\sfffff\x64\Debug\sff.exe
-     1>Done Building Project "C:\Users\mhgunnin\Source\Repos\sfffff\sff.vcxproj" (Build target(s)).
+﻿Build started 2/29/2016 8:25:33 PM.
 
 Build succeeded.
 
-Time Elapsed 00:00:01.11
+Time Elapsed 00:00:00.01

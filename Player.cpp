@@ -55,6 +55,8 @@ void Player::doMove(int move) {
 	if (state != ATTACKING && state != HITSTUN_STATE && state != AIRBORNE) {
 		if (state == WALKING)
 			xvel = 0;
+		if (move == IDLE)
+			xvel = 0;
 		character->currentMove = move;
 		getCurrentMove()->setHitFalse();
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
