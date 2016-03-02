@@ -1,14 +1,29 @@
-﻿  FightState.cpp
+﻿  Player.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\player.cpp(46): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\player.cpp(282): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\player.cpp(285): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  FightState.cpp
 c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(160): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(161): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(162): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(163): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(329): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(339): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(346): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(353): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(336): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(348): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(363): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(377): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
   Generating Code...
-  Skipping... (no relevant changes detected)
+  Compiling...
   sff.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  ResultsState.cpp
   PlayerSelectState.cpp
+  PauseState.cpp
+  Collision.cpp
+  CharacterBach.cpp
+  CameraControl.cpp
+  AssetManager.cpp
+  Generating Code...
   sff.vcxproj -> C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe

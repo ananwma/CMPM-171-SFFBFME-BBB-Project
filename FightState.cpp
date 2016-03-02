@@ -263,13 +263,20 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 				offsetHurt = tmp;
 			}
 			if (offsetHit.intersects(offsetHurt)) {
+				//on collision, checks first if player getting hit was holding block while being in the correct state
+				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACKING && defender.state != AIRBORNE) {
+					defender.block(attacker.getCurrentMove());
+				}
+				else {
+					//if not blocking, player gets hit
 				if (!attacker.getCurrentFrame().hit) {
-				cout << "hit!" << endl;
+					cout << "hit!" << endl;
 					defender.getHit(attacker.getCurrentMove());
 					attacker.getCurrentFrame().hit = true;
 				}
 				attacker.canCancel = true;
 				return;
+			}
 			}
 		}
 	}
@@ -320,9 +327,11 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 void FightState::processInput(Player& player, vector<int>& input) {
 	// Handle every possible combination of movement keys
 	if (player.left && player.jumping && player.right) {
+		player.holdingBlock = false;
 		player.jump(NEUTRAL);
 	}
 	else if (!player.left && player.jumping && player.right) {
+		player.holdingBlock = false;
 		player.jump(RIGHT);
 		if ((player.xpos + player.getSpriteWidth() >= WINDOW_WIDTH + player.character->wall_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
 			camera_view.move(player.character->walkspeed, 0);
@@ -330,9 +339,11 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	else if (player.left && !player.jumping && player.right) {
+		player.holdingBlock = false;
 		player.doMove(IDLE);
 	}
 	else if (player.left && player.jumping && !player.right) {
+		player.holdingBlock = false;
 		player.jump(LEFT);
 		if ((player.xpos + player.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
 			camera_view.move(-player.character->walkspeed, 0);
@@ -340,7 +351,15 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	else if (!player.left && !player.jumping && player.right) {
+
 		player.walk(RIGHT);
+		//check if player is holding correct direction to block
+		if (player.side == RIGHT) {
+			player.holdingBlock = true;
+		}
+		else {
+			player.holdingBlock = false;
+		}
 		if ((player.xpos + player.getSpriteWidth() >= WINDOW_WIDTH + player.character->wall_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
 			camera_view.move(player.character->walkspeed, 0);
 			game.currentScreen.stage.window_offset += player.character->walkspeed;
@@ -348,15 +367,24 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	}
 	else if (player.left && !player.jumping && !player.right) {
 		player.walk(LEFT);
+		//check if player is holding correct direction to block
+		if (player.side == LEFT) {
+			player.holdingBlock = true;
+		}
+		else {
+			player.holdingBlock = false;
+		}
 		if ((player.xpos + player.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
 			camera_view.move(-player.character->walkspeed, 0);
 			game.currentScreen.stage.window_offset -= player.character->walkspeed;
 		}
 	}
 	else if (!player.left && player.jumping && !player.right) {
+		player.holdingBlock = false;
 		player.jump(NEUTRAL);
 	}
 	else if (!player.left && !player.jumping && !player.right) {
+		player.holdingBlock = false;
 		player.doMove(IDLE);
 	}
 

@@ -19,6 +19,8 @@ BachShoryuken::BachShoryuken() {
 	damage = 100;
 	//Number of hitstun frames this causes
 	hitstun = 8;
+	//Number of blockstun frames this causes
+	blockstun = 4;
 	// Change in position on move
 	velY = -20;
 	// Change in opponents position

@@ -37,6 +37,7 @@ Player::Player()
 	lastMoveHit = false;
 	left = false;
 	jumping = false;
+	holdingBlock = false;
 	right = false;
 }
 
@@ -54,7 +55,7 @@ void Player::setPosition(float x, float y) {
 }
 
 void Player::doMove(int move) {
-	if (state != ATTACKING && state != HITSTUN_STATE && state != AIRBORNE) {
+	if (state != ATTACKING && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE) {
 		if (state == WALKING)
 			xvel = 0;
 		if (move == IDLE)
@@ -102,6 +103,34 @@ void Player::getHit(Move *move) {
 	}*/
 }
 
+void Player::block(Move *move) {
+	//if (state != BLOCKING) {
+	character->currentMove = BLOCK;
+	character->currentMoveFrame = 0;
+	blockstunFrames = move->blockstun;
+	character->sprite.setTexture(character->moveList.at(BLOCK)->spritesheet);
+	state = BLOCKSTUN_STATE;
+	//health -= move->damage;
+	int direction;
+	if (side == RIGHT) {
+		direction = 1;
+	}
+	else {
+		direction = -1;
+	}
+	xvel = move->pushX*direction;
+	yvel = move->pushY;
+	if (yvel < 0 || ypos < GROUND) state = AIRBORNE;
+	//}
+	/*else {
+	character->currentMove = BLOCKSTUN;
+	character->currentMoveFrame = 0;
+	character->sprite.setTexture(character->moveList.at(BLOCKSTUN)->spritesheet);
+	state = BLOCKSTUN_STATE;
+	health -= move->damage;
+	}*/
+}
+
 bool Player::moveCancelable(int currMove, int newMove) {
 	for (int i = 0; i < character->moveList.at(currMove)->cancelMoves.size(); i++){
 		if (newMove == character->moveList.at(currMove)->cancelMoves.at(i)) {
@@ -113,7 +142,7 @@ bool Player::moveCancelable(int currMove, int newMove) {
 
 void Player::walk(direction dir) {
 	// will need to add more later for figuring out which side player is on
-	if (state != ATTACKING && state != HITSTUN_STATE && state != AIRBORNE) {
+	if (state != ATTACKING && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = WALKING;
@@ -135,7 +164,7 @@ void Player::walk(direction dir) {
 }
 
 void Player::jump(direction dir) {
-	if (state != ATTACKING && state != HITSTUN_STATE && state != AIRBORNE) {
+	if (state != ATTACKING && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = AIRBORNE;
@@ -162,10 +191,14 @@ void Player::updateAnimFrame() {
 		character->currentMoveFrame = animFrames;
 		hitstunFrames -= 1;
 		}
-		else if (state == WALKING) {
+		else if (state == BLOCKSTUN_STATE && blockstunFrames != 0) {
+			character->currentMoveFrame = animFrames;
+			hitstunFrames -= 1;
+		}
+		else if (state == WALKING || state == IDLE) {
 			character->currentMoveFrame = 0;
 		}
-		else if (state == NONE || state == IDLE || state == ATTACKING || state == HITSTUN_STATE || state == AIRBORNE) {
+		else if (state == NONE || state == ATTACKING || state == HITSTUN_STATE || state == AIRBORNE) {
 			character->currentMoveFrame = 0;
 			character->currentMove = IDLE;
 			canCancel = false;

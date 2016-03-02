@@ -19,6 +19,8 @@ BachStrong::BachStrong() {
 	damage = 50;
 	//Number of hitstun frames this causes
 	hitstun = 5;
+	//Number of blockstun frames this causes
+	blockstun = 3;
 	// Change in position on move
 	// Change in opponents position
 	pushX = 5;

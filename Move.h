@@ -7,7 +7,7 @@ using namespace std;
 using BoxVec = vector<sf::FloatRect>;
 using FrameVec = vector<Frame>;
 
-enum state { NONE, WALKING, AIRBORNE, HITSTUN_STATE, ATTACKING, COLLIDING };
+enum state { NONE, WALKING, AIRBORNE, HITSTUN_STATE, ATTACKING, COLLIDING, BLOCKSTUN_STATE };
 
 class Move {
 	friend class Player;
@@ -25,6 +25,7 @@ protected:
 	vector<Frame> frameVector;
 	int damage;
 	int hitstun;
+	int blockstun;
 	float velX = 0;
 	float velY = 0;
 	float accX = 0;
