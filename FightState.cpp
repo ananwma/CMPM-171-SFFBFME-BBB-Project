@@ -35,7 +35,7 @@ void FightState::init() {
 	game.currentScreen.stage.window_offset = 0;
 
 	// Beat is in milliseconds, 1000 = 1 beat every 1 second
-	beat = 1000;
+	beat = 500;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 200;
 

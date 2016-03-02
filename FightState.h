@@ -57,7 +57,7 @@ private:
 	Collision collision;
 	ConcertHallStage chstage;
 	// Should fine tune these numbers at some point
-	float frameCounter = 0, switchFrame = 60, frameSpeed = 500;
+	float frameCounter = 0, switchFrame = 60, frameSpeed = 1000;
 	void checkBoxes(Player&, Player&);
 	void checkClipBoxes(Player&, Player&);
 	void drawBoxes(Player&, bool, bool, bool);

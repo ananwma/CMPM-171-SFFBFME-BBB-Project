@@ -24,6 +24,7 @@ protected:
 	int frameCount;
 	vector<Frame> frameVector;
 	int damage;
+	int hitstun;
 	float velX = 0;
 	float velY = 0;
 	float accX = 0;

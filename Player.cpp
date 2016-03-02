@@ -21,6 +21,7 @@ Player::Player()
 	//currentMoveFrame = 0;
 	//x = start_x;
 	//y = start_y;
+	hitstunFrames = 0;
 	meter = 1000.0f;
 	xpos = INIT_XPOS;
 	ypos = INIT_YPOS;
@@ -77,11 +78,19 @@ void Player::getHit(Move *move) {
 	//if (state != BLOCKING) {
 		character->currentMove = HITSTUN;
 		character->currentMoveFrame = 0;
+		hitstunFrames = move->hitstun;
 		character->sprite.setTexture(character->moveList.at(HITSTUN)->spritesheet);
 		state = HITSTUN_STATE;
 		health -= move->damage;
-		xvel = move->velX;
-		yvel = move->velY;
+		int direction;
+		if (side == RIGHT) {
+			direction = 1;
+		}
+		else {
+			direction = -1;
+		}
+		xvel = move->pushX*direction;
+		yvel = move->pushY;
 		if (yvel < 0 || ypos < GROUND) state = AIRBORNE;
 	//}
 	/*else {
@@ -148,8 +157,16 @@ void Player::updateAnimFrame() {
 	character->currentMoveFrame++;
 	int animFrames = ((getCurrentMove()->getFrameCount()) - 1);
 	if (getCurrentFrameNum() > animFrames) {
-		character->currentMoveFrame = 0;
-		if (state == ATTACKING || state == HITSTUN_STATE || state == AIRBORNE) {
+		
+		if (state == HITSTUN_STATE && hitstunFrames != 0) {
+		character->currentMoveFrame = animFrames;
+		hitstunFrames -= 1;
+		}
+		else if (state == WALKING) {
+			character->currentMoveFrame = 0;
+		}
+		else if (state == NONE || state == IDLE || state == ATTACKING || state == HITSTUN_STATE || state == AIRBORNE) {
+			character->currentMoveFrame = 0;
 			character->currentMove = IDLE;
 			canCancel = false;
 			getCurrentFrame().hit = false; 

@@ -33,6 +33,7 @@ public:
 	float deltaY;
 	float health;
 	float meter;
+	int hitstunFrames;
 	int roundWins;
 	int playerId;
 	direction side;

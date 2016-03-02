@@ -17,8 +17,11 @@ BachStrong::BachStrong() {
 	frameCount = 7;
 	// Damage
 	damage = 50;
+	//Number of hitstun frames this causes
+	hitstun = 5;
 	// Change in position on move
-
+	// Change in opponents position
+	pushX = 5;
 	// State move puts player in
 	state = ATTACKING;
 }

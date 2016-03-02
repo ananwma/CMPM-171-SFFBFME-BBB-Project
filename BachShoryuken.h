@@ -17,11 +17,13 @@ BachShoryuken::BachShoryuken() {
 	frameCount = 7;
 	// Damage
 	damage = 100;
+	//Number of hitstun frames this causes
+	hitstun = 8;
 	// Change in position on move
 	velY = -20;
 	// Change in opponents position
 	pushY = -20;
-	pushX = -20;
+	pushX = 15;
 	// State move puts player in
 	state = AIRBORNE;
 }

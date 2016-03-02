@@ -1,10 +1,14 @@
 ﻿  FightState.cpp
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(160): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(161): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(162): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(163): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(329): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(339): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(346): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(353): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(160): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(161): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(162): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(163): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(329): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(339): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(346): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(353): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  sff.cpp
+  PlayerSelectState.cpp
+  sff.vcxproj -> C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
