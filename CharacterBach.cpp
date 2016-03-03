@@ -7,6 +7,7 @@
 #include "BachHitstun.h"
 #include "BachStrong.h"
 #include "BachShoryuken.h"
+#include "BachBlockstun.h"
 
 using namespace std;
 
@@ -31,11 +32,13 @@ void Bach::initMoves() {
 	BachIdle* idle = new BachIdle;
 	BachHitstun* hitstun = new BachHitstun;
 	BachShoryuken* srk = new BachShoryuken;
+	BachBlockstun* blach = new BachBlockstun;
 	jab->initFrames();
 	jab->initCancelMoves();
 	idle->initFrames();
 	hitstun->initFrames();
 	strong->initFrames();
+	blach->initFrames();
 	srk->initFrames();
 	moveList[JAB] = jab;
 	moveList[IDLE] = idle;
@@ -43,5 +46,6 @@ void Bach::initMoves() {
 	moveList[JUMP] = idle;
 	moveList[HITSTUN] = hitstun;
 	moveList[STRONG] = strong;
+	moveList[BLOCK] = blach;
 	moveList[CMAJ] = srk;
 }

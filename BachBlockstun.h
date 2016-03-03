@@ -1,16 +1,16 @@
 #pragma once
 #include "Move.h"
 
-class BachIdle : public Move {
+class BachBlockstun : public Move {
 public:
-	BachIdle();
+	BachBlockstun();
 	virtual void initFrames();
 	virtual void initCancelMoves() {};
 };
 
-BachIdle::BachIdle() {
-	if (!spritesheet.loadFromFile("sprites/bach_idle.png")) {
-		std::cerr << "Error missing BachIdle sprites!\n";
+BachBlockstun::BachBlockstun() {
+	if (!spritesheet.loadFromFile("sprites/bach_block.png")) {
+		std::cerr << "Error missing BachBlockstun sprites!\n";
 		exit(EXIT_FAILURE);
 	}
 	// Number of animation frames
@@ -20,17 +20,17 @@ BachIdle::BachIdle() {
 	// Change in position on move
 
 	// State move puts player in
-	state = NO_STATE;
+	state = BLOCKSTUN_STATE;
 }
 
-void BachIdle::initFrames() {
+void BachBlockstun::initFrames() {
 	BoxVec hit;
 	BoxVec hurt;
 	BoxVec clip;
 	/***FRAME 1***/
-	clip.push_back(sf::FloatRect(155, 96, 148, 423));
-	hurt.push_back(sf::FloatRect(139, 289, 233, 239));
-	hurt.push_back(sf::FloatRect(125, 3, 226, 292));
+	clip.push_back(sf::FloatRect(129, 93, 160, 408));
+	hurt.push_back(sf::FloatRect(148, 277, 223, 226));
+	hurt.push_back(sf::FloatRect(100, 24, 221, 284));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();

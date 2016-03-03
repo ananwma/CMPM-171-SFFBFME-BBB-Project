@@ -17,10 +17,16 @@ BachJab::BachJab() {
 	frameCount = 5;
 	// Damage
 	damage = 20;
+	//Number of hitstun frames this causes
+	hitstun = 2;
+	//Number of blockstun frames this causes
+	blockstun = 1;
 	// Change in position on move
-
+	// Change in opponents position
+	
+	pushX = 2;
 	// State move puts player in
-	state = ATTACKING;
+	state = ATTACK_STATE;
 }
 
 void BachJab::initFrames() {

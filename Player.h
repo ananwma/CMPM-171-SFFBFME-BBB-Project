@@ -33,6 +33,8 @@ public:
 	float deltaY;
 	float health;
 	float meter;
+	int hitstunFrames;
+	int blockstunFrames;
 	int roundWins;
 	int playerId;
 	direction side;
@@ -48,11 +50,13 @@ public:
 	
 	int inputBuffer;
 	bool canCancel;
+	bool holdingBlock;
 	// currentSprite;
 	//int currentFrame;
 
 	void doMove(int);
 	void getHit(Move*);
+	void block(Move*);
 	bool moveCancelable(int, int);
 	void walk(direction);
 	void updateAnimFrame();

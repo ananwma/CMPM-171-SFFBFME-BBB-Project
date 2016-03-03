@@ -111,6 +111,9 @@
     <ClInclude Include="BachShoryuken.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="BachBlockstun.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
