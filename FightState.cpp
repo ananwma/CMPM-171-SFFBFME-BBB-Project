@@ -13,8 +13,6 @@
 
 using namespace std;
 
-// Some globals for testing
-sf::CircleShape shape(100.f);
 FightState::FightState(Game &_game) : game(_game) { }
 
 void FightState::init() {
@@ -24,12 +22,6 @@ void FightState::init() {
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 
-	// Initialize input vectors, 127 possible midi notes
-	//for (int i = 0; i < 127; i++) {
-	//	inputP1.push_back(false);
-	//	inputP2.push_back(false);
-	//}
-
 	game.currentScreen.setStage(chstage);
 	game.currentScreen.stage.sprite.move(-200, 0);
 	game.currentScreen.stage.window_offset = 0;
@@ -37,7 +29,7 @@ void FightState::init() {
 	// Beat is in milliseconds, 1000 = 1 beat every 1 second
 	beat = 500;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
-	beatThreshold = 200;
+	beatThreshold = 100;
 
 	// Later move this to character selection state
 	Bach* bach = new Bach();
@@ -50,15 +42,15 @@ void FightState::init() {
 	game.playerTwo.setCharacter(bach2);
 	game.playerTwo.character->initMoves();
 	game.playerTwo.doMove(IDLE);
-	game.playerTwo.character->currentMoveFrame = 0;	
+	game.playerTwo.character->currentMoveFrame = 0;
 	game.playerTwo.setPosition(400, 100);
 	game.playerTwo.side = RIGHT;
-	
-	player_1_HP.setSize(sf::Vector2f(400,30));
+
+	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
-	player_2_HP.setSize(sf::Vector2f(400,30));
+	player_2_HP.setSize(sf::Vector2f(400, 30));
 	player_2_HP.setFillColor(sf::Color(100, 250, 50));
-	player_2_HP.setPosition(WINDOW_WIDTH-400,0);
+	player_2_HP.setPosition(WINDOW_WIDTH - 400, 0);
 
 	player_1_meter.setPosition(0, 35);
 	player_1_meter.setSize(sf::Vector2f(400, 30));
@@ -166,7 +158,7 @@ void FightState::update() {
 	player_1_HP.setSize(p1HP);
 	player_2_HP.setSize(p2HP);
 	player_1_meter.setSize(p1M);
-	player_2_meter.setSize(p2M); 
+	player_2_meter.setSize(p2M);
 }
 
 void FightState::draw() {
@@ -201,21 +193,21 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
 		sf::FloatRect intersectBox;
 		if (offsetClipBox1.intersects(offsetClipBox2)) {
-			// Set vel of player not walking to player that is walking
-			if (p1.state == WALKING && p2.state != WALKING) {
+			// Set vel of player not WALK_STATE to player that is WALK_STATE
+			if (p1.state == WALK_STATE && p2.state != WALK_STATE) {
 				if (p1.xvel > 0 && p1.side == LEFT)
 					p2.xvel = p1.xvel;
 				else if (p1.xvel < 0 && p1.side == RIGHT)
 					p2.xvel = p1.xvel;
 			}
-			else if (p2.state == WALKING && p1.state != WALKING) {
+			else if (p2.state == WALK_STATE && p1.state != WALK_STATE) {
 				if (p2.xvel > 0 && p2.side == LEFT)
 					p1.xvel = p2.xvel;
 				else if (p2.xvel < 0 && p2.side == RIGHT)
 					p1.xvel = p2.xvel;
 			}
-			// Set vel to 0 if both walking and velocities have oposite signs
-			else if (p1.state == WALKING && p2.state == WALKING) {
+			// Set vel to 0 if both WALK_STATE and velocities have oposite signs
+			else if (p1.state == WALK_STATE && p2.state == WALK_STATE) {
 				if ((p1.xvel > 0) != (p2.xvel > 0)) {
 					p2.xvel = 0;
 					p1.xvel = 0;
@@ -223,7 +215,7 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 			}
 
 			// this part isnt ideal but good enough for demo
-			else if (p1.state != WALKING && p2.state != WALKING) {
+			else if (p1.state != WALK_STATE && p2.state != WALK_STATE) {
 				if (p1.side == LEFT) {
 					//p1.xvel = p2.xvel;
 					p2.xvel = 10;
@@ -264,19 +256,19 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			}
 			if (offsetHit.intersects(offsetHurt)) {
 				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACKING && defender.state != AIRBORNE) {
+				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
 					defender.block(attacker.getCurrentMove());
 				}
 				else {
 					//if not blocking, player gets hit
-				if (!attacker.getCurrentFrame().hit) {
-					cout << "hit!" << endl;
-					defender.getHit(attacker.getCurrentMove());
-					attacker.getCurrentFrame().hit = true;
+					if (!attacker.getCurrentFrame().hit) {
+						cout << "hit!" << endl;
+						defender.getHit(attacker.getCurrentMove());
+						attacker.getCurrentFrame().hit = true;
+					}
+					attacker.canCancel = true;
+					return;
 				}
-				attacker.canCancel = true;
-				return;
-			}
 			}
 		}
 	}
@@ -296,7 +288,7 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
 			drawRect.setFillColor(sf::Color(200, 40, 40, 120));
 			game.window.draw(drawRect);
-		}		
+		}
 	}
 	if (hurt) {
 		for (auto box : frame.hurtboxes) {
@@ -320,7 +312,7 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
 			drawRect.setFillColor(sf::Color(200, 200, 40, 120));
 			game.window.draw(drawRect);
-}
+		}
 	}
 }
 
@@ -399,7 +391,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 			   left shifted its distance away from middle C, ie C is 1, D is 10, E is 100,
 			   and so on. These numbers are OR'd together to make something like 10010001,
 			   which represents a C Major triad. To handle octaves, the number is right shifted
-			   12 times again and again until there are at most eleven trailing 0's in the 
+			   12 times again and again until there are at most eleven trailing 0's in the
 			   binary number. When that happens, we know the octave has been normalized. */
 			if (input.size() < 5) {
 				DWORD_PTR acc = 0;
@@ -415,23 +407,23 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				}
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
-				bitset<64> bin(acc);
 				cout << hex << acc << endl;
-				if (onBeat) {
-					if (acc == C_NATURAL) {
-						player.doMove(JAB);
-					}
-					else if (acc == D_NATURAL) {
-						player.doMove(STRONG);
-					}
-					else if (acc == F_NATURAL) {
-					}
-					else if (acc == C_MAJOR) {
-						player.doMove(CMAJ);
-					}
+				if (acc == C_NATURAL) {
+					player.doMove(JAB);
 				}
-				else {
-					player.doMove(HITSTUN);
+				else if (acc == D_NATURAL) {
+					player.doMove(STRONG);
+				}
+				else if (acc == F_NATURAL) {
+				}
+				else if (acc == C_MAJOR) {
+					player.doMove(CMAJ);
+				}
+				else if (acc == F_MAJOR_64) {
+					player.doMove(CMAJ);
+				}
+				else if (acc == G_MAJOR_6) {
+					player.doMove(CMAJ);
 				}
 			}
 			else {
@@ -443,26 +435,36 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 // Everything here is run on its own thread!
 void FightState::receiveKeysDown(int note, int playerId) {
-	if (playerId == game.playerOne.playerId) {
-		// Movement keys
-		if (note == 48) game.playerOne.left = true;
-		else if (note == 52) game.playerOne.jumping = true;
-		else if (note == 55) game.playerOne.right = true;
-		// Attack keys
-		else {
-			inputP1.push_back(note);
+	onBeat = true;
+	
+		
+		if (playerId == game.playerOne.playerId) {
+			// Movement keys
+			if (note == 48) game.playerOne.left = true;
+			else if (note == 52) game.playerOne.jumping = true;
+			else if (note == 55) game.playerOne.right = true;
+			// Attack keys
+			else {
+				if (onBeat) {
+					inputP1.push_back(note);
+					game.inputHandler->playNote(note);
+				}
+			}
 		}
-	}
-	else if (playerId == game.playerTwo.playerId) {
-		// Movement keys
-		if (note == 48) game.playerTwo.left = true;
-		else if (note == 52) game.playerTwo.jumping = true;
-		else if (note == 55) game.playerTwo.right = true;
-		// Attack keys
-		else {
-			inputP2.push_back(note);
+		else if (playerId == game.playerTwo.playerId) {
+			// Movement keys
+			if (note == 48) game.playerTwo.left = true;
+			else if (note == 52) game.playerTwo.jumping = true;
+			else if (note == 55) game.playerTwo.right = true;
+			// Attack keys
+			else {
+				if (onBeat) {
+					inputP2.push_back(note);
+					game.inputHandler->playNote(note);
+				}
+			}
 		}
-	}
+	
 }
 
 void FightState::receiveKeysUp(int note, int playerId) {

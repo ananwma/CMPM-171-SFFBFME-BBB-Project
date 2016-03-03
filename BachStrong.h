@@ -25,7 +25,7 @@ BachStrong::BachStrong() {
 	// Change in opponents position
 	pushX = 5;
 	// State move puts player in
-	state = ATTACKING;
+	state = ATTACK_STATE;
 }
 
 void BachStrong::initFrames() {

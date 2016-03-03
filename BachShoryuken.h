@@ -27,7 +27,7 @@ BachShoryuken::BachShoryuken() {
 	pushY = -20;
 	pushX = 15;
 	// State move puts player in
-	state = AIRBORNE;
+	state = AIRBORNE_STATE;
 }
 
 void BachShoryuken::initFrames() {
