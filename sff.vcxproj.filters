@@ -114,6 +114,15 @@
     <ClInclude Include="BachBlockstun.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="BachRoundhouse.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachForward.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachShort.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

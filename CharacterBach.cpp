@@ -8,6 +8,9 @@
 #include "BachStrong.h"
 #include "BachShoryuken.h"
 #include "BachBlockstun.h"
+#include "BachShort.h"
+#include "BachForward.h"
+#include "BachRoundhouse.h"
 
 using namespace std;
 
@@ -33,6 +36,9 @@ void Bach::initMoves() {
 	BachHitstun* hitstun = new BachHitstun;
 	BachShoryuken* srk = new BachShoryuken;
 	BachBlockstun* blach = new BachBlockstun;
+	BachShort* shrt = new BachShort;
+	BachForward* forward = new BachForward;
+	BachRoundhouse* roundhouse = new BachRoundhouse;
 	jab->initFrames();
 	jab->initCancelMoves();
 	idle->initFrames();
@@ -40,6 +46,9 @@ void Bach::initMoves() {
 	strong->initFrames();
 	blach->initFrames();
 	srk->initFrames();
+	shrt->initFrames();
+	forward->initFrames();
+	roundhouse->initFrames();
 	moveList[JAB] = jab;
 	moveList[IDLE] = idle;
 	moveList[WALK] = idle;
@@ -47,5 +56,8 @@ void Bach::initMoves() {
 	moveList[HITSTUN] = hitstun;
 	moveList[STRONG] = strong;
 	moveList[BLOCK] = blach;
+	moveList[SHRT] = shrt;
+	moveList[FORWARD] = forward;
+	moveList[ROUNDHOUSE] = roundhouse;
 	moveList[CMAJ] = srk;
 }

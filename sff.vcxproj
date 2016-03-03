@@ -163,9 +163,12 @@
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="BachBlockstun.h" />
+    <ClInclude Include="BachForward.h" />
     <ClInclude Include="BachHitstun.h" />
     <ClInclude Include="BachIdle.h" />
     <ClInclude Include="BachJab.h" />
+    <ClInclude Include="BachRoundhouse.h" />
+    <ClInclude Include="BachShort.h" />
     <ClInclude Include="BachShoryuken.h" />
     <ClInclude Include="BachStrong.h" />
     <ClInclude Include="CameraControl.h" />
