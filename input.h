@@ -136,8 +136,9 @@ public:
 	// Opens device
 	int prepareDevices();
 
-	// Method foR 0xadjusting output volume, takes value 0-127
+	// Methods for midi out operations
 	void setVolume(unsigned int);
+	void playNote(unsigned int);
 
 	// Event functions, has no implementation
 	__event void sendKeysDown(int, int);

@@ -15,7 +15,8 @@ void InputHandler::parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2
 	int byte2 = (dwParam1 >> 16) & 0xFF;
 	int byte3 = (dwParam1 >> 8) & 0xFF;
 	int byte4 = dwParam1 & 0xFF;
-	midiOutShortMsg(midout, dwParam1);
+	
+	//midiOutShortMsg(midout, dwParam1);
 	if (byte4 == NOTE_ON) {
 		if (byte2 != 0) {
 			//notes.push_back(byte3);
@@ -84,5 +85,12 @@ int InputHandler::prepareDevices() {
 void InputHandler::setVolume(unsigned int vol) {
 	assert(vol < 128 && "Volume value must be between 0 and 127");
 	DWORD_PTR msg = vol << 16 | 0x07B0;
+	midiOutShortMsg(midout, msg);
+}
+
+void InputHandler::playNote(unsigned int note) {
+	assert(note < 128 && "Volume value must be between 0 and 127");
+	int velocity = 50;
+	DWORD_PTR msg = velocity << 16 | note << 8 | NOTE_ON;
 	midiOutShortMsg(midout, msg);
 }

@@ -50,10 +50,10 @@ void FightState::init() {
 	game.playerTwo.setCharacter(bach2);
 	game.playerTwo.character->initMoves();
 	game.playerTwo.doMove(IDLE);
-	game.playerTwo.character->currentMoveFrame = 0;	
+	game.playerTwo.character->currentMoveFrame = 0;
 	game.playerTwo.setPosition(400, 100);
 	game.playerTwo.side = RIGHT;
-	
+
 	// Possibly move this to asset manager in future
 	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
 		cerr << "Could not load sound!\n";
@@ -104,7 +104,7 @@ void FightState::update() {
 	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
 	if (game.playerOne.xpos <= 0) {
 		game.currentScreen.move_camera_left(game.currentScreen.stage, game.playerTwo, game.playerOne);
-		if (game.playerOne.xpos < -200) 
+		if (game.playerOne.xpos < -200)
 			game.playerOne.setPosition(-200, game.playerOne.ypos);
 	}
 	if (game.playerOne.xpos + game.playerOne.getSpriteWidth() >= 1280) {
@@ -249,7 +249,7 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
 			drawRect.setFillColor(sf::Color(200, 40, 40, 120));
 			game.window.draw(drawRect);
-		}		
+		}
 	}
 	if (hurt) {
 		for (auto box : frame.hurtboxes) {
@@ -303,7 +303,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	else if (!player.left && !player.jumping && !player.right) {
 		player.doMove(IDLE);
 	}
-	
+
 	if (!input.empty()) {
 		if (!inputOpen) {
 			inputClock.restart();
@@ -315,7 +315,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 			   left shifted its distance away from middle C, ie C is 1, D is 10, E is 100,
 			   and so on. These numbers are OR'd together to make something like 10010001,
 			   which represents a C Major triad. To handle octaves, the number is right shifted
-			   12 times again and again until there are at most eleven trailing 0's in the 
+			   12 times again and again until there are at most eleven trailing 0's in the
 			   binary number. When that happens, we know the octave has been normalized. */
 			if (input.size() < 5) {
 				DWORD_PTR acc = 0;
@@ -332,7 +332,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				bitset<64> bin(acc);
-				cout << hex << acc << endl;
+				//cout << hex << acc << endl;
 				if (onBeat) {
 					if (acc == C_NATURAL) {
 						player.doMove(JAB);
@@ -357,24 +357,27 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 // Everything here is run on its own thread!
 void FightState::receiveKeysDown(int note, int playerId) {
-	if (playerId == game.playerOne.playerId) {
-		// Movement keys
-		if (note == 48) game.playerOne.left = true;
-		else if (note == 52) game.playerOne.jumping = true;
-		else if (note == 55) game.playerOne.right = true;
-		// Attack keys
-		else {
-			inputP1.push_back(note);
+	if (onBeat) {
+		game.inputHandler->playNote(note);
+		if (playerId == game.playerOne.playerId) {
+			// Movement keys
+			if (note == 48) game.playerOne.left = true;
+			else if (note == 52) game.playerOne.jumping = true;
+			else if (note == 55) game.playerOne.right = true;
+			// Attack keys
+			else {
+				inputP1.push_back(note);
+			}
 		}
-	}
-	else if (playerId == game.playerTwo.playerId) {
-		// Movement keys
-		if (note == 48) game.playerTwo.left = true;
-		else if (note == 52) game.playerTwo.jumping = true;
-		else if (note == 55) game.playerTwo.right = true;
-		// Attack keys
-		else {
-			inputP2.push_back(note);
+		else if (playerId == game.playerTwo.playerId) {
+			// Movement keys
+			if (note == 48) game.playerTwo.left = true;
+			else if (note == 52) game.playerTwo.jumping = true;
+			else if (note == 55) game.playerTwo.right = true;
+			// Attack keys
+			else {
+				inputP2.push_back(note);
+			}
 		}
 	}
 }
