@@ -432,8 +432,8 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
 				}
-				else if (acc == G_MAJOR_6) {
-					player.doMove(CMAJ);
+				else if (acc == G_MAJOR) {
+					player.doMove(GMAJ);
 				}
 			}
 			else {

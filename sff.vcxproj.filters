@@ -126,6 +126,9 @@
     <ClInclude Include="BachFierce.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="BachTatsu.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

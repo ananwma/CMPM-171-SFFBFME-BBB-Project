@@ -172,6 +172,7 @@
     <ClInclude Include="BachShort.h" />
     <ClInclude Include="BachShoryuken.h" />
     <ClInclude Include="BachStrong.h" />
+    <ClInclude Include="BachTatsu.h" />
     <ClInclude Include="CameraControl.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterBach.h" />
