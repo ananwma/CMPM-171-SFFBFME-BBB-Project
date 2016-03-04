@@ -11,6 +11,7 @@
 #include "BachShort.h"
 #include "BachForward.h"
 #include "BachRoundhouse.h"
+#include "BachFierce.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ void Bach::initMoves() {
 	// Clean up these pointers somewhere 
 	BachJab* jab = new BachJab;
 	BachStrong* strong = new BachStrong;
+	BachFierce* fierce = new BachFierce;
 	BachIdle* idle = new BachIdle;
 	BachHitstun* hitstun = new BachHitstun;
 	BachShoryuken* srk = new BachShoryuken;
@@ -44,6 +46,7 @@ void Bach::initMoves() {
 	idle->initFrames();
 	hitstun->initFrames();
 	strong->initFrames();
+	fierce->initFrames();
 	blach->initFrames();
 	srk->initFrames();
 	shrt->initFrames();
@@ -55,6 +58,7 @@ void Bach::initMoves() {
 	moveList[JUMP] = idle;
 	moveList[HITSTUN] = hitstun;
 	moveList[STRONG] = strong;
+	moveList[FIERCE] = fierce;
 	moveList[BLOCK] = blach;
 	moveList[SHRT] = shrt;
 	moveList[FORWARD] = forward;

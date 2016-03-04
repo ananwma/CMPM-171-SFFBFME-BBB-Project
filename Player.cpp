@@ -66,6 +66,10 @@ void Player::doMove(int move) {
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
 		yvel = getCurrentMove()->velY;
+		if (side == LEFT)
+			xvel = getCurrentMove()->velX;
+		else if (side == RIGHT)
+			xvel = -getCurrentMove()->velX;
 	}
 	else if (state == ATTACK_STATE && canCancel && moveCancelable(character->currentMove, move)) {
 		character->currentMove = move;

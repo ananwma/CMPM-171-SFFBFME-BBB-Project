@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="BachBlockstun.h" />
+    <ClInclude Include="BachFierce.h" />
     <ClInclude Include="BachForward.h" />
     <ClInclude Include="BachHitstun.h" />
     <ClInclude Include="BachIdle.h" />

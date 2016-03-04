@@ -10,3 +10,5 @@
 /sprites/out
 /sprites/bach_furious_fugue_flail.psd
 /sprites/bach_furious_fugue_flail.rar
+/x64/Debug/sff.tlog
+*.obj

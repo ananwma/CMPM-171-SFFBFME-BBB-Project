@@ -414,6 +414,9 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);
 				}
+				else if (acc == E_NATURAL) {
+					player.doMove(FIERCE);
+				}
 				else if (acc == F_NATURAL) {
 					player.doMove(SHRT);
 				}

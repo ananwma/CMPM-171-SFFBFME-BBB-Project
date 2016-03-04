@@ -18,7 +18,7 @@ BachRoundhouse::BachRoundhouse() {
 	// Damage
 	damage = 80;
 	// Change in attacker's position on move
-	velX = 0;
+	velX = 5;
 	velY = 0;
 	// Change in opponent's position on move
 	pushX = 6;
