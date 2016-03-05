@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Character.h"
 #include "Player.h"
+#include <time.h> 
 #define WALL_WIDTH 1280
 #define INIT_XPOS 20
 #define INIT_YPOS 400
@@ -10,17 +11,7 @@
 
 Player::Player()
 {
-	/*if (!pTexture.loadFromFile(character->spritesheet))
-		std::cout << "Error could not load player image" << std::endl;
-	pImage.setTexture(pTexture);
-	health = 100;
-	meter = 0;
-	roundWins = 0;
-	canCancel = false;*/
 	playerId = -1;
-	//currentMoveFrame = 0;
-	//x = start_x;
-	//y = start_y;
 	hitstunFrames = 0;
 	meter = 1000.0f;
 	xpos = INIT_XPOS;
@@ -29,8 +20,6 @@ Player::Player()
 	yvel = 0.0f;
 	xacc = 0.0f;
 	yacc = 0.0f;
-	// Gravity
-	//yacc = 1.0f;
 	state = NO_STATE;
 	colliding = false;
 	canCancel = false;
@@ -45,13 +34,14 @@ void Player::setCharacter(Character* c) {
 	character = c;
 	health = character->health;
 	side = LEFT;
+	srand(time(NULL));
+	character->sprite.setColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
 }
 
 void Player::setPosition(float x, float y) {
 	character->sprite.setPosition(x, y);
 	xpos = x;
 	ypos = y;
-	//updateBoxes(x, y);
 }
 
 void Player::doMove(int move) {
@@ -245,26 +235,12 @@ void Player::updatePhysics() {
 			ypos = GROUND;
 			yvel = 0.0f;
 			xvel = 0.0f;
-			state = NO_STATE;
+			if (state != ATTACK_STATE)
+				state = NO_STATE;
 		}
 	}
-
-
-	/*if (ypos >= 100) {
-		ypos = 100;
-		yvel = 0;
-		if (state == AIRBORNE_STATE) {
-			state = NO_STATE;
-			xvel = 0;
-		}
-		xvel = 0;
-		// dont go below ground
-		character->sprite.setPosition(xpos, 100);
-	}
-	else
-		state = AIRBORNE_STATE;*/
-
-	if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
+	//if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
+	if((character->sprite.getPosition().x-200 <= 0)||(character->sprite.getPosition().x+200 >= 1280)){
 		xvel = 0;
 	}
 	character->sprite.setPosition(xpos, ypos);

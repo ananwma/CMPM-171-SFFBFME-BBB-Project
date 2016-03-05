@@ -71,6 +71,26 @@ void FightState::init() {
 	}
 	metronomeSound.setBuffer(metronomeSoundBuffer);
 
+	if (!hitSoundBuffer.loadFromFile("sounds/hit.wav")) {
+		cerr << "Could not load sound!\n";
+		exit(EXIT_FAILURE);
+	}
+	hitSound.setBuffer(hitSoundBuffer);
+
+	if (!blockSoundBuffer.loadFromFile("sounds/block.wav")) {
+		cerr << "Could not load sound!\n";
+		exit(EXIT_FAILURE);
+	}
+	blockSound.setBuffer(blockSoundBuffer);
+
+	hitSound.setVolume(50);
+
+	octave = true;
+	accompanimentIndex = 0;
+	accompaniment.push_back(36);
+	accompaniment.push_back(38);
+	accompaniment.push_back(41);
+	accompaniment.push_back(43);
 }
 
 void FightState::update() {
@@ -96,7 +116,18 @@ void FightState::update() {
 	if (metronome.getElapsedTime().asMilliseconds() > beat) {
 		//cout << "beat" << endl;
 		metronome.restart();
-		metronomeSound.play();
+		//metronomeSound.play();
+		game.inputHandler->playNote(accompaniment.at(accompanimentIndex));
+		++accompanimentIndex %= accompaniment.size();
+
+		/*if (octave) {
+			game.inputHandler->playNote(36);
+			octave = false;
+		}
+		else {
+			game.inputHandler->playNote(48);
+			octave = true;
+		}*/
 	}
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
@@ -166,8 +197,8 @@ void FightState::draw() {
 	game.window.draw(game.currentScreen.stage.sprite);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
-	drawBoxes(game.playerOne, 1, 1, 1);
-	drawBoxes(game.playerTwo, 1, 1, 1);
+	drawBoxes(game.playerOne, 0, 0, 0);
+	drawBoxes(game.playerTwo, 0, 0, 0);
 	game.window.setView(HUD);
 	game.window.draw(player_1_HP);
 	game.window.draw(player_2_HP);
@@ -265,6 +296,10 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 						cout << "hit!" << endl;
 						defender.getHit(attacker.getCurrentMove());
 						attacker.getCurrentFrame().hit = true;
+						if (defender.holdingBlock)
+							blockSound.play();
+						else
+							hitSound.play();
 					}
 					attacker.canCancel = true;
 					return;
@@ -331,7 +366,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	else if (player.left && !player.jumping && player.right) {
-		player.holdingBlock = false;
+		player.holdingBlock = true;
 		player.doMove(IDLE);
 	}
 	else if (player.left && player.jumping && !player.right) {
@@ -435,6 +470,10 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
 				}
+				//cheats
+				else if (acc == 0x540) {
+					player.health = 1000;
+				}
 			}
 			else {
 				input.clear();
@@ -445,9 +484,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 // Everything here is run on its own thread!
 void FightState::receiveKeysDown(int note, int playerId) {
-	onBeat = true;
-	
-		
 		if (playerId == game.playerOne.playerId) {
 			// Movement keys
 			if (note == 48) game.playerOne.left = true;

@@ -49,6 +49,9 @@ private:
 	int intOnBeat;
 	int beat;
 	int beatThreshold;
+	bool octave;
+	vector<int> accompaniment;
+	int accompanimentIndex;
 	vector<int> inputP1;
 	vector<int> inputP2;
 	vector<int> inputBuffer;
@@ -64,4 +67,8 @@ private:
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;
+	sf::SoundBuffer hitSoundBuffer;
+	sf::Sound hitSound;
+	sf::SoundBuffer blockSoundBuffer;
+	sf::Sound blockSound;
 };

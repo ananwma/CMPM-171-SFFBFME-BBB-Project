@@ -23,6 +23,7 @@ BachShoryuken::BachShoryuken() {
 	blockstun = 4;
 	// Change in position on move
 	velY = -20;
+	velX = 3;
 	// Change in opponents position
 	pushY = -20;
 	pushX = 15;

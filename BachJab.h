@@ -18,7 +18,7 @@ BachJab::BachJab() {
 	// Damage
 	damage = 20;
 	//Number of hitstun frames this causes
-	hitstun = 2;
+	hitstun = 5;
 	//Number of blockstun frames this causes
 	blockstun = 1;
 	// Change in position on move
