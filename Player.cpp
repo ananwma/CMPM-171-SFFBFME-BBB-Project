@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Character.h"
 #include "Player.h"
+#include "BeatIndicator.h"
 #include <time.h> 
 #define WALL_WIDTH 1280
 #define INIT_XPOS 20
@@ -245,6 +246,8 @@ void Player::updatePhysics() {
 	}
 	character->sprite.setPosition(xpos, ypos);
 }
+
+
 int Player::getCurrentMoveNum() {
 	return character->currentMove;
 }

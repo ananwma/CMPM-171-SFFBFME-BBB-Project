@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Player.h"
 #include "Collision.h"
+#include "BeatIndicator.h"
 #include "ConcertHallStage.h"
 #include <SFML/Audio.hpp>
 
@@ -27,6 +28,8 @@ public:
 	sf::View HUD;
 	sf::RectangleShape player_1_HP;
 	sf::RectangleShape player_2_HP;
+	BeatIndicator player_1_beatIndicator;
+	BeatIndicator player_2_beatIndicator;
 	sf::RectangleShape player_1_meter;
 	sf::RectangleShape player_2_meter;
 	void processInput(Player&, vector<int>&);
@@ -49,6 +52,7 @@ private:
 	int intOnBeat;
 	int beat;
 	int beatThreshold;
+	int indicatorFlash;
 	bool octave;
 	vector<int> accompaniment;
 	int accompanimentIndex;

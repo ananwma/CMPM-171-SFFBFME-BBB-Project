@@ -8,6 +8,7 @@
 #include "FightState.h"
 #include "PauseState.h"
 #include "ResultsState.h"
+#include "BeatIndicator.h"
 // tmp
 #include "CharacterBach.h"
 
@@ -30,6 +31,9 @@ void FightState::init() {
 	beat = 500;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100;
+
+	// Number of frames to leave indicator on
+	indicatorFlash = 15;
 
 	// Later move this to character selection state
 	Bach* bach = new Bach();
@@ -58,6 +62,9 @@ void FightState::init() {
 	player_2_meter.setSize(sf::Vector2f(400, 30));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
+	
+	game.playerOne.indicator.bSprite.setPosition(0,50);
+	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
 	camera_view.setCenter(640, 300);
 	camera_view.setSize(1280, 600);
@@ -112,7 +119,16 @@ void FightState::update() {
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
 		onBeat = true;
+		game.playerOne.indicator.updateIndicator(NONE);
+		game.playerTwo.indicator.updateIndicator(NONE);
 	}
+
+	if ((metronome.getElapsedTime().asMilliseconds()) > (300 * beat) / 500) {
+		game.playerOne.indicator.updateIndicator(NOBEAT);
+		game.playerTwo.indicator.updateIndicator(NOBEAT);
+	}
+	
+
 	if (metronome.getElapsedTime().asMilliseconds() > beat) {
 		//cout << "beat" << endl;
 		metronome.restart();
@@ -190,6 +206,8 @@ void FightState::update() {
 	player_2_HP.setSize(p2HP);
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
+	
+	
 }
 
 void FightState::draw() {
@@ -204,6 +222,8 @@ void FightState::draw() {
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
+	game.window.draw(game.playerOne.indicator.bSprite);
+	game.window.draw(game.playerTwo.indicator.bSprite);
 	game.window.display();
 }
 
@@ -443,6 +463,10 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
+			
+				player.indicator.updateIndicator(ONBEAT);
+			
+
 				if (acc == C_NATURAL) {
 					player.doMove(JAB);
 				}

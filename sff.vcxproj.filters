@@ -129,6 +129,9 @@
     <ClInclude Include="BachTatsu.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="BeatIndicator.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -181,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="ResultsState.cpp">
       <Filter>GameStates\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BeatIndicator.cpp">
+      <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,1 +1,10 @@
-﻿  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe
+﻿  FightState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(199): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(200): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(201): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(202): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(385): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(397): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(412): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(426): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  sff.vcxproj -> C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
