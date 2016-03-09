@@ -23,7 +23,7 @@ void InputHandler::parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2
 			sendKeysUp(byte3, (int)hMidiIn);
 		}
 	} 
-	else if (byte4 == NOTE_OFF) {
+	else if (byte4 >> 4 == NOTE_OFF) {
 		sendKeysUp(byte3, (int)hMidiIn);
 	}
 
