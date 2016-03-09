@@ -173,7 +173,11 @@
     <ClInclude Include="BachShoryuken.h" />
     <ClInclude Include="BachStrong.h" />
     <ClInclude Include="BachTatsu.h" />
+<<<<<<< HEAD
     <ClInclude Include="BeatIndicator.h" />
+=======
+    <ClInclude Include="Bassline.h" />
+>>>>>>> 17a9de412d278f01aa4d91970378172da2a182f9
     <ClInclude Include="CameraControl.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterBach.h" />
@@ -198,7 +202,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="BeatIndicator.cpp" />
+=======
+    <ClCompile Include="Bassline.cpp" />
+>>>>>>> 17a9de412d278f01aa4d91970378172da2a182f9
     <ClCompile Include="CameraControl.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterBach.cpp" />

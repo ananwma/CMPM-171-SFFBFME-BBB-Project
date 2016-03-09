@@ -130,6 +130,7 @@
       <Filter>Bach</Filter>
     </ClInclude>
     <ClInclude Include="BeatIndicator.h">
+    <ClInclude Include="Bassline.h">
       <Filter>sff headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,7 +186,11 @@
     <ClCompile Include="ResultsState.cpp">
       <Filter>GameStates\Source</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="BeatIndicator.cpp">
+=======
+    <ClCompile Include="Bassline.cpp">
+>>>>>>> 17a9de412d278f01aa4d91970378172da2a182f9
       <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>

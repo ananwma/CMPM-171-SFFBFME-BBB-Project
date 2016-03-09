@@ -6,6 +6,7 @@
 #include "Collision.h"
 #include "BeatIndicator.h"
 #include "ConcertHallStage.h"
+#include "Bassline.h"
 #include <SFML/Audio.hpp>
 
 class FightState : public GameState {
@@ -54,8 +55,8 @@ private:
 	bool octave;
 
 	bool played;
-	vector<int> accompaniment;
-	int accompanimentIndex;
+	Bassline bassline;
+	bool quarterNote = true;
 	vector<int> inputP1;
 	vector<int> inputP2;
 	vector<int> inputBuffer;

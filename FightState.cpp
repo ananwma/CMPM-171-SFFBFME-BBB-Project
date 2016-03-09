@@ -14,7 +14,8 @@
 
 using namespace std;
 
-FightState::FightState(Game &_game) : game(_game) { }
+FightState::FightState(Game &_game) : game(_game), bassline(game, { 36, 48, 41, 53, 43, 55 }, 70) {
+}
 
 void FightState::init() {
 	cout << game.playerOne.playerId << endl;
@@ -71,6 +72,7 @@ void FightState::init() {
 	HUD.setCenter(640, 300);
 	HUD.setSize(1280, 600);
 	game.window.setView(camera_view);
+
 	// Possibly move this to asset manager in future
 	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
 		cerr << "Could not load sound!\n";
@@ -91,16 +93,8 @@ void FightState::init() {
 	blockSound.setBuffer(blockSoundBuffer);
 
 	hitSound.setVolume(50);
-	accompanimentIndex = 0;
-	accompaniment.push_back(36);
-	accompaniment.push_back(48);
 
-	accompaniment.push_back(41);
-	accompaniment.push_back(53);
-
-	accompaniment.push_back(43); 
-	accompaniment.push_back(55);
-	game.inputHandler->setInstrument(33, 1);
+	bassline.setInstrument(32);
 
 }
 
@@ -136,12 +130,14 @@ void FightState::update() {
 	if (metronome.getElapsedTime().asMilliseconds() > beat) {
 		//cout << "beat" << endl;
 		metronome.restart();
-		//metronomeSound.play();
-		cout << accompanimentIndex<<endl;
-		game.inputHandler->playNote(accompaniment.at((accompanimentIndex + accompaniment.size()) % accompaniment.size()), 0, 1);
-		game.inputHandler->playNote(accompaniment.at(accompanimentIndex), 50, 1);
-		++accompanimentIndex %= accompaniment.size();
-		played = false;
+		// Play a note in the bassline on each quarter note
+		if (quarterNote) {
+			bassline.playNextNote();
+			quarterNote = false;
+		}
+		else {
+			quarterNote = true;
+		}
 	}
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
@@ -306,6 +302,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 				//on collision, checks first if player getting hit was holding block while being in the correct state
 				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
 					defender.block(attacker.getCurrentMove());
+					blockSound.play();
 				}
 				else {
 					//if not blocking, player gets hit
@@ -313,10 +310,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 						cout << "hit!" << endl;
 						defender.getHit(attacker.getCurrentMove());
 						attacker.getCurrentFrame().hit = true;
-						if (defender.holdingBlock)
-							blockSound.play();
-						else
-							hitSound.play();
+						hitSound.play();
 					}
 					attacker.canCancel = true;
 					return;
@@ -487,6 +481,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
+					bassline.transpose(7);
 				}
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
