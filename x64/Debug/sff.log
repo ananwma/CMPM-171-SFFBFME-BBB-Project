@@ -1,10 +1,38 @@
-﻿  FightState.cpp
+﻿  input.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(20): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(20): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(23): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(23): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(27): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(27): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(40): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(50): warning C4018: '<': signed/unsigned mismatch
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(54): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(54): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(58): warning C4018: '<': signed/unsigned mismatch
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(75): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(81): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(88): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+  FightState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(196): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(197): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(198): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(199): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(200): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(201): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(202): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(385): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(397): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(412): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(426): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(382): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(394): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(409): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\fightstate.cpp(423): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  sff.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  ResultsState.cpp
+  PlayerSelectState.cpp
+  PauseState.cpp
+  AssetManager.cpp
+  Generating Code...
+sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4204: 'C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\x64\Debug\vc140.pdb' is missing debugging information for referencing module; linking object as if no debug info
   sff.vcxproj -> C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
