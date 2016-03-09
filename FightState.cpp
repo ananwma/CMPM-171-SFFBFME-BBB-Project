@@ -91,13 +91,17 @@ void FightState::init() {
 	blockSound.setBuffer(blockSoundBuffer);
 
 	hitSound.setVolume(50);
-
-	octave = true;
 	accompanimentIndex = 0;
 	accompaniment.push_back(36);
-	accompaniment.push_back(38);
+	accompaniment.push_back(48);
+
 	accompaniment.push_back(41);
-	accompaniment.push_back(43);
+	accompaniment.push_back(53);
+
+	accompaniment.push_back(43); 
+	accompaniment.push_back(55);
+	game.inputHandler->setInstrument(33, 1);
+
 }
 
 void FightState::update() {
@@ -133,17 +137,11 @@ void FightState::update() {
 		//cout << "beat" << endl;
 		metronome.restart();
 		//metronomeSound.play();
-		game.inputHandler->playNote(accompaniment.at(accompanimentIndex));
+		cout << accompanimentIndex<<endl;
+		game.inputHandler->playNote(accompaniment.at((accompanimentIndex + accompaniment.size()) % accompaniment.size()), 0, 1);
+		game.inputHandler->playNote(accompaniment.at(accompanimentIndex), 50, 1);
 		++accompanimentIndex %= accompaniment.size();
-
-		/*if (octave) {
-			game.inputHandler->playNote(36);
-			octave = false;
-		}
-		else {
-			game.inputHandler->playNote(48);
-			octave = true;
-		}*/
+		played = false;
 	}
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
@@ -152,7 +150,6 @@ void FightState::update() {
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
-	//checkClipBoxes(game.playerTwo, game.playerOne);
 
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
@@ -517,7 +514,7 @@ void FightState::receiveKeysDown(int note, int playerId) {
 			else {
 				if (onBeat) {
 					inputP1.push_back(note);
-					game.inputHandler->playNote(note);
+					game.inputHandler->playNote(note, 80);
 				}
 			}
 		}
@@ -530,7 +527,7 @@ void FightState::receiveKeysDown(int note, int playerId) {
 			else {
 				if (onBeat) {
 					inputP2.push_back(note);
-					game.inputHandler->playNote(note);
+					game.inputHandler->playNote(note, 80);
 				}
 			}
 		}
@@ -545,7 +542,7 @@ void FightState::receiveKeysUp(int note, int playerId) {
 		else if (note == 55) game.playerOne.right = false;
 		// Attack keys
 		else {
-			//inputP1.at(note) = false;
+			game.inputHandler->playNote(note, 0);
 		}
 	}
 	else if (playerId == game.playerTwo.playerId) {
@@ -555,7 +552,7 @@ void FightState::receiveKeysUp(int note, int playerId) {
 		else if (note == 55) game.playerTwo.right = false;
 		// Attack keys 
 		else {
-			//inputP2.at(note) = false;
+			game.inputHandler->playNote(note, 0);
 		}
 	}
 }

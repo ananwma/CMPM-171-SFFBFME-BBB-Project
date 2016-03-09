@@ -28,8 +28,6 @@ public:
 	sf::View HUD;
 	sf::RectangleShape player_1_HP;
 	sf::RectangleShape player_2_HP;
-	BeatIndicator player_1_beatIndicator;
-	BeatIndicator player_2_beatIndicator;
 	sf::RectangleShape player_1_meter;
 	sf::RectangleShape player_2_meter;
 	void processInput(Player&, vector<int>&);
@@ -54,6 +52,8 @@ private:
 	int beatThreshold;
 	int indicatorFlash;
 	bool octave;
+
+	bool played;
 	vector<int> accompaniment;
 	int accompanimentIndex;
 	vector<int> inputP1;

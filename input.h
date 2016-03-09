@@ -5,8 +5,11 @@
 #include <mmreg.h>
 
 // Some midi data signals
-#define NOTE_ON 144
-#define NOTE_OFF 128
+#define NOTE_ON 0x9
+#define NOTE_OFF 0x8
+#define CONTROL_CHANGE 0xB
+#define PROGRAM_CHANGE 0xC
+#define VOLUME_CONTROL 0x7
 
 
 #define C_NATURAL 0x1
@@ -139,8 +142,9 @@ public:
 	int prepareDevices();
 
 	// Methods for midi out operations
-	void setVolume(unsigned int);
-	void playNote(unsigned int);
+	void setVolume(unsigned int, unsigned int = 0);
+	void playNote(unsigned int, unsigned int, unsigned int = 0);
+	void setInstrument(unsigned int, unsigned int = 0);
 
 	// Event functions, has no implementation
 	__event void sendKeysDown(int, int);
