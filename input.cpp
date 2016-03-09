@@ -15,32 +15,18 @@ void InputHandler::parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2
 	int byte2 = (dwParam1 >> 16) & 0xFF;
 	int byte3 = (dwParam1 >> 8) & 0xFF;
 	int byte4 = dwParam1 & 0xFF;
-	//midiOutShortMsg(midout, dwParam1);
-	if (byte4 == NOTE_ON) {
+	if (byte4 >> 4 == NOTE_ON) {
 		if (byte2 != 0) {
-			//notes.push_back(byte3);
-			//send as int
 			sendKeysDown(byte3, (int)hMidiIn);
 		}
 		else {
 			sendKeysUp(byte3, (int)hMidiIn);
-			//if (!notes.empty())
-				//notes.pop_back();
 		}
 	} 
 	else if (byte4 == NOTE_OFF) {
 		sendKeysUp(byte3, (int)hMidiIn);
-		//if (!notes.empty()) 
-			//notes.pop_back();
 	}
 
-	/*if (!notes.empty()) {
-		for (auto i : notes) {
-			cout << i;
-		}
-		cout << endl;*/
-	//	onNoteDown(notes);
-	//}
 }
 
 void InputHandler::MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, DWORD dwParam1, DWORD dwParam2) {
@@ -68,6 +54,7 @@ int InputHandler::prepareDevices() {
 		device_map[(int)device] = i;
 	}
 
+	// Change this later when we have more keyboards to test with
 	for (int i = 0; i < midiOutGetNumDevs(); i++) {
 		MIDIOUTCAPS caps;
 		midiOutGetDevCaps(i, &caps, sizeof caps);
@@ -78,18 +65,25 @@ int InputHandler::prepareDevices() {
 	return 0;
 }
 
+// Could merge these into one generic function
 /* To build the midi message, leftshift volume 16 to make byte 2, and than
    OR with 0x07B0, the values for bytes 3 and 4 which designated a volume
    control message */
-void InputHandler::setVolume(unsigned int vol) {
+void InputHandler::setVolume(unsigned int vol, unsigned int channel) {
 	assert(vol < 128 && "Volume value must be between 0 and 127");
-	DWORD_PTR msg = vol << 16 | 0x07B0;
+	DWORD_PTR msg = vol << 16 | VOLUME_CONTROL << 4 | CONTROL_CHANGE << 4 | channel;
 	midiOutShortMsg(midout, msg);
 }
 
-void InputHandler::playNote(unsigned int note) {
-	assert(note < 128 && "Volume value must be between 0 and 127");
-	int velocity = 50;
-	DWORD_PTR msg = velocity << 16 | note << 8 | NOTE_ON;
+void InputHandler::playNote(unsigned int note, unsigned int velocity, unsigned int channel) {
+	assert(note < 128 && "Note value must be between 0 and 127");
+	DWORD_PTR msg = velocity << 16 | note << 8 | NOTE_ON << 4 | channel;
+	midiOutShortMsg(midout, msg);
+}
+
+void InputHandler::setInstrument(unsigned int instrument, unsigned int channel) {
+	assert(instrument < 128 && "Volume value must be between 0 and 127");
+	DWORD_PTR msg = instrument << 8 | PROGRAM_CHANGE << 4 | channel;
+	cout << "msg: " << hex << msg << endl;
 	midiOutShortMsg(midout, msg);
 }

@@ -49,7 +49,7 @@ private:
 	int intOnBeat;
 	int beat;
 	int beatThreshold;
-	bool octave;
+	bool played;
 	vector<int> accompaniment;
 	int accompanimentIndex;
 	vector<int> inputP1;
