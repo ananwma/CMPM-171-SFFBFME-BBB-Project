@@ -13,6 +13,7 @@
 #include "BachRoundhouse.h"
 #include "BachFierce.h"
 #include "BachTatsu.h"
+#include "Game.h"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ Bach::Bach() {
 	height = 548;
 	walkspeed = 8.0f;
 	jumpX = 8.0f;
-	jumpY = 35.0f;
+	jumpY = 35.0f * (500/BEAT_SPEED);
 	health = 1000;
 	wall_offset = 100;
 }

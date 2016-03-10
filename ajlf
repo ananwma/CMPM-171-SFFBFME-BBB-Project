@@ -1,0 +1,286 @@
+[33mcommit ad7b3c1e048c69c2c0a9d0dab84ca7650b577260[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Mar 9 20:16:53 2016 -0800
+
+    DROP THE BASS
+
+[33mcommit 7f20771e6b3d4c77f7cff98d3c83eee9a2bf9a71[m
+Merge: d4ea762 17a9de4
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Wed Mar 9 10:26:14 2016 -0800
+
+    Merge branch 'master' of https://github.com/ananwma/CMPM-171-SFFBFME-BBB-Project
+    
+    # Conflicts:
+    #	sff.vcxproj
+    #	sff.vcxproj.filters
+    #	x64/Debug/sff.log
+
+[33mcommit d4ea762893d4d75d33dfa7a96c4a9f36a2a6bad1[m
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Wed Mar 9 10:20:38 2016 -0800
+
+    Still trying to merge....
+
+[33mcommit f5a711858da1e78e8e78092a8d4ac84714cd9c0f[m
+Merge: bd80b17 aa39078
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Wed Mar 9 10:19:42 2016 -0800
+
+    Trying to merge?
+
+[33mcommit 17a9de412d278f01aa4d91970378172da2a182f9[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Tue Mar 8 23:01:11 2016 -0800
+
+    added bassline class
+
+[33mcommit bd80b17d4eed059495e2c90a045b4a0bff609b71[m
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Tue Mar 8 21:45:19 2016 -0800
+
+    Added Metronome Indicator
+    Flashes grey every beat, green if the player pressed an attack key on beat
+
+[33mcommit aa39078139ee165d70e9e7b2f11f3e5ad6580b02[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Tue Mar 8 19:06:12 2016 -0800
+
+    fixed an input bug
+
+[33mcommit 15287432f362fd07dc0524a3ce1da232d73e4655[m
+Merge: 3405d90 375ced1
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Tue Mar 8 18:54:29 2016 -0800
+
+    Merge branch 'master' of https://github.com/ananwma/CMPM-171-SFFBFME-BBB-Project.git
+
+[33mcommit 3405d904fc35bc1226d36bbce0c8c8ea37d8390a[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Tue Mar 8 18:54:05 2016 -0800
+
+    all my changes
+
+[33mcommit 375ced1602e12a65d8c4738893bf62fbb84ab804[m
+Author: Anan <ananwma@gmail.com>
+Date:   Sat Mar 5 15:31:59 2016 -0800
+
+    frequency.java added
+    
+    program that sorts all the number of occurrences of substrings of size two within a given list of strings
+    used to find the frequency of patterns of attacks within our game, influencing the combos, list of cancelable moves, and supers
+
+[33mcommit 07743ee63d9d8af8bbfc5f8b2f22da19e21f3166[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Fri Mar 4 22:41:37 2016 -0800
+
+    playtest build
+
+[33mcommit f40a379f681970deff32a40634085c8edc9f4927[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Thu Mar 3 18:38:55 2016 -0800
+
+    damn hella good at photoshop, try a g major chord
+
+[33mcommit f6beb5e1ebd90144e3cfe6b72eb1f2c48deeb740[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Thu Mar 3 17:32:57 2016 -0800
+
+    added a hard punch
+
+[33mcommit 6e60767ae75d7b141d5df51f1c9830564105cc1e[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Thu Mar 3 04:35:48 2016 -0800
+
+    added some shitty ass kicks, medium kick = op
+
+[33mcommit 5af4b1c283d6062df9fb938dc9891c5800cab1e8[m
+Merge: 3a34ad2 85185f8
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Mar 2 22:03:07 2016 -0800
+
+    just trying to pull
+
+[33mcommit 3a34ad2523edd543be1de79786f0a4dd21db9591[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Mar 2 22:01:43 2016 -0800
+
+    git
+
+[33mcommit 1c0e0492e4e0768543a466330c429521521ea1a6[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Mar 2 22:00:42 2016 -0800
+
+    no changes just trying to pull
+
+[33mcommit 85185f8c73edd6d106575b49a7b67c9152bb378f[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Mar 2 19:43:52 2016 -0800
+
+    blocking merged in, some changes to metronome
+
+[33mcommit 251d84ef052e43d4c67ba22cbb8ac1de11601a45[m
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Wed Mar 2 03:18:21 2016 -0800
+
+    Added blockstun values to existing moves, and code for blocking and blockstun; CAUTION: HAS NOT BEEN TESTED YET(kind of hard to test without another person)
+
+[33mcommit 2faa35f7d08ad82b8829f38686e7b577dbb6ae03[m
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Wed Mar 2 01:00:11 2016 -0800
+
+    Added hitstun and pushback values to moves, and implemented code for pushback on hit; increased frequency of metronome beats and sped up framerate for testing combos
+
+[33mcommit 0bc51e3e18229ffe86f43730f9b05476c985de52[m
+Merge: 7ab3d72 995bbe9
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Tue Mar 1 02:08:16 2016 -0800
+
+    all my code is merged in
+
+[33mcommit 995bbe97e1979f0b32f1e71d437f862121c6e8e4[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Tue Mar 1 01:22:38 2016 -0800
+
+    added files
+
+[33mcommit 9be47a2d68692389235fb7a975a34730a302ea08[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Tue Mar 1 00:41:15 2016 -0800
+
+    fuck eyah
+
+[33mcommit 864203f6ec7ec22dcc500092f033e8e6091c4960[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Mon Feb 29 20:38:22 2016 -0800
+
+    quick jumping collision stuff
+
+[33mcommit 91c732285730a0d334aa334f5d4563a7e3b4d273[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Mon Feb 29 20:25:48 2016 -0800
+
+    player against player collision works
+
+[33mcommit 2cea51ef14ca73a495b8464dcff3e0918ade40a1[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Mon Feb 29 19:35:54 2016 -0800
+
+    input has been improved
+
+[33mcommit 7ab3d72d44f08c990c0372f074b5d0f68d6d2fe6[m
+Author: Anan <ananwma@gmail.com>
+Date:   Mon Feb 29 15:30:15 2016 -0800
+
+    camera fixed, hud added
+
+[33mcommit 8e02e3628efd6f033e416931fd8ded24251d2f6a[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Mon Feb 29 15:27:52 2016 -0800
+
+    input and physicsc improvements
+
+[33mcommit b8b3d19192871eaa3bcb5adcad80b10786e17d4f[m
+Merge: 488ed83 0f24702
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Sun Feb 28 14:54:48 2016 -0800
+
+    Merge branch 'master' of https://github.com/ananwma/CMPM-171-SFFBFME-BBB-Project
+    
+    # Conflicts:
+    #	sff.sdf
+
+[33mcommit 488ed83872554ba2596cd8dd8c036af2c16f47c5[m
+Author: Ronald Murray <rlmurray@ucsc.edu>
+Date:   Sun Feb 28 14:52:28 2016 -0800
+
+    FB Icon
+
+[33mcommit 0f24702b9c6ec459bdbe89db3d2cb1ef8e8cabd9[m
+Author: mhgunning <mhgunnin@ucsc.edu>
+Date:   Fri Feb 26 18:27:29 2016 -0800
+
+    readded filters file
+
+[33mcommit af910aef8e318dce8fa948953e2d1f206f3d591f[m
+Author: Anan <ananwma@gmail.com>
+Date:   Fri Feb 26 17:10:03 2016 -0800
+
+    fixed wall collisions
+
+[33mcommit 548f6ecd81f8bb8c539f535baebdc4f25512e7fc[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Fri Feb 26 16:11:48 2016 -0800
+
+    in progress
+
+[33mcommit e6ce4b65b494564a09cfb60c339c7c2000d495c0[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 22:14:40 2016 -0800
+
+    probably should add these to .gitignore
+
+[33mcommit 1d3c9130c91664ec9ae31f47f072a1038242fe5a[m
+Merge: 3dbe2fd fced038
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 22:10:02 2016 -0800
+
+    merged ronald's commits with mine
+
+[33mcommit 3dbe2fd4c56b043cb165ed02cd2b179f5f6adca6[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 22:06:27 2016 -0800
+
+    extra files
+
+[33mcommit d8d1eb6e74d5210a1f78668b12ecc6a7507783e5[m
+Author: MGunning <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 22:05:40 2016 -0800
+
+    a few changes to framerate and hitboxes
+
+[33mcommit fbf8f3997dde18323871cdfe561a29e1d48d4166[m
+Author: mhgunnin <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 21:54:51 2016 -0800
+
+    files
+
+[33mcommit ed9b152c5a1832536ca02793c1f8d00ed51c00ca[m
+Author: mhgunnin <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 21:43:43 2016 -0800
+
+    fix
+
+[33mcommit 5d133c0257a9f5f19fce0ec2f174c236c15c28c5[m
+Author: mhgunnin <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 20:09:34 2016 -0800
+
+    hj
+
+[33mcommit ff1245295bca3ea730c783469c65d08d6ca29d44[m
+Author: mhgunnin <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 20:06:54 2016 -0800
+
+    Revert "w"
+    
+    This reverts commit 9be8095f927161dd3e757166480d100b8f6ec40a.
+
+[33mcommit 9be8095f927161dd3e757166480d100b8f6ec40a[m
+Author: mhgunnin <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 20:04:38 2016 -0800
+
+    w
+
+[33mcommit 2d6708eb27956ba8e548fb7e6ec5881539ba3542[m
+Author: mhgunnin <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 20:03:16 2016 -0800
+
+    files
+
+[33mcommit 2c8f1e436071c07ed59591569ea8b8bef777f504[m
+Author: mhgunnin <mhgunnin@ucsc.edu>
+Date:   Wed Feb 24 20:01:17 2016 -0800
+
+    ignore
+
+[33mcommit c2574b59c45a950bb4176164ce3c1c33d87

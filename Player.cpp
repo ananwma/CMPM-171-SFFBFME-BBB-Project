@@ -3,10 +3,13 @@
 #include "Player.h"
 #include "BeatIndicator.h"
 #include <time.h> 
+#include <math.h>
+#include "Game.h"
+
 #define WALL_WIDTH 1280
 #define INIT_XPOS 20
 #define INIT_YPOS 400
-#define GRAVITY 0.98f
+#define GRAVITY 0.98f * pow((500.0f/BEAT_SPEED),2.0f)
 #define GROUND 100
 
 
@@ -56,7 +59,7 @@ void Player::doMove(int move) {
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
-		yvel = getCurrentMove()->velY;
+		yvel = getCurrentMove()->velY * (500/BEAT_SPEED);
 		if (side == LEFT)
 			xvel = getCurrentMove()->velX;
 		else if (side == RIGHT)
@@ -226,6 +229,7 @@ void Player::updatePhysics() {
 	//Add acceleration to velocity
 	xvel += xacc;
 	yvel += yacc;
+	xvel = xvel  * (500 / BEAT_SPEED);
 	//Update positions based on velocity
 	xpos += xvel;
 	ypos += yvel;
