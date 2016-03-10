@@ -441,7 +441,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
 				if (acc == C_NATURAL) {
-					player.doMove(JAB);
+					player.doMove(SUPER);
 				}
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);

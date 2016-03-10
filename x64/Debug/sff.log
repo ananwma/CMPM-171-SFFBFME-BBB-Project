@@ -1,4 +1,9 @@
-﻿  FightState.cpp
+﻿  Player.cpp
+c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(35): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(266): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(269): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  FightState.cpp
 c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(180): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(181): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(182): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
@@ -7,4 +12,20 @@ c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(362): w
 c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(374): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
 c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(389): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
 c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(403): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  CharacterBach.cpp
+  Generating Code...
+  Compiling...
+  sff.cpp
+c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  ResultsState.cpp
+  PlayerSelectState.cpp
+  PauseState.cpp
+  Collision.cpp
+  CameraControl.cpp
+  AssetManager.cpp
+  Generating Code...
+sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4099: PDB 'vc140.pdb' was not found with 'sfml-main-d.lib(MainWin32.cpp.obj)' or at 'C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\vc140.pdb'; linking object as if no debug info
   sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe
