@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Resource Files">
@@ -129,8 +129,16 @@
     <ClInclude Include="BachTatsu.h">
       <Filter>Bach</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="BeatIndicator.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Bassline.h">
+      <Filter>sff headers</Filter>
+=======
     <ClInclude Include="BachSuper.h">
       <Filter>Bach</Filter>
+>>>>>>> 0ade37110f355a6726175f03cc3157779d98dc57
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +192,12 @@
     </ClCompile>
     <ClCompile Include="ResultsState.cpp">
       <Filter>GameStates\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="BeatIndicator.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="Bassline.cpp">
+      <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

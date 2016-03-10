@@ -1,40 +1,34 @@
-﻿Build started 3/10/2016 12:24:59 AM.
-     1>Project "C:\Users\mhgunnin\Source\Repos\NewRepo\sff.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\mhgunnin\Desktop\SFML-2.3.2\include" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /sdl- /Od /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt FightState.cpp
-         FightState.cpp
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(209): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(210): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(211): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(212): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(428): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(440): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(455): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(469): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\mhgunnin\Source\Repos\NewRepo\x64\Debug\sff.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\mhgunnin\Desktop\SFML-2.3.2\lib" /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win64" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-main-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" Winmm.lib vld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-main-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" Winmm.lib vld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\mhgunnin\Source\Repos\NewRepo\x64\Debug\sff.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\mhgunnin\Source\Repos\NewRepo\x64\Debug\sff.lib" /MACHINE:X64 x64\Debug\sff.res
-         x64\Debug\AssetManager.obj
-         x64\Debug\BeatIndicator.obj
-         x64\Debug\Bassline.obj
-         x64\Debug\CameraControl.obj
-         x64\Debug\Character.obj
-         x64\Debug\CharacterBach.obj
-         x64\Debug\Collision.obj
-         x64\Debug\ConcertHallStage.obj
-         x64\Debug\FightState.obj
-         x64\Debug\Frame.obj
-         x64\Debug\GameStateManager.obj
-         x64\Debug\input.obj
-         x64\Debug\PauseState.obj
-         x64\Debug\Player.obj
-         x64\Debug\PlayerSelectState.obj
-         x64\Debug\ResultsState.obj
-         x64\Debug\sff.obj
-         x64\Debug\Stage.obj
-         x64\Debug\stdafx.obj
-         sff.vcxproj -> C:\Users\mhgunnin\Source\Repos\NewRepo\x64\Debug\sff.exe
-     1>Done Building Project "C:\Users\mhgunnin\Source\Repos\NewRepo\sff.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:01.13
+﻿  AssetManager.cpp
+  Generating Code...
+  Compiling...
+  sff.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  ResultsState.cpp
+  PlayerSelectState.cpp
+  Player.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(42): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(293): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(296): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(300): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  PauseState.cpp
+  FightState.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(32): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(37): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(206): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(207): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(208): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(209): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(390): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(402): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(417): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(431): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  CharacterBach.cpp
+  Bassline.cpp
+  Generating Code...
+sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4204: 'C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\vc140.pdb' is missing debugging information for referencing module; linking object as if no debug info
+  sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe

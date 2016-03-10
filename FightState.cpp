@@ -29,12 +29,12 @@ void FightState::init() {
 	game.currentScreen.stage.window_offset = 0;
 
 	// Beat is in milliseconds, 1000 = 1 beat every 1 second
-	beat = 500;
+	beat = BEAT_SPEED;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
-	beatThreshold = 100;
+	beatThreshold = 100 * (BEAT_SPEED/500);
 
 	// Number of frames to leave indicator on
-	indicatorFlash = 15;
+	indicatorFlash = 15 * (BEAT_SPEED / 500);
 
 	// Later move this to character selection state
 	Bach* bach = new Bach();
