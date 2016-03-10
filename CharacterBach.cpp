@@ -24,6 +24,7 @@ Bach::Bach() {
 	jumpY = 35.0f;
 	health = 1000;
 	wall_offset = 100;
+	super = { 7, 0, 2, 4, 5, 7, 0, 0 };
 }
 
 void Bach::walk() {

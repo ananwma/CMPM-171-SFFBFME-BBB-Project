@@ -43,10 +43,12 @@ public:
 	state state;
 	bool colliding;
 	bool lastMoveHit;
+	int superIndex = 0;
 	sf::Texture pTexture;
 	sf::Sprite pImage;
 	sf::RectangleShape hitboxes_v;
 	sf::RectangleShape hurtboxes_v;
+	sf::Clock superTimeout;
 
 	//Move currentMove;
 	
@@ -65,6 +67,9 @@ public:
 	void updatePhysics();
 	Move* getCurrentMove();
 	Frame& getCurrentFrame();
+	void checkSuper(int);
+	bool isInSuper();
+
 	int getCurrentMoveNum();
 	int getCurrentFrameNum();
 	float getSpriteHeight();

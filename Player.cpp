@@ -8,6 +8,7 @@
 #define INIT_YPOS 400
 #define GRAVITY 0.98f
 #define GROUND 100
+#define SUPER_TIMEOUT 4000
 
 
 Player::Player()
@@ -232,6 +233,7 @@ void Player::updatePhysics() {
 	//Add gravitational acceleration if AIRBORNE_STATE
 	if (ypos < GROUND) {
 		yvel += GRAVITY;
+		if (abs(yvel) < 0.5) cout << ypos<<endl;
 		if (ypos + yvel > GROUND) {
 			ypos = GROUND;
 			yvel = 0.0f;
@@ -245,6 +247,24 @@ void Player::updatePhysics() {
 		xvel = 0;
 	}
 	character->sprite.setPosition(xpos, ypos);
+}
+
+void Player::checkSuper(int note) {
+	if (character->super.at(superIndex) == note && superTimeout.restart().asMilliseconds() < SUPER_TIMEOUT) {
+		superIndex++;
+		if (superIndex == character->super.size()) {
+			state = NO_STATE;
+			doMove(CMAJ);
+			superIndex = 0;
+		}
+	}
+	else {
+		superIndex = 0;
+	}
+}
+
+bool Player::isInSuper() {
+	return superIndex > 0;
 }
 
 

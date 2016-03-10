@@ -19,6 +19,7 @@ protected:
 	float jumpX;
 	float jumpY;
 	int health;
+	vector<int> super;
 public:
 	float walkspeed;
 	int wall_offset;

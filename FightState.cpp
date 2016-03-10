@@ -113,7 +113,7 @@ void FightState::update() {
 			game.window.close();
 			break;
 		}
-	}
+	} 
 
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
@@ -521,13 +521,10 @@ void FightState::receiveKeysDown(int note, int playerId) {
 			else if (note == 55) game.playerOne.right = true;
 			// Attack keys
 			else {
-				if (onBeat) {
+				if (onBeat || game.playerOne.isInSuper()) {
 					inputP1.push_back(note);
 					game.inputHandler->playNote(note, 80);
-					//switch (note % 12 - bassline.getCurrentNote() % 12) {
-					//	case 
-					//}
-					
+					game.playerOne.checkSuper(note % 12);
 				}
 			}
 		}
