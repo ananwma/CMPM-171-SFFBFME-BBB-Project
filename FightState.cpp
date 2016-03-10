@@ -473,7 +473,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 			
 
 				if (acc == C_NATURAL) {
-					player.doMove(JAB);
+					player.doMove(SUPER);
 				}
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);
