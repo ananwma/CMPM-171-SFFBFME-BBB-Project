@@ -14,6 +14,7 @@
 #include "BachFierce.h"
 #include "BachTatsu.h"
 #include "Game.h"
+#include "BachSuper.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ Bach::Bach() {
 	jumpY = 35.0f * (500/BEAT_SPEED);
 	health = 1000;
 	wall_offset = 100;
+	super = { 7, 0, 2, 4, 5, 7, 0, 0 };
 }
 
 void Bach::walk() {
@@ -44,6 +46,7 @@ void Bach::initMoves() {
 	BachForward* forward = new BachForward;
 	BachRoundhouse* roundhouse = new BachRoundhouse;
 	BachTatsu* tatsu = new BachTatsu;
+	BachSuper* super = new BachSuper;
 	jab->initFrames();
 	jab->initCancelMoves();
 	idle->initFrames();
@@ -56,6 +59,7 @@ void Bach::initMoves() {
 	forward->initFrames();
 	roundhouse->initFrames();
 	tatsu->initFrames();
+	super->initFrames();
 	moveList[JAB] = jab;
 	moveList[IDLE] = idle;
 	moveList[WALK] = idle;
@@ -69,4 +73,5 @@ void Bach::initMoves() {
 	moveList[ROUNDHOUSE] = roundhouse;
 	moveList[CMAJ] = srk;
 	moveList[GMAJ] = tatsu;
+	moveList[SUPER] = super;
 }

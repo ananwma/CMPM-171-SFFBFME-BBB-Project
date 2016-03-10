@@ -129,11 +129,16 @@
     <ClInclude Include="BachTatsu.h">
       <Filter>Bach</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="BeatIndicator.h">
       <Filter>sff headers</Filter>
     </ClInclude>
     <ClInclude Include="Bassline.h">
       <Filter>sff headers</Filter>
+=======
+    <ClInclude Include="BachSuper.h">
+      <Filter>Bach</Filter>
+>>>>>>> 0ade37110f355a6726175f03cc3157779d98dc57
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
