@@ -272,6 +272,10 @@ float Player::getSpriteHeight() {
 	return character->height;
 }
 
+float Player::getMaxHealth() {
+	return character->health;
+}
+
 Player::~Player()
 {
 }

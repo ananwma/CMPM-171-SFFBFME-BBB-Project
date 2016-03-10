@@ -57,6 +57,7 @@ private:
 	bool played;
 	Bassline bassline;
 	bool quarterNote = true;
+	int phase = 0;
 	vector<int> inputP1;
 	vector<int> inputP2;
 	vector<int> inputBuffer;

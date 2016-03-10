@@ -69,6 +69,7 @@ public:
 	int getCurrentFrameNum();
 	float getSpriteHeight();
 	float getSpriteWidth();
+	float getMaxHealth();
 
 
 	Player();

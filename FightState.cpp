@@ -14,7 +14,7 @@
 
 using namespace std;
 
-FightState::FightState(Game &_game) : game(_game), bassline(game, { 36, 48, 41, 53, 43, 55 }, 70) {
+FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70) {
 }
 
 void FightState::init() {
@@ -95,6 +95,7 @@ void FightState::init() {
 	hitSound.setVolume(50);
 
 	bassline.setInstrument(32);
+	game.inputHandler->setInstrument(6);
 
 }
 
@@ -180,6 +181,19 @@ void FightState::update() {
 		game.playerOne.roundWins++;
 		ResultsState results(game);
 		game.gsm.stopState(*this, &results);
+	}
+
+	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
+		phase = 1;
+		bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
+	}
+	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
+		phase = 2;
+		bassline.setBassline({ C1, G1, E1, C2 });
+	}
+	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
+		phase = 3;
+		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
 
 	frameCounter += frameSpeed * clock.restart().asSeconds();
@@ -510,6 +524,10 @@ void FightState::receiveKeysDown(int note, int playerId) {
 				if (onBeat) {
 					inputP1.push_back(note);
 					game.inputHandler->playNote(note, 80);
+					//switch (note % 12 - bassline.getCurrentNote() % 12) {
+					//	case 
+					//}
+					
 				}
 			}
 		}

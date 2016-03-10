@@ -138,8 +138,11 @@ public:
 	InputHandler& operator= (InputHandler&&) = default;
 	~InputHandler() = default;
 
-	// Opens device
-	int prepareDevices();
+	// Opens all input devices
+	void prepareDevices();
+	// If device is output capable, opens output for device, otherwise, opens MS Wavetable Synth for device
+	// might be better to use raw output then wavetable synth
+	void prepareOutput(int);
 
 	// Methods for midi out operations
 	void setVolume(unsigned int, unsigned int = 0);
