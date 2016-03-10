@@ -19,10 +19,10 @@ BachSuper::BachSuper() {
 	// Damage
 	damage = 200;
 	// Change in attacker's position on move
-	velX = 30;
+	velX = 10;
 	velY = 0;
 	// Change in opponent's position on move
-	pushX = 30;
+	pushX = 20;
 	pushY = 0;
 	//Number of hitstun frames this causes
 	hitstun = 10;

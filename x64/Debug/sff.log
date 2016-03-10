@@ -1,13 +1,16 @@
-﻿Build started 3/9/2016 10:08:55 PM.
+﻿Build started 3/10/2016 12:24:59 AM.
      1>Project "C:\Users\mhgunnin\Source\Repos\NewRepo\sff.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\mhgunnin\Desktop\SFML-2.3.2\include" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /sdl- /Od /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt Player.cpp
-         Player.cpp
-     1>c:\users\mhgunnin\source\repos\newrepo\player.cpp(37): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\player.cpp(39): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\player.cpp(289): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\player.cpp(292): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-     1>c:\users\mhgunnin\source\repos\newrepo\player.cpp(296): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /I"C:\Users\mhgunnin\Desktop\SFML-2.3.2\include" /I"C:\Program Files (x86)\Visual Leak Detector\include" /ZI /nologo /W3 /WX- /sdl- /Od /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt FightState.cpp
+         FightState.cpp
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(209): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(210): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(211): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(212): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(428): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(440): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(455): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+     1>c:\users\mhgunnin\source\repos\newrepo\fightstate.cpp(469): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\mhgunnin\Source\Repos\NewRepo\x64\Debug\sff.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\mhgunnin\Desktop\SFML-2.3.2\lib" /LIBPATH:"C:\Program Files (x86)\Visual Leak Detector\lib\Win64" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-main-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" "sfml-audio-d.lib" Winmm.lib vld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib "sfml-main-d.lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" Winmm.lib vld.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\mhgunnin\Source\Repos\NewRepo\x64\Debug\sff.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\mhgunnin\Source\Repos\NewRepo\x64\Debug\sff.lib" /MACHINE:X64 x64\Debug\sff.res
          x64\Debug\AssetManager.obj
@@ -34,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.00
+Time Elapsed 00:00:01.13

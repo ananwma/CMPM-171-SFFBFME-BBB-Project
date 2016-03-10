@@ -53,6 +53,7 @@ private:
 	int beatThreshold;
 	int indicatorFlash;
 	bool octave;
+	bool colliding = false;
 
 	bool played;
 	Bassline bassline;

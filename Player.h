@@ -42,6 +42,7 @@ public:
 	direction side;
 	state state;
 	bool colliding;
+	bool againstWall = false;
 	bool lastMoveHit;
 	int superIndex = 0;
 	sf::Texture pTexture;

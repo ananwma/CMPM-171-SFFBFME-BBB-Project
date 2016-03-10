@@ -63,8 +63,8 @@ void FightState::init() {
 	player_2_meter.setSize(sf::Vector2f(400, 30));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
-	
-	game.playerOne.indicator.bSprite.setPosition(0,50);
+
+	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
 	camera_view.setCenter(640, 300);
@@ -113,7 +113,7 @@ void FightState::update() {
 			game.window.close();
 			break;
 		}
-	} 
+	}
 
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
@@ -126,7 +126,7 @@ void FightState::update() {
 		game.playerOne.indicator.updateIndicator(NOBEAT);
 		game.playerTwo.indicator.updateIndicator(NOBEAT);
 	}
-	
+
 
 	if (metronome.getElapsedTime().asMilliseconds() > beat) {
 		//cout << "beat" << endl;
@@ -169,8 +169,8 @@ void FightState::update() {
 			game.playerOne.setPosition(1480, game.playerOne.ypos);
 	}*/
 
-	collision.flip_sprites(game.playerOne, game.playerTwo);
-	collision.flip_sprites(game.playerTwo, game.playerOne);
+		collision.flip_sprites(game.playerOne, game.playerTwo);
+		collision.flip_sprites(game.playerTwo, game.playerOne);
 
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
@@ -213,8 +213,8 @@ void FightState::update() {
 	player_2_HP.setSize(p2HP);
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
-	
-	
+
+
 }
 
 void FightState::draw() {
@@ -253,16 +253,28 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 		if (offsetClipBox1.intersects(offsetClipBox2)) {
 			// Set vel of player not WALK_STATE to player that is WALK_STATE
 			if (p1.state == WALK_STATE && p2.state != WALK_STATE) {
-				if (p1.xvel > 0 && p1.side == LEFT)
+				if (p1.xvel > 0 && p1.side == LEFT) {
 					p2.xvel = p1.xvel;
-				else if (p1.xvel < 0 && p1.side == RIGHT)
+					if (p2.againstWall)
+						p1.xvel = 0;
+				}
+				else if (p1.xvel < 0 && p1.side == RIGHT) {
 					p2.xvel = p1.xvel;
+					if (p2.againstWall)
+						p1.xvel = 0;
+				}
 			}
 			else if (p2.state == WALK_STATE && p1.state != WALK_STATE) {
-				if (p2.xvel > 0 && p2.side == LEFT)
+				if (p2.xvel > 0 && p2.side == LEFT) {
 					p1.xvel = p2.xvel;
-				else if (p2.xvel < 0 && p2.side == RIGHT)
+					if (p1.againstWall)
+						p2.xvel = 0;
+				}
+				else if (p2.xvel < 0 && p2.side == RIGHT) {
 					p1.xvel = p2.xvel;
+					if (p1.againstWall)
+						p2.xvel = 0;
+				}
 			}
 			// Set vel to 0 if both WALK_STATE and velocities have oposite signs
 			else if (p1.state == WALK_STATE && p2.state == WALK_STATE) {
@@ -274,16 +286,39 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 
 			// this part isnt ideal but good enough for demo
 			else if (p1.state != WALK_STATE && p2.state != WALK_STATE) {
-				if (p1.side == LEFT) {
-					//p1.xvel = p2.xvel;
-					p2.xvel = 10;
-				}
-				else if (p2.side == RIGHT) {
-					//p1.xvel = p2.xvel;
-					p2.xvel = -10;
-				}
+				if (p1.side == LEFT && !p1.againstWall)
+					p1.xvel = -8.0f;
+				else if (p1.side == RIGHT && !p1.againstWall)
+					p1.xvel = 8.0f;
+
+				if (p2.side == LEFT && !p2.againstWall)
+					p2.xvel = -8.0f;
+				else if (p2.side == RIGHT && !p2.againstWall)
+					p2.xvel = 8.0f;
+			}
+			else {
+				p1.xvel = 0;
+				p2.xvel = 0;
 			}
 		}
+		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
+			if (p1.xvel < 0 && p1.side == LEFT)
+				p1.xvel = 0;
+			if (p1.xvel > 0 && p1.side == RIGHT)
+				p1.xvel = 0;
+			p1.againstWall = true;
+		}
+		else
+			p1.againstWall = false;
+		if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
+			if (p2.xvel < 0 && p2.side == LEFT)
+				p2.xvel = 0;
+			if (p2.xvel > 0 && p2.side == RIGHT)
+				p2.xvel = 0;
+			p2.againstWall = true;
+		}
+		else
+			p2.againstWall = false;
 	}
 }
 
@@ -386,7 +421,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		player.holdingBlock = false;
 		player.jump(RIGHT);
 		if ((player.xpos + player.getSpriteWidth() >= WINDOW_WIDTH + player.character->wall_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-			camera_view.move(player.character->walkspeed, 0);
+			//camera_view.move(player.character->walkspeed, 0);
 			game.currentScreen.stage.window_offset += player.character->walkspeed;
 		}
 	}
@@ -398,7 +433,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		player.holdingBlock = false;
 		player.jump(LEFT);
 		if ((player.xpos + player.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-			camera_view.move(-player.character->walkspeed, 0);
+			//camera_view.move(-player.character->walkspeed, 0);
 			game.currentScreen.stage.window_offset -= player.character->walkspeed;
 		}
 	}
@@ -413,7 +448,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 			player.holdingBlock = false;
 		}
 		if ((player.xpos + player.getSpriteWidth() >= WINDOW_WIDTH + player.character->wall_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-			camera_view.move(player.character->walkspeed, 0);
+			//camera_view.move(player.character->walkspeed, 0);
 			game.currentScreen.stage.window_offset += player.character->walkspeed;
 		}
 	}
@@ -427,7 +462,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 			player.holdingBlock = false;
 		}
 		if ((player.xpos + player.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-			camera_view.move(-player.character->walkspeed, 0);
+			//camera_view.move(-player.character->walkspeed, 0);
 			game.currentScreen.stage.window_offset -= player.character->walkspeed;
 		}
 	}
@@ -468,12 +503,12 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
-			
+
 				player.indicator.updateIndicator(ONBEAT);
-			
+
 
 				if (acc == C_NATURAL) {
-					player.doMove(SUPER);
+					player.doMove(JAB);
 				}
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);
@@ -514,34 +549,35 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 // Everything here is run on its own thread!
 void FightState::receiveKeysDown(int note, int playerId) {
-		if (playerId == game.playerOne.playerId) {
-			// Movement keys
-			if (note == 48) game.playerOne.left = true;
-			else if (note == 52) game.playerOne.jumping = true;
-			else if (note == 55) game.playerOne.right = true;
-			// Attack keys
-			else {
-				if (onBeat || game.playerOne.isInSuper()) {
-					inputP1.push_back(note);
-					game.inputHandler->playNote(note, 80);
-					game.playerOne.checkSuper(note % 12);
-				}
+	if (playerId == game.playerOne.playerId) {
+		// Movement keys
+		if (note == 48) game.playerOne.left = true;
+		else if (note == 52) game.playerOne.jumping = true;
+		else if (note == 55) game.playerOne.right = true;
+		// Attack keys
+		else {
+			if (onBeat || game.playerOne.isInSuper()) {
+				inputP1.push_back(note);
+				game.inputHandler->playNote(note, 80);
+				game.playerOne.checkSuper(note % 12);
 			}
 		}
-		else if (playerId == game.playerTwo.playerId) {
-			// Movement keys
-			if (note == 48) game.playerTwo.left = true;
-			else if (note == 52) game.playerTwo.jumping = true;
-			else if (note == 55) game.playerTwo.right = true;
-			// Attack keys
-			else {
-				if (onBeat) {
-					inputP2.push_back(note);
-					game.inputHandler->playNote(note, 80);
-				}
+	}
+	else if (playerId == game.playerTwo.playerId) {
+		// Movement keys
+		if (note == 48) game.playerTwo.left = true;
+		else if (note == 52) game.playerTwo.jumping = true;
+		else if (note == 55) game.playerTwo.right = true;
+		// Attack keys
+		else {
+			if (onBeat || game.playerOne.isInSuper()) {
+				inputP2.push_back(note);
+				game.inputHandler->playNote(note, 80);
+				game.playerOne.checkSuper(note % 12);
 			}
 		}
-	
+	}
+
 }
 
 void FightState::receiveKeysUp(int note, int playerId) {
