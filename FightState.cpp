@@ -33,8 +33,9 @@ void FightState::init() {
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100 * (BEAT_SPEED/500);
 
-	// Number of frames to leave indicator on
-	indicatorFlash = 15 * (BEAT_SPEED / 500);
+	// Number of frames to leave indicator on, as well as a boolean for when it's on
+	indicatorFlash = 15;
+	indicatorFlashOn = false;
 
 	// Later move this to character selection state
 	Bach* bach = new Bach();
@@ -118,13 +119,10 @@ void FightState::update() {
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
 		onBeat = true;
+		indicatorFlashOn = true;
+		indicatorFlash = 15;
 		game.playerOne.indicator.updateIndicator(NONE);
 		game.playerTwo.indicator.updateIndicator(NONE);
-	}
-
-	if ((metronome.getElapsedTime().asMilliseconds()) > (300 * beat) / 500) {
-		game.playerOne.indicator.updateIndicator(NOBEAT);
-		game.playerTwo.indicator.updateIndicator(NOBEAT);
 	}
 
 
@@ -195,10 +193,19 @@ void FightState::update() {
 		phase = 3;
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
-
+	
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
+		if(indicatorFlashOn){
+		indicatorFlash -= 1;
+		}
+		if (indicatorFlash == 0) {
+			game.playerOne.indicator.updateIndicator(NOBEAT);
+			game.playerTwo.indicator.updateIndicator(NOBEAT);
+			indicatorFlashOn = false;
+			indicatorFlash = 15;
+		}
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
 	}
@@ -503,6 +510,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
+				indicatorFlashOn = true;
 
 				player.indicator.updateIndicator(ONBEAT);
 
