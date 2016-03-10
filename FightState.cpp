@@ -8,12 +8,14 @@
 #include "FightState.h"
 #include "PauseState.h"
 #include "ResultsState.h"
+#include "BeatIndicator.h"
 // tmp
 #include "CharacterBach.h"
 
 using namespace std;
 
-FightState::FightState(Game &_game) : game(_game) { }
+FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70) {
+}
 
 void FightState::init() {
 	cout << game.playerOne.playerId << endl;
@@ -30,6 +32,9 @@ void FightState::init() {
 	beat = 500;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100;
+
+	// Number of frames to leave indicator on
+	indicatorFlash = 15;
 
 	// Later move this to character selection state
 	Bach* bach = new Bach();
@@ -58,12 +63,16 @@ void FightState::init() {
 	player_2_meter.setSize(sf::Vector2f(400, 30));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
+	
+	game.playerOne.indicator.bSprite.setPosition(0,50);
+	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
 	camera_view.setCenter(640, 300);
 	camera_view.setSize(1280, 600);
 	HUD.setCenter(640, 300);
 	HUD.setSize(1280, 600);
 	game.window.setView(camera_view);
+
 	// Possibly move this to asset manager in future
 	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
 		cerr << "Could not load sound!\n";
@@ -84,16 +93,9 @@ void FightState::init() {
 	blockSound.setBuffer(blockSoundBuffer);
 
 	hitSound.setVolume(50);
-	accompanimentIndex = 0;
-	accompaniment.push_back(36);
-	accompaniment.push_back(48);
 
-	accompaniment.push_back(41);
-	accompaniment.push_back(53);
-
-	accompaniment.push_back(43); 
-	accompaniment.push_back(55);
-	game.inputHandler->setInstrument(33, 1);
+	bassline.setInstrument(32);
+	game.inputHandler->setInstrument(6);
 
 }
 
@@ -116,16 +118,27 @@ void FightState::update() {
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
 		onBeat = true;
+		game.playerOne.indicator.updateIndicator(NONE);
+		game.playerTwo.indicator.updateIndicator(NONE);
 	}
+
+	if ((metronome.getElapsedTime().asMilliseconds()) > (300 * beat) / 500) {
+		game.playerOne.indicator.updateIndicator(NOBEAT);
+		game.playerTwo.indicator.updateIndicator(NOBEAT);
+	}
+	
+
 	if (metronome.getElapsedTime().asMilliseconds() > beat) {
 		//cout << "beat" << endl;
 		metronome.restart();
-		//metronomeSound.play();
-		cout << accompanimentIndex<<endl;
-		game.inputHandler->playNote(accompaniment.at((accompanimentIndex + accompaniment.size()) % accompaniment.size()), 0, 1);
-		game.inputHandler->playNote(accompaniment.at(accompanimentIndex), 50, 1);
-		++accompanimentIndex %= accompaniment.size();
-		played = false;
+		// Play a note in the bassline on each quarter note
+		if (quarterNote) {
+			bassline.playNextNote();
+			quarterNote = false;
+		}
+		else {
+			quarterNote = true;
+		}
 	}
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
@@ -170,6 +183,19 @@ void FightState::update() {
 		game.gsm.stopState(*this, &results);
 	}
 
+	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
+		phase = 1;
+		bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
+	}
+	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
+		phase = 2;
+		bassline.setBassline({ C1, G1, E1, C2 });
+	}
+	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
+		phase = 3;
+		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
+	}
+
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
@@ -187,6 +213,8 @@ void FightState::update() {
 	player_2_HP.setSize(p2HP);
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
+	
+	
 }
 
 void FightState::draw() {
@@ -201,6 +229,8 @@ void FightState::draw() {
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
+	game.window.draw(game.playerOne.indicator.bSprite);
+	game.window.draw(game.playerTwo.indicator.bSprite);
 	game.window.display();
 }
 
@@ -286,6 +316,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 				//on collision, checks first if player getting hit was holding block while being in the correct state
 				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
 					defender.block(attacker.getCurrentMove());
+					blockSound.play();
 				}
 				else {
 					//if not blocking, player gets hit
@@ -293,10 +324,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 						cout << "hit!" << endl;
 						defender.getHit(attacker.getCurrentMove());
 						attacker.getCurrentFrame().hit = true;
-						if (defender.holdingBlock)
-							blockSound.play();
-						else
-							hitSound.play();
+						hitSound.play();
 					}
 					attacker.canCancel = true;
 					return;
@@ -440,6 +468,10 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
+			
+				player.indicator.updateIndicator(ONBEAT);
+			
+
 				if (acc == C_NATURAL) {
 					player.doMove(SUPER);
 				}
@@ -463,6 +495,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
+					bassline.transpose(7);
 				}
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
@@ -491,6 +524,10 @@ void FightState::receiveKeysDown(int note, int playerId) {
 				if (onBeat) {
 					inputP1.push_back(note);
 					game.inputHandler->playNote(note, 80);
+					//switch (note % 12 - bassline.getCurrentNote() % 12) {
+					//	case 
+					//}
+					
 				}
 			}
 		}

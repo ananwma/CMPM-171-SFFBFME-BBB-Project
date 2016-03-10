@@ -23,7 +23,7 @@ void InputHandler::parseMidiData(HMIDIIN hMidiIn, DWORD dwParam1, DWORD dwParam2
 			sendKeysUp(byte3, (int)hMidiIn);
 		}
 	} 
-	else if (byte4 == NOTE_OFF) {
+	else if (byte4 >> 4 == NOTE_OFF) {
 		sendKeysUp(byte3, (int)hMidiIn);
 	}
 
@@ -45,8 +45,7 @@ void InputHandler::MidiInProc(HMIDIIN hMidiIn, UINT wMsg, DWORD_PTR dwInstance, 
 	}
 }
 
-// Make return value useful later
-int InputHandler::prepareDevices() {
+void InputHandler::prepareDevices() {
 	for (int i = 0; i < midiInGetNumDevs(); i++) {
 		HMIDIIN device;
 		midiInOpen(&device, i, (DWORD_PTR)MidiInProc, reinterpret_cast<DWORD_PTR>(this), CALLBACK_FUNCTION);
@@ -58,11 +57,16 @@ int InputHandler::prepareDevices() {
 	for (int i = 0; i < midiOutGetNumDevs(); i++) {
 		MIDIOUTCAPS caps;
 		midiOutGetDevCaps(i, &caps, sizeof caps);
+		wcout << caps.szPname <<" --- "<<caps.wPid << endl;
 		if (caps.wMid == MM_YAMAHA)
 			midiOutOpen(&midout, i, 0, 0, 0);
 	}
 	// Possibly move into constructor?
-	return 0;
+}
+
+//unfinshed
+void InputHandler::prepareOutput(int deviceId) {
+	//midiOutOpen(&midout, device_map[deviceId], 0, 0, 0);
 }
 
 // Could merge these into one generic function

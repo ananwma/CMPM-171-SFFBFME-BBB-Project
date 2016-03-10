@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ﻿  stdafx.cpp
   Stage.cpp
 c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\stage.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
@@ -40,7 +40,7 @@ c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(4): warn
   c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.cpp(4): note: Add directive to 'stdafx.h' or rebuild precompiled header
 c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.h(2): fatal error C1083: Cannot open include file: 'SFML/graphics.hpp': No such file or directory
   Generating Code...
-=======
+
 ﻿Build started 2/23/2016 6:30:26 PM.
      1>Project "C:\Users\mhgunnin\Source\Repos\CMPM-171-SFFBFME-BBB-Project\sff.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
@@ -92,4 +92,4 @@ c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.h(2): fatal 
 Build FAILED.
 
 Time Elapsed 00:00:04.56
->>>>>>> bcd27a87e3083e188990137b3f73257d18ef2631
+

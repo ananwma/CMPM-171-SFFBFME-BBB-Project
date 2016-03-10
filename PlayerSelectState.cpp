@@ -43,6 +43,7 @@ void PlayerSelectState::receiveKeysDown(int note, int playerId) {
 	if (game.playerOne.playerId != -1 && playerId != game.playerOne.playerId) {
 		game.playerTwo.playerId = playerId;
 		running = false;
+		game.inputHandler->prepareOutput(playerId);
 	}
 	if (game.playerOne.playerId == -1) {
 		game.playerOne.playerId = playerId;

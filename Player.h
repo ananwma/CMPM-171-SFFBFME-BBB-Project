@@ -5,6 +5,7 @@
 #include <string>
 #include "Character.h"
 #include "Move.h"
+#include "BeatIndicator.h"
 
 using namespace std;
 enum direction { LEFT, RIGHT, NEUTRAL };
@@ -16,6 +17,7 @@ public:
 	// No copy constructor
 	Player(const Player&) = delete;
 	Character* character;
+	BeatIndicator indicator;
 	bool isMoveValid();
 	void setCharacter(Character*);
 	void setPosition(float, float);
@@ -67,6 +69,7 @@ public:
 	int getCurrentFrameNum();
 	float getSpriteHeight();
 	float getSpriteWidth();
+	float getMaxHealth();
 
 
 	Player();
