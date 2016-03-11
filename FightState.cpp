@@ -150,6 +150,8 @@ void FightState::update() {
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
+	restrict_movement(game.playerOne, game.playerTwo);
+	restrict_movement(game.playerTwo, game.playerOne);
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
@@ -222,6 +224,12 @@ void FightState::update() {
 		game.playerOne.updateAnimFrame();
 	}
 
+	move_camera(game.playerOne, game.playerTwo);
+	move_camera(game.playerTwo, game.playerOne);
+
+	//cout << "offset" << endl;
+	//cout << game.currentScreen.stage.window_offset << endl;
+
 	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
 	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
 	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
@@ -252,6 +260,38 @@ void FightState::draw() {
 	game.window.draw(game.playerTwo.indicator.bSprite);
 	game.window.display();
 }
+
+void FightState::move_camera(Player& cp, Player& op){
+	//right
+
+	if ((!(op.xpos + op.character->wall_offset <= game.currentScreen.stage.window_offset))&&(cp.xpos + cp.getSpriteWidth() - cp.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
+		camera_view.move(cp.character->walkspeed, 0);
+		game.currentScreen.stage.window_offset += cp.character->walkspeed;
+	}
+
+	//left
+
+	if ((!(op.xpos + op.getSpriteWidth() - op.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset))&&(cp.xpos + cp.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
+		camera_view.move(-cp.character->walkspeed, 0);
+		game.currentScreen.stage.window_offset -= cp.character->walkspeed;
+	}
+
+}
+
+void FightState::restrict_movement(Player& p1, Player& p2) {
+	//right
+
+	if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) &&(p1.xvel>0)){
+		p1.xvel = 0;
+	}
+
+	//left
+
+	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel<0)){
+		p1.xvel = 0;
+	}
+}
+
 
 //Change some copies to moves in future
 void FightState::checkClipBoxes(Player& p1, Player& p2) {
@@ -494,10 +534,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	else if (!player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
 		player.jump(RIGHT);
-		if ((player.xpos + player.getSpriteWidth() >= WINDOW_WIDTH + player.character->wall_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-			//camera_view.move(player.character->walkspeed, 0);
-			game.currentScreen.stage.window_offset += player.character->walkspeed;
-		}
 	}
 	else if (player.left && !player.jumping && player.right) {
 		player.holdingBlock = true;
@@ -506,10 +542,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	else if (player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
 		player.jump(LEFT);
-		if ((player.xpos + player.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-			//camera_view.move(-player.character->walkspeed, 0);
-			game.currentScreen.stage.window_offset -= player.character->walkspeed;
-		}
 	}
 	else if (!player.left && !player.jumping && player.right) {
 
@@ -521,10 +553,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		else {
 			player.holdingBlock = false;
 		}
-		if ((player.xpos + player.getSpriteWidth() >= WINDOW_WIDTH + player.character->wall_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-			//camera_view.move(player.character->walkspeed, 0);
-			game.currentScreen.stage.window_offset += player.character->walkspeed;
-		}
 	}
 	else if (player.left && !player.jumping && !player.right) {
 		player.walk(LEFT);
@@ -534,10 +562,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		}
 		else {
 			player.holdingBlock = false;
-		}
-		if ((player.xpos + player.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-			//camera_view.move(-player.character->walkspeed, 0);
-			game.currentScreen.stage.window_offset -= player.character->walkspeed;
 		}
 	}
 	else if (!player.left && player.jumping && !player.right) {
