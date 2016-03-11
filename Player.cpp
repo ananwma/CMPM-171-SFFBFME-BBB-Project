@@ -170,13 +170,17 @@ void Player::jump(direction dir) {
 		if (dir == RIGHT) {
 			yvel = -character->jumpY;
 			xvel = character->jumpX;
+			jumpSide = side;
 		}
 		if (dir == LEFT) {
 			yvel = -character->jumpY;
 			xvel = -character->jumpX;
+			jumpSide = side;
 		}
 		if (dir == NEUTRAL) {
 			yvel = -character->jumpY;
+			// Neutral jump = opposite side for crossunders
+			side == LEFT ? jumpSide = RIGHT : jumpSide = LEFT;
 		}
 	}
 }
@@ -247,9 +251,9 @@ void Player::updatePhysics() {
 		}
 	}
 	//if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
-	if((character->sprite.getPosition().x-200 <= 0)||(character->sprite.getPosition().x+200 >= 1280)){
-		xvel = 0;
-	}
+	//if((xpos <= 0)||(xpos >= 1280)){
+	//	xvel = 0;
+	//}
 	character->sprite.setPosition(xpos, ypos);
 }
 
@@ -258,7 +262,7 @@ void Player::checkSuper(int note) {
 		superIndex++;
 		if (superIndex == character->super.size()) {
 			state = NO_STATE;
-			doMove(CMAJ);
+			doMove(SUPER);
 			superIndex = 0;
 		}
 	}

@@ -27,6 +27,8 @@ BachJab::BachJab() {
 	pushX = 2;
 	// State move puts player in
 	state = ATTACK_STATE;
+	
+	initFrames();
 }
 
 void BachJab::initFrames() {
@@ -86,5 +88,6 @@ void BachJab::initFrames() {
 void BachJab::initCancelMoves() {
 	cancelMoves.push_back(JAB);
 	cancelMoves.push_back(STRONG);
+	cancelMoves.push_back(CMAJ);
 
 }

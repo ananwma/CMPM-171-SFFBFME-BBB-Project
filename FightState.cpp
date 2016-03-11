@@ -31,10 +31,11 @@ void FightState::init() {
 	// Beat is in milliseconds, 1000 = 1 beat every 1 second
 	beat = BEAT_SPEED;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
-	beatThreshold = 100 * (BEAT_SPEED/500);
+	beatThreshold = 100 * (BEAT_SPEED / 500);
 
-	// Number of frames to leave indicator on
-	indicatorFlash = 15 * (BEAT_SPEED / 500);
+	// Number of frames to leave indicator on, as well as a boolean for when it's on
+	indicatorFlash = 5;
+	indicatorFlashOn = false;
 
 	// Later move this to character selection state
 	Bach* bach = new Bach();
@@ -63,8 +64,8 @@ void FightState::init() {
 	player_2_meter.setSize(sf::Vector2f(400, 30));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
-	
-	game.playerOne.indicator.bSprite.setPosition(0,50);
+
+	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
 	camera_view.setCenter(640, 300);
@@ -113,28 +114,30 @@ void FightState::update() {
 			game.window.close();
 			break;
 		}
-	} 
+	}
 
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
 		onBeat = true;
-		game.playerOne.indicator.updateIndicator(NONE);
-		game.playerTwo.indicator.updateIndicator(NONE);
+		
 	}
 
-	if ((metronome.getElapsedTime().asMilliseconds()) > (300 * beat) / 500) {
-		game.playerOne.indicator.updateIndicator(NOBEAT);
-		game.playerTwo.indicator.updateIndicator(NOBEAT);
-	}
-	
 
 	if (metronome.getElapsedTime().asMilliseconds() > beat) {
 		//cout << "beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
+		//flash indicator???
+			indicatorFlashOn = true;
+			cout << "indicatorflashon" << endl;
+			indicatorFlash = 5;
+			game.playerOne.indicator.updateIndicator(NONE);
+			game.playerTwo.indicator.updateIndicator(NONE);
 		if (quarterNote) {
 			bassline.playNextNote();
+			metronomeSound.play();
 			quarterNote = false;
+			
 		}
 		else {
 			quarterNote = true;
@@ -147,7 +150,6 @@ void FightState::update() {
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
-
 	restrict_movement(game.playerOne, game.playerTwo);
 	restrict_movement(game.playerTwo, game.playerOne);
 	game.playerOne.updatePhysics();
@@ -171,8 +173,8 @@ void FightState::update() {
 			game.playerOne.setPosition(1480, game.playerOne.ypos);
 	}*/
 
-	collision.flip_sprites(game.playerOne, game.playerTwo);
-	collision.flip_sprites(game.playerTwo, game.playerOne);
+		collision.flip_sprites(game.playerOne, game.playerTwo);
+		collision.flip_sprites(game.playerTwo, game.playerOne);
 
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
@@ -187,20 +189,37 @@ void FightState::update() {
 
 	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
 		phase = 1;
+#define BEAT_SPEED 300.0f
+		beat = 300;
 		bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
 		phase = 2;
+#define BEAT_SPEED 200.0f
+		beat = 200;
 		bassline.setBassline({ C1, G1, E1, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
+#define BEAT_SPEED 100.0f
+		beat = 100;
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
-
+	
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
+		if (indicatorFlashOn) {
+		indicatorFlash -= 1;
+		cout << "indicatorframe: " << dec << indicatorFlash << endl;
+		}
+		if (indicatorFlash == 0) {
+			game.playerOne.indicator.updateIndicator(NOBEAT);
+			game.playerTwo.indicator.updateIndicator(NOBEAT);
+			cout << "indicatorflashoff" << endl;
+			indicatorFlashOn = false;
+			indicatorFlash = 5;
+		}
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
 	}
@@ -221,8 +240,8 @@ void FightState::update() {
 	player_2_HP.setSize(p2HP);
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
-	
-	
+
+
 }
 
 void FightState::draw() {
@@ -291,39 +310,129 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
 		sf::FloatRect intersectBox;
 		if (offsetClipBox1.intersects(offsetClipBox2)) {
-			// Set vel of player not WALK_STATE to player that is WALK_STATE
-			if (p1.state == WALK_STATE && p2.state != WALK_STATE) {
-				if (p1.xvel > 0 && p1.side == LEFT)
+			// If player 1 is moving in the x direction and player 2 is standing still
+			if (abs(p1.xvel) > 0 && p2.xvel == 0) {
+				if (p1.xvel > 0 && p1.side == LEFT) {
 					p2.xvel = p1.xvel;
-				else if (p1.xvel < 0 && p1.side == RIGHT)
+					if (p2.againstWall)
+						p1.xvel = 0;
+				}
+				else if (p1.xvel < 0 && p1.side == RIGHT) {
 					p2.xvel = p1.xvel;
+					if (p2.againstWall)
+						p1.xvel = 0;
+				}
 			}
-			else if (p2.state == WALK_STATE && p1.state != WALK_STATE) {
-				if (p2.xvel > 0 && p2.side == LEFT)
+			// If player 2 is moving in the x direction and player 1 is standing still
+			else if (abs(p2.xvel) > 0 && p1.xvel == 0) {
+				if (p2.xvel > 0 && p2.side == LEFT) {
 					p1.xvel = p2.xvel;
-				else if (p2.xvel < 0 && p2.side == RIGHT)
+					if (p1.againstWall)
+						p2.xvel = 0;
+				}
+				else if (p2.xvel < 0 && p2.side == RIGHT) {
 					p1.xvel = p2.xvel;
+					if (p1.againstWall)
+						p2.xvel = 0;
+				}
 			}
-			// Set vel to 0 if both WALK_STATE and velocities have oposite signs
-			else if (p1.state == WALK_STATE && p2.state == WALK_STATE) {
+			// If both are moving in opposing directions, set both vels to 0
+			else if (abs(p1.xvel) > 0 && abs(p2.xvel) > 0) {
 				if ((p1.xvel > 0) != (p2.xvel > 0)) {
 					p2.xvel = 0;
 					p1.xvel = 0;
 				}
 			}
 
-			// this part isnt ideal but good enough for demo
-			else if (p1.state != WALK_STATE && p2.state != WALK_STATE) {
-				if (p1.side == LEFT) {
-					//p1.xvel = p2.xvel;
-					p2.xvel = 10;
+			if (p2.againstWall && p2.state == WALK_STATE && p1.state == WALK_STATE) {
+				p2.xvel = 0;
+				p1.xvel = 0;
+			}
+			else if (p1.againstWall && p1.state == WALK_STATE && p2.state == WALK_STATE) {
+				p2.xvel = 0;
+				p1.xvel = 0;
+			}
+
+			// Airborne stuff
+			if (abs(p1.yvel) > 0.0f) {
+				float p1Center = (offsetClipBox1.left + offsetClipBox1.width / 2);
+				float p2Center = (offsetClipBox2.left + offsetClipBox2.width / 2);
+				if (p1Center < p2Center) {
+					
 				}
-				else if (p2.side == RIGHT) {
-					//p1.xvel = p2.xvel;
-					p2.xvel = -10;
+
+				if (p1.jumpSide == LEFT) {
+					if (p2.side == RIGHT) {
+						p1.xvel = 0;
+						p2.xvel = p1.character->jumpX;
+					}
+					else if (p2.side == LEFT) {
+						p2.xvel = -p1.character->jumpX;
+					}
+			}
+				else if (p1.jumpSide == RIGHT) {
+					if (p2.side == LEFT) {
+				p1.xvel = 0;
+						p2.xvel = -p1.character->jumpX;
+					}
+					else if (p2.side == RIGHT) {
+						p2.xvel = p1.character->jumpX;
+					}
+				}
+			}
+			else if (abs(p2.yvel) > 0.0f) {
+
+				if (p2.jumpSide == LEFT) {
+					if (p1.side == RIGHT) {
+						p2.xvel = 0;
+						p1.xvel = p2.character->jumpX;
+					}
+					else if (p1.side == LEFT) {
+						p1.xvel = -p2.character->jumpX;
+					}
+				}
+				else if (p2.jumpSide == RIGHT) {
+					if (p1.side == LEFT) {
+				p2.xvel = 0;
+						p1.xvel = -p2.character->jumpX;
+					}
+					else if (p1.side == RIGHT) {
+						p1.xvel = p2.character->jumpX;
+					}
 				}
 			}
 		}
+		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
+			if (p1.xvel < 0 && p1.side == LEFT)
+				p1.xvel = 0;
+			if (p1.xvel > 0 && p1.side == RIGHT)
+				p1.xvel = 0;
+			p1.againstWall = true;
+		}
+		else
+			p1.againstWall = false;
+		if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
+			if (p2.xvel < 0 && p2.side == LEFT)
+				p2.xvel = 0;
+			if (p2.xvel > 0 && p2.side == RIGHT)
+				p2.xvel = 0;
+			p2.againstWall = true;
+		}
+		else
+			p2.againstWall = false;
+	}
+
+	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
+		p2.xvel = -p1.character->jumpX;
+	}
+	else if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == RIGHT) {
+		p2.xvel = p1.character->jumpX;
+	}
+	if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == LEFT) {
+		p1.xvel = -p2.character->jumpX;
+	}
+	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
+		p1.xvel = p2.character->jumpX;
 	}
 }
 
@@ -492,12 +601,14 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
-			
+				cout << "indicatorflashon" << endl;
+				indicatorFlashOn = true;
+
 				player.indicator.updateIndicator(ONBEAT);
-			
+
 
 				if (acc == C_NATURAL) {
-					player.doMove(SUPER);
+					player.doMove(JAB);
 				}
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);
@@ -538,34 +649,35 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 // Everything here is run on its own thread!
 void FightState::receiveKeysDown(int note, int playerId) {
-		if (playerId == game.playerOne.playerId) {
-			// Movement keys
-			if (note == 48) game.playerOne.left = true;
-			else if (note == 52) game.playerOne.jumping = true;
-			else if (note == 55) game.playerOne.right = true;
-			// Attack keys
-			else {
-				if (onBeat || game.playerOne.isInSuper()) {
-					inputP1.push_back(note);
-					game.inputHandler->playNote(note, 80);
-					game.playerOne.checkSuper(note % 12);
-				}
+	if (playerId == game.playerOne.playerId) {
+		// Movement keys
+		if (note == 48) game.playerOne.left = true;
+		else if (note == 52) game.playerOne.jumping = true;
+		else if (note == 55) game.playerOne.right = true;
+		// Attack keys
+		else {
+			if (onBeat || game.playerOne.isInSuper()) {
+				inputP1.push_back(note);
+				game.inputHandler->playNote(note, 80);
+				game.playerOne.checkSuper(note % 12);
 			}
 		}
-		else if (playerId == game.playerTwo.playerId) {
-			// Movement keys
-			if (note == 48) game.playerTwo.left = true;
-			else if (note == 52) game.playerTwo.jumping = true;
-			else if (note == 55) game.playerTwo.right = true;
-			// Attack keys
-			else {
-				if (onBeat) {
-					inputP2.push_back(note);
-					game.inputHandler->playNote(note, 80);
-				}
+	}
+	else if (playerId == game.playerTwo.playerId) {
+		// Movement keys
+		if (note == 48) game.playerTwo.left = true;
+		else if (note == 52) game.playerTwo.jumping = true;
+		else if (note == 55) game.playerTwo.right = true;
+		// Attack keys
+		else {
+			if (onBeat || game.playerOne.isInSuper()) {
+				inputP2.push_back(note);
+				game.inputHandler->playNote(note, 80);
+				game.playerOne.checkSuper(note % 12);
 			}
 		}
-	
+	}
+
 }
 
 void FightState::receiveKeysUp(int note, int playerId) {

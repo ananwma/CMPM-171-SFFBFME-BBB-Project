@@ -232,9 +232,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SFFProperties.props">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="SFFProperties.props" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

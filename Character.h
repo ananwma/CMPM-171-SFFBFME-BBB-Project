@@ -16,11 +16,12 @@ friend class Player;
 protected:
 	int width;
 	int height;
-	float jumpX;
 	float jumpY;
 	int health;
 	vector<int> super;
 public:
+	float jumpX;
+
 	float walkspeed;
 	int wall_offset;
 	sf::Sprite sprite;

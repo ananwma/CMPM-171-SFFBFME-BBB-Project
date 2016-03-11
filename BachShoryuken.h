@@ -29,29 +29,39 @@ BachShoryuken::BachShoryuken() {
 	pushX = 15;
 	// State move puts player in
 	state = AIRBORNE_STATE;
+
+	initFrames();
 }
 
 void BachShoryuken::initFrames() {
 	BoxVec hit;
 	BoxVec hurt;
 	BoxVec clip;
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	frameVector.push_back(Frame(hit, hurt, clip));
+	clip.clear();
 	/***FRAME 2***/
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	hit.push_back(sf::FloatRect(199, 26, 141, 259));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
 	clip.clear();
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	frameVector.push_back(Frame(hit, hurt, clip));
+	clip.clear();
 	/***FRAME 5***/
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	hit.push_back(sf::FloatRect(274, 5, 114, 246));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
 	clip.clear();
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	frameVector.push_back(Frame(hit, hurt, clip));
+	clip.clear();
 }
 
 void BachShoryuken::initCancelMoves() {

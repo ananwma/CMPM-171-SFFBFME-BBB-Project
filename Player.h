@@ -23,6 +23,7 @@ public:
 	void setPosition(float, float);
 	void jump(direction dir);
 	bool left, jumping, right;
+	direction jumpSide;
 	float xpos;
 	float ypos;
 	float xvel;
@@ -42,6 +43,7 @@ public:
 	direction side;
 	state state;
 	bool colliding;
+	bool againstWall = false;
 	bool lastMoveHit;
 	int superIndex = 0;
 	sf::Texture pTexture;

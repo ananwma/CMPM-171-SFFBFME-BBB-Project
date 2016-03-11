@@ -29,6 +29,8 @@ BachFierce::BachFierce() {
 	blockstun = 5;
 	// State move puts player in
 	state = ATTACK_STATE;
+
+	initFrames();
 }
 
 void BachFierce::initFrames() {
