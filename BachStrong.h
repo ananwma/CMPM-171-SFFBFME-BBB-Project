@@ -5,7 +5,7 @@ class BachStrong : public Move {
 public:
 	BachStrong();
 	virtual void initFrames();
-	virtual void initCancelMoves() {};
+	virtual void initCancelMoves();
 };
 
 BachStrong::BachStrong() {
@@ -23,7 +23,7 @@ BachStrong::BachStrong() {
 	blockstun = 3;
 	// Change in position on move
 	// Change in opponents position
-	pushX = 5;
+	pushX = 3;
 	// State move puts player in
 	state = ATTACK_STATE;
 }
@@ -98,4 +98,10 @@ void BachStrong::initFrames() {
 	hit.clear();
 	hurt.clear();
 	clip.clear();
+}
+
+void BachStrong::initCancelMoves() {
+	cancelMoves.push_back(FIERCE);
+	cancelMoves.push_back(CMAJ);
+
 }

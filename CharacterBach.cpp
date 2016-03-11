@@ -52,11 +52,14 @@ void Bach::initMoves() {
 	idle->initFrames();
 	hitstun->initFrames();
 	strong->initFrames();
+	strong->initCancelMoves();
 	fierce->initFrames();
 	blach->initFrames();
 	srk->initFrames();
 	shrt->initFrames();
+	shrt->initCancelMoves();
 	forward->initFrames();
+	forward->initCancelMoves();
 	roundhouse->initFrames();
 	tatsu->initFrames();
 	super->initFrames();

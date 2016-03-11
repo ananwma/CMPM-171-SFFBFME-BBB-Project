@@ -34,7 +34,7 @@ void FightState::init() {
 	beatThreshold = 100 * (BEAT_SPEED/500);
 
 	// Number of frames to leave indicator on, as well as a boolean for when it's on
-	indicatorFlash = 15;
+	indicatorFlash = 5;
 	indicatorFlashOn = false;
 
 	// Later move this to character selection state
@@ -119,10 +119,7 @@ void FightState::update() {
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
 		onBeat = true;
-		indicatorFlashOn = true;
-		indicatorFlash = 15;
-		game.playerOne.indicator.updateIndicator(NONE);
-		game.playerTwo.indicator.updateIndicator(NONE);
+		
 	}
 
 
@@ -130,9 +127,17 @@ void FightState::update() {
 		//cout << "beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
+		//flash indicator???
+			indicatorFlashOn = true;
+			cout << "indicatorflashon" << endl;
+			indicatorFlash = 5;
+			game.playerOne.indicator.updateIndicator(NONE);
+			game.playerTwo.indicator.updateIndicator(NONE);
 		if (quarterNote) {
 			bassline.playNextNote();
+			metronomeSound.play();
 			quarterNote = false;
+			
 		}
 		else {
 			quarterNote = true;
@@ -199,12 +204,14 @@ void FightState::update() {
 		frameCounter = 0;
 		if(indicatorFlashOn){
 		indicatorFlash -= 1;
+		cout << "indicatorframe: " << dec << indicatorFlash << endl;
 		}
 		if (indicatorFlash == 0) {
 			game.playerOne.indicator.updateIndicator(NOBEAT);
 			game.playerTwo.indicator.updateIndicator(NOBEAT);
+			cout << "indicatorflashoff" << endl;
 			indicatorFlashOn = false;
-			indicatorFlash = 15;
+			indicatorFlash = 5;
 		}
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
@@ -510,6 +517,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
+				cout << "indicatorflashon" << endl;
 				indicatorFlashOn = true;
 
 				player.indicator.updateIndicator(ONBEAT);

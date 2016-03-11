@@ -21,7 +21,7 @@ BachForward::BachForward() {
 	velX = 0;
 	velY = 0;
 	// Change in opponent's position on move
-	pushX = 0;
+	pushX = 3;
 	pushY = 0;
 	//Number of hitstun frames this causes
 	hitstun = 5;
@@ -95,5 +95,5 @@ void BachForward::initFrames() {
 }
 
 void BachForward::initCancelMoves() {
-
+	cancelMoves.push_back(GMAJ);
 }

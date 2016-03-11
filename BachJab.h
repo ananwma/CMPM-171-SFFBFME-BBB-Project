@@ -86,5 +86,6 @@ void BachJab::initFrames() {
 void BachJab::initCancelMoves() {
 	cancelMoves.push_back(JAB);
 	cancelMoves.push_back(STRONG);
+	cancelMoves.push_back(CMAJ);
 
 }
