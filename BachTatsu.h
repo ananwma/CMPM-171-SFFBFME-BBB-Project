@@ -29,6 +29,8 @@ BachTatsu::BachTatsu() {
 	blockstun = 2;
 	// State move puts player in
 	state = ATTACK_STATE;
+
+	initFrames();
 }
 
 void BachTatsu::initFrames() {

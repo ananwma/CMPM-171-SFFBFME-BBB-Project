@@ -31,7 +31,7 @@ void FightState::init() {
 	// Beat is in milliseconds, 1000 = 1 beat every 1 second
 	beat = BEAT_SPEED;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
-	beatThreshold = 100 * (BEAT_SPEED/500);
+	beatThreshold = 100 * (BEAT_SPEED / 500);
 
 	// Number of frames to leave indicator on, as well as a boolean for when it's on
 	indicatorFlash = 15;
@@ -145,7 +145,6 @@ void FightState::update() {
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
-
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
@@ -167,8 +166,8 @@ void FightState::update() {
 			game.playerOne.setPosition(1480, game.playerOne.ypos);
 	}*/
 
-		collision.flip_sprites(game.playerOne, game.playerTwo);
-		collision.flip_sprites(game.playerTwo, game.playerOne);
+	collision.flip_sprites(game.playerOne, game.playerTwo);
+	collision.flip_sprites(game.playerTwo, game.playerOne);
 
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
@@ -183,22 +182,28 @@ void FightState::update() {
 
 	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
 		phase = 1;
+#define BEAT_SPEED 300.0f
+		beat = 300;
 		bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
 		phase = 2;
+#define BEAT_SPEED 200.0f
+		beat = 200;
 		bassline.setBassline({ C1, G1, E1, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
+#define BEAT_SPEED 100.0f
+		beat = 100;
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
-	
+
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
-		if(indicatorFlashOn){
-		indicatorFlash -= 1;
+		if (indicatorFlashOn) {
+			indicatorFlash -= 1;
 		}
 		if (indicatorFlash == 0) {
 			game.playerOne.indicator.updateIndicator(NOBEAT);
@@ -258,11 +263,11 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
 		sf::FloatRect intersectBox;
 		if (offsetClipBox1.intersects(offsetClipBox2)) {
-			// Set vel of player not WALK_STATE to player that is WALK_STATE
-			if (p1.state == WALK_STATE && p2.state != WALK_STATE) {
+			// If player 1 is moving in the x direction and player 2 is standing still
+			if (abs(p1.xvel) > 0 && p2.xvel == 0) {
 				if (p1.xvel > 0 && p1.side == LEFT) {
 					p2.xvel = p1.xvel;
-					if (p2.againstWall)
+					if (p2.againstWall) 
 						p1.xvel = 0;
 				}
 				else if (p1.xvel < 0 && p1.side == RIGHT) {
@@ -271,7 +276,8 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 						p1.xvel = 0;
 				}
 			}
-			else if (p2.state == WALK_STATE && p1.state != WALK_STATE) {
+			// If player 2 is moving in the x direction and player 1 is standing still
+			else if (abs(p2.xvel) > 0 && p1.xvel == 0) {
 				if (p2.xvel > 0 && p2.side == LEFT) {
 					p1.xvel = p2.xvel;
 					if (p1.againstWall)
@@ -283,29 +289,70 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 						p2.xvel = 0;
 				}
 			}
-			// Set vel to 0 if both WALK_STATE and velocities have oposite signs
-			else if (p1.state == WALK_STATE && p2.state == WALK_STATE) {
+			// If both are moving in opposing directions, set both vels to 0
+			else if (abs(p1.xvel) > 0 && abs(p2.xvel) > 0) {
 				if ((p1.xvel > 0) != (p2.xvel > 0)) {
 					p2.xvel = 0;
 					p1.xvel = 0;
 				}
 			}
 
-			// this part isnt ideal but good enough for demo
-			else if (p1.state != WALK_STATE && p2.state != WALK_STATE) {
-				if (p1.side == LEFT && !p1.againstWall)
-					p1.xvel = -8.0f;
-				else if (p1.side == RIGHT && !p1.againstWall)
-					p1.xvel = 8.0f;
-
-				if (p2.side == LEFT && !p2.againstWall)
-					p2.xvel = -8.0f;
-				else if (p2.side == RIGHT && !p2.againstWall)
-					p2.xvel = 8.0f;
-			}
-			else {
-				p1.xvel = 0;
+			if (p2.againstWall && p2.state == WALK_STATE && p1.state == WALK_STATE) {
 				p2.xvel = 0;
+				p1.xvel = 0;
+			}
+			else if (p1.againstWall && p1.state == WALK_STATE && p2.state == WALK_STATE) {
+				p2.xvel = 0;
+				p1.xvel = 0;
+			}
+
+			// Airborne stuff
+			if (abs(p1.yvel) > 0.0f) {
+				float p1Center = (offsetClipBox1.left + offsetClipBox1.width / 2);
+				float p2Center = (offsetClipBox2.left + offsetClipBox2.width / 2);
+				if (p1Center < p2Center) {
+					
+				}
+
+				if (p1.jumpSide == LEFT) {
+					if (p2.side == RIGHT) {
+						p1.xvel = 0;
+						p2.xvel = p1.character->jumpX;
+					}
+					else if (p2.side == LEFT) {
+						p2.xvel = -p1.character->jumpX;
+					}
+				}
+				else if (p1.jumpSide == RIGHT) {
+					if (p2.side == LEFT) {
+						p1.xvel = 0;
+						p2.xvel = -p1.character->jumpX;
+					}
+					else if (p2.side == RIGHT) {
+						p2.xvel = p1.character->jumpX;
+					}
+				}
+			}
+			else if (abs(p2.yvel) > 0.0f) {
+
+				if (p2.jumpSide == LEFT) {
+					if (p1.side == RIGHT) {
+						p2.xvel = 0;
+						p1.xvel = p2.character->jumpX;
+					}
+					else if (p1.side == LEFT) {
+						p1.xvel = -p2.character->jumpX;
+					}
+				}
+				else if (p2.jumpSide == RIGHT) {
+					if (p1.side == LEFT) {
+						p2.xvel = 0;
+						p1.xvel = -p2.character->jumpX;
+					}
+					else if (p1.side == RIGHT) {
+						p1.xvel = p2.character->jumpX;
+					}
+				}
 			}
 		}
 		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
@@ -326,6 +373,19 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 		}
 		else
 			p2.againstWall = false;
+	}
+
+	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
+		p2.xvel = -p1.character->jumpX;
+	}
+	else if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == RIGHT) {
+		p2.xvel = p1.character->jumpX;
+	}
+	if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == LEFT) {
+		p1.xvel = -p2.character->jumpX;
+	}
+	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
+		p1.xvel = p2.character->jumpX;
 	}
 }
 

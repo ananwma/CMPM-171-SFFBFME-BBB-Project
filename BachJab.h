@@ -27,6 +27,8 @@ BachJab::BachJab() {
 	pushX = 2;
 	// State move puts player in
 	state = ATTACK_STATE;
+	
+	initFrames();
 }
 
 void BachJab::initFrames() {

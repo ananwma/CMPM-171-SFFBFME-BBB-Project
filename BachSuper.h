@@ -30,6 +30,8 @@ BachSuper::BachSuper() {
 	blockstun = 5;
 	// State move puts player in
 	state = ATTACK_STATE;
+	
+	initFrames();
 }
 
 void BachSuper::initFrames() {
@@ -37,6 +39,7 @@ void BachSuper::initFrames() {
 	BoxVec hurt;
 	BoxVec clip;
 	//1-7
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	frameVector.push_back(Frame(hit, hurt, clip));
@@ -51,6 +54,7 @@ void BachSuper::initFrames() {
 	hurt.clear();
 	clip.clear();
 	//9-12
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	frameVector.push_back(Frame(hit, hurt, clip));
@@ -62,12 +66,14 @@ void BachSuper::initFrames() {
 	hurt.clear();
 	clip.clear();
 	/***FRAME 14***/
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	hurt.push_back(sf::FloatRect(180, 13, 163, 488));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
 	clip.clear();
 	/***FRAME 15***/
+	clip.push_back(sf::FloatRect(139, 102, 158, 411));
 	hurt.push_back(sf::FloatRect(167, 3, 183, 529));
 	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();

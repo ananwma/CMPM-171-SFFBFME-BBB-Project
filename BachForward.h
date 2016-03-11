@@ -29,6 +29,8 @@ BachForward::BachForward() {
 	blockstun = 3;
 	// State move puts player in
 	state = ATTACK_STATE;
+
+	initFrames();
 }
 
 void BachForward::initFrames() {

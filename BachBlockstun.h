@@ -21,6 +21,8 @@ BachBlockstun::BachBlockstun() {
 
 	// State move puts player in
 	state = BLOCKSTUN_STATE;
+
+	initFrames();
 }
 
 void BachBlockstun::initFrames() {

@@ -29,6 +29,8 @@ BachShort::BachShort() {
 	blockstun = 1;
 	// State move puts player in
 	state = ATTACK_STATE;
+
+	initFrames();
 }
 
 void BachShort::initFrames() {

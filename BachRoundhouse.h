@@ -29,6 +29,8 @@ BachRoundhouse::BachRoundhouse() {
 	blockstun = 4;
 	// State move puts player in
 	state = ATTACK_STATE;
+	
+	initFrames();
 }
 
 void BachRoundhouse::initFrames() {

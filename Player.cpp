@@ -170,13 +170,17 @@ void Player::jump(direction dir) {
 		if (dir == RIGHT) {
 			yvel = -character->jumpY;
 			xvel = character->jumpX;
+			jumpSide = side;
 		}
 		if (dir == LEFT) {
 			yvel = -character->jumpY;
 			xvel = -character->jumpX;
+			jumpSide = side;
 		}
 		if (dir == NEUTRAL) {
 			yvel = -character->jumpY;
+			// Neutral jump = opposite side for crossunders
+			side == LEFT ? jumpSide = RIGHT : jumpSide = LEFT;
 		}
 	}
 }
@@ -250,7 +254,6 @@ void Player::updatePhysics() {
 	//if((xpos <= 0)||(xpos >= 1280)){
 	//	xvel = 0;
 	//}
-	cout << xpos << endl;
 	character->sprite.setPosition(xpos, ypos);
 }
 

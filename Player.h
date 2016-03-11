@@ -23,6 +23,7 @@ public:
 	void setPosition(float, float);
 	void jump(direction dir);
 	bool left, jumping, right;
+	direction jumpSide;
 	float xpos;
 	float ypos;
 	float xvel;
