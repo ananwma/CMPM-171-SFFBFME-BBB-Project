@@ -21,7 +21,7 @@ BachShort::BachShort() {
 	velX = 0;
 	velY = 0;
 	// Change in opponent's position on move
-	pushX = 0;
+	pushX = 1;
 	pushY = 0;
 	//Number of hitstun frames this causes
 	hitstun = 2;
@@ -87,5 +87,5 @@ void BachShort::initFrames() {
 }
 
 void BachShort::initCancelMoves() {
-
+	cancelMoves.push_back(GMAJ);
 }

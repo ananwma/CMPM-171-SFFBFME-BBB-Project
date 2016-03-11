@@ -34,7 +34,7 @@ void FightState::init() {
 	beatThreshold = 100 * (BEAT_SPEED / 500);
 
 	// Number of frames to leave indicator on, as well as a boolean for when it's on
-	indicatorFlash = 15;
+	indicatorFlash = 5;
 	indicatorFlashOn = false;
 
 	// Later move this to character selection state
@@ -119,10 +119,7 @@ void FightState::update() {
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
 		onBeat = true;
-		indicatorFlashOn = true;
-		indicatorFlash = 15;
-		game.playerOne.indicator.updateIndicator(NONE);
-		game.playerTwo.indicator.updateIndicator(NONE);
+		
 	}
 
 
@@ -130,9 +127,17 @@ void FightState::update() {
 		//cout << "beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
+		//flash indicator???
+			indicatorFlashOn = true;
+			cout << "indicatorflashon" << endl;
+			indicatorFlash = 5;
+			game.playerOne.indicator.updateIndicator(NONE);
+			game.playerTwo.indicator.updateIndicator(NONE);
 		if (quarterNote) {
 			bassline.playNextNote();
+			metronomeSound.play();
 			quarterNote = false;
+			
 		}
 		else {
 			quarterNote = true;
@@ -166,8 +171,8 @@ void FightState::update() {
 			game.playerOne.setPosition(1480, game.playerOne.ypos);
 	}*/
 
-	collision.flip_sprites(game.playerOne, game.playerTwo);
-	collision.flip_sprites(game.playerTwo, game.playerOne);
+		collision.flip_sprites(game.playerOne, game.playerTwo);
+		collision.flip_sprites(game.playerTwo, game.playerOne);
 
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
@@ -198,18 +203,20 @@ void FightState::update() {
 		beat = 100;
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
-
+	
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
 		if (indicatorFlashOn) {
-			indicatorFlash -= 1;
+		indicatorFlash -= 1;
+		cout << "indicatorframe: " << dec << indicatorFlash << endl;
 		}
 		if (indicatorFlash == 0) {
 			game.playerOne.indicator.updateIndicator(NOBEAT);
 			game.playerTwo.indicator.updateIndicator(NOBEAT);
+			cout << "indicatorflashoff" << endl;
 			indicatorFlashOn = false;
-			indicatorFlash = 15;
+			indicatorFlash = 5;
 		}
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
@@ -267,7 +274,7 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 			if (abs(p1.xvel) > 0 && p2.xvel == 0) {
 				if (p1.xvel > 0 && p1.side == LEFT) {
 					p2.xvel = p1.xvel;
-					if (p2.againstWall) 
+					if (p2.againstWall)
 						p1.xvel = 0;
 				}
 				else if (p1.xvel < 0 && p1.side == RIGHT) {
@@ -322,10 +329,10 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 					else if (p2.side == LEFT) {
 						p2.xvel = -p1.character->jumpX;
 					}
-				}
+			}
 				else if (p1.jumpSide == RIGHT) {
 					if (p2.side == LEFT) {
-						p1.xvel = 0;
+				p1.xvel = 0;
 						p2.xvel = -p1.character->jumpX;
 					}
 					else if (p2.side == RIGHT) {
@@ -346,7 +353,7 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 				}
 				else if (p2.jumpSide == RIGHT) {
 					if (p1.side == LEFT) {
-						p2.xvel = 0;
+				p2.xvel = 0;
 						p1.xvel = -p2.character->jumpX;
 					}
 					else if (p1.side == RIGHT) {
@@ -570,6 +577,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				cout << hex << acc << endl;
+				cout << "indicatorflashon" << endl;
 				indicatorFlashOn = true;
 
 				player.indicator.updateIndicator(ONBEAT);
