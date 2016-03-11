@@ -64,6 +64,7 @@ public:
 	bool holdingBlock;
 	// currentSprite;
 	//int currentFrame;
+	int ezmode = 0;
 
 	void doMove(int);
 	void getHit(Move*);

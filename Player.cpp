@@ -78,7 +78,8 @@ void Player::getHit(Move *move) {
 	//if (state != BLOCKING) {
 	character->currentMove = HITSTUN;
 	character->currentMoveFrame = 0;
-	hitstunFrames = move->hitstun;
+	hitstunFrames = move->hitstun + ezmode;
+
 	character->sprite.setTexture(character->moveList.at(HITSTUN)->spritesheet);
 	state = HITSTUN_STATE;
 	health -= move->damage;

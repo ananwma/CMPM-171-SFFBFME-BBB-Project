@@ -671,6 +671,9 @@ void FightState::receiveKeysDown(int note, int playerId) {
 				game.playerOne.checkSuper(note % 12);
 			}
 		}
+		else if (note == 39) {
+			game.playerTwo.ezmode = 5;
+		}
 	}
 	else if (playerId == game.playerTwo.playerId) {
 		// Movement keys
@@ -684,6 +687,9 @@ void FightState::receiveKeysDown(int note, int playerId) {
 				game.inputHandler->playNote(note, 80);
 				game.playerTwo.checkSuper(note % 12);
 			}
+		}
+		else if (note == 39) {
+			game.playerOne.ezmode = 5;
 		}
 	}
 
