@@ -70,6 +70,8 @@ private:
 	void checkBoxes(Player&, Player&);
 	void checkClipBoxes(Player&, Player&);
 	void drawBoxes(Player&, bool, bool, bool);
+	void FightState::move_camera(Player&, Player&);
+	void FightState::restrict_movement(Player&, Player&);
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;
