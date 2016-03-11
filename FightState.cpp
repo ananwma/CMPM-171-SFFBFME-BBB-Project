@@ -21,8 +21,6 @@ void FightState::init() {
 	cout << game.playerOne.playerId << endl;
 	cout << game.playerTwo.playerId << endl;
 	running = true;
-	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
-	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 
 	game.currentScreen.setStage(chstage);
 	game.currentScreen.stage.sprite.move(-200, 0);
@@ -96,6 +94,8 @@ void FightState::init() {
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(6);
 
+	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
+	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 }
 
 void FightState::update() {
@@ -218,12 +218,10 @@ void FightState::update() {
 		frameCounter = 0;
 		if (indicatorFlashOn) {
 		indicatorFlash -= 1;
-		cout << "indicatorframe: " << dec << indicatorFlash << endl;
 		}
 		if (indicatorFlash == 0) {
 			game.playerOne.indicator.updateIndicator(NOBEAT);
 			game.playerTwo.indicator.updateIndicator(NOBEAT);
-			cout << "indicatorflashoff" << endl;
 			indicatorFlashOn = false;
 			indicatorFlash = 5;
 		}
@@ -477,7 +475,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 				else {
 					//if not blocking, player gets hit
 					if (!attacker.getCurrentFrame().hit) {
-						cout << "hit!" << endl;
+						//cout << "hit!" << endl;
 						defender.getHit(attacker.getCurrentMove());
 						attacker.getCurrentFrame().hit = true;
 						hitSound.play();
@@ -607,8 +605,8 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				}
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
-				cout << hex << acc << endl;
-				cout << "indicatorflashon" << endl;
+				//cout << hex << acc << endl;
+				//cout << "indicatorflashon" << endl;
 				indicatorFlashOn = true;
 
 				player.indicator.updateIndicator(ONBEAT);
