@@ -62,9 +62,9 @@ void Player::doMove(int move) {
 		state = getCurrentMove()->state;
 		yvel = getCurrentMove()->velY * (500 / beat);
 		if (side == LEFT)
-			xvel = getCurrentMove()->velX;
+			xvel = getCurrentMove()->velX * (500 / beat);
 		else if (side == RIGHT)
-			xvel = -getCurrentMove()->velX;
+			xvel = -getCurrentMove()->velX * (500 / beat);
 	}
 	else if (state == ATTACK_STATE && canCancel && moveCancelable(character->currentMove, move)) {
 		character->currentMove = move;
@@ -149,14 +149,14 @@ void Player::walk(direction dir) {
 			//character->sprite.move(character->walkspeed, 0);
 			//xpos += character->walkspeed;
 			if (!(character->sprite.getPosition().x + character->wall_offset <= -200)) {
-				xvel = -character->walkspeed;
+				xvel = -character->walkspeed * (500 / beat);
 			}
 		}
 		else if (dir == RIGHT) {
 			//character->sprite.move(-character->walkspeed, 0);
 			//xpos -= character->walkspeed;
 			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH + 200)) {
-				xvel = character->walkspeed;
+				xvel = character->walkspeed * (500 / beat);
 			}
 		}
 	}
@@ -169,12 +169,12 @@ void Player::jump(direction dir) {
 		state = AIRBORNE_STATE;
 		if (dir == RIGHT) {
 			yvel = -character->jumpY * (500 / beat);
-			xvel = character->jumpX;
+			xvel = character->jumpX *  (500 / beat);
 			jumpSide = side;
 		}
 		if (dir == LEFT) {
 			yvel = -character->jumpY * (500 / beat);
-			xvel = -character->jumpX;
+			xvel = -character->jumpX * (500 / beat);
 			jumpSide = side;
 		}
 		if (dir == NEUTRAL) {
@@ -234,20 +234,19 @@ void Player::updatePhysics() {
 	//Add acceleration to velocity
 	xvel += xacc;
 	yvel += yacc;
-	xvel = xvel;
 	//Update positions based on velocity
 	xpos += xvel;
 	ypos += yvel;
 	//Add gravitational acceleration if AIRBORNE_STATE
 	if (ypos < GROUND) {
 		yvel += gravity;
-		if (ypos + yvel > GROUND) {
-			ypos = GROUND;
-			yvel = 0.0f;
-			xvel = 0.0f;
-			if (state != ATTACK_STATE)
-				state = NO_STATE;
-		}
+	}
+	if (ypos + yvel > GROUND) {
+		ypos = GROUND;
+		yvel = 0.0f;
+		xvel = 0.0f;
+		if (state != ATTACK_STATE)
+			state = NO_STATE;
 	}
 	//if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
 	//if((xpos <= 0)||(xpos >= 1280)){

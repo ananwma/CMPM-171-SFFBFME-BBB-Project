@@ -187,7 +187,7 @@ void FightState::update() {
 
 	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
 		phase = 1;
-		game.beat = 450.0f;
+		game.beat = 425.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
 		game.playerOne.setBeat(game.beat);
@@ -196,7 +196,7 @@ void FightState::update() {
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
 		phase = 2;
-		game.beat = 400;
+		game.beat = 350.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
 		game.playerOne.setBeat(game.beat);
@@ -205,7 +205,7 @@ void FightState::update() {
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
-		game.beat = 300;
+		game.beat = 275.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
 		game.playerOne.setBeat(game.beat);
@@ -664,7 +664,7 @@ void FightState::receiveKeysDown(int note, int playerId) {
 		else if (note == 52) game.playerOne.jumping = true;
 		else if (note == 55) game.playerOne.right = true;
 		// Attack keys
-		else {
+		else if (note > 59) {
 			if (onBeat || game.playerOne.isInSuper()) {
 				inputP1.push_back(note);
 				game.inputHandler->playNote(note, 80);
@@ -678,7 +678,7 @@ void FightState::receiveKeysDown(int note, int playerId) {
 		else if (note == 52) game.playerTwo.jumping = true;
 		else if (note == 55) game.playerTwo.right = true;
 		// Attack keys
-		else {
+		else if (note > 59) {
 			if (onBeat || game.playerTwo.isInSuper()) {
 				inputP2.push_back(note);
 				game.inputHandler->playNote(note, 80);
@@ -696,7 +696,7 @@ void FightState::receiveKeysUp(int note, int playerId) {
 		else if (note == 52) game.playerOne.jumping = false;
 		else if (note == 55) game.playerOne.right = false;
 		// Attack keys
-		else {
+		else if (note > 59) {
 			game.inputHandler->playNote(note, 0);
 		}
 	}
@@ -706,7 +706,7 @@ void FightState::receiveKeysUp(int note, int playerId) {
 		else if (note == 52) game.playerTwo.jumping = false;
 		else if (note == 55) game.playerTwo.right = false;
 		// Attack keys 
-		else {
+		else if (note > 59) {
 			game.inputHandler->playNote(note, 0);
 		}
 	}
