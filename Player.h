@@ -36,6 +36,11 @@ public:
 	float deltaY;
 	float health;
 	float meter;
+
+	// change where this is initialized later
+	float beat = 500.0f;
+	float gravity = 0.98f * pow((500.0f / 500.0f), 2.0f);
+
 	int hitstunFrames;
 	int blockstunFrames;
 	int roundWins;
@@ -77,7 +82,7 @@ public:
 	float getSpriteHeight();
 	float getSpriteWidth();
 	float getMaxHealth();
-
+	void setBeat(float);
 
 	Player();
 	~Player();

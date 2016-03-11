@@ -48,8 +48,8 @@ private:
 	sf::Clock clock;
 	sf::Clock metronome;
 	bool onBeat;
+	float beat;
 	int intOnBeat;
-	int beat;
 	int beatThreshold;
 	int indicatorFlash;
 	bool indicatorFlashOn;

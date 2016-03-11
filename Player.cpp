@@ -2,9 +2,9 @@
 #include "Character.h"
 #include "Player.h"
 #include "BeatIndicator.h"
+#include "Game.h"
 #include <time.h> 
 #include <math.h>
-#include "Game.h"
 
 #define WALL_WIDTH 1280
 #define INIT_XPOS 20
@@ -60,7 +60,7 @@ void Player::doMove(int move) {
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
-		yvel = getCurrentMove()->velY * (500/BEAT_SPEED);
+		yvel = getCurrentMove()->velY * (500 / beat);
 		if (side == LEFT)
 			xvel = getCurrentMove()->velX;
 		else if (side == RIGHT)
@@ -168,17 +168,17 @@ void Player::jump(direction dir) {
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = AIRBORNE_STATE;
 		if (dir == RIGHT) {
-			yvel = -character->jumpY;
+			yvel = -character->jumpY * (500 / beat);
 			xvel = character->jumpX;
 			jumpSide = side;
 		}
 		if (dir == LEFT) {
-			yvel = -character->jumpY;
+			yvel = -character->jumpY * (500 / beat);
 			xvel = -character->jumpX;
 			jumpSide = side;
 		}
 		if (dir == NEUTRAL) {
-			yvel = -character->jumpY;
+			yvel = -character->jumpY * (500 / beat);
 			// Neutral jump = opposite side for crossunders
 			side == LEFT ? jumpSide = RIGHT : jumpSide = LEFT;
 		}
@@ -234,14 +234,13 @@ void Player::updatePhysics() {
 	//Add acceleration to velocity
 	xvel += xacc;
 	yvel += yacc;
-	xvel = xvel  * (500 / BEAT_SPEED);
+	xvel = xvel;
 	//Update positions based on velocity
 	xpos += xvel;
 	ypos += yvel;
 	//Add gravitational acceleration if AIRBORNE_STATE
 	if (ypos < GROUND) {
-		yvel += GRAVITY;
-		if (abs(yvel) < 0.5) cout << ypos<<endl;
+		yvel += gravity;
 		if (ypos + yvel > GROUND) {
 			ypos = GROUND;
 			yvel = 0.0f;
@@ -302,6 +301,11 @@ float Player::getSpriteHeight() {
 
 float Player::getMaxHealth() {
 	return character->health;
+}
+
+void Player::setBeat(float beat) {
+	this->beat = beat;
+	gravity = 0.98f * pow((500.0f / beat), 2.0f);
 }
 
 Player::~Player()

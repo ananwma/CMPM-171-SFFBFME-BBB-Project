@@ -28,8 +28,6 @@ void FightState::init() {
 	game.currentScreen.stage.sprite.move(-200, 0);
 	game.currentScreen.stage.window_offset = 0;
 
-	// Beat is in milliseconds, 1000 = 1 beat every 1 second
-	beat = BEAT_SPEED;
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100 * (BEAT_SPEED / 500);
 
@@ -117,25 +115,25 @@ void FightState::update() {
 	}
 
 	onBeat = false;
-	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > beat - beatThreshold) {
+	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > game.beat - beatThreshold) {
 		onBeat = true;
 		
 	}
 
 
-	if (metronome.getElapsedTime().asMilliseconds() > beat) {
-		//cout << "beat" << endl;
+	if (metronome.getElapsedTime().asMilliseconds() > game.beat) {
+		//cout << "game.beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
 		//flash indicator???
 			indicatorFlashOn = true;
-			cout << "indicatorflashon" << endl;
+			//cout << "indicatorflashon" << endl;
 			indicatorFlash = 5;
 			game.playerOne.indicator.updateIndicator(NONE);
 			game.playerTwo.indicator.updateIndicator(NONE);
 		if (quarterNote) {
 			bassline.playNextNote();
-			metronomeSound.play();
+			//metronomeSound.play();
 			quarterNote = false;
 			
 		}
@@ -189,20 +187,29 @@ void FightState::update() {
 
 	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
 		phase = 1;
-#define BEAT_SPEED 300.0f
-		beat = 300;
+		game.beat = 450.0f;
+		beatThreshold = 100 * (game.beat / 500);
+		frameSpeed = 1000 * (500 / game.beat);
+		game.playerOne.setBeat(game.beat);
+		game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
 		phase = 2;
-#define BEAT_SPEED 200.0f
-		beat = 200;
+		game.beat = 400;
+		beatThreshold = 100 * (game.beat / 500);
+		frameSpeed = 1000 * (500 / game.beat);
+		game.playerOne.setBeat(game.beat);
+		game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, G1, E1, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
-#define BEAT_SPEED 100.0f
-		beat = 100;
+		game.beat = 300;
+		beatThreshold = 100 * (game.beat / 500);
+		frameSpeed = 1000 * (500 / game.beat);
+		game.playerOne.setBeat(game.beat);
+		game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
 	
@@ -630,7 +637,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
-					bassline.transpose(7);
 				}
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
@@ -638,6 +644,11 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				//cheats
 				else if (acc == 0x540) {
 					player.health = 1000;
+				}
+				else {
+					player.hitstunFrames = 3;
+					player.doMove(HITSTUN);
+					player.health -= 50;
 				}
 			}
 			else {
@@ -670,10 +681,10 @@ void FightState::receiveKeysDown(int note, int playerId) {
 		else if (note == 55) game.playerTwo.right = true;
 		// Attack keys
 		else {
-			if (onBeat || game.playerOne.isInSuper()) {
+			if (onBeat || game.playerTwo.isInSuper()) {
 				inputP2.push_back(note);
 				game.inputHandler->playNote(note, 80);
-				game.playerOne.checkSuper(note % 12);
+				game.playerTwo.checkSuper(note % 12);
 			}
 		}
 	}

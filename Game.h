@@ -32,4 +32,7 @@ struct Game {
 	AssetManager currentScreen;
 	Player playerOne;
 	Player playerTwo;
+	
+	// Beat is in milliseconds, 1000 = 1 beat every 1 second
+	float beat = BEAT_SPEED;
 };
