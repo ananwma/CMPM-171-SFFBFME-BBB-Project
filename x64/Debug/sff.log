@@ -1,1 +1,33 @@
-﻿
+﻿  AssetManager.cpp
+  Generating Code...
+  Compiling...
+  sff.cpp
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  ResultsState.cpp
+  PlayerSelectState.cpp
+  Player.cpp
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(42): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(296): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(299): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\player.cpp(303): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  PauseState.cpp
+  FightState.cpp
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(193): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(202): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(211): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(240): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(241): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(242): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(243): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(277): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(284): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  CharacterBach.cpp
+  Bassline.cpp
+  Generating Code...
+sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4204: 'C:\Users\mhgunnin\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\vc140.pdb' is missing debugging information for referencing module; linking object as if no debug info
+  sff.vcxproj -> C:\Users\mhgunnin\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
