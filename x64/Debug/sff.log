@@ -1,16 +1,2 @@
-﻿  FightState.cpp
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(70): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(209): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(218): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(227): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(261): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(262): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(263): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(264): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(236): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(300): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(307): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+﻿  UI.cpp
   sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe

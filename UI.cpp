@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "UI.h"
 
-
+/*
 UI::UI(float _xpos, float _ypos, sf::Sprite _sprite) : 
 	xpos(_xpos),
 	ypos(_ypos),
-	sprite(_sprite)
+	//sprite(_sprite)
 {
-}
+}*/
 
 void UI::setPos(float x, float y) {
 	xpos = x;
@@ -15,7 +15,7 @@ void UI::setPos(float x, float y) {
 }
 
 void UI::setSprite(sf::Sprite s) {
-	sprite = s;
+	//sprite = s;
 }
 
 void UI::setData(int d) {
