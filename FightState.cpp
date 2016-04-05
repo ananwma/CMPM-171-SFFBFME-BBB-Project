@@ -45,7 +45,9 @@ void FightState::init() {
 	game.playerTwo.character->initMoves();
 	game.playerTwo.doMove(IDLE);
 	game.playerTwo.character->currentMoveFrame = 0;
-	game.playerTwo.setPosition(400, 100);
+	//100 = ground level
+	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
+	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
 	game.playerTwo.side = RIGHT;
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
@@ -64,10 +66,10 @@ void FightState::init() {
 	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
-	camera_view.setCenter(640, 300);
-	camera_view.setSize(1280, 600);
-	HUD.setCenter(640, 300);
-	HUD.setSize(1280, 600);
+	camera_view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	camera_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	HUD.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	HUD.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.window.setView(camera_view);
 
 	// Possibly move this to asset manager in future
@@ -250,6 +252,7 @@ void FightState::update() {
 }
 
 void FightState::draw() {
+	game.window.clear();
 	game.window.setView(camera_view);
 	game.window.draw(game.currentScreen.stage.sprite);
 	game.window.draw(game.playerOne.character->sprite);

@@ -10,7 +10,7 @@
 #define INIT_XPOS 20
 #define INIT_YPOS 400
 #define GRAVITY 0.98f * pow((500.0f/BEAT_SPEED),2.0f)
-#define GROUND 100
+//#define GROUND 100
 #define SUPER_TIMEOUT 4000
 
 
