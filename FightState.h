@@ -31,6 +31,12 @@ public:
 	sf::RectangleShape player_2_HP;
 	sf::RectangleShape player_1_meter;
 	sf::RectangleShape player_2_meter;
+	sf::RectangleShape timer;
+	sf::Text timer_text;
+	sf::Font font;
+	float time;
+	sf::RectangleShape player_1_round_wins;
+	sf::RectangleShape player_2_round_wins;
 	void processInput(Player&, vector<int>&);
 
 private:

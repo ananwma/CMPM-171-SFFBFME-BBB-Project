@@ -9,12 +9,12 @@ public:
 };
 
 BachGrab::BachGrab() {
-	if (!spritesheet.loadFromFile("sprites/Bachgrab.png")) {
+	if (!spritesheet.loadFromFile("sprites/Bachmissgrab.png")) {
 		std::cerr << "Error missing BachGrab sprites!\n";
 		exit(EXIT_FAILURE);
 	}
 	// Number of animation frames
-	frameCount = 6;
+	frameCount = 5;
 	// Damage
 	damage = 40;
 	// Change in attacker's position on move
