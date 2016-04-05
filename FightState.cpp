@@ -55,6 +55,23 @@ void FightState::init() {
 	player_2_HP.setFillColor(sf::Color(100, 250, 50));
 	player_2_HP.setPosition(WINDOW_WIDTH - 400, 0);
 
+	timer.setSize(sf::Vector2f(200,200));
+	timer.setFillColor(sf::Color(250,250,250));
+	timer.setPosition(WINDOW_WIDTH/2-100, 0);
+
+	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
+		cerr << "Font not found!\n";
+		exit(EXIT_FAILURE);
+	}
+	timer_text.setFont(font);
+	timer_text.setColor(sf::Color(0, 0, 0));
+	time = 60.0f;
+	char temp[256];
+	sprintf(temp, "%f", time);
+	timer_text.setString(temp);
+	timer_text.setCharacterSize(50);
+	timer_text.setPosition(WINDOW_WIDTH / 2 - 100, 0);
+
 	player_1_meter.setPosition(0, 35);
 	player_1_meter.setSize(sf::Vector2f(400, 30));
 	player_1_meter.setFillColor(sf::Color(0, 255, 255));
@@ -213,7 +230,12 @@ void FightState::update() {
 		game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
-	
+
+	time -= clock.getElapsedTime().asSeconds();
+	char temp[256];
+	sprintf(temp, "%f", time);
+	timer_text.setString(temp);
+
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
@@ -263,6 +285,8 @@ void FightState::draw() {
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
+	game.window.draw(timer);
+	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
 	game.window.display();

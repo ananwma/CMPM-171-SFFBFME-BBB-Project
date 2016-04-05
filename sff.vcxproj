@@ -184,7 +184,6 @@
     <ClInclude Include="FightState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
-    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="PauseState.h" />
@@ -210,14 +209,12 @@
     <ClCompile Include="FightState.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
-    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSelectState.cpp" />
     <ClCompile Include="ResultsState.cpp" />
     <ClCompile Include="sff.cpp" />
-    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

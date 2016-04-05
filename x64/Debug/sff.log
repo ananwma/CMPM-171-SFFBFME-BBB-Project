@@ -1,2 +1,16 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(936,5): warning MSB8027: Two or more files with the name of HealthBar.cpp will produce outputs to the same location. This can lead to an incorrect build result.  The files involved are HealthBar.cpp, HealthBar.cpp.
+﻿  FightState.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(70): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(209): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(218): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(227): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(261): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(262): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(263): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(264): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(236): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(300): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(307): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
   sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
