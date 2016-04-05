@@ -135,9 +135,6 @@
     <ClInclude Include="BachSuper.h">
       <Filter>Bach</Filter>
     </ClInclude>
-    <ClInclude Include="BachGrab.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>sff headers</Filter>
     </ClInclude>
@@ -145,9 +142,6 @@
       <Filter>Bach</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>sff headers</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthBar.h">
       <Filter>sff headers</Filter>
     </ClInclude>
     <ClInclude Include="BachGrab.h">
@@ -219,9 +213,6 @@
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>sff source</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="HealthBar.cpp">

@@ -2,10 +2,10 @@
 #include "UI.h"
 
 
-UI::UI(float _xpos, float _ypos, sf::Sprite _sprite) : 
+UI::UI(float _xpos, float _ypos) : 
 	xpos(_xpos),
-	ypos(_ypos),
-	sprite(_sprite)
+	ypos(_ypos)
+	//sprite(_sprite)
 {
 }
 
@@ -15,7 +15,7 @@ void UI::setPos(float x, float y) {
 }
 
 void UI::setSprite(sf::Sprite s) {
-	sprite = s;
+	//sprite = s;
 }
 
 void UI::setData(int d) {

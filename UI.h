@@ -4,7 +4,7 @@ class UI
 {
 public:
 	// CTOR and DTOR
-	UI(float, float, sf::Sprite);
+	UI(float, float);
 	~UI() = default;
 
 	// Mutators

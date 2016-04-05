@@ -66,12 +66,13 @@ void Player::doMove(int move) {
 		else if (side == RIGHT)
 			xvel = -getCurrentMove()->velX * (500 / beat);
 	}
-	else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {
+	// Fix this later
+	/*else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {
 		character->currentMove = move;
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
-	}
+	}*/
 }
 
 void Player::getHit(Move *move) {
