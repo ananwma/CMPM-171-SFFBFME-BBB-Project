@@ -8,6 +8,7 @@
 #include "PauseState.h"
 #include "ResultsState.h"
 #include "BeatIndicator.h"
+#include "UI.h"
 // tmp
 #include "CharacterBach.h"
 

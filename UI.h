@@ -19,7 +19,7 @@ public:
 private:
 	float xpos;
 	float ypos;
-	sf::Sprite sprite;
+	std::vector<sf::Drawable> drawables;
 	int data;
 };
 
