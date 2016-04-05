@@ -72,6 +72,12 @@ void Player::doMove(int move) {
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
 	}
+	else if (state == GRAB_STATE, (character->currentMove, move)) {
+		character->currentMove = move;
+		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
+		character->currentMoveFrame = 0;
+		state = getCurrentMove()->state;
+	}
 }
 
 void Player::getHit(Move *move) {
@@ -201,7 +207,7 @@ void Player::updateAnimFrame() {
 		else if (state == WALK_STATE || state == NO_STATE) {
 			character->currentMoveFrame = 0;
 		}
-		else if (state == NO_STATE || state == ATTACK_STATE || state == HITSTUN_STATE || state == AIRBORNE_STATE || state == BLOCKSTUN_STATE) {
+		else if (state == NO_STATE || state == ATTACK_STATE || state == HITSTUN_STATE || state == AIRBORNE_STATE || state == BLOCKSTUN_STATE || state == GRAB_STATE) {
 			character->currentMoveFrame = 0;
 			character->currentMove = IDLE;
 			canCancel = false;

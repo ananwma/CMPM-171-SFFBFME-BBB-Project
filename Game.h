@@ -9,9 +9,8 @@
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 600
-#define BEAT_SPEED 500.0f
+#define BEAT_SPEED 250.0f
 
-// c
 
 // Struct for data we want shared between states
 // GameStateManager and RenderWindow are references instead of pointers because they should never be reinitialized.

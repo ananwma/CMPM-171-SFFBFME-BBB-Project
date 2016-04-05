@@ -138,6 +138,9 @@
     <ClInclude Include="BachSuper.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="BachGrab.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

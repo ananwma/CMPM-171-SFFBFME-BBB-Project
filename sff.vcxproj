@@ -186,6 +186,7 @@
     <ClInclude Include="FightState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
+    <ClInclude Include="BachGrab.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="PauseState.h" />
