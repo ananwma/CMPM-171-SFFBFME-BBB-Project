@@ -7,9 +7,13 @@
 #include "AssetManager.h"
 #include <SFML/Graphics.hpp>
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 600
-#define BEAT_SPEED 250.0f
+//#define WINDOW_WIDTH 1280
+//#define WINDOW_HEIGHT 600
+//#define BEAT_SPEED 250.0f
+#define WINDOW_WIDTH 1920
+#define WINDOW_HEIGHT 1080
+#define BEAT_SPEED 500.0f
+#define GROUND WINDOW_WIDTH / 4
 
 
 // Struct for data we want shared between states
@@ -31,4 +35,7 @@ struct Game {
 	AssetManager currentScreen;
 	Player playerOne;
 	Player playerTwo;
+	
+	// Beat is in milliseconds, 1000 = 1 beat every 1 second
+	float beat = BEAT_SPEED;
 };

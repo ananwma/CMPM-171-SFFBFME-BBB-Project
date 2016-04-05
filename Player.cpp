@@ -2,15 +2,15 @@
 #include "Character.h"
 #include "Player.h"
 #include "BeatIndicator.h"
+#include "Game.h"
 #include <time.h> 
 #include <math.h>
-#include "Game.h"
 
 #define WALL_WIDTH 1280
 #define INIT_XPOS 20
 #define INIT_YPOS 400
 #define GRAVITY 0.98f * pow((500.0f/BEAT_SPEED),2.0f)
-#define GROUND 100
+//#define GROUND 100
 #define SUPER_TIMEOUT 4000
 
 
@@ -50,7 +50,7 @@ void Player::setPosition(float x, float y) {
 }
 
 void Player::doMove(int move) {
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE && state != GRAB_STATE) {
 		if (state == WALK_STATE)
 			xvel = 0;
 		if (move == IDLE)
@@ -60,19 +60,13 @@ void Player::doMove(int move) {
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
-		yvel = getCurrentMove()->velY * (500/BEAT_SPEED);
+		yvel = getCurrentMove()->velY * (500 / beat);
 		if (side == LEFT)
-			xvel = getCurrentMove()->velX;
+			xvel = getCurrentMove()->velX * (500 / beat);
 		else if (side == RIGHT)
-			xvel = -getCurrentMove()->velX;
+			xvel = -getCurrentMove()->velX * (500 / beat);
 	}
-	else if (state == ATTACK_STATE && canCancel && moveCancelable(character->currentMove, move)) {
-		character->currentMove = move;
-		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
-		character->currentMoveFrame = 0;
-		state = getCurrentMove()->state;
-	}
-	else if (state == GRAB_STATE, (character->currentMove, move)) {
+	else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {
 		character->currentMove = move;
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
@@ -84,7 +78,8 @@ void Player::getHit(Move *move) {
 	//if (state != BLOCKING) {
 	character->currentMove = HITSTUN;
 	character->currentMoveFrame = 0;
-	hitstunFrames = move->hitstun;
+	hitstunFrames = move->hitstun + ezmode;
+
 	character->sprite.setTexture(character->moveList.at(HITSTUN)->spritesheet);
 	state = HITSTUN_STATE;
 	health -= move->damage;
@@ -147,7 +142,7 @@ bool Player::moveCancelable(int currMove, int newMove) {
 
 void Player::walk(direction dir) {
 	// will need to add more later for figuring out which side player is on
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE && state != GRAB_STATE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = WALK_STATE;
@@ -155,36 +150,36 @@ void Player::walk(direction dir) {
 			//character->sprite.move(character->walkspeed, 0);
 			//xpos += character->walkspeed;
 			if (!(character->sprite.getPosition().x + character->wall_offset <= -200)) {
-				xvel = -character->walkspeed;
+				xvel = -character->walkspeed * (500 / beat);
 			}
 		}
 		else if (dir == RIGHT) {
 			//character->sprite.move(-character->walkspeed, 0);
 			//xpos -= character->walkspeed;
 			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH + 200)) {
-				xvel = character->walkspeed;
+				xvel = character->walkspeed * (500 / beat);
 			}
 		}
 	}
 }
 
 void Player::jump(direction dir) {
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE && state != GRAB_STATE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = AIRBORNE_STATE;
 		if (dir == RIGHT) {
-			yvel = -character->jumpY;
-			xvel = character->jumpX;
+			yvel = -character->jumpY * (500 / beat);
+			xvel = character->jumpX *  (500 / beat);
 			jumpSide = side;
 		}
 		if (dir == LEFT) {
-			yvel = -character->jumpY;
-			xvel = -character->jumpX;
+			yvel = -character->jumpY * (500 / beat);
+			xvel = -character->jumpX * (500 / beat);
 			jumpSide = side;
 		}
 		if (dir == NEUTRAL) {
-			yvel = -character->jumpY;
+			yvel = -character->jumpY * (500 / beat);
 			// Neutral jump = opposite side for crossunders
 			side == LEFT ? jumpSide = RIGHT : jumpSide = LEFT;
 		}
@@ -240,21 +235,19 @@ void Player::updatePhysics() {
 	//Add acceleration to velocity
 	xvel += xacc;
 	yvel += yacc;
-	xvel = xvel  * (500 / BEAT_SPEED);
 	//Update positions based on velocity
 	xpos += xvel;
 	ypos += yvel;
 	//Add gravitational acceleration if AIRBORNE_STATE
 	if (ypos < GROUND) {
-		yvel += GRAVITY;
-		if (abs(yvel) < 0.5) cout << ypos<<endl;
-		if (ypos + yvel > GROUND) {
-			ypos = GROUND;
-			yvel = 0.0f;
-			xvel = 0.0f;
-			if (state != ATTACK_STATE)
-				state = NO_STATE;
-		}
+		yvel += gravity;
+	}
+	if (ypos + yvel > GROUND) {
+		ypos = GROUND;
+		yvel = 0.0f;
+		xvel = 0.0f;
+		if (state != ATTACK_STATE)
+			state = NO_STATE;
 	}
 	//if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
 	//if((xpos <= 0)||(xpos >= 1280)){
@@ -308,6 +301,11 @@ float Player::getSpriteHeight() {
 
 float Player::getMaxHealth() {
 	return character->health;
+}
+
+void Player::setBeat(float beat) {
+	this->beat = beat;
+	gravity = 0.98f * pow((500.0f / beat), 2.0f);
 }
 
 Player::~Player()

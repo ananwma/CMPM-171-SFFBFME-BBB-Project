@@ -158,9 +158,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="AssetManager.h" />
     <ClInclude Include="BachBlockstun.h" />
     <ClInclude Include="BachFierce.h" />
@@ -180,13 +177,14 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterBach.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConcertHallStage.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="FightState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
-    <ClInclude Include="BachGrab.h" />
+    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="PauseState.h" />
@@ -198,6 +196,7 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssetManager.cpp" />
@@ -211,12 +210,14 @@
     <ClCompile Include="FightState.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerSelectState.cpp" />
     <ClCompile Include="ResultsState.cpp" />
     <ClCompile Include="sff.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -224,6 +225,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="sff.rc" />
@@ -231,9 +233,26 @@
   <ItemGroup>
     <Image Include="sff.ico" />
     <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SFFProperties.props" />
+    <Image Include="sprites\bach.png" />
+    <Image Include="sprites\Bachgrab.png" />
+    <Image Include="sprites\Bachmissgrab.png" />
+    <Image Include="sprites\bachs_big_bash.png" />
+    <Image Include="sprites\bach_block.png" />
+    <Image Include="sprites\bach_default.png" />
+    <Image Include="sprites\bach_fierce.png" />
+    <Image Include="sprites\bach_forward.png" />
+    <Image Include="sprites\bach_furious_fugue_flail.png" />
+    <Image Include="sprites\bach_hitstun.png" />
+    <Image Include="sprites\bach_idle.png" />
+    <Image Include="sprites\bach_jab.png" />
+    <Image Include="sprites\bach_roundhouse.png" />
+    <Image Include="sprites\bach_short.png" />
+    <Image Include="sprites\bach_strong.png" />
+    <Image Include="sprites\bach_toccata_and_kick_ur_ass_in_d_minor.png" />
+    <Image Include="sprites\fbicon.png" />
+    <Image Include="sprites\hit_spark.png" />
+    <Image Include="sprites\metro_indicator.png" />
+    <Image Include="sprites\Ryu.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

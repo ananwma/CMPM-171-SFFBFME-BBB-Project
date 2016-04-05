@@ -1,0 +1,23 @@
+<?xml version="1.0" ?><hitboxer frameheight="548" framewidth="438" spritesheet="C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\sff\sprites\Bachmissgrab.png"><hitbox color="65280" frame="0" height="221" userdata="hurt" width="139" x="53" y="8"/>
+<hitbox color="65280" frame="0" height="433" userdata="hurt" width="243" x="24" y="95"/>
+<hitbox color="65280" frame="1" height="224" userdata="hurt" width="156" x="71" y="20"/>
+<hitbox color="4278255360" frame="1" height="308" userdata="hurt" width="193" x="63" y="121"/>
+<hitbox color="65280" frame="1" height="208" userdata="hurt" width="286" x="8" y="314"/>
+<hitbox color="16776960" frame="0" height="415" userdata="clip" width="169" x="62" y="111"/>
+<hitbox color="16776960" frame="1" height="401" userdata="clip" width="143" x="88" y="113"/>
+<hitbox color="65280" frame="2" height="126" userdata="hurt" width="154" x="75" y="52"/>
+<hitbox color="4278255360" frame="2" height="177" userdata="hurt" width="188" x="77" y="159"/>
+<hitbox color="4278255360" frame="2" height="215" userdata="hurt" width="295" x="10" y="320"/>
+<hitbox color="65280" frame="2" height="120" userdata="hurt" width="297" x="38" y="62"/>
+<hitbox color="16711680" frame="2" height="187" userdata="hit" width="221" x="116" y="60"/>
+<hitbox color="65280" frame="3" height="133" userdata="hurt" width="153" x="81" y="41"/>
+<hitbox color="65280" frame="3" height="164" userdata="hurt" width="192" x="110" y="45"/>
+<hitbox color="65280" frame="3" height="172" userdata="hurt" width="161" x="91" y="205"/>
+<hitbox color="16776960" frame="2" height="382" userdata="clip" width="139" x="109" y="143"/>
+<hitbox color="16776960" frame="3" height="381" userdata="clip" width="149" x="96" y="145"/>
+<hitbox color="65280" frame="4" height="221" userdata="hurt" width="255" x="32" y="317"/>
+<hitbox color="65280" frame="4" height="158" userdata="hurt" width="200" x="51" y="162"/>
+<hitbox color="4278255360" frame="4" height="173" userdata="hurt" width="248" x="26" y="11"/>
+<hitbox color="4294967040" frame="4" height="370" userdata="clip" width="163" x="67" y="166"/>
+<hitbox color="65280" frame="3" height="226" userdata="hurt" width="273" x="30" y="314"/>
+</hitboxer>
