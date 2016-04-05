@@ -138,6 +138,12 @@
     <ClInclude Include="BachSuper.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachGrab.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -195,6 +201,9 @@
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="Bassline.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
