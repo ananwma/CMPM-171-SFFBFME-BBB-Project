@@ -2,7 +2,6 @@
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
-
 #include <bitset>
 
 #include "FightState.h"
@@ -472,7 +471,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			}
 			if (offsetHit.intersects(offsetHurt)) {
 				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
+				if (attacker.state != GRAB_STATE && defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
 					defender.block(attacker.getCurrentMove());
 					blockSound.play();
 				}
@@ -633,6 +632,9 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				}
 				else if (acc == A_NATURAL) {
 					player.doMove(ROUNDHOUSE);
+				}
+				else if (acc == B_NATURAL) {
+					player.doMove(GRAB);
 				}
 				else if (acc == C_MAJOR) {
 					player.doMove(CMAJ);

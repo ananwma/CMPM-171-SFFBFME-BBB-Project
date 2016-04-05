@@ -15,6 +15,7 @@
 #include "BachTatsu.h"
 #include "Game.h"
 #include "BachSuper.h"
+#include "BachGrab.h"
 
 using namespace std;
 
@@ -35,6 +36,7 @@ void Bach::walk() {
 
 void Bach::initMoves() {
 	// Clean up these pointers somewhere 
+	BachGrab* grab = new BachGrab;
 	BachJab* jab = new BachJab;
 	BachStrong* strong = new BachStrong;
 	BachFierce* fierce = new BachFierce;
@@ -47,6 +49,7 @@ void Bach::initMoves() {
 	BachRoundhouse* roundhouse = new BachRoundhouse;
 	BachTatsu* tatsu = new BachTatsu;
 	BachSuper* super = new BachSuper;
+	moveList[GRAB] = grab;
 	moveList[JAB] = jab;
 	moveList[IDLE] = idle;
 	moveList[WALK] = idle;

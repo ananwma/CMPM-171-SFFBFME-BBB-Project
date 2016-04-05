@@ -16,23 +16,19 @@ BachGrab::BachGrab() {
 	// Number of animation frames
 	frameCount = 6;
 	// Damage
-
-	//////////////////////////////////////
-	// remember to adjust these values
-	damage = 10000;
+	damage = 40;
 	// Change in attacker's position on move
 	velX = 0;
-	velY = 10;
+	velY = 0;
 	// Change in opponent's position on move
 	pushX = 0;
 	pushY = 10;
 	//Number of hitstun frames this causes
-	hitstun = 0;
+	hitstun = 6;
 	//Number of blockstun frames this causes
 	blockstun = 0;
 	// State move puts player in
-	state = GRABBING;
-	///////////////////////////////////
+	state = GRAB_STATE;
 }
 
 void BachGrab::initFrames() {
@@ -97,5 +93,5 @@ void BachGrab::initFrames() {
 }
 
 void BachGrab::initCancelMoves() {
-
+	//cancelMoves.push_back(GMAJ);
 }

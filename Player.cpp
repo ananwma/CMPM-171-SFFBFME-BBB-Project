@@ -50,7 +50,7 @@ void Player::setPosition(float x, float y) {
 }
 
 void Player::doMove(int move) {
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE && state != GRAB_STATE) {
 		if (state == WALK_STATE)
 			xvel = 0;
 		if (move == IDLE)
@@ -66,7 +66,7 @@ void Player::doMove(int move) {
 		else if (side == RIGHT)
 			xvel = -getCurrentMove()->velX * (500 / beat);
 	}
-	else if (state == ATTACK_STATE && canCancel && moveCancelable(character->currentMove, move)) {
+	else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {
 		character->currentMove = move;
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
@@ -142,7 +142,7 @@ bool Player::moveCancelable(int currMove, int newMove) {
 
 void Player::walk(direction dir) {
 	// will need to add more later for figuring out which side player is on
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE && state != GRAB_STATE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = WALK_STATE;
@@ -164,7 +164,7 @@ void Player::walk(direction dir) {
 }
 
 void Player::jump(direction dir) {
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE && state != GRAB_STATE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = AIRBORNE_STATE;
@@ -202,7 +202,7 @@ void Player::updateAnimFrame() {
 		else if (state == WALK_STATE || state == NO_STATE) {
 			character->currentMoveFrame = 0;
 		}
-		else if (state == NO_STATE || state == ATTACK_STATE || state == HITSTUN_STATE || state == AIRBORNE_STATE || state == BLOCKSTUN_STATE) {
+		else if (state == NO_STATE || state == ATTACK_STATE || state == HITSTUN_STATE || state == AIRBORNE_STATE || state == BLOCKSTUN_STATE || state == GRAB_STATE) {
 			character->currentMoveFrame = 0;
 			character->currentMove = IDLE;
 			canCancel = false;
