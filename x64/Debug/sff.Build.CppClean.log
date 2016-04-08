@@ -2,7 +2,6 @@ c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.pch
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\vc140.pdb
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\vc140.idb
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\stdafx.obj
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\assetmanager.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\beatindicator.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\bassline.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\cameracontrol.obj
@@ -13,6 +12,7 @@ c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\concerthallsta
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\fightstate.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\frame.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\gamestatemanager.obj
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\healthbar.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\input.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\pausestate.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\player.obj
@@ -21,7 +21,7 @@ c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\resultsstate.o
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\stage.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\ui.obj
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\healthbar.obj
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\assetmanager.obj
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.ilk
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.exe
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.pdb
