@@ -20,7 +20,9 @@ BachIdle::BachIdle() {
 	// Change in position on move
 
 	// State move puts player in
-	state = NONE;
+	state = NO_STATE;
+
+	initFrames();
 }
 
 void BachIdle::initFrames() {

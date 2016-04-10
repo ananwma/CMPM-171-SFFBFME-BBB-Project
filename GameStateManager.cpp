@@ -16,7 +16,7 @@ void GameStateManager::runState(GameState &state) {
 	state.init();
 	sf::Clock clock;
 	sf::Time accumulator = sf::Time::Zero;
-	sf::Time ups = sf::seconds(1.f / 60.f);
+	sf::Time ups = sf::seconds(1.f / 60.0f);
 	while (state_is_running) {
 		while (accumulator > ups) {
 			//if (updateClock.getElapsedTime().asMilliseconds() > UPDATERATE) {

@@ -8,7 +8,11 @@
 #include <SFML/Graphics.hpp>
 
 #define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 600
+#define WINDOW_HEIGHT 1080
+#define BEAT_SPEED 500.0f
+#define GROUND WINDOW_WIDTH / 4
+
+// c
 
 // Struct for data we want shared between states
 // GameStateManager and RenderWindow are references instead of pointers because they should never be reinitialized.
@@ -29,4 +33,7 @@ struct Game {
 	AssetManager currentScreen;
 	Player playerOne;
 	Player playerTwo;
+	
+	// Beat is in milliseconds, 1000 = 1 beat every 1 second
+	float beat = BEAT_SPEED;
 };

@@ -1,1 +1,12 @@
-﻿
+﻿  FightState.cpp
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(191): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(200): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(209): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(238): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(239): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(240): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(241): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(274): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(281): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe

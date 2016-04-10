@@ -17,9 +17,16 @@ MOVENAME::MOVENAME() {
 	frameCount = X;
 	// Damage
 	damage = X;
-	// Change in position on move
-	deltax = X;
-	deltay = X;
+	// Change in attacker's position on move
+	velX = X;
+   velY = X;
+   // Change in opponent's position on move
+	pushX = X;
+   pushY = X;
+   //Number of hitstun frames this causes
+	hitstun = X;
+	//Number of blockstun frames this causes
+	blockstun = X;
    // State move puts player in
 	state = STATE;
 }

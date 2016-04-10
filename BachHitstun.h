@@ -21,6 +21,8 @@ BachHitstun::BachHitstun() {
 
 	// State move puts player in
 	state = HITSTUN_STATE;
+
+	initFrames();
 }
 
 void BachHitstun::initFrames() {

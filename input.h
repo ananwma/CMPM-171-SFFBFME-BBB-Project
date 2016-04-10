@@ -5,8 +5,11 @@
 #include <mmreg.h>
 
 // Some midi data signals
-#define NOTE_ON 144
-#define NOTE_OFF 128
+#define NOTE_ON 0x9
+#define NOTE_OFF 0x8
+#define CONTROL_CHANGE 0xB
+#define PROGRAM_CHANGE 0xC
+#define VOLUME_CONTROL 0x7
 
 
 #define C_NATURAL 0x1
@@ -30,10 +33,10 @@
 #define C_MINOR_6 0x1088
 #define C_MINOR_64 0x9080
 #define C_MINOR_7 0x489
-#define CS_MAJOR 0x
-#define CS_MAJOR_6 0x
-#define CS_MAJOR_64 0x
-#define CS_MAJOR_7 0x
+#define CS_MAJOR 0x122
+#define CS_MAJOR_6 0x2120
+#define CS_MAJOR_64 0x22100
+#define CS_MAJOR_7 0x922
 #define CS_MINOR 0x
 #define CS_MINOR_6 0x
 #define CS_MINOR_64 0x
@@ -43,8 +46,8 @@
 #define D_MAJOR_64 0x
 #define D_MAJOR_7 0x
 #define D_MINOR 0x224
-#define D_MINOR_6 0x
-#define D_MINOR_64 0x
+#define D_MINOR_6 0x4220
+#define D_MINOR_64 0x24200
 #define D_MINOR_7 0x
 #define DS_MAJOR 0x
 #define DS_MAJOR_6 0x
@@ -59,13 +62,13 @@
 #define E_MAJOR_64 0x
 #define E_MAJOR_7 0x
 #define E_MINOR 0x890
-#define E_MINOR_6 0x
-#define E_MINOR_64 0x
+#define E_MINOR_6 0x10880
+#define E_MINOR_64 0x90800
 #define E_MINOR_7 0x
 #define F_MAJOR 0x1220
-#define F_MAJOR_6 0x
-#define F_MAJOR_64 0x
-#define F_MAJOR_7 0x
+#define F_MAJOR_6 0x21200
+#define F_MAJOR_64 0x221
+#define F_MAJOR_7 0x9220
 #define F_MINOR 0x
 #define F_MINOR_6 0x
 #define F_MINOR_64 0x
@@ -99,8 +102,8 @@
 #define A_MAJOR_64 0x
 #define A_MAJOR_7 0x
 #define A_MINOR 0x11200
-#define A_MINOR_6 0x
-#define A_MINOR_64 0x
+#define A_MINOR_6 0x211
+#define A_MINOR_64 0x1210
 #define A_MINOR_7 0x
 #define AS_MAJOR 0x
 #define AS_MAJOR_6 0x
@@ -117,7 +120,9 @@
 #define B_MINOR 0x
 #define B_MINOR_6 0x
 #define B_MINOR_64 0x
-#define B_MAJOR_DIM 0x24800
+#define B_DIM 0x24800
+#define B_DIM_6 0x824
+#define B_DIM_64 0x4820
 #define B_MINOR_7 0x 
 
 #pragma once
@@ -133,11 +138,16 @@ public:
 	InputHandler& operator= (InputHandler&&) = default;
 	~InputHandler() = default;
 
-	// Opens device
-	int prepareDevices();
+	// Opens all input devices
+	void prepareDevices();
+	// If device is output capable, opens output for device, otherwise, opens MS Wavetable Synth for device
+	// might be better to use raw output then wavetable synth
+	void prepareOutput(int);
 
-	// Method foR 0xadjusting output volume, takes value 0-127
-	void setVolume(unsigned int);
+	// Methods for midi out operations
+	void setVolume(unsigned int, unsigned int = 0);
+	void playNote(unsigned int, unsigned int, unsigned int = 0);
+	void setInstrument(unsigned int, unsigned int = 0);
 
 	// Event functions, has no implementation
 	__event void sendKeysDown(int, int);

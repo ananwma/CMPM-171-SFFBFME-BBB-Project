@@ -111,6 +111,45 @@
     <ClInclude Include="BachShoryuken.h">
       <Filter>Bach</Filter>
     </ClInclude>
+    <ClInclude Include="BachBlockstun.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachRoundhouse.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachForward.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachShort.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachFierce.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BachTatsu.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="BeatIndicator.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Bassline.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachSuper.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachGrab.h">
+      <Filter>Bach</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -164,6 +203,21 @@
     <ClCompile Include="ResultsState.cpp">
       <Filter>GameStates\Source</Filter>
     </ClCompile>
+    <ClCompile Include="BeatIndicator.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="Bassline.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="sff.rc">
@@ -177,5 +231,8 @@
     <Image Include="sff.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SFFProperties.props" />
   </ItemGroup>
 </Project>

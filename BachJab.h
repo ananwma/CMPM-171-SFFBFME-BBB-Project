@@ -14,13 +14,21 @@ BachJab::BachJab() {
 		exit(EXIT_FAILURE);
 	}
 	// Number of animation frames
-	frameCount = 4;
+	frameCount = 5;
 	// Damage
 	damage = 20;
+	//Number of hitstun frames this causes
+	hitstun = 6;
+	//Number of blockstun frames this causes
+	blockstun = 1;
 	// Change in position on move
-
+	// Change in opponents position
+	
+	pushX = 2;
 	// State move puts player in
-	state = ATTACKING;
+	state = ATTACK_STATE;
+	
+	initFrames();
 }
 
 void BachJab::initFrames() {
@@ -62,11 +70,24 @@ void BachJab::initFrames() {
 	frameVector.push_back(Frame(hit, hurt, clip));
 	hit.clear();
 	hurt.clear();
+	/***FRAME 4***/
+	hurt.push_back(sf::FloatRect(139, 289, 223, 239));
+	hurt.push_back(sf::FloatRect(125, 3, 226, 292));
+	frameVector.push_back(Frame(hit, hurt));
+	hit.clear();
+	hurt.clear();
+	/***FRAME 5***/
+	hurt.push_back(sf::FloatRect(108, 296, 253, 223));
+	hurt.push_back(sf::FloatRect(114, 9, 247, 288));
+	frameVector.push_back(Frame(hit, hurt));
+	hit.clear();
+	hurt.clear();
 	clip.clear();
 }
 
 void BachJab::initCancelMoves() {
 	cancelMoves.push_back(JAB);
 	cancelMoves.push_back(STRONG);
+	cancelMoves.push_back(CMAJ);
 
 }
