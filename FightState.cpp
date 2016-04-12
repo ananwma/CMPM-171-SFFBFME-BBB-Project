@@ -671,12 +671,28 @@ void FightState::processInput(Player& player, vector<int>& input) {
 					player.doMove(CMAJ);
 					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
+				else if (acc == C_MAJOR_6) {
+					player.doMove(CMAJ, 2, 4);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
+				else if (acc == C_MAJOR_64) {
+					player.doMove(CMAJ, 4, 6);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
 					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
+				else if (acc == G_MAJOR_6) {
+					player.doMove(CMAJ, 0, 3);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
+				else if (acc == G_MAJOR_64) {
+					player.doMove(CMAJ, 0, 5);
 					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				//cheats

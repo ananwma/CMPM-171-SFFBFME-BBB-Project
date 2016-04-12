@@ -1,1 +1,41 @@
-﻿  sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
+﻿  Player.cpp
+c:\users\mhgunnin\source\repos\sff2\player.cpp(40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\player.cpp(42): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\player.cpp(300): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\player.cpp(303): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\player.cpp(307): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  FightState.cpp
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(71): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(210): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(219): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(228): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(262): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(263): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(264): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(265): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(237): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(301): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\sff2\fightstate.cpp(308): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  sff.cpp
+c:\users\mhgunnin\source\repos\sff2\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\mhgunnin\source\repos\sff2\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  ResultsState.cpp
+  PlayerSelectState.cpp
+  PauseState.cpp
+  Collision.cpp
+  CharacterBach.cpp
+  CameraControl.cpp
+  Bassline.cpp
+  AssetManager.cpp
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  BeatIndicator.cpp
+sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4204: 'C:\Users\mhgunnin\Source\Repos\sff2\x64\Debug\vc140.pdb' is missing debugging information for referencing module; linking object as if no debug info
+  sff.vcxproj -> C:\Users\mhgunnin\Source\Repos\sff2\x64\Debug\sff.exe

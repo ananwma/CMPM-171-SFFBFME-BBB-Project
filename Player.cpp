@@ -49,7 +49,7 @@ void Player::setPosition(float x, float y) {
 	ypos = y;
 }
 
-void Player::doMove(int move) {
+void Player::doMove(int move, int modX, int modY) {
 	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE && state != GRAB_STATE) {
 		if (state == WALK_STATE)
 			xvel = 0;
@@ -60,11 +60,11 @@ void Player::doMove(int move) {
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
-		yvel = getCurrentMove()->velY * (500 / beat);
+		yvel = getCurrentMove()->velY - modY * (500 / beat);
 		if (side == LEFT)
-			xvel = getCurrentMove()->velX * (500 / beat);
+			xvel = getCurrentMove()->velX + modX * (500 / beat);
 		else if (side == RIGHT)
-			xvel = -getCurrentMove()->velX * (500 / beat);
+			xvel = -getCurrentMove()->velX + modX * (500 / beat);
 	}
 	// Fix this later
 	/*else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {
