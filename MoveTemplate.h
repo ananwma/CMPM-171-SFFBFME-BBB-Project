@@ -29,6 +29,8 @@ MOVENAME::MOVENAME() {
 	blockstun = X;
    // State move puts player in
 	state = STATE;
+	
+	initFrames();
 }
 
 void MOVENAME::initFrames() {

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.pch
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\vc140.pdb
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\vc140.idb
@@ -35,3 +36,14 @@ c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.tlog\link.
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.tlog\rc.command.1.tlog
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.tlog\rc.read.1.tlog
 c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\x64\debug\sff.tlog\rc.write.1.tlog
+=======
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\sff.pch
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\vc140.pdb
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\vc140.idb
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\stdafx.obj
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\character.obj
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\input.obj
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\sff.tlog\cl.command.1.tlog
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\sff.tlog\cl.read.1.tlog
+c:\users\mhgunnin\source\repos\sfffff\x64\debug\sff.tlog\cl.write.1.tlog
+>>>>>>> 27b41a5819376a5b1787fe0d985494005258f4df

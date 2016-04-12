@@ -17,6 +17,8 @@ BachRoundhouse::BachRoundhouse() {
 	frameCount = 7;
 	// Damage
 	damage = 80;
+	// Meter Gain
+	metergain = 80;
 	// Change in attacker's position on move
 	velX = 5;
 	velY = 0;

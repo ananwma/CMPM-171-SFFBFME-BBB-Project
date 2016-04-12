@@ -18,7 +18,7 @@ Player::Player()
 {
 	playerId = -1;
 	hitstunFrames = 0;
-	meter = 1000.0f;
+	meter = 0.0f;
 	xpos = INIT_XPOS;
 	ypos = INIT_YPOS;
 	xvel = 0.0f;
@@ -66,12 +66,13 @@ void Player::doMove(int move) {
 		else if (side == RIGHT)
 			xvel = -getCurrentMove()->velX * (500 / beat);
 	}
-	else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {
+	// Fix this later
+	/*else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {
 		character->currentMove = move;
 		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
-	}
+	}*/
 }
 
 void Player::getHit(Move *move) {
@@ -261,7 +262,10 @@ void Player::checkSuper(int note) {
 		superIndex++;
 		if (superIndex == character->super.size()) {
 			state = NO_STATE;
-			doMove(SUPER);
+			if (meter == 1000) {
+				doMove(SUPER);
+				meter = 0;
+			}
 			superIndex = 0;
 		}
 	}

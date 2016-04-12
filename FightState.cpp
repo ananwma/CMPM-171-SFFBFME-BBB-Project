@@ -262,7 +262,7 @@ void FightState::update() {
 	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
 	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
 	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
-	sf::Vector2<float> p2M(400.0*(game.playerOne.meter / 1000.0), 30);
+	sf::Vector2<float> p2M(400.0*(game.playerTwo.meter / 1000.0), 30);
 	//cout << game.playerOne.meter << endl;
 	//cout << p2HP.x << endl;
 	player_1_HP.setSize(p1HP);
@@ -641,33 +641,43 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 				if (acc == C_NATURAL) {
 					player.doMove(JAB);
+					if (player.meter < 1000) player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == E_NATURAL) {
 					player.doMove(FIERCE);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == F_NATURAL) {
 					player.doMove(SHRT);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == G_NATURAL) {
 					player.doMove(FORWARD);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == A_NATURAL) {
 					player.doMove(ROUNDHOUSE);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == B_NATURAL) {
 					player.doMove(GRAB);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == C_MAJOR) {
 					player.doMove(CMAJ);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				//cheats
 				else if (acc == 0x540) {
@@ -678,6 +688,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 					player.doMove(HITSTUN);
 					player.health -= 50;
 				}
+				if (player.meter > 1000)player.meter = 1000;
 			}
 			else {
 				input.clear();

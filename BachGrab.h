@@ -17,18 +17,21 @@ BachGrab::BachGrab() {
 	frameCount = 5;
 	// Damage
 	damage = 40;
+	metergain = 40;
 	// Change in attacker's position on move
 	velX = 0;
 	velY = 0;
 	// Change in opponent's position on move
-	pushX = 0;
-	pushY = 10;
+	pushX = -10;
+	pushY = -40;
 	//Number of hitstun frames this causes
 	hitstun = 6;
 	//Number of blockstun frames this causes
 	blockstun = 0;
 	// State move puts player in
 	state = GRAB_STATE;
+	
+	initFrames();
 }
 
 void BachGrab::initFrames() {

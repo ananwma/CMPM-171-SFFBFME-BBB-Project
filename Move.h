@@ -18,12 +18,14 @@ public:
 	virtual void initCancelMoves() = 0;
 	virtual int getFrameCount() { return frameCount; };
 	virtual int getDamage() { return damage; };
+	virtual int getMeterGain() { return metergain; };
 	void setHitFalse() { for (auto &i : frameVector) i.hit = false; }
 protected:
 	sf::Texture spritesheet;
 	int frameCount;
 	vector<Frame> frameVector;
 	int damage;
+	int metergain;
 	int hitstun;
 	int blockstun;
 	float velX = 0;

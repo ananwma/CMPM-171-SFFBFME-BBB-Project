@@ -17,6 +17,8 @@ BachShoryuken::BachShoryuken() {
 	frameCount = 7;
 	// Damage
 	damage = 100;
+	// Meter Gain
+	metergain = 100;
 	//Number of hitstun frames this causes
 	hitstun = 8;
 	//Number of blockstun frames this causes

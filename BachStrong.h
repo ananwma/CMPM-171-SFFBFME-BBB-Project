@@ -17,6 +17,8 @@ BachStrong::BachStrong() {
 	frameCount = 7;
 	// Damage
 	damage = 50;
+	// Meter Gain
+	metergain = 50;
 	//Number of hitstun frames this causes
 	hitstun = 5;
 	//Number of blockstun frames this causes
