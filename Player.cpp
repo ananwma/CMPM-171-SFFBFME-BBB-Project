@@ -65,6 +65,7 @@ void Player::doMove(int move) {
 			xvel = getCurrentMove()->velX * (500 / beat);
 		else if (side == RIGHT)
 			xvel = -getCurrentMove()->velX * (500 / beat);
+		if (meter < 1000)meter += character->moveList.at(move)->metergain;
 	}
 	// Fix this later
 	/*else if (state == ATTACK_STATE || state == GRAB_STATE && canCancel && moveCancelable(character->currentMove, move)) {

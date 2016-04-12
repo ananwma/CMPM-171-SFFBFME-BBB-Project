@@ -138,10 +138,10 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>sff headers</Filter>
     </ClInclude>
-    <ClInclude Include="BachGrab.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachGrab.h">
       <Filter>sff headers</Filter>
     </ClInclude>
     <ClInclude Include="BachGrab.h">
@@ -213,9 +213,6 @@
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>sff source</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>

@@ -16,6 +16,7 @@ BachHitstun::BachHitstun() {
 	// Number of animation frames
 	frameCount = 1;
 	// Damage
+	metergain = 0;
 	damage = 0;
 	// Change in position on move
 
