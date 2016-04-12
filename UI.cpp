@@ -1,21 +1,13 @@
 #include "stdafx.h"
 #include "UI.h"
 
-
-UI::UI(float _xpos, float _ypos, sf::Sprite _sprite) : 
-	xpos(_xpos),
-	ypos(_ypos),
-	sprite(_sprite)
-{
-}
-
 void UI::setPos(float x, float y) {
 	xpos = x;
 	ypos = y;
 }
 
-void UI::setSprite(sf::Sprite s) {
-	sprite = s;
+void UI::addDrawable(sf::Drawable& d) {
+	drawVector.push_back(d);
 }
 
 void UI::setData(int d) {

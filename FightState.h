@@ -7,6 +7,7 @@
 #include "BeatIndicator.h"
 #include "ConcertHallStage.h"
 #include "Bassline.h"
+#include "UI.h"
 #include <SFML/Audio.hpp>
 
 class FightState : public GameState {
@@ -74,6 +75,9 @@ private:
 	void drawBoxes(Player&, bool, bool, bool);
 	void FightState::move_camera(Player&, Player&);
 	void FightState::restrict_movement(Player&, Player&);
+	void drawHud();
+	
+	UI timer;
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;
@@ -81,4 +85,7 @@ private:
 	sf::Sound hitSound;
 	sf::SoundBuffer blockSoundBuffer;
 	sf::Sound blockSound;
+
+	sf::Text text;
+	sf::Font font;
 };

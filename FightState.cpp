@@ -14,8 +14,10 @@
 
 using namespace std;
 
-FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70) {
-}
+FightState::FightState(Game &_game) : 
+	game(_game), 
+	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70)
+{ }
 
 void FightState::init() {
 	cout << game.playerOne.playerId << endl;
@@ -96,6 +98,13 @@ void FightState::init() {
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(0);
 
+	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
+		cerr << "Font not found!\n";
+		exit(EXIT_FAILURE);
+	}
+	text.setFont(font);
+	timer.addDrawable(text);
+
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 }
@@ -135,7 +144,7 @@ void FightState::update() {
 			game.playerTwo.indicator.updateIndicator(NONE);
 		if (quarterNote) {
 			bassline.playNextNote();
-			//metronomeSound.play();
+			metronomeSound.play();
 			quarterNote = false;
 			
 		}
@@ -617,6 +626,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 				if (acc == C_NATURAL) {
 					player.doMove(JAB);
+					player.health-= 20;
 				}
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);
@@ -636,11 +646,23 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				else if (acc == C_MAJOR) {
 					player.doMove(CMAJ);
 				}
+				else if (acc == C_MAJOR_6) {
+					player.doMove(CMAJ, 4);
+				}
+				else if (acc == C_MAJOR_64) {
+					player.doMove(CMAJ, 6);
+				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
 				}
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
+				}
+				else if (acc == G_MAJOR_6) {
+					player.doMove(GMAJ, 4);
+				}
+				else if (acc == G_MAJOR_64) {
+					player.doMove(GMAJ, 6);
 				}
 				//cheats
 				else if (acc == 0x540) {

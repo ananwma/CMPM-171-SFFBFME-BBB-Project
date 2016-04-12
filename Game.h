@@ -7,8 +7,8 @@
 #include "AssetManager.h"
 #include <SFML/Graphics.hpp>
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
 #define BEAT_SPEED 500.0f
 #define GROUND WINDOW_WIDTH / 4
 

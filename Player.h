@@ -66,7 +66,7 @@ public:
 	//int currentFrame;
 	int ezmode = 0;
 
-	void doMove(int);
+	void doMove(int, int = 0);
 	void getHit(Move*);
 	void block(Move*);
 	bool moveCancelable(int, int);

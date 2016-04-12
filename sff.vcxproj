@@ -181,14 +181,12 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterBach.h" />
     <ClInclude Include="Collision.h" />
-    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConcertHallStage.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="FightState.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateManager.h" />
-    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Move.h" />
     <ClInclude Include="PauseState.h" />
@@ -210,12 +208,10 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharacterBach.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConcertHallStage.cpp" />
     <ClCompile Include="FightState.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
-    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
