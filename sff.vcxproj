@@ -183,6 +183,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConcertHallStage.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="FightState.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConcertHallStage.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FightState.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameStateManager.cpp" />

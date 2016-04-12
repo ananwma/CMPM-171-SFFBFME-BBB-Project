@@ -150,6 +150,9 @@
     <ClInclude Include="HealthBar.h">
       <Filter>sff headers</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -216,6 +219,9 @@
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="HealthBar.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>

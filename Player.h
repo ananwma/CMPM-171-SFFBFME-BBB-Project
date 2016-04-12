@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include "Entity.h"
 #include "Character.h"
 #include "Move.h"
 #include "BeatIndicator.h"
@@ -10,7 +11,7 @@
 using namespace std;
 enum direction { LEFT, RIGHT, NEUTRAL };
 
-class Player {
+class Player : public Entity {
 private:
 	//Character* character;
 public:

@@ -94,7 +94,7 @@ void FightState::init() {
 	hitSound.setVolume(50);
 
 	bassline.setInstrument(32);
-	game.inputHandler->setInstrument(0);
+	game.inputHandler->setInstrument(6);
 
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);

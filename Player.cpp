@@ -186,7 +186,7 @@ void Player::jump(direction dir) {
 	}
 }
 
-void Player::updateAnimFrame() {
+/*void Player::updateAnimFrame() {
 	character->currentMoveFrame++;
 	int animFrames = ((getCurrentMove()->getFrameCount()) - 1);
 	if (getCurrentFrameNum() > animFrames) {
@@ -229,7 +229,7 @@ void Player::updateAnimFrame() {
 			character->height
 			));
 	}
-}
+}*/
 
 void Player::updatePhysics() {
 	//Add acceleration to velocity
