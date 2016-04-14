@@ -5,6 +5,13 @@ void Entity::setSprite(sf::Sprite s) {
 	sprite = s;
 }
 
+void Entity::setAnimSprite(sf::Sprite s, int width, int height, int framecount) {
+	sprite = s;
+	spriteWidth = width;
+	spriteHeight = height;
+	numAnimFrames = framecount;
+}
+
 void Entity::setPosition(float x, float y) {
 	sprite.setPosition(x, y);
 	xpos = x;
@@ -15,8 +22,8 @@ void Entity::updateSide(Entity relativeTo) {
 }
 
 void Entity::updateAnimFrame() {
-	animFrame++;
-	int animFrames = ((getCurrentMove()->getFrameCount()) - 1);
+	//MOVE TO PLAYER
+	/*int animFrames = ((getCurrentMove()->getFrameCount()) - 1);
 	if (getCurrentFrameNum() > animFrames) {
 
 		if (state == HITSTUN_STATE && hitstunFrames != 0) {
@@ -39,22 +46,22 @@ void Entity::updateAnimFrame() {
 			if (state != AIRBORNE_STATE)
 				state = NO_STATE;
 		}
-	}
+	}*/
 	if (side == LEFT) {
-		character->sprite.setTextureRect(sf::IntRect(
-			getCurrentFrameNum() * character->width,
+		sprite.setTextureRect(sf::IntRect(
+			currAnimFrame * spriteWidth,
 			0,
-			character->width,
-			character->height
+			spriteWidth,
+			spriteHeight
 			));
 	}
 	// Draw flipped
 	else if (side == RIGHT) {
-		character->sprite.setTextureRect(sf::IntRect(
-			(getCurrentFrameNum() * character->width) + character->width,
+		sprite.setTextureRect(sf::IntRect(
+			(currAnimFrame * spriteWidth) + spriteWidth,
 			0,
-			-character->width,
-			character->height
+			-spriteWidth,
+			spriteHeight
 			));
 	}
 }

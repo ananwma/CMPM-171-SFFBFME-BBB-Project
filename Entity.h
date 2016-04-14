@@ -10,6 +10,7 @@ public:
 	Entity& operator= (Entity&&) = delete;
 	
 	void setSprite(sf::Sprite);
+	void setAnimSprite(sf::Sprite, int, int, int);
 	void setPosition(float, float);
 	void updateSide(Entity);
 	void updateAnimFrame();
@@ -23,6 +24,12 @@ private:
 	sf::Sprite sprite;
 	float xpos;
 	float ypos;
+
+	int spriteWidth;
+	int spriteHeight;
+	int numAnimFrames;
+	int currAnimFrame = 0;
+
 	direction side;
 	int currAnimFrame;
 	int numAnimFrames;
