@@ -52,11 +52,23 @@ void FightState::init() {
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
+
+	player_1_HP_box.setSize(sf::Vector2f(400, 30));
+	player_1_HP_box.setOutlineThickness(5);
+	player_1_HP_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_1_HP_box.setFillColor(sf::Color::Transparent);
+
 	player_2_HP.setSize(sf::Vector2f(400, 30));
 	player_2_HP.setFillColor(sf::Color(100, 250, 50));
 	player_2_HP.setPosition(WINDOW_WIDTH - 400, 0);
 
-	timer.setSize(sf::Vector2f(200,200));
+	player_2_HP_box.setSize(sf::Vector2f(400, 30));
+	player_2_HP_box.setPosition(WINDOW_WIDTH - 400, 0);
+	player_2_HP_box.setOutlineThickness(5);
+	player_2_HP_box.setOutlineColor(sf::Color(250,250,250));
+	player_2_HP_box.setFillColor(sf::Color::Transparent);
+
+	timer.setSize(sf::Vector2f(175,75));
 	timer.setFillColor(sf::Color(250,250,250));
 	timer.setPosition(WINDOW_WIDTH/2-100, 0);
 
@@ -71,14 +83,27 @@ void FightState::init() {
 	sprintf(temp, "%f", time);
 	timer_text.setString(temp);
 	timer_text.setCharacterSize(50);
-	timer_text.setPosition(WINDOW_WIDTH / 2 - 100, 0);
+	timer_text.setPosition(WINDOW_WIDTH / 2 - 30, 0);
 
 	player_1_meter.setPosition(0, 35);
 	player_1_meter.setSize(sf::Vector2f(400, 30));
 	player_1_meter.setFillColor(sf::Color(0, 255, 255));
+
+	player_1_meter_box.setOutlineThickness(5);
+	player_1_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_1_meter_box.setPosition(0, 35);
+	player_1_meter_box.setSize(sf::Vector2f(400, 30));
+	player_1_meter_box.setFillColor(sf::Color::Transparent);
+
 	player_2_meter.setSize(sf::Vector2f(400, 30));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
+
+	player_2_meter_box.setOutlineThickness(5);
+	player_2_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_2_meter_box.setSize(sf::Vector2f(400, 30));
+	player_2_meter_box.setPosition(WINDOW_WIDTH - 400, 35);
+	player_2_meter_box.setFillColor(sf::Color::Transparent);
 
 	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
@@ -115,6 +140,7 @@ void FightState::init() {
 
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
+	clock.restart();
 }
 
 void FightState::update() {
@@ -193,6 +219,12 @@ void FightState::update() {
 		collision.flip_sprites(game.playerOne, game.playerTwo);
 		collision.flip_sprites(game.playerTwo, game.playerOne);
 
+		time -= clock.getElapsedTime().asSeconds();
+		if (time < 0) time = 0.0;
+		char temp[256];
+		sprintf(temp, "%d", (int)time);
+		timer_text.setString(temp);
+
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
 		ResultsState results(game);
@@ -202,6 +234,28 @@ void FightState::update() {
 		game.playerOne.roundWins++;
 		ResultsState results(game);
 		game.gsm.stopState(*this, &results);
+	}
+	else if (time <= 0) {
+		cout << "entered loop" << endl;
+		if (game.playerOne.health < game.playerTwo.health) {
+			cout << "sit1" << endl;
+			game.playerTwo.roundWins++;
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
+		else if (game.playerTwo.health < game.playerOne.health) {
+			cout << "sit2" << endl;
+			game.playerOne.roundWins++;
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
+		else {
+			cout << "sit3" << endl;
+			game.playerOne.roundWins++;
+			game.playerTwo.roundWins++;
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
 	}
 
 	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
@@ -232,10 +286,6 @@ void FightState::update() {
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
 
-	time -= clock.getElapsedTime().asSeconds();
-	char temp[256];
-	sprintf(temp, "%f", time);
-	timer_text.setString(temp);
 
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
@@ -286,6 +336,10 @@ void FightState::draw() {
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
+	game.window.draw(player_1_HP_box);
+	game.window.draw(player_2_HP_box);
+	game.window.draw(player_1_meter_box);
+	game.window.draw(player_2_meter_box);
 	game.window.draw(timer);
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
@@ -663,11 +717,27 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				else if (acc == C_MAJOR) {
 					player.doMove(CMAJ);
 				}
+				else if (acc == C_MAJOR_6) {
+					player.doMove(CMAJ, 2, 4);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
+				else if (acc == C_MAJOR_64) {
+					player.doMove(CMAJ, 4, 6);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
 				}
 				else if (acc == G_MAJOR) {
 					player.doMove(GMAJ);
+				}
+				else if (acc == G_MAJOR_6) {
+					player.doMove(CMAJ, 0, 3);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
+				else if (acc == G_MAJOR_64) {
+					player.doMove(CMAJ, 0, 5);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				//cheats
 				else if (acc == 0x540) {
