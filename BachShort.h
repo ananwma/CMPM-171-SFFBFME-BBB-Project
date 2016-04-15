@@ -17,6 +17,8 @@ BachShort::BachShort() {
 	frameCount = 5;
 	// Damage
 	damage = 20;
+	// Meter Gain
+	metergain = 20;
 	// Change in attacker's position on move
 	velX = 0;
 	velY = 0;

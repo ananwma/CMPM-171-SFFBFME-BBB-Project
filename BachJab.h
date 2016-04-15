@@ -17,6 +17,8 @@ BachJab::BachJab() {
 	frameCount = 5;
 	// Damage
 	damage = 20;
+	// Meter Gain
+	metergain = 20;
 	//Number of hitstun frames this causes
 	hitstun = 6;
 	//Number of blockstun frames this causes

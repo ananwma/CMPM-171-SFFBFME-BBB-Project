@@ -27,9 +27,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="stdafx.h">
       <Filter>sff headers</Filter>
     </ClInclude>
@@ -141,13 +138,19 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>sff headers</Filter>
     </ClInclude>
-    <ClInclude Include="BachGrab.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>sff headers</Filter>
     </ClInclude>
-    <ClInclude Include="HealthBar.h">
+    <ClInclude Include="BachGrab.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachGrab.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachGrab.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BachGrab.h">
       <Filter>sff headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -209,13 +212,7 @@
     <ClCompile Include="Bassline.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>sff source</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>sff source</Filter>
-    </ClCompile>
-    <ClCompile Include="HealthBar.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -231,8 +228,65 @@
     <Image Include="sff.ico">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SFFProperties.props" />
+    <Image Include="sprites\bach.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_block.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_default.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_fierce.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_forward.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_furious_fugue_flail.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_hitstun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_idle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_jab.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_roundhouse.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_short.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_strong.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bach_toccata_and_kick_ur_ass_in_d_minor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\Bachgrab.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\Bachmissgrab.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\bachs_big_bash.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\fbicon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\hit_spark.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\metro_indicator.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sprites\Ryu.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

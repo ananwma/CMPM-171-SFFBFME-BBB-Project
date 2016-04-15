@@ -17,6 +17,8 @@ BachFierce::BachFierce() {
 	frameCount = 13;
 	// Damage
 	damage = 100;
+	// Meter Gain
+	metergain = 100;
 	// Change in attacker's position on move
 	velX = 0;
 	velY = 0;

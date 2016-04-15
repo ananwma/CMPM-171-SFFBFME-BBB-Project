@@ -18,6 +18,8 @@ BachSuper::BachSuper() {
 	frameCount = 16;
 	// Damage
 	damage = 200;
+	// Meter Gain
+	metergain = 0;
 	// Change in attacker's position on move
 	velX = 10;
 	velY = 0;

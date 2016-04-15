@@ -17,6 +17,8 @@ BachForward::BachForward() {
 	frameCount = 6;
 	// Damage
 	damage = 40;
+	// Meter Gain
+	metergain = 40;
 	// Change in attacker's position on move
 	velX = 0;
 	velY = 0;

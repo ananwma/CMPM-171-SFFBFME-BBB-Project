@@ -19,8 +19,11 @@ void ResultsState::init() {
 	text.setFont(font);
 	if (game.playerOne.roundWins > game.playerTwo.roundWins)
 		text.setString("Player One Wins!");	
-	else
+	else if (game.playerOne.roundWins < game.playerTwo.roundWins)
 		text.setString("Player Two Wins!");
+	else {
+		text.setString("Draw!");
+	}
 	text.setCharacterSize(200);
 	text.setColor(sf::Color(200, 40, 40));
 	text.setStyle(sf::Text::Bold);

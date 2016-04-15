@@ -2,22 +2,20 @@
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
-
 #include <bitset>
 
 #include "FightState.h"
 #include "PauseState.h"
 #include "ResultsState.h"
 #include "BeatIndicator.h"
+#include "UI.h"
 // tmp
 #include "CharacterBach.h"
 
 using namespace std;
 
-FightState::FightState(Game &_game) : 
-	game(_game), 
-	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70)
-{ }
+FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70) {
+}
 
 void FightState::init() {
 	cout << game.playerOne.playerId << endl;
@@ -54,16 +52,58 @@ void FightState::init() {
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
+
+	player_1_HP_box.setSize(sf::Vector2f(400, 30));
+	player_1_HP_box.setOutlineThickness(5);
+	player_1_HP_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_1_HP_box.setFillColor(sf::Color::Transparent);
+
 	player_2_HP.setSize(sf::Vector2f(400, 30));
 	player_2_HP.setFillColor(sf::Color(100, 250, 50));
 	player_2_HP.setPosition(WINDOW_WIDTH - 400, 0);
 
+	player_2_HP_box.setSize(sf::Vector2f(400, 30));
+	player_2_HP_box.setPosition(WINDOW_WIDTH - 400, 0);
+	player_2_HP_box.setOutlineThickness(5);
+	player_2_HP_box.setOutlineColor(sf::Color(250,250,250));
+	player_2_HP_box.setFillColor(sf::Color::Transparent);
+
+	timer.setSize(sf::Vector2f(175,75));
+	timer.setFillColor(sf::Color(250,250,250));
+	timer.setPosition(WINDOW_WIDTH/2-100, 0);
+
+	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
+		cerr << "Font not found!\n";
+		exit(EXIT_FAILURE);
+	}
+	timer_text.setFont(font);
+	timer_text.setColor(sf::Color(0, 0, 0));
+	time = 60.0f;
+	char temp[256];
+	sprintf(temp, "%f", time);
+	timer_text.setString(temp);
+	timer_text.setCharacterSize(50);
+	timer_text.setPosition(WINDOW_WIDTH / 2 - 30, 0);
+
 	player_1_meter.setPosition(0, 35);
 	player_1_meter.setSize(sf::Vector2f(400, 30));
 	player_1_meter.setFillColor(sf::Color(0, 255, 255));
+
+	player_1_meter_box.setOutlineThickness(5);
+	player_1_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_1_meter_box.setPosition(0, 35);
+	player_1_meter_box.setSize(sf::Vector2f(400, 30));
+	player_1_meter_box.setFillColor(sf::Color::Transparent);
+
 	player_2_meter.setSize(sf::Vector2f(400, 30));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
+
+	player_2_meter_box.setOutlineThickness(5);
+	player_2_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_2_meter_box.setSize(sf::Vector2f(400, 30));
+	player_2_meter_box.setPosition(WINDOW_WIDTH - 400, 35);
+	player_2_meter_box.setFillColor(sf::Color::Transparent);
 
 	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
@@ -98,15 +138,9 @@ void FightState::init() {
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(0);
 
-	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
-		cerr << "Font not found!\n";
-		exit(EXIT_FAILURE);
-	}
-	text.setFont(font);
-	timer.addDrawable(text);
-
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
+	clock.restart();
 }
 
 void FightState::update() {
@@ -144,7 +178,7 @@ void FightState::update() {
 			game.playerTwo.indicator.updateIndicator(NONE);
 		if (quarterNote) {
 			bassline.playNextNote();
-			metronomeSound.play();
+			//metronomeSound.play();
 			quarterNote = false;
 			
 		}
@@ -185,6 +219,12 @@ void FightState::update() {
 		collision.flip_sprites(game.playerOne, game.playerTwo);
 		collision.flip_sprites(game.playerTwo, game.playerOne);
 
+		time -= clock.getElapsedTime().asSeconds();
+		if (time < 0) time = 0.0;
+		char temp[256];
+		sprintf(temp, "%d", (int)time);
+		timer_text.setString(temp);
+
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
 		ResultsState results(game);
@@ -194,6 +234,28 @@ void FightState::update() {
 		game.playerOne.roundWins++;
 		ResultsState results(game);
 		game.gsm.stopState(*this, &results);
+	}
+	else if (time <= 0) {
+		cout << "entered loop" << endl;
+		if (game.playerOne.health < game.playerTwo.health) {
+			cout << "sit1" << endl;
+			game.playerTwo.roundWins++;
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
+		else if (game.playerTwo.health < game.playerOne.health) {
+			cout << "sit2" << endl;
+			game.playerOne.roundWins++;
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
+		else {
+			cout << "sit3" << endl;
+			game.playerOne.roundWins++;
+			game.playerTwo.roundWins++;
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
 	}
 
 	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
@@ -223,7 +285,8 @@ void FightState::update() {
 		game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
-	
+
+
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
@@ -249,7 +312,7 @@ void FightState::update() {
 	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
 	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
 	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
-	sf::Vector2<float> p2M(400.0*(game.playerOne.meter / 1000.0), 30);
+	sf::Vector2<float> p2M(400.0*(game.playerTwo.meter / 1000.0), 30);
 	//cout << game.playerOne.meter << endl;
 	//cout << p2HP.x << endl;
 	player_1_HP.setSize(p1HP);
@@ -273,6 +336,12 @@ void FightState::draw() {
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
+	game.window.draw(player_1_HP_box);
+	game.window.draw(player_2_HP_box);
+	game.window.draw(player_1_meter_box);
+	game.window.draw(player_2_meter_box);
+	game.window.draw(timer);
+	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
 	game.window.display();
@@ -480,7 +549,7 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			}
 			if (offsetHit.intersects(offsetHurt)) {
 				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
+				if (attacker.state != GRAB_STATE && defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
 					defender.block(attacker.getCurrentMove());
 					blockSound.play();
 				}
@@ -626,7 +695,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 				if (acc == C_NATURAL) {
 					player.doMove(JAB);
-					player.health-= 20;
 				}
 				else if (acc == D_NATURAL) {
 					player.doMove(STRONG);
@@ -643,14 +711,19 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				else if (acc == A_NATURAL) {
 					player.doMove(ROUNDHOUSE);
 				}
+				else if (acc == B_NATURAL) {
+					player.doMove(GRAB);
+				}
 				else if (acc == C_MAJOR) {
 					player.doMove(CMAJ);
 				}
 				else if (acc == C_MAJOR_6) {
-					player.doMove(CMAJ, 4);
+					player.doMove(CMAJ, 2, 4);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == C_MAJOR_64) {
-					player.doMove(CMAJ, 6);
+					player.doMove(CMAJ, 4, 6);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == F_MAJOR_64) {
 					player.doMove(CMAJ);
@@ -659,10 +732,12 @@ void FightState::processInput(Player& player, vector<int>& input) {
 					player.doMove(GMAJ);
 				}
 				else if (acc == G_MAJOR_6) {
-					player.doMove(GMAJ, 4);
+					player.doMove(CMAJ, 0, 3);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == G_MAJOR_64) {
-					player.doMove(GMAJ, 6);
+					player.doMove(CMAJ, 0, 5);
+					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				//cheats
 				else if (acc == 0x540) {
@@ -673,6 +748,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 					player.doMove(HITSTUN);
 					player.health -= 50;
 				}
+				if (player.meter > 1000)player.meter = 1000;
 			}
 			else {
 				input.clear();

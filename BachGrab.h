@@ -9,30 +9,29 @@ public:
 };
 
 BachGrab::BachGrab() {
-	if (!spritesheet.loadFromFile("sprites/Bachgrab.png")) {
+	if (!spritesheet.loadFromFile("sprites/Bachmissgrab.png")) {
 		std::cerr << "Error missing BachGrab sprites!\n";
 		exit(EXIT_FAILURE);
 	}
 	// Number of animation frames
-	frameCount = 6;
+	frameCount = 5;
 	// Damage
-
-	//////////////////////////////////////
-	// remember to adjust these values
-	damage = 10000;
+	damage = 40;
+	metergain = 40;
 	// Change in attacker's position on move
 	velX = 0;
-	velY = 10;
+	velY = 0;
 	// Change in opponent's position on move
-	pushX = 0;
-	pushY = 10;
+	pushX = -10;
+	pushY = -40;
 	//Number of hitstun frames this causes
-	hitstun = 0;
+	hitstun = 6;
 	//Number of blockstun frames this causes
 	blockstun = 0;
 	// State move puts player in
-	state = GRABBING;
-	///////////////////////////////////
+	state = GRAB_STATE;
+	
+	initFrames();
 }
 
 void BachGrab::initFrames() {
@@ -97,5 +96,5 @@ void BachGrab::initFrames() {
 }
 
 void BachGrab::initCancelMoves() {
-
+	//cancelMoves.push_back(GMAJ);
 }

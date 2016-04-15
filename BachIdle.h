@@ -17,6 +17,7 @@ BachIdle::BachIdle() {
 	frameCount = 1;
 	// Damage
 	damage = 0;
+	metergain = 0;
 	// Change in position on move
 
 	// State move puts player in

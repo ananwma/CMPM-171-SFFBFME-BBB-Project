@@ -17,6 +17,8 @@ BachTatsu::BachTatsu() {
 	frameCount = 15;
 	// Damage
 	damage = 10;
+	// Meter Gain
+	metergain = 10;
 	// Change in attacker's position on move
 	velX = 0;
 	velY = -20;

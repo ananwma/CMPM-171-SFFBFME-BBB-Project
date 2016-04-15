@@ -1,16 +1,15 @@
 #pragma once
-#include <vector>
 #include <SFML\Graphics.hpp>
 class UI
 {
 public:
 	// CTOR and DTOR
-	UI() = default;
+	UI(float, float);
 	~UI() = default;
 
 	// Mutators
 	void setPos(float, float);
-	void addDrawable(sf::Drawable&);
+	void setSprite(sf::Sprite);
 	void setData(int);
 
 	// Accessors
@@ -20,8 +19,7 @@ public:
 private:
 	float xpos;
 	float ypos;
-	sf::Sprite sprite;
-	std::vector<sf::Drawable&> drawVector;
+	std::vector<sf::Drawable> drawables;
 	int data;
 };
 
