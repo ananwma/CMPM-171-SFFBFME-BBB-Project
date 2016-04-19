@@ -46,7 +46,7 @@ void FightState::init() {
 	game.playerTwo.character->currentMoveFrame = 0;
 	//100 = ground level
 	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
-	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
+	game.playerTwo.setPosition(WINDOW_WIDTH / 1.4, GROUND);
 	game.playerTwo.side = RIGHT;
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
@@ -241,8 +241,8 @@ void FightState::update() {
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
-	//restrict_movement(game.playerOne, game.playerTwo);
-	//restrict_movement(game.playerTwo, game.playerOne);
+	restrict_movement(game.playerOne, game.playerTwo);
+	restrict_movement(game.playerTwo, game.playerOne);
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
@@ -370,8 +370,8 @@ void FightState::update() {
 		game.playerOne.updateAnimFrame();
 	}
 
-	//move_camera(game.playerOne, game.playerTwo);
-	//move_camera(game.playerTwo, game.playerOne);
+	move_camera(game.playerOne, game.playerTwo);
+	move_camera(game.playerTwo, game.playerOne);
 
 	//cout << "offset" << endl;
 	//cout << game.currentScreen.stage.window_offset << endl;
@@ -387,8 +387,9 @@ void FightState::update() {
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
 
-	//cout << game.currentScreen.stage.window_offset << endl;
-	cout << game.playerOne.roundWins << endl;
+	cout << dec<<game.currentScreen.stage.window_offset << endl;
+	//cout << dec << game.playerTwo.xpos << endl;
+	//cout << game.playerOne.roundWins << endl;
 }
 
 void FightState::draw() {
@@ -594,7 +595,8 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 		else
 			p2.againstWall = false;
 			*/
-		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
+		//change window width to background width
+		if (offsetClipBox1.left < -440 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH + 440) {
 			if (p1.xvel < 0 && p1.side == LEFT)
 				p1.xvel = 0;
 			if (p1.xvel > 0 && p1.side == RIGHT)
@@ -602,7 +604,7 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 			p2.againstWall = false;
 			p1.againstWall = true;
 		}
-		else if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
+		else if (offsetClipBox2.left < -440 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH + 440) {
 			if (p2.xvel < 0 && p2.side == LEFT)
 				p2.xvel = 0;
 			if (p2.xvel > 0 && p2.side == RIGHT)

@@ -152,14 +152,16 @@ void Player::walk(direction dir) {
 		if (dir == LEFT) {
 			//character->sprite.move(character->walkspeed, 0);
 			//xpos += character->walkspeed;
-			if (!(character->sprite.getPosition().x + character->wall_offset <= -200)) {
+
+			/////440 = window limit/////
+			if (!(character->sprite.getPosition().x + character->wall_offset <= -440)) {
 				xvel = -character->walkspeed * (500 / beat);
 			}
 		}
 		else if (dir == RIGHT) {
 			//character->sprite.move(-character->walkspeed, 0);
 			//xpos -= character->walkspeed;
-			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WINDOW_WIDTH + 200)) {
+			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WINDOW_WIDTH + 440)) {
 				xvel = character->walkspeed * (500 / beat);
 			}
 		}
