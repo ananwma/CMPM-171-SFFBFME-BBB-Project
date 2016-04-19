@@ -39,7 +39,7 @@ public:
 	sf::RectangleShape task;
 	sf::Text task_text;
 	sf::Text text;
-	sf::Text dialogue;
+	sf::RectangleShape dialogue;
 	sf::Text dialogue_text;
 	sf::Font font;
 	sf::RectangleShape player_1_round_wins;
