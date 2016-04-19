@@ -87,7 +87,7 @@ private:
 	void FightState::restrict_movement(Player&, Player&);
 	void drawHud();
 	
-	UI timer;
+	//UI timer;
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;
@@ -96,6 +96,6 @@ private:
 	sf::SoundBuffer blockSoundBuffer;
 	sf::Sound blockSound;
 
-	sf::Text text;
-	sf::Font font;
+	//sf::Text text;
+//	sf::Font font;
 };

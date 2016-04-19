@@ -6,7 +6,6 @@
 #include <bitset>
 
 #include "TutorialState.h"
-#include "TutorialTask.h"
 #include "PauseState.h"
 #include "ResultsState.h"
 #include "BeatIndicator.h"

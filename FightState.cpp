@@ -68,9 +68,9 @@ void FightState::init() {
 	player_2_HP_box.setOutlineColor(sf::Color(250,250,250));
 	player_2_HP_box.setFillColor(sf::Color::Transparent);
 
-	timer.setSize(sf::Vector2f(175,75));
-	timer.setFillColor(sf::Color(250,250,250));
-	timer.setPosition(WINDOW_WIDTH/2-100, 0);
+	//timer.setSize(sf::Vector2f(175,75));
+	//timer.setFillColor(sf::Color(250,250,250));
+	//timer.setPosition(WINDOW_WIDTH/2-100, 0);
 
 	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
 		cerr << "Font not found!\n";
@@ -340,7 +340,7 @@ void FightState::draw() {
 	game.window.draw(player_2_HP_box);
 	game.window.draw(player_1_meter_box);
 	game.window.draw(player_2_meter_box);
-	game.window.draw(timer);
+	//game.window.draw(timer);
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
