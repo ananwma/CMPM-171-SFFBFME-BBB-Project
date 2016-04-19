@@ -18,12 +18,11 @@ FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, 
 }
 
 void FightState::init() {
-	cout << game.playerOne.playerId << endl;
-	cout << game.playerTwo.playerId << endl;
+
 	running = true;
 
 	game.currentScreen.setStage(chstage);
-	game.currentScreen.stage.sprite.move(-200, 0);
+	game.currentScreen.stage.sprite.move(-game.currentScreen.stage.window_offset, 0);
 	game.currentScreen.stage.window_offset = 0;
 
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
@@ -71,6 +70,29 @@ void FightState::init() {
 	timer.setSize(sf::Vector2f(175,75));
 	timer.setFillColor(sf::Color(250,250,250));
 	timer.setPosition(WINDOW_WIDTH/2-100, 0);
+
+	game.playerOne.roundWins = 0;
+	game.playerTwo.roundWins = 0;
+	game.playerOne.health = 1000;
+	game.playerTwo.health = 1000;
+	game.playerOne.meter = 0;
+	game.playerTwo.meter = 0;
+
+	player_1_round_win_1.setSize(sf::Vector2f(30, 30));
+	player_1_round_win_1.setPosition(WINDOW_WIDTH / 2 - 160, 70);
+	player_1_round_win_1.setFillColor(sf::Color(255,255,0));
+
+	player_1_round_win_2.setSize(sf::Vector2f(30, 30));
+	player_1_round_win_2.setPosition(WINDOW_WIDTH / 2 - 200, 70);
+	player_1_round_win_2.setFillColor(sf::Color(255, 255, 0));
+
+	player_2_round_win_1.setSize(sf::Vector2f(30, 30));
+	player_2_round_win_1.setPosition(WINDOW_WIDTH / 2 + 100, 70);
+	player_2_round_win_1.setFillColor(sf::Color(255, 255, 0));
+
+	player_2_round_win_2.setSize(sf::Vector2f(30, 30));
+	player_2_round_win_2.setPosition(WINDOW_WIDTH / 2 + 140, 70);
+	player_2_round_win_2.setFillColor(sf::Color(255, 255, 0));
 
 	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
 		cerr << "Font not found!\n";
@@ -143,6 +165,31 @@ void FightState::init() {
 	clock.restart();
 }
 
+void FightState::reset() {
+	game.playerOne.character->initMoves();
+	game.playerOne.doMove(IDLE);
+	game.playerOne.character->currentMoveFrame = 0;
+	game.playerOne.setPosition(20, 100);
+	game.playerTwo.character->initMoves();
+	game.playerTwo.doMove(IDLE);
+	game.playerTwo.character->currentMoveFrame = 0;
+	//100 = ground level
+	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
+	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
+	game.playerTwo.side = RIGHT;
+
+	time = 60.0f;
+	char temp[256];
+	sprintf(temp, "%f", time);
+	timer_text.setString(temp);
+	clock.restart();
+
+	game.playerOne.health = 1000;
+	game.playerOne.meter = 0;
+	game.playerTwo.health = 1000;
+	game.playerTwo.meter = 0;
+}
+
 void FightState::update() {
 	//cout << "State #1" << endl;
 	if (!running) {
@@ -193,8 +240,8 @@ void FightState::update() {
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
-	restrict_movement(game.playerOne, game.playerTwo);
-	restrict_movement(game.playerTwo, game.playerOne);
+	//restrict_movement(game.playerOne, game.playerTwo);
+	//restrict_movement(game.playerTwo, game.playerOne);
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
@@ -227,34 +274,53 @@ void FightState::update() {
 
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
-		ResultsState results(game);
-		game.gsm.stopState(*this, &results);
+		if (game.playerTwo.roundWins == 2) {
+			game.window.draw(player_2_round_win_2);
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
+		else {
+			reset();
+		}
 	}
 	else if (game.playerTwo.health <= 0) {
 		game.playerOne.roundWins++;
-		ResultsState results(game);
-		game.gsm.stopState(*this, &results);
+		if (game.playerOne.roundWins == 2) {
+			game.window.draw(player_1_round_win_2);
+			ResultsState results(game);
+			game.gsm.stopState(*this, &results);
+		}
+		else {
+			reset();
+		}
 	}
 	else if (time <= 0) {
 		cout << "entered loop" << endl;
 		if (game.playerOne.health < game.playerTwo.health) {
 			cout << "sit1" << endl;
 			game.playerTwo.roundWins++;
-			ResultsState results(game);
-			game.gsm.stopState(*this, &results);
 		}
 		else if (game.playerTwo.health < game.playerOne.health) {
 			cout << "sit2" << endl;
 			game.playerOne.roundWins++;
-			ResultsState results(game);
-			game.gsm.stopState(*this, &results);
 		}
 		else {
 			cout << "sit3" << endl;
 			game.playerOne.roundWins++;
 			game.playerTwo.roundWins++;
+		}
+		if (game.playerOne.roundWins == 2 || game.playerTwo.roundWins == 2) {
+			if (game.playerOne.roundWins == 2) {
+				game.window.draw(player_1_round_win_2);
+			}
+			if (game.playerTwo.roundWins == 2) {
+				game.window.draw(player_2_round_win_2);
+			}
 			ResultsState results(game);
 			game.gsm.stopState(*this, &results);
+		}
+		else {
+			reset();
 		}
 	}
 
@@ -303,8 +369,8 @@ void FightState::update() {
 		game.playerOne.updateAnimFrame();
 	}
 
-	move_camera(game.playerOne, game.playerTwo);
-	move_camera(game.playerTwo, game.playerOne);
+	//move_camera(game.playerOne, game.playerTwo);
+	//move_camera(game.playerTwo, game.playerOne);
 
 	//cout << "offset" << endl;
 	//cout << game.currentScreen.stage.window_offset << endl;
@@ -320,7 +386,8 @@ void FightState::update() {
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
 
-
+	//cout << game.currentScreen.stage.window_offset << endl;
+	cout << game.playerOne.roundWins << endl;
 }
 
 void FightState::draw() {
@@ -344,6 +411,25 @@ void FightState::draw() {
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
+	if (game.playerOne.roundWins > 0) {
+		game.window.draw(player_1_round_win_1);
+	}
+	if (game.playerOne.roundWins > 1) {
+		game.window.draw(player_1_round_win_2);
+	}
+	if (game.playerTwo.roundWins > 0) {
+		game.window.draw(player_2_round_win_1);
+	}
+	if (game.playerTwo.roundWins > 1) {
+		game.window.draw(player_2_round_win_2);
+	}
+	/*
+	game.window.draw(player_1_round_win_1);
+	game.window.draw(player_1_round_win_2);
+	game.window.draw(player_2_round_win_1);
+	game.window.draw(player_2_round_win_2);*/
+
+
 	game.window.display();
 }
 
@@ -488,7 +574,7 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 				}
 			}
 		}
-		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
+		/*if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
 			if (p1.xvel < 0 && p1.side == LEFT)
 				p1.xvel = 0;
 			if (p1.xvel > 0 && p1.side == RIGHT)
@@ -506,6 +592,27 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 		}
 		else
 			p2.againstWall = false;
+			*/
+		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
+			if (p1.xvel < 0 && p1.side == LEFT)
+				p1.xvel = 0;
+			if (p1.xvel > 0 && p1.side == RIGHT)
+				p1.xvel = 0;
+			p2.againstWall = false;
+			p1.againstWall = true;
+		}
+		else if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
+			if (p2.xvel < 0 && p2.side == LEFT)
+				p2.xvel = 0;
+			if (p2.xvel > 0 && p2.side == RIGHT)
+				p2.xvel = 0;
+			p2.againstWall = true;
+			p1.againstWall = false;
+		}
+		else {
+			p2.againstWall = false;
+			p1.againstWall = false;
+		}
 	}
 
 	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
@@ -520,6 +627,11 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
 		p1.xvel = p2.character->jumpX;
 	}
+	/*
+	cout << "p1: " << endl;
+	cout << p1.againstWall << endl;
+	cout << "p2: " << endl;
+	cout << p2.againstWall << endl;*/
 }
 
 void FightState::checkBoxes(Player& attacker, Player& defender) {

@@ -10,8 +10,9 @@ ConcertHallStage::ConcertHallStage()
 		exit(EXIT_FAILURE);
 	}
 	sprite.setTexture(texture);
-	window_limit = 200;
-	window_offset = 200;
+	//(IMAGE_X - WINDOW_WIDTH) / 2
+	window_limit = 440;
+	window_offset = 440;
 }
 
 

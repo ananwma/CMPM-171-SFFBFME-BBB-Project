@@ -35,6 +35,10 @@ public:
 	sf::RectangleShape player_2_HP_box;
 	sf::RectangleShape player_1_meter_box;
 	sf::RectangleShape player_2_meter_box;
+	sf::RectangleShape player_1_round_win_1;
+	sf::RectangleShape player_1_round_win_2;
+	sf::RectangleShape player_2_round_win_1;
+	sf::RectangleShape player_2_round_win_2;
 	sf::RectangleShape timer;
 	sf::Text timer_text;
 	sf::Font font;
@@ -84,6 +88,7 @@ private:
 	void drawBoxes(Player&, bool, bool, bool);
 	void FightState::move_camera(Player&, Player&);
 	void FightState::restrict_movement(Player&, Player&);
+	void FightState::reset();
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;
