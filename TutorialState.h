@@ -32,6 +32,18 @@ public:
 	sf::RectangleShape player_2_HP;
 	sf::RectangleShape player_1_meter;
 	sf::RectangleShape player_2_meter;
+	sf::RectangleShape player_1_HP_box;
+	sf::RectangleShape player_2_HP_box;
+	sf::RectangleShape player_1_meter_box;
+	sf::RectangleShape player_2_meter_box;
+	sf::RectangleShape task;
+	sf::Text task_text;
+	sf::Text text;
+	sf::Text dialogue;
+	sf::Text dialogue_text;
+	sf::Font font;
+	sf::RectangleShape player_1_round_wins;
+	sf::RectangleShape player_2_round_wins;
 	void processInput(Player&, vector<int>&);
 
 private:
@@ -59,7 +71,9 @@ private:
 
 	vector<TutorialStage> tutorial;
 	int current_stage;
+	string current_task;
 	string current_dialogue;
+	stack <string> dialogue_stack;
 	bool inDialogue = false;
 	bool checkMovedLeft(Player&);
 	bool checkMovedRight(Player&);

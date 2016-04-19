@@ -5,11 +5,13 @@ TutorialTask::TutorialTask()
 
 }
 
-TutorialTask::TutorialTask(bool tskch(), string tsk)
+TutorialTask::TutorialTask(string tsk)
 {
 	taskComplete = false;
-	testTask = tskch;
 	task = tsk;
 	
 }
 
+bool TutorialTask::testTask(int currst) {
+	int c = currst;
+}

@@ -1,411 +1,60 @@
-﻿  UI.cpp
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(571): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(781): note: see reference to class template instantiation 'std::allocator<_Ty>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(444): note: see reference to class template instantiation 'std::_Wrap_alloc<std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(496): note: see reference to class template instantiation 'std::_Vec_base_types<_Ty,_Alloc>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(683): note: see reference to class template instantiation 'std::_Vector_alloc<std::_Vec_base_types<_Ty,_Alloc>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\users\michael\source\repos\super fugue fighter\sff\sff\ui.h(24): note: see reference to class template instantiation 'std::vector<sf::Drawable &,std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(572): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(595): error C2535: 'sf::Drawable &(*std::allocator<_Ty>::address(sf::Drawable &) noexcept const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(589): note: see declaration of 'std::allocator<_Ty>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(714): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(785): note: see reference to class template instantiation 'std::allocator_traits<_Alloc>' being compiled
-          with
-          [
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(715): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(734): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(740): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(828): error C2535: 'sf::Drawable &(*std::_Wrap_alloc<std::allocator<_Ty>>::address(sf::Drawable &) const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(822): note: see declaration of 'std::_Wrap_alloc<std::allocator<_Ty>>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: 'abstract declarator': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(447): note: see reference to class template instantiation 'std::_Is_simple_alloc<std::_Wrap_alloc<std::allocator<_Ty>>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: 'abstract declarator': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(455): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(191): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(500): note: see reference to class template instantiation 'std::_Simple_types<sf::Drawable &>' being compiled
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(192): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(829): error C2528: '_Pval': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1278): error C2535: 'void std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back(sf::Drawable &)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(898): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1361): error C2535: 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>> std::vector<sf::Drawable &,std::allocator<_Ty>>::insert(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>>,_Ty)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(921): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::insert'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1618): error C2528: '_Ptr': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1780): error C2528: '_Pval': pointer to reference is illegal
-  FightState.cpp
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(571): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(781): note: see reference to class template instantiation 'std::allocator<_Ty>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(444): note: see reference to class template instantiation 'std::_Wrap_alloc<std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(496): note: see reference to class template instantiation 'std::_Vec_base_types<_Ty,_Alloc>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(683): note: see reference to class template instantiation 'std::_Vector_alloc<std::_Vec_base_types<_Ty,_Alloc>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\users\michael\source\repos\super fugue fighter\sff\sff\ui.h(24): note: see reference to class template instantiation 'std::vector<sf::Drawable &,std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(572): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(595): error C2535: 'sf::Drawable &(*std::allocator<_Ty>::address(sf::Drawable &) noexcept const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(589): note: see declaration of 'std::allocator<_Ty>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(714): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(785): note: see reference to class template instantiation 'std::allocator_traits<_Alloc>' being compiled
-          with
-          [
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(715): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(734): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(740): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(828): error C2535: 'sf::Drawable &(*std::_Wrap_alloc<std::allocator<_Ty>>::address(sf::Drawable &) const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(822): note: see declaration of 'std::_Wrap_alloc<std::allocator<_Ty>>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: 'abstract declarator': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(447): note: see reference to class template instantiation 'std::_Is_simple_alloc<std::_Wrap_alloc<std::allocator<_Ty>>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: 'abstract declarator': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(455): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(191): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(500): note: see reference to class template instantiation 'std::_Simple_types<sf::Drawable &>' being compiled
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(192): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(829): error C2528: '_Pval': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1278): error C2535: 'void std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back(sf::Drawable &)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(898): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1361): error C2535: 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>> std::vector<sf::Drawable &,std::allocator<_Ty>>::insert(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>>,_Ty)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(921): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::insert'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1618): error C2528: '_Ptr': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1780): error C2528: '_Pval': pointer to reference is illegal
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(32): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(52): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(108): error C2065: 'game.inputHandler.get()': undeclared identifier
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(109): error C2065: 'game.inputHandler.get()': undeclared identifier
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(202): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(211): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(220): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(249): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(250): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(251): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(252): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(282): error C3312: no callable 'begin' function found for type 'UI'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(282): error C3312: no callable 'end' function found for type 'UI'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(283): error C2039: 'getNextDrawable': is not a member of 'UI'
-  c:\users\michael\source\repos\super fugue fighter\sff\sff\ui.h(5): note: see declaration of 'UI'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(284): error C2143: syntax error: missing ';' before '}'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(292): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(299): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(754): error C2065: 'game.inputHandler.get()': undeclared identifier
-c:\users\michael\source\repos\super fugue fighter\sff\sff\fightstate.cpp(755): error C2065: 'game.inputHandler.get()': undeclared identifier
-  Generating Code...
-  Compiling...
-  PlayerSelectState.cpp
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(571): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(781): note: see reference to class template instantiation 'std::allocator<_Ty>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(444): note: see reference to class template instantiation 'std::_Wrap_alloc<std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(496): note: see reference to class template instantiation 'std::_Vec_base_types<_Ty,_Alloc>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(683): note: see reference to class template instantiation 'std::_Vector_alloc<std::_Vec_base_types<_Ty,_Alloc>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\users\michael\source\repos\super fugue fighter\sff\sff\ui.h(24): note: see reference to class template instantiation 'std::vector<sf::Drawable &,std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(572): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(595): error C2535: 'sf::Drawable &(*std::allocator<_Ty>::address(sf::Drawable &) noexcept const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(589): note: see declaration of 'std::allocator<_Ty>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(714): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(785): note: see reference to class template instantiation 'std::allocator_traits<_Alloc>' being compiled
-          with
-          [
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(715): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(734): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(740): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(828): error C2535: 'sf::Drawable &(*std::_Wrap_alloc<std::allocator<_Ty>>::address(sf::Drawable &) const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(822): note: see declaration of 'std::_Wrap_alloc<std::allocator<_Ty>>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: 'abstract declarator': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(447): note: see reference to class template instantiation 'std::_Is_simple_alloc<std::_Wrap_alloc<std::allocator<_Ty>>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: 'abstract declarator': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(455): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(191): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(500): note: see reference to class template instantiation 'std::_Simple_types<sf::Drawable &>' being compiled
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(192): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(829): error C2528: '_Pval': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1278): error C2535: 'void std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back(sf::Drawable &)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(898): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1361): error C2535: 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>> std::vector<sf::Drawable &,std::allocator<_Ty>>::insert(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>>,_Ty)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(921): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::insert'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1618): error C2528: '_Ptr': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1780): error C2528: '_Pval': pointer to reference is illegal
-c:\users\michael\source\repos\super fugue fighter\sff\sff\playerselectstate.cpp(14): error C2065: 'game.inputHandler.get()': undeclared identifier
-c:\users\michael\source\repos\super fugue fighter\sff\sff\playerselectstate.cpp(56): error C2065: 'game.inputHandler.get()': undeclared identifier
-  Generating Code...
-  Compiling...
+﻿  stdafx.cpp
+  UI.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\ui.h(2): fatal error C1083: Cannot open include file: 'SFML\Graphics.hpp': No such file or directory
+  TutorialTask.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  TutorialState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  TutorialStage.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Stage.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\stage.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
   sff.cpp
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(571): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(781): note: see reference to class template instantiation 'std::allocator<_Ty>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(444): note: see reference to class template instantiation 'std::_Wrap_alloc<std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(496): note: see reference to class template instantiation 'std::_Vec_base_types<_Ty,_Alloc>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(683): note: see reference to class template instantiation 'std::_Vector_alloc<std::_Vec_base_types<_Ty,_Alloc>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &,
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-  c:\users\michael\source\repos\super fugue fighter\sff\sff\ui.h(24): note: see reference to class template instantiation 'std::vector<sf::Drawable &,std::allocator<_Ty>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(572): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(595): error C2535: 'sf::Drawable &(*std::allocator<_Ty>::address(sf::Drawable &) noexcept const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(589): note: see declaration of 'std::allocator<_Ty>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(714): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(785): note: see reference to class template instantiation 'std::allocator_traits<_Alloc>' being compiled
-          with
-          [
-              _Alloc=std::allocator<sf::Drawable &>
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(715): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(734): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(740): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(828): error C2535: 'sf::Drawable &(*std::_Wrap_alloc<std::allocator<_Ty>>::address(sf::Drawable &) const)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(822): note: see declaration of 'std::_Wrap_alloc<std::allocator<_Ty>>::address'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: 'abstract declarator': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(447): note: see reference to class template instantiation 'std::_Is_simple_alloc<std::_Wrap_alloc<std::allocator<_Ty>>>' being compiled
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(174): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: 'abstract declarator': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(176): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(455): error C2528: '<template-parameter>': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(191): error C2528: 'pointer': pointer to reference is illegal
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(500): note: see reference to class template instantiation 'std::_Simple_types<sf::Drawable &>' being compiled
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\xmemory0(192): error C2528: 'const_pointer': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(829): error C2528: '_Pval': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1278): error C2535: 'void std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back(sf::Drawable &)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(898): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::push_back'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1361): error C2535: 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>> std::vector<sf::Drawable &,std::allocator<_Ty>>::insert(std::_Vector_const_iterator<std::_Vector_val<std::_Simple_types<sf::Drawable &>>>,_Ty)': member function already defined or declared
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-  c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(921): note: see declaration of 'std::vector<sf::Drawable &,std::allocator<_Ty>>::insert'
-          with
-          [
-              _Ty=sf::Drawable &
-          ]
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1618): error C2528: '_Ptr': pointer to reference is illegal
-c:\program files (x86)\microsoft visual studio 14.0\vc\include\vector(1780): error C2528: '_Pval': pointer to reference is illegal
-c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(28): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\sff.cpp(5): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ResultsState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  PlayerSelectState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Player.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  PauseState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  input.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(20): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(20): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(23): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(23): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(27): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(27): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(40): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(49): warning C4018: '<': signed/unsigned mismatch
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(53): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(53): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(57): warning C4018: '<': signed/unsigned mismatch
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(79): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(85): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\input.cpp(92): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+  GameStateManager.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Frame.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\frame.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  FightState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  ConcertHallStage.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\stage.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Collision.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  CharacterBach.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Character.cpp
+  CameraControl.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\character.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Bassline.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\gamestate.h(3): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  Generating Code...
+  Compiling...
+  BeatIndicator.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\beatindicator.h(2): fatal error C1083: Cannot open include file: 'SFML/Graphics.hpp': No such file or directory
+  AssetManager.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\assetmanager.h(2): fatal error C1083: Cannot open include file: 'SFML/graphics.hpp': No such file or directory
   Generating Code...

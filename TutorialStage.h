@@ -14,5 +14,5 @@ public:
 	TutorialStage();
 	TutorialStage(stack<string>, stack<string>, vector<TutorialTask>);
 	stack <string> preText;
-	stack <string>  
+	stack <string> postText;
 };

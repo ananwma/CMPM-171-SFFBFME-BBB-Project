@@ -52,16 +52,66 @@ void TutorialState::init() {
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
+
+	player_1_HP_box.setSize(sf::Vector2f(400, 30));
+	player_1_HP_box.setOutlineThickness(5);
+	player_1_HP_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_1_HP_box.setFillColor(sf::Color::Transparent);
+
 	player_2_HP.setSize(sf::Vector2f(400, 30));
 	player_2_HP.setFillColor(sf::Color(100, 250, 50));
 	player_2_HP.setPosition(WINDOW_WIDTH - 400, 0);
 
+	player_2_HP_box.setSize(sf::Vector2f(400, 30));
+	player_2_HP_box.setPosition(WINDOW_WIDTH - 400, 0);
+	player_2_HP_box.setOutlineThickness(5);
+	player_2_HP_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_2_HP_box.setFillColor(sf::Color::Transparent);
+
+	task.setSize(sf::Vector2f(175, 75));
+	task.setFillColor(sf::Color(250, 250, 250));
+	task.setPosition(WINDOW_WIDTH / 2 - 100, 0);
+
+	dialogue.setSize(sf::Vector2f(300, 300));
+	dialogue.setFillColor(sf::Color(250, 250, 250));
+	dialogue.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	
+	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
+		cerr << "Font not found!\n";
+		exit(EXIT_FAILURE);
+	}
+
+	task_text.setFont(font);
+	task_text.setColor(sf::Color(0, 0, 0));
+	task_text.setString("");
+	task_text.setCharacterSize(50);
+	task_text.setPosition(WINDOW_WIDTH / 2 - 30, 0);
+
+	dialogue_text.setFont(font);
+	dialogue_text.setColor(sf::Color(0, 0, 0));
+	dialogue_text.setString("");
+	dialogue_text.setCharacterSize(50);
+	dialogue_text.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+
 	player_1_meter.setPosition(0, 35);
 	player_1_meter.setSize(sf::Vector2f(400, 30));
 	player_1_meter.setFillColor(sf::Color(0, 255, 255));
+
+	player_1_meter_box.setOutlineThickness(5);
+	player_1_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_1_meter_box.setPosition(0, 35);
+	player_1_meter_box.setSize(sf::Vector2f(400, 30));
+	player_1_meter_box.setFillColor(sf::Color::Transparent);
+
 	player_2_meter.setSize(sf::Vector2f(400, 30));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
+
+	player_2_meter_box.setOutlineThickness(5);
+	player_2_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_2_meter_box.setSize(sf::Vector2f(400, 30));
+	player_2_meter_box.setPosition(WINDOW_WIDTH - 400, 35);
+	player_2_meter_box.setFillColor(sf::Color::Transparent);
 
 	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
@@ -74,9 +124,12 @@ void TutorialState::init() {
 
 	
 	//initialize and push tutorialstages to tutorial
+	//Stage1
+	stage1_tasks.push_back(TutorialTask("Move Backward"));
+	stage1_tasks.push_back(TutorialTask("Move Forward"));
 	stage1_pre.push("Welcome to the Super Fugue Fighter Tutorial. Let's start with movement.");
 	stage1_post.push("Exquisite. Movement is important for positioning yourself correctly to hit your opponent.");
-	tutorial.push_back(TutorialStage(stage1_pre, stage1_post));
+	tutorial.push_back(TutorialStage(stage1_pre, stage1_post, stage1_tasks));
 
 	// Possibly move this to asset manager in future
 	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
@@ -246,7 +299,7 @@ void TutorialState::update() {
 	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
 	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
 	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
-	sf::Vector2<float> p2M(400.0*(game.playerOne.meter / 1000.0), 30);
+	sf::Vector2<float> p2M(400.0*(game.playerTwo.meter / 1000.0), 30);
 	//cout << game.playerOne.meter << endl;
 	//cout << p2HP.x << endl;
 	player_1_HP.setSize(p1HP);
@@ -270,8 +323,18 @@ void TutorialState::draw() {
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
+	game.window.draw(player_1_HP_box);
+	game.window.draw(player_2_HP_box);
+	game.window.draw(player_1_meter_box);
+	game.window.draw(player_2_meter_box);
+	game.window.draw(task);
+	game.window.draw(task_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
+	if (inDialogue) {
+		game.window.draw(dialogue);
+			game.window.draw(dialogue_text);
+	}
 	game.window.display();
 }
 
@@ -617,7 +680,15 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 				//cout << hex << acc << endl;
 				//cout << "indicatorflashon" << endl;
 				
-				if(inDialogue){
+				if (inDialogue) {
+					if (!dialogue_stack.empty()) {
+						current_dialogue = dialogue_stack.top();
+						dialogue_stack.pop();
+					}
+					else {
+						inDialogue = false;
+					}
+						
 				
 				}
 				else {
