@@ -107,6 +107,7 @@ void FightState::init() {
 	timer_text.setCharacterSize(50);
 	timer_text.setPosition(WINDOW_WIDTH / 2 - 30, 0);
 
+
 	player_1_meter.setPosition(0, 35);
 	player_1_meter.setSize(sf::Vector2f(400, 30));
 	player_1_meter.setFillColor(sf::Color(0, 255, 255));
@@ -407,7 +408,7 @@ void FightState::draw() {
 	game.window.draw(player_2_HP_box);
 	game.window.draw(player_1_meter_box);
 	game.window.draw(player_2_meter_box);
-	game.window.draw(timer);
+	//game.window.draw(timer);
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);

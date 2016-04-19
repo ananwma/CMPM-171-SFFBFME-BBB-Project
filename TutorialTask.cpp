@@ -14,4 +14,7 @@ TutorialTask::TutorialTask(string tsk)
 
 bool TutorialTask::testTask(int currst) {
 	int c = currst;
+	
+	//not sure what this function does but it needs to return a bool
+	return true;
 }

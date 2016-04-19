@@ -6,7 +6,6 @@
 #include <time.h> 
 #include <math.h>
 
-#define WALL_WIDTH 1280
 #define INIT_XPOS 20
 #define INIT_YPOS 400
 #define GRAVITY 0.98f * pow((500.0f/BEAT_SPEED),2.0f)
@@ -160,7 +159,7 @@ void Player::walk(direction dir) {
 		else if (dir == RIGHT) {
 			//character->sprite.move(-character->walkspeed, 0);
 			//xpos -= character->walkspeed;
-			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH + 200)) {
+			if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WINDOW_WIDTH + 200)) {
 				xvel = character->walkspeed * (500 / beat);
 			}
 		}

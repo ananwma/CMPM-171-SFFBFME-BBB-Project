@@ -6,6 +6,7 @@
 #include "BeatIndicator.h"
 #include "ConcertHallStage.h"
 #include "Bassline.h"
+#include "TutorialTask.h"
 #include "TutorialStage.h"
 #include <SFML/Audio.hpp>
 #include <string>
@@ -39,7 +40,7 @@ public:
 	sf::RectangleShape task;
 	sf::Text task_text;
 	sf::Text text;
-	sf::Text dialogue;
+	sf::RectangleShape dialogue;
 	sf::Text dialogue_text;
 	sf::Font font;
 	sf::RectangleShape player_1_round_wins;
@@ -88,16 +89,16 @@ private:
 	stack <string> stage1_post;
 	vector <TutorialTask> stage1_tasks;
 	stack <string> stage2_pre;
-	stack <string> stage2_pre;
+//	stack <string> stage2_pre;
 	vector <TutorialTask> stage2_tasks;
 	stack <string> stage3_pre;
-	stack <string> stage3_pre;
+//	stack <string> stage3_pre;
 	vector <TutorialTask> stage3_tasks;
 	stack <string> stage4_pre;
-	stack <string> stage4_pre;
+//	stack <string> stage4_pre;
 	vector <TutorialTask> stage4_tasks;
 	stack <string> stage5_pre;
-	stack <string> stage5_pre;
+//	stack <string> stage5_pre;
 	vector <TutorialTask> stage5_tasks;
 
 	bool played;

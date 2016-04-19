@@ -102,4 +102,6 @@ private:
 
 	sf::Text text;
 	//sf::Font font;
+	//sf::Text text;
+//	sf::Font font;
 };

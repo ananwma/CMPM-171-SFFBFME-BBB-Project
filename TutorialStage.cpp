@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "TutorialStage.h"
-#include "TutorialTask.h"
 
 TutorialStage::TutorialStage()
 {
