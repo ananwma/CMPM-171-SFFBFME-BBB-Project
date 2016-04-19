@@ -1,19 +1,116 @@
-﻿  FightState.cpp
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(29): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(105): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(183): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(330): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(339): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(348): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(378): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(379): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(380): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(381): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(272): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(441): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(448): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-  sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
+﻿  TutorialTask.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstage.h(12): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstage.h(12): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstage.h(15): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstage.h(15): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(89): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(89): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(91): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage2_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(90): note: see declaration of 'TutorialState::stage2_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(92): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(92): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(94): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage3_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(93): note: see declaration of 'TutorialState::stage3_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(95): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(95): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(97): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage4_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(96): note: see declaration of 'TutorialState::stage4_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(98): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(98): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(100): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage5_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(99): note: see declaration of 'TutorialState::stage5_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(101): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(101): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+  TutorialState.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(91): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage2_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(90): note: see declaration of 'TutorialState::stage2_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(94): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage3_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(93): note: see declaration of 'TutorialState::stage3_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(97): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage4_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(96): note: see declaration of 'TutorialState::stage4_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(100): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage5_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(99): note: see declaration of 'TutorialState::stage5_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(158): error C2065: 'game.inputHandler.get()': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(159): error C2065: 'game.inputHandler.get()': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(252): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(261): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(270): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(299): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(300): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(301): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(302): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(346): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(353): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(807): error C2065: 'game.inputHandler.get()': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(808): error C2065: 'game.inputHandler.get()': undeclared identifier
+  TutorialStage.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(72): error C2065: 'TutorialStage': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(72): error C2923: 'std::vector': 'TutorialStage' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(89): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(89): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(91): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage2_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(90): note: see declaration of 'TutorialState::stage2_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(92): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(92): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(94): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage3_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(93): note: see declaration of 'TutorialState::stage3_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(95): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(95): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(97): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage4_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(96): note: see declaration of 'TutorialState::stage4_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(98): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(98): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(100): error C2086: 'std::stack<std::string,std::deque<_Ty,std::allocator<_Ty>>> TutorialState::stage5_pre': redefinition
+          with
+          [
+              _Ty=std::string
+          ]
+  c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(99): note: see declaration of 'TutorialState::stage5_pre'
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(101): error C2065: 'TutorialTask': undeclared identifier
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.h(101): error C2923: 'std::vector': 'TutorialTask' is not a valid template type argument for parameter '_Ty'
+  Generating Code...

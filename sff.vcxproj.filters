@@ -135,9 +135,6 @@
     <ClInclude Include="BachSuper.h">
       <Filter>Bach</Filter>
     </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>sff headers</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>sff headers</Filter>
     </ClInclude>
@@ -151,6 +148,15 @@
       <Filter>sff headers</Filter>
     </ClInclude>
     <ClInclude Include="BachGrab.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialState.h">
+      <Filter>GameStates\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialStage.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialTask.h">
       <Filter>sff headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -213,6 +219,15 @@
       <Filter>sff source</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialState.cpp">
+      <Filter>GameStates\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialStage.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialTask.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
