@@ -21,7 +21,7 @@ void FightState::init() {
 	cout << game.playerOne.playerId << endl;
 	cout << game.playerTwo.playerId << endl;
 	running = true;
-
+	 
 	game.currentScreen.setStage(chstage);
 	game.currentScreen.stage.sprite.move(-200, 0);
 	game.currentScreen.stage.window_offset = 0;
@@ -173,8 +173,10 @@ void FightState::update() {
 			game.playerOne.setPosition(1480, game.playerOne.ypos);
 	}*/
 
-		collision.flip_sprites(game.playerOne, game.playerTwo);
-		collision.flip_sprites(game.playerTwo, game.playerOne);
+		//collision.flip_sprites(game.playerOne, game.playerTwo);
+		//collision.flip_sprites(game.playerTwo, game.playerOne);
+	game.playerOne.updateSide(game.playerTwo);
+	game.playerTwo.updateSide(game.playerOne);
 
 	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;

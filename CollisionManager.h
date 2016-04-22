@@ -8,7 +8,7 @@ public:
 
 	enum collisionType { STATIC, DYNAMIC, NONE };
 
-	void registerEntity(Entity e, collisionType);
+	//void registerEntity(Entity e, collisionType);
 
 	~CollisionManager();
 };

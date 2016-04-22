@@ -9,6 +9,7 @@
 #include "Bassline.h"
 #include <SFML/Audio.hpp>
 
+
 class FightState : public GameState {
 public:
 	// CTOR

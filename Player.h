@@ -8,8 +8,8 @@
 #include "Move.h"
 #include "BeatIndicator.h"
 
+
 using namespace std;
-enum direction { LEFT, RIGHT, NEUTRAL };
 
 class Player : public Entity {
 private:
@@ -72,8 +72,8 @@ public:
 	void block(Move*);
 	bool moveCancelable(int, int);
 	void walk(direction);
-	void updateAnimFrame();
-	void updatePhysics();
+	//void updateAnimFrame();
+	//void updatePhysics();
 	Move* getCurrentMove();
 	Frame& getCurrentFrame();
 	void checkSuper(int);

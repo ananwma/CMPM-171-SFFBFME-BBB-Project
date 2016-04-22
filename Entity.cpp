@@ -1,12 +1,13 @@
 #include "stdafx.h"
+
 #include "Entity.h"
 
-void Entity::setSprite(sf::Sprite s) {
-	sprite = s;
+void Entity::setTexture(sf::Texture texture) {
+	sprite.setTexture(texture);
 }
 
-void Entity::setAnimSprite(sf::Sprite s, int width, int height, int framecount) {
-	sprite = s;
+void Entity::setAnimTexture(sf::Texture texture, int width, int height, int framecount) {
+	sprite.setTexture(texture);
 	spriteWidth = width;
 	spriteHeight = height;
 	numAnimFrames = framecount;
@@ -18,8 +19,14 @@ void Entity::setPosition(float x, float y) {
 	ypos = y;
 }
 
-void Entity::updateSide(Entity relativeTo) {
-}
+void Entity::updateSide(Entity &relativeTo) {
+	if (xpos < relativeTo.xpos && side == RIGHT) {
+		side = LEFT;
+	}
+	else if (xpos > relativeTo.xpos && side == LEFT) {
+		side = RIGHT;
+	}
+} 
 
 void Entity::updateAnimFrame() {
 	//MOVE TO PLAYER
@@ -64,4 +71,33 @@ void Entity::updateAnimFrame() {
 			spriteHeight
 			));
 	}
+}
+
+void Entity::updatePhysics() {
+
+	//Add acceleration to velocity
+	xvel += xacc;
+	yvel += yacc;
+
+	//Update positions based on velocity
+	xpos += xvel;
+	ypos += yvel;
+
+	//Add gravitational acceleration if above ground
+	if (ypos < GROUND) {
+		yvel += gravity;
+	} 
+
+	if (ypos + yvel > GROUND) {
+		ypos = GROUND;
+		yvel = 0.0f;
+		xvel = 0.0f;
+		//if (state != ATTACK_STATE)
+		//	state = NO_STATE;
+	}
+	//if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
+	//if((xpos <= 0)||(xpos >= 1280)){
+	//	xvel = 0;
+	//}
+	setPosition(xpos, ypos);
 }
