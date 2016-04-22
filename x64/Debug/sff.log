@@ -1,10 +1,61 @@
-﻿  Player.cpp
-c:\users\mhgunnin\source\repos\newrepo3\player.cpp(40): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\newrepo3\player.cpp(42): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\mhgunnin\source\repos\newrepo3\player.cpp(298): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\newrepo3\player.cpp(301): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\newrepo3\player.cpp(305): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-FightState.obj : error LNK2019: unresolved external symbol "public: void __cdecl Entity::updateSide(class Entity &)" (?updateSide@Entity@@QEAAXAEAV1@@Z) referenced in function "public: virtual void __cdecl FightState::update(void)" (?update@FightState@@UEAAXXZ)
-FightState.obj : error LNK2019: unresolved external symbol "public: void __cdecl Entity::updatePhysics(void)" (?updatePhysics@Entity@@QEAAXXZ) referenced in function "public: virtual void __cdecl FightState::update(void)" (?update@FightState@@UEAAXXZ)
-Player.obj : error LNK2019: unresolved external symbol "public: void __cdecl Entity::setAnimTexture(class sf::Texture,int,int,int)" (?setAnimTexture@Entity@@QEAAXVTexture@sf@@HHH@Z) referenced in function "public: void __cdecl Player::doMove(int)" (?doMove@Player@@QEAAXH@Z)
-C:\Users\mhgunnin\Source\Repos\NewRepo3\x64\Debug\sff.exe : fatal error LNK1120: 3 unresolved externals
+﻿  stdafx.cpp
+  UI.cpp
+  Stage.cpp
+  sff.cpp
+c:\users\mhgunnin\source\repos\newrepo5\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+c:\users\mhgunnin\source\repos\newrepo5\sff.cpp(30): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
+  ResultsState.cpp
+  PlayerSelectState.cpp
+  Player.cpp
+c:\users\mhgunnin\source\repos\newrepo5\player.cpp(41): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\player.cpp(43): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\player.cpp(299): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\player.cpp(302): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\player.cpp(306): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+  PauseState.cpp
+  input.cpp
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(20): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(20): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(23): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(23): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(27): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(27): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(40): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(49): warning C4018: '<': signed/unsigned mismatch
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(53): warning C4311: 'type cast': pointer truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(53): warning C4302: 'type cast': truncation from 'HMIDIIN' to 'int'
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(57): warning C4018: '<': signed/unsigned mismatch
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(79): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(85): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\input.cpp(92): warning C4244: 'argument': conversion from 'DWORD_PTR' to 'DWORD', possible loss of data
+  HealthBar.cpp
+  GameStateManager.cpp
+  Frame.cpp
+  FightState.cpp
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(195): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(204): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(213): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(242): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(243): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(244): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(245): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(279): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgunnin\source\repos\newrepo5\fightstate.cpp(286): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  Entity.cpp
+  ConcertHallStage.cpp
+  CollisionManager.cpp
+  Collision.cpp
+  CharacterBach.cpp
+  Character.cpp
+  CameraControl.cpp
+  Bassline.cpp
+  Generating Code...
+  Compiling...
+  BeatIndicator.cpp
+  AssetManager.cpp
+  Generating Code...
+sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4204: 'C:\Users\mhgunnin\Source\Repos\NewRepo5\x64\Debug\vc140.pdb' is missing debugging information for referencing module; linking object as if no debug info
+  sff.vcxproj -> C:\Users\mhgunnin\Source\Repos\NewRepo5\x64\Debug\sff.exe

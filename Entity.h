@@ -6,7 +6,6 @@
 #define BEAT_SPEED 500.0f
 #define GROUND WINDOW_WIDTH / 4
 
-
 enum direction { LEFT, RIGHT, NEUTRAL };
 
 class Entity {
@@ -16,7 +15,7 @@ public:
 	Entity(Entity&&) = delete;
 	Entity& operator= (const Entity&) = delete;
 	Entity& operator= (Entity&&) = delete;
-	
+
 	void setTexture(sf::Texture);
 	void setAnimTexture(sf::Texture, int, int, int);
 	void setPosition(float, float);
