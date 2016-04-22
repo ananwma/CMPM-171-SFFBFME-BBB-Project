@@ -37,7 +37,7 @@ int main()
 	shared_ptr<InputHandler> inputHandler(new InputHandler());
 	inputHandler->prepareDevices();
 	GameStateManager gsm;
-	Collision collisionManager;
+	CollisionManager collisionManager;
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Super Fugue Fighter");
 	//window.setFramerateLimit(60);
 	Game game(gsm, collisionManager, inputHandler, window);

@@ -2,7 +2,7 @@
 #include "Character.h"
 #include "Player.h"
 #include "BeatIndicator.h"
-#include "Game.h"
+//#include "Game.h"
 #include <time.h> 
 #include <math.h>
 
@@ -12,6 +12,7 @@
 #define GRAVITY 0.98f * pow((500.0f/BEAT_SPEED),2.0f)
 //#define GROUND 100
 #define SUPER_TIMEOUT 4000
+
 
 
 Player::Player()
@@ -57,7 +58,8 @@ void Player::doMove(int move) {
 			xvel = 0;
 		character->currentMove = move;
 		getCurrentMove()->setHitFalse();
-		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
+		//character->sprite.setTexture(character->moveList.at(move)->spritesheet);
+		this->setAnimTexture(character->moveList.at(move)->spritesheet, 438, 548, character->moveList.at(move)->frameCount);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
 		yvel = getCurrentMove()->velY * (500 / beat);
@@ -186,6 +188,7 @@ void Player::jump(direction dir) {
 	}
 }
 
+
 /*void Player::updateAnimFrame() {
 	character->currentMoveFrame++;
 	int animFrames = ((getCurrentMove()->getFrameCount()) - 1);
@@ -231,7 +234,7 @@ void Player::jump(direction dir) {
 	}
 }*/
 
-void Player::updatePhysics() {
+/*void Player::updatePhysics() {
 	//Add acceleration to velocity
 	xvel += xacc;
 	yvel += yacc;
@@ -254,7 +257,7 @@ void Player::updatePhysics() {
 	//	xvel = 0;
 	//}
 	character->sprite.setPosition(xpos, ypos);
-}
+}*/
 
 void Player::checkSuper(int note) {
 	if (character->super.at(superIndex) == note && superTimeout.restart().asMilliseconds() < SUPER_TIMEOUT) {
