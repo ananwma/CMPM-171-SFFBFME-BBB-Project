@@ -51,7 +51,7 @@ void FightState::init() {
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
-	 
+
 	player_1_HP_box.setSize(sf::Vector2f(400, 30));
 	player_1_HP_box.setOutlineThickness(5);
 	player_1_HP_box.setOutlineColor(sf::Color(250, 250, 250));
