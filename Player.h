@@ -21,7 +21,7 @@ public:
 	BeatIndicator indicator;
 	bool isMoveValid();
 	void setCharacter(Character*);
-	void setPosition(float, float);
+	//void setPosition(float, float);
 	void jump(direction dir);
 	bool left, jumping, right;
 	direction jumpSide;
@@ -52,8 +52,8 @@ public:
 	bool againstWall = false;
 	bool lastMoveHit;
 	int superIndex = 0;
-	sf::Texture pTexture;
-	sf::Sprite pImage;
+	//sf::Texture pTexture;
+	//sf::Sprite pImage;
 	sf::RectangleShape hitboxes_v;
 	sf::RectangleShape hurtboxes_v;
 	sf::Clock superTimeout;

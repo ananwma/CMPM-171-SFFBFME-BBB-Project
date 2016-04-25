@@ -44,11 +44,11 @@ void Player::setCharacter(Character* c) {
 	character->sprite.setColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
 }
 
-void Player::setPosition(float x, float y) {
+/*void Player::setPosition(float x, float y) {
 	character->sprite.setPosition(x, y);
 	xpos = x;
 	ypos = y;
-}
+}*/
 
 void Player::doMove(int move) {
 	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
@@ -59,7 +59,7 @@ void Player::doMove(int move) {
 		character->currentMove = move;
 		getCurrentMove()->setHitFalse();
 		//character->sprite.setTexture(character->moveList.at(move)->spritesheet);
-		this->setAnimTexture(character->moveList.at(move)->spritesheet, 438, 548, character->moveList.at(move)->frameCount);
+		setAnimTexture(character->moveList.at(move)->spritesheet, 438, 548, character->moveList.at(move)->frameCount);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
 		yvel = getCurrentMove()->velY * (500 / beat);

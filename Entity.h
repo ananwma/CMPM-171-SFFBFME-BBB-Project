@@ -27,8 +27,9 @@ public:
 
 	~Entity() = default;
 
-private:
 	sf::Sprite sprite;
+
+private:
 
 	float xpos;
 	float ypos;

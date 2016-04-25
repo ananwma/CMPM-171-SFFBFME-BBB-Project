@@ -39,7 +39,8 @@ void FightState::init() {
 	game.playerOne.setCharacter(bach);
 	game.playerOne.character->initMoves();
 	game.playerOne.doMove(IDLE);
-	game.playerOne.character->currentMoveFrame = 0;
+	// Entities must be dynamically allocated so textures aren't lost 
+	//game.playerOne.character->currentMoveFrame = 0;
 	game.playerOne.setPosition(20, 100);
 	game.playerTwo.setCharacter(bach2);
 	game.playerTwo.character->initMoves();
@@ -48,7 +49,7 @@ void FightState::init() {
 	//100 = ground level
 	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
 	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
-	game.playerTwo.side = RIGHT;
+	game.playerTwo.side = LEFT;
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
@@ -257,8 +258,8 @@ void FightState::draw() {
 	game.window.clear();
 	game.window.setView(camera_view);
 	game.window.draw(game.currentScreen.stage.sprite);
-	game.window.draw(game.playerOne.character->sprite);
-	game.window.draw(game.playerTwo.character->sprite);
+	game.window.draw(game.playerOne.sprite);
+	game.window.draw(game.playerTwo.sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
 	drawBoxes(game.playerTwo, 0, 0, 0);
 	game.window.setView(HUD);
