@@ -3,6 +3,7 @@
 
 #include "MainMenuState.h"
 #include "FightState.h"
+#include "TutorialState.h"
 
 #define PADDING WINDOW_HEIGHT/20
 
@@ -127,8 +128,8 @@ void MainMenuState::update() {
 			game.window.draw(loadingText);
 			game.window.display();
 			unhookEvent();
-			FightState fightState(game);
-			game.gsm.stopState(*this, &fightState);
+			TutorialState tutorialState(game);
+			game.gsm.stopState(*this, &tutorialState);
 		}
 	}
 }
