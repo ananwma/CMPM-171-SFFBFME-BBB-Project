@@ -35,8 +35,8 @@ struct Game {
 	sf::RenderWindow& window;
 
 	AssetManager currentScreen;
-	Player playerOne;
-	Player playerTwo;
+	Player* playerOne;
+	Player* playerTwo;
 	
 	// Beat is in milliseconds, 1000 = 1 beat every 1 second
 	float beat = BEAT_SPEED;

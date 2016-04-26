@@ -41,7 +41,6 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Super Fugue Fighter");
 	//window.setFramerateLimit(60);
 	Game game(gsm, collisionManager, inputHandler, window);
-
 	// Run the first state
 	PlayerSelectState pss(game);
 	gsm.runState(pss);

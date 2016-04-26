@@ -32,7 +32,7 @@ public:
 	sf::RectangleShape player_2_HP;
 	sf::RectangleShape player_1_meter;
 	sf::RectangleShape player_2_meter;
-	void processInput(Player&, vector<int>&);
+	void processInput(Player*, vector<int>&);
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager
@@ -70,11 +70,11 @@ private:
 	ConcertHallStage chstage;
 	// Should fine tune these numbers at some point
 	float frameCounter = 0, switchFrame = 60, frameSpeed = 1000 * (500 / BEAT_SPEED);
-	void checkBoxes(Player&, Player&);
-	void checkClipBoxes(Player&, Player&);
-	void drawBoxes(Player&, bool, bool, bool);
-	void FightState::move_camera(Player&, Player&);
-	void FightState::restrict_movement(Player&, Player&);
+	void checkBoxes(Player*, Player*);
+	void checkClipBoxes(Player*, Player*);
+	void drawBoxes(Player*, bool, bool, bool);
+	void FightState::move_camera(Player*, Player*);
+	void FightState::restrict_movement(Player*, Player*);
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;

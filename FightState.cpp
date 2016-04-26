@@ -18,8 +18,8 @@ FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, 
 }
 
 void FightState::init() {
-	cout << game.playerOne.playerId << endl;
-	cout << game.playerTwo.playerId << endl;
+	cout << game.playerOne->playerId << endl;
+	cout << game.playerTwo->playerId << endl;
 	running = true;
 	 
 	game.currentScreen.setStage(chstage);
@@ -36,20 +36,22 @@ void FightState::init() {
 	// Later move this to character selection state
 	Bach* bach = new Bach();
 	Bach* bach2 = new Bach();
-	game.playerOne.setCharacter(bach);
-	game.playerOne.character->initMoves();
-	game.playerOne.doMove(IDLE);
+	game.playerOne = new Player();
+	game.playerTwo = new Player();
+	game.playerOne->setCharacter(bach);
+	game.playerOne->character->initMoves();
+	game.playerOne->doMove(IDLE);
 	// Entities must be dynamically allocated so textures aren't lost 
-	//game.playerOne.character->currentMoveFrame = 0;
-	game.playerOne.setPosition(20, 100);
-	game.playerTwo.setCharacter(bach2);
-	game.playerTwo.character->initMoves();
-	game.playerTwo.doMove(IDLE);
-	game.playerTwo.character->currentMoveFrame = 0;
+	//game.playerOne->character->currentMoveFrame = 0;
+	game.playerOne->setPosition(20, 100);
+	game.playerTwo->setCharacter(bach2);
+	game.playerTwo->character->initMoves();
+	game.playerTwo->doMove(IDLE);
+	game.playerTwo->character->currentMoveFrame = 0;
 	//100 = ground level
-	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
-	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
-	game.playerTwo.side = LEFT;
+	game.playerOne->setPosition(WINDOW_WIDTH / 50, GROUND);
+	game.playerTwo->setPosition(WINDOW_WIDTH / 1.2, GROUND);
+	game.playerTwo->side = LEFT;
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
@@ -64,8 +66,8 @@ void FightState::init() {
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
 
-	game.playerOne.indicator.bSprite.setPosition(0, 50);
-	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
+	game.playerOne->indicator.bSprite.setPosition(0, 50);
+	game.playerTwo->indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
 	camera_view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 	camera_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -132,8 +134,8 @@ void FightState::update() {
 			indicatorFlashOn = true;
 			//cout << "indicatorflashon" << endl;
 			indicatorFlash = 5;
-			game.playerOne.indicator.updateIndicator(NONE);
-			game.playerTwo.indicator.updateIndicator(NONE);
+			game.playerOne->indicator.updateIndicator(NONE);
+			game.playerTwo->indicator.updateIndicator(NONE);
 		if (quarterNote) {
 			bassline.playNextNote();
 			//metronomeSound.play();
@@ -147,14 +149,14 @@ void FightState::update() {
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
-	//cout << "P1 vel: " << game.playerOne.xvel << endl << "P2 vel: " << game.playerTwo.xvel << endl << endl;
+	//cout << "P1 vel: " << game.playerOne->xvel << endl << "P2 vel: " << game.playerTwo->xvel << endl << endl;
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
 	checkClipBoxes(game.playerOne, game.playerTwo);
 	restrict_movement(game.playerOne, game.playerTwo);
 	restrict_movement(game.playerTwo, game.playerOne);
-	game.playerOne.updatePhysics();
-	game.playerTwo.updatePhysics();
+	game.playerOne->updatePhysics();
+	game.playerTwo->updatePhysics();
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
 
 	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
@@ -163,58 +165,58 @@ void FightState::update() {
 	//** TEMP CAMERA STUFF **
 	//***********************
 
-	//if (game.playerOne.xpos <= -game.playerOne.character->wall_offset) {
+	//if (game.playerOne->xpos <= -game.playerOne->character->wall_offset) {
 		//game.currentScreen.move_camera_left(game.currentScreen.stage, game.playerTwo, game.playerOne);
 		//camera_view.move(-1, 0);
 	//}
 	/*
-	if (game.playerOne.xpos + game.playerOne.getSpriteWidth() >= 1280) {
+	if (game.playerOne->xpos + game.playerOne->getSpriteWidth() >= 1280) {
 		game.currentScreen.move_camera_right(game.currentScreen.stage, game.playerTwo, game.playerOne);
-		if (game.playerOne.xpos > 1480)
-			game.playerOne.setPosition(1480, game.playerOne.ypos);
+		if (game.playerOne->xpos > 1480)
+			game.playerOne->setPosition(1480, game.playerOne->ypos);
 	}*/
 
 		//collision.flip_sprites(game.playerOne, game.playerTwo);
 		//collision.flip_sprites(game.playerTwo, game.playerOne);
-	game.playerOne.updateSide(game.playerTwo);
-	game.playerTwo.updateSide(game.playerOne);
+	//game.playerOne->updateSide(game.playerTwo);
+	//game.playerTwo->updateSide(game.playerOne);
 
-	if (game.playerOne.health <= 0) {
-		game.playerTwo.roundWins++;
+	if (game.playerOne->health <= 0) {
+		game.playerTwo->roundWins++;
 		ResultsState results(game);
 		game.gsm.stopState(*this, &results);
 	}
-	else if (game.playerTwo.health <= 0) {
-		game.playerOne.roundWins++;
+	else if (game.playerTwo->health <= 0) {
+		game.playerOne->roundWins++;
 		ResultsState results(game);
 		game.gsm.stopState(*this, &results);
 	}
 
-	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
+	if ((game.playerOne->health < game.playerOne->getMaxHealth() / 1.333f || game.playerTwo->health < game.playerTwo->getMaxHealth() / 1.333f) && phase == 0) {
 		phase = 1;
 		game.beat = 425.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
-		game.playerOne.setBeat(game.beat);
-		game.playerTwo.setBeat(game.beat);
+		game.playerOne->setBeat(game.beat);
+		game.playerTwo->setBeat(game.beat);
 		bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
 	}
-	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
+	else if ((game.playerOne->health < game.playerOne->getMaxHealth() / 2 || game.playerTwo->health < game.playerTwo->getMaxHealth() / 2) && phase == 1) {
 		phase = 2;
 		game.beat = 350.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
-		game.playerOne.setBeat(game.beat);
-		game.playerTwo.setBeat(game.beat);
+		game.playerOne->setBeat(game.beat);
+		game.playerTwo->setBeat(game.beat);
 		bassline.setBassline({ C1, G1, E1, C2 });
 	}
-	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
+	else if ((game.playerOne->health < game.playerOne->getMaxHealth() / 4 || game.playerTwo->health < game.playerTwo->getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
 		game.beat = 275.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
-		game.playerOne.setBeat(game.beat);
-		game.playerTwo.setBeat(game.beat);
+		game.playerOne->setBeat(game.beat);
+		game.playerTwo->setBeat(game.beat);
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
 	
@@ -225,13 +227,13 @@ void FightState::update() {
 		indicatorFlash -= 1;
 		}
 		if (indicatorFlash == 0) {
-			game.playerOne.indicator.updateIndicator(NOBEAT);
-			game.playerTwo.indicator.updateIndicator(NOBEAT);
+			game.playerOne->indicator.updateIndicator(NOBEAT);
+			game.playerTwo->indicator.updateIndicator(NOBEAT);
 			indicatorFlashOn = false;
 			indicatorFlash = 5;
 		}
-		game.playerTwo.updateAnimFrame();
-		game.playerOne.updateAnimFrame();
+		game.playerTwo->updateAnimFrame();
+		game.playerOne->updateAnimFrame();
 	}
 
 	move_camera(game.playerOne, game.playerTwo);
@@ -240,11 +242,11 @@ void FightState::update() {
 	//cout << "offset" << endl;
 	//cout << game.currentScreen.stage.window_offset << endl;
 
-	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
-	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
-	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
-	sf::Vector2<float> p2M(400.0*(game.playerOne.meter / 1000.0), 30);
-	//cout << game.playerOne.meter << endl;
+	sf::Vector2<float> p1HP(400.0*(game.playerOne->health / 1000.0), 30);
+	sf::Vector2<float> p2HP(400.0*(game.playerTwo->health / 1000.0), 30);
+	sf::Vector2<float> p1M(400.0*(game.playerOne->meter / 1000.0), 30);
+	sf::Vector2<float> p2M(400.0*(game.playerOne->meter / 1000.0), 30);
+	//cout << game.playerOne->meter << endl;
 	//cout << p2HP.x << endl;
 	player_1_HP.setSize(p1HP);
 	player_2_HP.setSize(p2HP);
@@ -258,8 +260,8 @@ void FightState::draw() {
 	game.window.clear();
 	game.window.setView(camera_view);
 	game.window.draw(game.currentScreen.stage.sprite);
-	game.window.draw(game.playerOne.sprite);
-	game.window.draw(game.playerTwo.sprite);
+	game.window.draw(game.playerOne->sprite);
+	game.window.draw(game.playerTwo->sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
 	drawBoxes(game.playerTwo, 0, 0, 0);
 	game.window.setView(HUD);
@@ -267,226 +269,226 @@ void FightState::draw() {
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
-	game.window.draw(game.playerOne.indicator.bSprite);
-	game.window.draw(game.playerTwo.indicator.bSprite);
+	game.window.draw(game.playerOne->indicator.bSprite);
+	game.window.draw(game.playerTwo->indicator.bSprite);
 	game.window.display();
 }
 
-void FightState::move_camera(Player& cp, Player& op){
+void FightState::move_camera(Player* cp, Player* op){
 	//right
 
-	if ((!(op.xpos + op.character->wall_offset <= game.currentScreen.stage.window_offset))&&(cp.xpos + cp.getSpriteWidth() - cp.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-		camera_view.move(cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset += cp.character->walkspeed;
+	if ((!(op->xpos + op->character->wall_offset <= game.currentScreen.stage.window_offset))&&(cp->xpos + cp->getSpriteWidth() - cp->character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
+		camera_view.move(cp->character->walkspeed, 0);
+		game.currentScreen.stage.window_offset += cp->character->walkspeed;
 	}
 
 	//left
 
-	if ((!(op.xpos + op.getSpriteWidth() - op.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset))&&(cp.xpos + cp.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-		camera_view.move(-cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset -= cp.character->walkspeed;
+	if ((!(op->xpos + op->getSpriteWidth() - op->character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset))&&(cp->xpos + cp->character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
+		camera_view.move(-cp->character->walkspeed, 0);
+		game.currentScreen.stage.window_offset -= cp->character->walkspeed;
 	}
 
 }
 
-void FightState::restrict_movement(Player& p1, Player& p2) {
+void FightState::restrict_movement(Player* p1, Player* p2) {
 	//right
 
-	if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) &&(p1.xvel>0)){
-		p1.xvel = 0;
+	if ((p2->xpos + p2->character->wall_offset <= game.currentScreen.stage.window_offset) && (p1->xpos + p1->getSpriteWidth() - p1->character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) &&(p1->xvel>0)){
+		p1->xvel = 0;
 	}
 
 	//left
 
-	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel<0)){
-		p1.xvel = 0;
+	if ((p1->xpos + p1->character->wall_offset <= game.currentScreen.stage.window_offset) && (p2->xpos + p2->getSpriteWidth() - p2->character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1->xvel<0)){
+		p1->xvel = 0;
 	}
 }
 
 
 //Change some copies to moves in future
-void FightState::checkClipBoxes(Player& p1, Player& p2) {
-	if (!p1.getCurrentFrame().clipboxes.empty() && !p2.getCurrentFrame().clipboxes.empty()) {
-		sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
-		sf::FloatRect clipbox2 = p2.getCurrentFrame().clipboxes.at(0);
+void FightState::checkClipBoxes(Player* p1, Player* p2) {
+	if (!p1->getCurrentFrame().clipboxes.empty() && !p2->getCurrentFrame().clipboxes.empty()) {
+		sf::FloatRect clipbox1 = p1->getCurrentFrame().clipboxes.at(0);
+		sf::FloatRect clipbox2 = p2->getCurrentFrame().clipboxes.at(0);
 		sf::FloatRect offsetClipBox1;
 		sf::FloatRect offsetClipBox2;
-		if (p1.side == LEFT)
-			offsetClipBox1 = sf::FloatRect(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		else if (p1.side == RIGHT)
-			offsetClipBox1 = sf::FloatRect(p1.xpos - clipbox1.width - clipbox1.left + p1.getSpriteWidth(), clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		if (p2.side == LEFT)
-			offsetClipBox2 = sf::FloatRect(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-		else if (p2.side == RIGHT)
-			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
+		if (p1->side == LEFT)
+			offsetClipBox1 = sf::FloatRect(clipbox1.left + p1->xpos, clipbox1.top + p1->ypos, clipbox1.width, clipbox1.height);
+		else if (p1->side == RIGHT)
+			offsetClipBox1 = sf::FloatRect(p1->xpos - clipbox1.width - clipbox1.left + p1->getSpriteWidth(), clipbox1.top + p1->ypos, clipbox1.width, clipbox1.height);
+		if (p2->side == LEFT)
+			offsetClipBox2 = sf::FloatRect(clipbox2.left + p2->xpos, clipbox2.top + p2->ypos, clipbox2.width, clipbox2.height);
+		else if (p2->side == RIGHT)
+			offsetClipBox2 = sf::FloatRect(p2->xpos - clipbox2.width - clipbox2.left + p2->getSpriteWidth(), clipbox2.top + p2->ypos, clipbox2.width, clipbox2.height);
 		sf::FloatRect intersectBox;
 		if (offsetClipBox1.intersects(offsetClipBox2)) {
 			// If player 1 is moving in the x direction and player 2 is standing still
-			if (abs(p1.xvel) > 0 && p2.xvel == 0) {
-				if (p1.xvel > 0 && p1.side == LEFT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
+			if (abs(p1->xvel) > 0 && p2->xvel == 0) {
+				if (p1->xvel > 0 && p1->side == LEFT) {
+					p2->xvel = p1->xvel;
+					if (p2->againstWall)
+						p1->xvel = 0;
 				}
-				else if (p1.xvel < 0 && p1.side == RIGHT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
+				else if (p1->xvel < 0 && p1->side == RIGHT) {
+					p2->xvel = p1->xvel;
+					if (p2->againstWall)
+						p1->xvel = 0;
 				}
 			}
 			// If player 2 is moving in the x direction and player 1 is standing still
-			else if (abs(p2.xvel) > 0 && p1.xvel == 0) {
-				if (p2.xvel > 0 && p2.side == LEFT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
+			else if (abs(p2->xvel) > 0 && p1->xvel == 0) {
+				if (p2->xvel > 0 && p2->side == LEFT) {
+					p1->xvel = p2->xvel;
+					if (p1->againstWall)
+						p2->xvel = 0;
 				}
-				else if (p2.xvel < 0 && p2.side == RIGHT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
+				else if (p2->xvel < 0 && p2->side == RIGHT) {
+					p1->xvel = p2->xvel;
+					if (p1->againstWall)
+						p2->xvel = 0;
 				}
 			}
 			// If both are moving in opposing directions, set both vels to 0
-			else if (abs(p1.xvel) > 0 && abs(p2.xvel) > 0) {
-				if ((p1.xvel > 0) != (p2.xvel > 0)) {
-					p2.xvel = 0;
-					p1.xvel = 0;
+			else if (abs(p1->xvel) > 0 && abs(p2->xvel) > 0) {
+				if ((p1->xvel > 0) != (p2->xvel > 0)) {
+					p2->xvel = 0;
+					p1->xvel = 0;
 				}
 			}
 
-			if (p2.againstWall && p2.state == WALK_STATE && p1.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
+			if (p2->againstWall && p2->state == WALK_STATE && p1->state == WALK_STATE) {
+				p2->xvel = 0;
+				p1->xvel = 0;
 			}
-			else if (p1.againstWall && p1.state == WALK_STATE && p2.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
+			else if (p1->againstWall && p1->state == WALK_STATE && p2->state == WALK_STATE) {
+				p2->xvel = 0;
+				p1->xvel = 0;
 			}
 
 			// Airborne stuff
-			if (abs(p1.yvel) > 0.0f) {
+			if (abs(p1->yvel) > 0.0f) {
 				float p1Center = (offsetClipBox1.left + offsetClipBox1.width / 2);
 				float p2Center = (offsetClipBox2.left + offsetClipBox2.width / 2);
 				if (p1Center < p2Center) {
 					
 				}
 
-				if (p1.jumpSide == LEFT) {
-					if (p2.side == RIGHT) {
-						p1.xvel = 0;
-						p2.xvel = p1.character->jumpX;
+				if (p1->jumpSide == LEFT) {
+					if (p2->side == RIGHT) {
+						p1->xvel = 0;
+						p2->xvel = p1->character->jumpX;
 					}
-					else if (p2.side == LEFT) {
-						p2.xvel = -p1.character->jumpX;
+					else if (p2->side == LEFT) {
+						p2->xvel = -p1->character->jumpX;
 					}
 			}
-				else if (p1.jumpSide == RIGHT) {
-					if (p2.side == LEFT) {
-				p1.xvel = 0;
-						p2.xvel = -p1.character->jumpX;
+				else if (p1->jumpSide == RIGHT) {
+					if (p2->side == LEFT) {
+				p1->xvel = 0;
+						p2->xvel = -p1->character->jumpX;
 					}
-					else if (p2.side == RIGHT) {
-						p2.xvel = p1.character->jumpX;
+					else if (p2->side == RIGHT) {
+						p2->xvel = p1->character->jumpX;
 					}
 				}
 			}
-			else if (abs(p2.yvel) > 0.0f) {
+			else if (abs(p2->yvel) > 0.0f) {
 
-				if (p2.jumpSide == LEFT) {
-					if (p1.side == RIGHT) {
-						p2.xvel = 0;
-						p1.xvel = p2.character->jumpX;
+				if (p2->jumpSide == LEFT) {
+					if (p1->side == RIGHT) {
+						p2->xvel = 0;
+						p1->xvel = p2->character->jumpX;
 					}
-					else if (p1.side == LEFT) {
-						p1.xvel = -p2.character->jumpX;
+					else if (p1->side == LEFT) {
+						p1->xvel = -p2->character->jumpX;
 					}
 				}
-				else if (p2.jumpSide == RIGHT) {
-					if (p1.side == LEFT) {
-				p2.xvel = 0;
-						p1.xvel = -p2.character->jumpX;
+				else if (p2->jumpSide == RIGHT) {
+					if (p1->side == LEFT) {
+				p2->xvel = 0;
+						p1->xvel = -p2->character->jumpX;
 					}
-					else if (p1.side == RIGHT) {
-						p1.xvel = p2.character->jumpX;
+					else if (p1->side == RIGHT) {
+						p1->xvel = p2->character->jumpX;
 					}
 				}
 			}
 		}
 		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
-			if (p1.xvel < 0 && p1.side == LEFT)
-				p1.xvel = 0;
-			if (p1.xvel > 0 && p1.side == RIGHT)
-				p1.xvel = 0;
-			p1.againstWall = true;
+			if (p1->xvel < 0 && p1->side == LEFT)
+				p1->xvel = 0;
+			if (p1->xvel > 0 && p1->side == RIGHT)
+				p1->xvel = 0;
+			p1->againstWall = true;
 		}
 		else
-			p1.againstWall = false;
+			p1->againstWall = false;
 		if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
-			if (p2.xvel < 0 && p2.side == LEFT)
-				p2.xvel = 0;
-			if (p2.xvel > 0 && p2.side == RIGHT)
-				p2.xvel = 0;
-			p2.againstWall = true;
+			if (p2->xvel < 0 && p2->side == LEFT)
+				p2->xvel = 0;
+			if (p2->xvel > 0 && p2->side == RIGHT)
+				p2->xvel = 0;
+			p2->againstWall = true;
 		}
 		else
-			p2.againstWall = false;
+			p2->againstWall = false;
 	}
 
-	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
-		p2.xvel = -p1.character->jumpX;
+	if (p2->againstWall && p1->againstWall && abs(p1->yvel) > 0 && p1->jumpSide == LEFT) {
+		p2->xvel = -p1->character->jumpX;
 	}
-	else if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == RIGHT) {
-		p2.xvel = p1.character->jumpX;
+	else if (p2->againstWall && p1->againstWall && abs(p1->yvel) > 0 && p1->jumpSide == RIGHT) {
+		p2->xvel = p1->character->jumpX;
 	}
-	if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == LEFT) {
-		p1.xvel = -p2.character->jumpX;
+	if (p1->againstWall && p2->againstWall && abs(p2->yvel) > 0 && p2->jumpSide == LEFT) {
+		p1->xvel = -p2->character->jumpX;
 	}
-	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
-		p1.xvel = p2.character->jumpX;
+	else if (p1->againstWall && p2->againstWall && abs(p2->yvel) > 0 && p2->jumpSide == RIGHT) {
+		p1->xvel = p2->character->jumpX;
 	}
 }
 
-void FightState::checkBoxes(Player& attacker, Player& defender) {
-	sf::Vector2f attPos = attacker.character->sprite.getPosition();
-	sf::Vector2f defPos = defender.character->sprite.getPosition();
-	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
-		for (auto hurtbox : defender.getCurrentFrame().hurtboxes) {
+void FightState::checkBoxes(Player* attacker, Player* defender) {
+	sf::Vector2f attPos = attacker->character->sprite.getPosition();
+	sf::Vector2f defPos = defender->character->sprite.getPosition();
+	for (auto hitbox : attacker->getCurrentFrame().hitboxes) {
+		for (auto hurtbox : defender->getCurrentFrame().hurtboxes) {
 			// Make new rects offset by players' current positions and orientations
 			sf::FloatRect offsetHit;
-			if (attacker.side == LEFT) {
+			if (attacker->side == LEFT) {
 				sf::FloatRect tmp(hitbox.left + attPos.x, hitbox.top + attPos.y, hitbox.width, hitbox.height);
 				offsetHit = tmp;
 			}
-			else if (attacker.side == RIGHT) {
-				sf::FloatRect tmp(attPos.x - hitbox.width - hitbox.left + attacker.getSpriteWidth(), hitbox.top + attPos.y, hitbox.width, hitbox.height);
+			else if (attacker->side == RIGHT) {
+				sf::FloatRect tmp(attPos.x - hitbox.width - hitbox.left + attacker->getSpriteWidth(), hitbox.top + attPos.y, hitbox.width, hitbox.height);
 				offsetHit = tmp;
 			}
 
 			sf::FloatRect offsetHurt;
-			if (defender.side == LEFT) {
+			if (defender->side == LEFT) {
 				sf::FloatRect tmp(hurtbox.left + defPos.x, hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
 				offsetHurt = tmp;
 			}
-			else if (defender.side == RIGHT) {
-				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
+			else if (defender->side == RIGHT) {
+				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender->getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
 				offsetHurt = tmp;
 			}
 			if (offsetHit.intersects(offsetHurt)) {
 				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
-					defender.block(attacker.getCurrentMove());
+				if (defender->holdingBlock && defender->state != HITSTUN_STATE && defender->state != ATTACK_STATE && defender->state != AIRBORNE_STATE) {
+					defender->block(attacker->getCurrentMove());
 					blockSound.play();
 				}
 				else {
 					//if not blocking, player gets hit
-					if (!attacker.getCurrentFrame().hit) {
+					if (!attacker->getCurrentFrame().hit) {
 						//cout << "hit!" << endl;
-						defender.getHit(attacker.getCurrentMove());
-						attacker.getCurrentFrame().hit = true;
+						defender->getHit(attacker->getCurrentMove());
+						attacker->getCurrentFrame().hit = true;
 						hitSound.play();
 					}
-					attacker.canCancel = true;
+					attacker->canCancel = true;
 					return;
 				}
 			}
@@ -494,18 +496,18 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 	}
 }
 
-void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
+void FightState::drawBoxes(Player* player, bool hit, bool hurt, bool clip) {
 	// Anan's super secret math formula
-	sf::Vector2f v = player.character->sprite.getPosition();
-	Frame &frame = player.getCurrentFrame();
+	sf::Vector2f v = player->character->sprite.getPosition();
+	Frame &frame = player->getCurrentFrame();
 	if (hit) {
 		for (auto box : frame.hitboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player->character->sprite.getPosition();
+			if (player->side == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
-				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
+				drawRect.setPosition(v.x - box.width - box.left + player->getSpriteWidth(), v.y + box.top);
 			drawRect.setFillColor(sf::Color(200, 40, 40, 120));
 			game.window.draw(drawRect);
 		}
@@ -513,11 +515,11 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	if (hurt) {
 		for (auto box : frame.hurtboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player->character->sprite.getPosition();
+			if (player->side == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
-				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
+				drawRect.setPosition(v.x - box.width - box.left + player->getSpriteWidth(), v.y + box.top);
 			drawRect.setFillColor(sf::Color(40, 200, 40, 120));
 			game.window.draw(drawRect);
 		}
@@ -525,63 +527,63 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	if (clip) {
 		for (auto box : frame.clipboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player->character->sprite.getPosition();
+			if (player->side == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
-				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
+				drawRect.setPosition(v.x - box.width - box.left + player->getSpriteWidth(), v.y + box.top);
 			drawRect.setFillColor(sf::Color(200, 200, 40, 120));
 			game.window.draw(drawRect);
 		}
 	}
 }
 
-void FightState::processInput(Player& player, vector<int>& input) {
+void FightState::processInput(Player* player, vector<int>& input) {
 	// Handle every possible combination of movement keys
-	if (player.left && player.jumping && player.right) {
-		player.holdingBlock = false;
-		player.jump(NEUTRAL);
+	if (player->left && player->jumping && player->right) {
+		player->holdingBlock = false;
+		player->jump(NEUTRAL);
 	}
-	else if (!player.left && player.jumping && player.right) {
-		player.holdingBlock = false;
-		player.jump(RIGHT);
+	else if (!player->left && player->jumping && player->right) {
+		player->holdingBlock = false;
+		player->jump(RIGHT);
 	}
-	else if (player.left && !player.jumping && player.right) {
-		player.holdingBlock = true;
-		player.doMove(IDLE);
+	else if (player->left && !player->jumping && player->right) {
+		player->holdingBlock = true;
+		player->doMove(IDLE);
 	}
-	else if (player.left && player.jumping && !player.right) {
-		player.holdingBlock = false;
-		player.jump(LEFT);
+	else if (player->left && player->jumping && !player->right) {
+		player->holdingBlock = false;
+		player->jump(LEFT);
 	}
-	else if (!player.left && !player.jumping && player.right) {
+	else if (!player->left && !player->jumping && player->right) {
 
-		player.walk(RIGHT);
+		player->walk(RIGHT);
 		//check if player is holding correct direction to block
-		if (player.side == RIGHT) {
-			player.holdingBlock = true;
+		if (player->side == RIGHT) {
+			player->holdingBlock = true;
 		}
 		else {
-			player.holdingBlock = false;
+			player->holdingBlock = false;
 		}
 	}
-	else if (player.left && !player.jumping && !player.right) {
-		player.walk(LEFT);
+	else if (player->left && !player->jumping && !player->right) {
+		player->walk(LEFT);
 		//check if player is holding correct direction to block
-		if (player.side == LEFT) {
-			player.holdingBlock = true;
+		if (player->side == LEFT) {
+			player->holdingBlock = true;
 		}
 		else {
-			player.holdingBlock = false;
+			player->holdingBlock = false;
 		}
 	}
-	else if (!player.left && player.jumping && !player.right) {
-		player.holdingBlock = false;
-		player.jump(NEUTRAL);
+	else if (!player->left && player->jumping && !player->right) {
+		player->holdingBlock = false;
+		player->jump(NEUTRAL);
 	}
-	else if (!player.left && !player.jumping && !player.right) {
-		player.holdingBlock = false;
-		player.doMove(IDLE);
+	else if (!player->left && !player->jumping && !player->right) {
+		player->holdingBlock = false;
+		player->doMove(IDLE);
 	}
 
 	if (!input.empty()) {
@@ -615,44 +617,44 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				//cout << "indicatorflashon" << endl;
 				indicatorFlashOn = true;
 
-				player.indicator.updateIndicator(ONBEAT);
+				player->indicator.updateIndicator(ONBEAT);
 
 
 				if (acc == C_NATURAL) {
-					player.doMove(JAB);
+					player->doMove(JAB);
 				}
 				else if (acc == D_NATURAL) {
-					player.doMove(STRONG);
+					player->doMove(STRONG);
 				}
 				else if (acc == E_NATURAL) {
-					player.doMove(FIERCE);
+					player->doMove(FIERCE);
 				}
 				else if (acc == F_NATURAL) {
-					player.doMove(SHRT);
+					player->doMove(SHRT);
 				}
 				else if (acc == G_NATURAL) {
-					player.doMove(FORWARD);
+					player->doMove(FORWARD);
 				}
 				else if (acc == A_NATURAL) {
-					player.doMove(ROUNDHOUSE);
+					player->doMove(ROUNDHOUSE);
 				}
 				else if (acc == C_MAJOR) {
-					player.doMove(CMAJ);
+					player->doMove(CMAJ);
 				}
 				else if (acc == F_MAJOR_64) {
-					player.doMove(CMAJ);
+					player->doMove(CMAJ);
 				}
 				else if (acc == G_MAJOR) {
-					player.doMove(GMAJ);
+					player->doMove(GMAJ);
 				}
 				//cheats
 				else if (acc == 0x540) {
-					player.health = 1000;
+					player->health = 1000;
 				}
 				else {
-					player.hitstunFrames = 3;
-					player.doMove(HITSTUN);
-					player.health -= 50;
+					player->hitstunFrames = 3;
+					player->doMove(HITSTUN);
+					player->health -= 50;
 				}
 			}
 			else {
@@ -664,59 +666,59 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 // Everything here is run on its own thread!
 void FightState::receiveKeysDown(int note, int playerId) {
-	if (playerId == game.playerOne.playerId) {
+	if (playerId == game.playerOne->playerId) {
 		// Movement keys
-		if (note == 48) game.playerOne.left = true;
-		else if (note == 52) game.playerOne.jumping = true;
-		else if (note == 55) game.playerOne.right = true;
+		if (note == 48) game.playerOne->left = true;
+		else if (note == 52) game.playerOne->jumping = true;
+		else if (note == 55) game.playerOne->right = true;
 		// Attack keys
 		else if (note > 59) {
-			if (onBeat || game.playerOne.isInSuper()) {
+			if (onBeat || game.playerOne->isInSuper()) {
 				inputP1.push_back(note);
 				game.inputHandler->playNote(note, 80);
-				game.playerOne.checkSuper(note % 12);
+				game.playerOne->checkSuper(note % 12);
 			}
 		}
 		else if (note == 39) {
-			game.playerTwo.ezmode = 5;
+			game.playerTwo->ezmode = 5;
 		}
 	}
-	else if (playerId == game.playerTwo.playerId) {
+	else if (playerId == game.playerTwo->playerId) {
 		// Movement keys
-		if (note == 48) game.playerTwo.left = true;
-		else if (note == 52) game.playerTwo.jumping = true;
-		else if (note == 55) game.playerTwo.right = true;
+		if (note == 48) game.playerTwo->left = true;
+		else if (note == 52) game.playerTwo->jumping = true;
+		else if (note == 55) game.playerTwo->right = true;
 		// Attack keys
 		else if (note > 59) {
-			if (onBeat || game.playerTwo.isInSuper()) {
+			if (onBeat || game.playerTwo->isInSuper()) {
 				inputP2.push_back(note);
 				game.inputHandler->playNote(note, 80);
-				game.playerTwo.checkSuper(note % 12);
+				game.playerTwo->checkSuper(note % 12);
 			}
 		}
 		else if (note == 39) {
-			game.playerOne.ezmode = 5;
+			game.playerOne->ezmode = 5;
 		}
 	}
 
 }
 
 void FightState::receiveKeysUp(int note, int playerId) {
-	if (playerId == game.playerOne.playerId) {
+	if (playerId == game.playerOne->playerId) {
 		// Movement keys
-		if (note == 48) game.playerOne.left = false;
-		else if (note == 52) game.playerOne.jumping = false;
-		else if (note == 55) game.playerOne.right = false;
+		if (note == 48) game.playerOne->left = false;
+		else if (note == 52) game.playerOne->jumping = false;
+		else if (note == 55) game.playerOne->right = false;
 		// Attack keys
 		else if (note > 59) {
 			game.inputHandler->playNote(note, 0);
 		}
 	}
-	else if (playerId == game.playerTwo.playerId) {
+	else if (playerId == game.playerTwo->playerId) {
 		// Movement keys
-		if (note == 48) game.playerTwo.left = false;
-		else if (note == 52) game.playerTwo.jumping = false;
-		else if (note == 55) game.playerTwo.right = false;
+		if (note == 48) game.playerTwo->left = false;
+		else if (note == 52) game.playerTwo->jumping = false;
+		else if (note == 55) game.playerTwo->right = false;
 		// Attack keys 
 		else if (note > 59) {
 			game.inputHandler->playNote(note, 0);
