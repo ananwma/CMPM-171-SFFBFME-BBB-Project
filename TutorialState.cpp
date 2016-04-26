@@ -123,40 +123,49 @@ void TutorialState::init() {
 	game.window.setView(camera_view);
 
 	
-	//initialize and push tutorialstages to tutorial
-	//Stage1
-	stage1_tasks.push_back(TutorialTask("Move Backward"));
-	stage1_tasks.push_back(TutorialTask("Move Forward"));
-	stage1_pre.push("Welcome to the Super Fugue Fighter Tutorial. Let's start with movement.");
-	stage1_post.push("Exquisite. Movement is important for positioning yourself correctly to hit your opponent.");
-	tutorial.push_back(TutorialStage(stage1_pre, stage1_post, stage1_tasks));
+//initialize and push tutorialstages to tutorial
+//Stage1
+stage1_tasks.push_back(TutorialTask("Move Backward"));
+stage1_tasks.push_back(TutorialTask("Move Forward"));
+stage1_pre.push("Welcome to the Super Fugue Fighter Tutorial. Let's start with movement.");
+stage1_post.push("Exquisite. Movement is important for positioning yourself correctly to hit your opponent.");
+tutorial.push_back(TutorialStage(stage1_pre, stage1_post, stage1_tasks));
 
-	// Possibly move this to asset manager in future
-	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
-		cerr << "Could not load sound!\n";
-		exit(EXIT_FAILURE);
-	}
-	metronomeSound.setBuffer(metronomeSoundBuffer);
+current_stage = 0;
+current_task_num = 0;
+dialogue_stack = tutorial.at(current_stage).preText;
+current_dialogue = dialogue_stack.top();
+dialogue_stack.pop();
+dialogue_text.setString(current_dialogue);
+inDialogue = true;
+//inPreText = true;
 
-	if (!hitSoundBuffer.loadFromFile("sounds/hit.wav")) {
-		cerr << "Could not load sound!\n";
-		exit(EXIT_FAILURE);
-	}
-	hitSound.setBuffer(hitSoundBuffer);
+// Possibly move this to asset manager in future
+if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
+	cerr << "Could not load sound!\n";
+	exit(EXIT_FAILURE);
+}
+metronomeSound.setBuffer(metronomeSoundBuffer);
 
-	if (!blockSoundBuffer.loadFromFile("sounds/block.wav")) {
-		cerr << "Could not load sound!\n";
-		exit(EXIT_FAILURE);
-	}
-	blockSound.setBuffer(blockSoundBuffer);
+if (!hitSoundBuffer.loadFromFile("sounds/hit.wav")) {
+	cerr << "Could not load sound!\n";
+	exit(EXIT_FAILURE);
+}
+hitSound.setBuffer(hitSoundBuffer);
 
-	hitSound.setVolume(50);
+if (!blockSoundBuffer.loadFromFile("sounds/block.wav")) {
+	cerr << "Could not load sound!\n";
+	exit(EXIT_FAILURE);
+}
+blockSound.setBuffer(blockSoundBuffer);
 
-	bassline.setInstrument(32);
-	game.inputHandler->setInstrument(6);
+hitSound.setVolume(50);
 
-	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
-	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
+bassline.setInstrument(32);
+game.inputHandler->setInstrument(6);
+
+__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
+__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 }
 
 void TutorialState::update() {
@@ -203,8 +212,11 @@ void TutorialState::update() {
 		}
 	}
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
+	//update dialogue
+	dialogue_text.setString(current_dialogue);
+	
 	processInput(game.playerOne, inputP1);
-	processInput(game.playerTwo, inputP2);
+	//processInput(game.playerTwo, inputP2);
 	//cout << "P1 vel: " << game.playerOne.xvel << endl << "P2 vel: " << game.playerTwo.xvel << endl << endl;
 	checkBoxes(game.playerOne, game.playerTwo);
 	checkBoxes(game.playerTwo, game.playerOne);
@@ -213,6 +225,25 @@ void TutorialState::update() {
 	restrict_movement(game.playerTwo, game.playerOne);
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
+	//test current task, if true advance to next one
+	task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
+	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
+	task.setPosition(game.playerOne.xpos, game.playerOne.ypos);
+	tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
+	if (tutorial.at(current_stage).tasks.at(current_task_num).taskComplete) {
+		current_task_num += 1;
+	}
+	//check if all tasks are true
+	if(current_task_num > tutorial.at(current_stage).tasks.size()){
+	tutorial.at(current_stage).stagecomplete = true;
+	dialogue_stack = tutorial.at(current_stage).postText;
+	}
+		//check if all tasks are true
+/*	if (checkAllCurrentTasks(tutorial.at(current_stage).tasks)) {
+		tutorial.at(current_stage).stagecomplete = true;
+		dialogue_stack = tutorial.at(current_stage).postText;
+	}
+	*/
 	//checkMoveBoxes(game.playerOne, game.playerTwo);
 
 	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
@@ -329,11 +360,18 @@ void TutorialState::draw() {
 	game.window.draw(player_2_meter_box);
 	game.window.draw(task);
 	game.window.draw(task_text);
+	//cout << "currentdialoguetext: " << current_dialogue << endl;
+	cout << "currenttask: " << tutorial.at(current_stage).tasks.at(current_task_num).task << endl;
+	cout << "current task true??: " << tutorial.at(current_stage).tasks.at(current_task_num).taskComplete << endl;
+	cout << "playerstate: " << game.playerOne.state << endl;
+	cout << "playervel: " << game.playerOne.xvel << endl;
+	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
+	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
 	if (inDialogue) {
 		game.window.draw(dialogue);
-			game.window.draw(dialogue_text);
+		game.window.draw(dialogue_text);
 	}
 	game.window.display();
 }
@@ -603,6 +641,8 @@ void TutorialState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 }
 
 void TutorialState::processInput(Player& player, vector<int>& input) {
+	if(!inDialogue){
+	
 	// Handle every possible combination of movement keys
 	if (player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
@@ -649,6 +689,8 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 		player.holdingBlock = false;
 		player.doMove(IDLE);
 	}
+}
+
 
 	if (!input.empty()) {
 		if (!inputOpen) {
@@ -738,6 +780,14 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 			}
 		}
 	}
+	//test current task, if true advance to next one
+	task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
+	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
+	task.setPosition(game.playerOne.xpos, game.playerOne.ypos);
+	tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
+	if (tutorial.at(current_stage).tasks.at(current_task_num).taskComplete) {
+		current_task_num += 1;
+	}
 }
 
 // Everything here is run on its own thread!
@@ -806,6 +856,16 @@ void TutorialState::unhookEvent() {
 	cout << "FightState events unhooked\n";
 	__unhook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__unhook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
+}
+
+//checks if every task in the current tutorial stage is complete. if so, returns true
+bool TutorialState::checkAllCurrentTasks(vector<TutorialTask> v) {
+	for (int i = 0; i < v.size(); i++) {
+		if (v.at(i).taskComplete == false) {
+			return false;
+		}
+	}
+	return true;
 }
 
 TutorialState::~TutorialState() {

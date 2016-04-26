@@ -3,6 +3,7 @@
 
 #include "PlayerSelectState.h"
 #include "FightState.h"
+#include "TutorialState.h"
 
 
 using namespace std;
@@ -28,8 +29,9 @@ void PlayerSelectState::update() {
 
 	if (!running) {
 		unhookEvent();
-		FightState fightState(game);
-		game.gsm.stopState(*this, &fightState);
+		//FightState fightState(game);
+		TutorialState tutorialState(game);
+		game.gsm.stopState(*this, &tutorialState);
 	}
 
 }

@@ -72,10 +72,14 @@ private:
 
 	vector<TutorialStage> tutorial;
 	int current_stage;
-	string current_task;
+	int current_task_num;
+	//string current_task;
 	string current_dialogue;
 	stack <string> dialogue_stack;
 	bool inDialogue = false;
+	bool inPreText = false;
+	bool checkAllCurrentTasks(vector<TutorialTask>);
+	/*
 	bool checkMovedLeft(Player&);
 	bool checkMovedRight(Player&);
 	bool checkJumped(Player&);
@@ -85,6 +89,7 @@ private:
 	bool checkSpecial(Player&);
 	bool checkSuper(Player&);
 	bool checkGrabbed(Player&);
+	*/
 	stack <string> stage1_pre;
 	stack <string> stage1_post;
 	vector <TutorialTask> stage1_tasks;

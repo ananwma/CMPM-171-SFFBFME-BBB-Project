@@ -1,8 +1,12 @@
-﻿  Player.cpp
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(41): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(302): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(305): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(309): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4204: 'C:\Users\mhgunnin\Source\Repos\sffnew\x64\Debug\vc140.pdb' is missing debugging information for referencing module; linking object as if no debug info
-  sff.vcxproj -> C:\Users\mhgunnin\Source\Repos\sffnew\x64\Debug\sff.exe
+﻿  TutorialState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(283): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(292): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(301): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(330): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(331): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(332): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(333): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(384): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(391): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  sff.vcxproj -> C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
