@@ -159,6 +159,9 @@
     <ClInclude Include="TutorialTask.h">
       <Filter>sff headers</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenuState.h">
+      <Filter>GameStates\Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -229,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="TutorialTask.cpp">
       <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuState.cpp">
+      <Filter>GameStates\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

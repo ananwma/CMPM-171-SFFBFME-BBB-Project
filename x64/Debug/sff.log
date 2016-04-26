@@ -1,8 +1,1 @@
-﻿  Player.cpp
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(39): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(41): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(302): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(305): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\mhgunnin\source\repos\sffnew\player.cpp(309): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-sfml-main-d.lib(MainWin32.cpp.obj) : warning LNK4204: 'C:\Users\mhgunnin\Source\Repos\sffnew\x64\Debug\vc140.pdb' is missing debugging information for referencing module; linking object as if no debug info
-  sff.vcxproj -> C:\Users\mhgunnin\Source\Repos\sffnew\x64\Debug\sff.exe
+﻿

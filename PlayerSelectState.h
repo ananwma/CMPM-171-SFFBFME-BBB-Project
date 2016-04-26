@@ -25,6 +25,18 @@ private:
 	// Reference to Game struct containing window, input handler, and game state manager
 	Game &game;
 
+	sf::Text pressAKey;
+	sf::Font font;
+	sf::Sprite keyboard1;
+	sf::Sprite keyboard2;
+	sf::Texture keyboardTex;
+
 	// True if state is currently being ran
 	bool running;
+
+	bool p1Pressed = false;
+	bool p2Pressed = false;
+	float rot = 0;
+	int fade1 = 255;
+	int fade2 = 255;
 };
