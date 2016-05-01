@@ -2,7 +2,6 @@ c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\sff.pch
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\vc140.pdb
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\vc140.idb
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\stdafx.obj
-c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\bassline.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\cameracontrol.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\character.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\characterbach.obj
@@ -12,6 +11,7 @@ c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\fightstate.o
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\frame.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\gamestatemanager.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\input.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\mainmenustate.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\pausestate.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\player.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\playerselectstate.obj
@@ -24,7 +24,7 @@ c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\tutorialtask
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\ui.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\assetmanager.obj
 c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\beatindicator.obj
-c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\mainmenustate.obj
+c:\users\michael\source\repos\super fugue fighter\sff\sff\x64\debug\bassline.obj
 c:\users\michael\source\repos\super fugue fighter\sff\x64\debug\sff.ilk
 c:\users\michael\source\repos\super fugue fighter\sff\x64\debug\sff.exe
 c:\users\michael\source\repos\super fugue fighter\sff\x64\debug\sff.pdb
