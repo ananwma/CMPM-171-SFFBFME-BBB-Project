@@ -17,7 +17,7 @@ void ResultsState::init() {
 		exit(EXIT_FAILURE);
 	}
 	text.setFont(font);
-	if (game.playerOne->roundWins > game.playerTwo->roundWins)
+	if (game.playerOne.roundWins > game.playerTwo.roundWins)
 		text.setString("Player One Wins!");	
 	else
 		text.setString("Player Two Wins!");

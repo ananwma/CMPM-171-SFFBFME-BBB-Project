@@ -1,10 +1,1 @@
-﻿  sff.cpp
-c:\users\michael\source\repos\super fugue fighter\sff\sff\game.h(11): warning C4005: 'WINDOW_WIDTH': macro redefinition
-  c:\users\michael\source\repos\super fugue fighter\sff\sff\entity.h(4): note: see previous definition of 'WINDOW_WIDTH'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\game.h(12): warning C4005: 'WINDOW_HEIGHT': macro redefinition
-  c:\users\michael\source\repos\super fugue fighter\sff\sff\entity.h(5): note: see previous definition of 'WINDOW_HEIGHT'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(29): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-c:\users\michael\source\repos\super fugue fighter\sff\sff\sff.cpp(30): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe
+﻿  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe
