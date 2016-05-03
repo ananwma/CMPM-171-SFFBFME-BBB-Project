@@ -26,5 +26,5 @@ void TutorialTask::testTask(Player& player) {
 		}
 	}
 	
-	taskComplete = false;
+	
 }

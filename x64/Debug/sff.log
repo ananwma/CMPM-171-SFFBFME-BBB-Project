@@ -1,1 +1,13 @@
-﻿
+﻿  TutorialState.cpp
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(50): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(286): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(295): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(304): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(333): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(334): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(335): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(336): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(387): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\ronald\documents\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(394): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  sff.vcxproj -> C:\Users\Ronald\Documents\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe

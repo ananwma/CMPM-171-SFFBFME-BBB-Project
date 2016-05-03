@@ -127,6 +127,9 @@ void TutorialState::init() {
 //Stage1
 stage1_tasks.push_back(TutorialTask("Move Backward"));
 stage1_tasks.push_back(TutorialTask("Move Forward"));
+//stage1_tasks.push_back(TutorialTask("Jump Straight Up"));
+//stage1_tasks.push_back(TutorialTask("Jump Forward"));
+//stage1_tasks.push_back(TutorialTask("Jump Backward"));
 stage1_pre.push("Welcome to the Super Fugue Fighter Tutorial. Let's start with movement.");
 stage1_post.push("Exquisite. Movement is important for positioning yourself correctly to hit your opponent.");
 tutorial.push_back(TutorialStage(stage1_pre, stage1_post, stage1_tasks));
@@ -234,7 +237,7 @@ void TutorialState::update() {
 		current_task_num += 1;
 	}
 	//check if all tasks are true
-	if(current_task_num > tutorial.at(current_stage).tasks.size()){
+	if(current_task_num >= tutorial.at(current_stage).tasks.size()){
 	tutorial.at(current_stage).stagecomplete = true;
 	dialogue_stack = tutorial.at(current_stage).postText;
 	}
@@ -361,10 +364,10 @@ void TutorialState::draw() {
 	game.window.draw(task);
 	game.window.draw(task_text);
 	//cout << "currentdialoguetext: " << current_dialogue << endl;
-	cout << "currenttask: " << tutorial.at(current_stage).tasks.at(current_task_num).task << endl;
-	cout << "current task true??: " << tutorial.at(current_stage).tasks.at(current_task_num).taskComplete << endl;
-	cout << "playerstate: " << game.playerOne.state << endl;
-	cout << "playervel: " << game.playerOne.xvel << endl;
+	//cout << "currenttask: " << tutorial.at(current_stage).tasks.at(current_task_num).task << endl;
+	//cout << "current task true??: " << tutorial.at(current_stage).tasks.at(current_task_num).taskComplete << endl;
+	//cout << "playerstate: " << game.playerOne.state << endl;
+	//cout << "playervel: " << game.playerOne.xvel << endl;
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	game.window.draw(game.playerOne.indicator.bSprite);

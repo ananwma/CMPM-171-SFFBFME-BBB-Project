@@ -218,15 +218,16 @@ void FightState::update() {
 		//cout << "game.beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
-		//flash indicator???
+		
+		if (quarterNote) {
+			bassline.playNextNote();
+			//metronomeSound.play();
+			//flash indicator???
 			indicatorFlashOn = true;
 			//cout << "indicatorflashon" << endl;
 			indicatorFlash = 5;
 			game.playerOne.indicator.updateIndicator(NONE);
 			game.playerTwo.indicator.updateIndicator(NONE);
-		if (quarterNote) {
-			bassline.playNextNote();
-			//metronomeSound.play();
 			quarterNote = false;
 			
 		}
