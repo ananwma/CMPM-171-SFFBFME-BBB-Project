@@ -27,9 +27,9 @@ public:
 
 	~Entity() = default;
 
-	sf::Sprite sprite;
+	sf::Sprite *e_sprite = new sf::Sprite();
 
-private:
+protected:
 
 	float xpos;
 	float ypos;

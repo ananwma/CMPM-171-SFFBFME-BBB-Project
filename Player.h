@@ -14,6 +14,12 @@ using namespace std;
 class Player : public Entity {
 private:
 	//Character* character;
+	float walkspeed;
+	float jumpX;
+	float jumpY;
+	//int health;
+	int walloffset;
+	vector<int> super;
 public:
 	// No copy constructor
 	Player(const Player&) = delete;
@@ -35,7 +41,7 @@ public:
 	//Need to keep track of where the player has moved to update hitboxes
 	float deltaX;
 	float deltaY;
-	float health;
+	int health;
 	float meter;
 
 	// change where this is initialized later
@@ -85,6 +91,8 @@ public:
 	float getSpriteWidth();
 	float getMaxHealth();
 	void setBeat(float);
+
+	bool loadCharacter(string);
 
 	Player();
 	~Player();

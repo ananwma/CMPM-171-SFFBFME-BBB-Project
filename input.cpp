@@ -88,6 +88,5 @@ void InputHandler::playNote(unsigned int note, unsigned int velocity, unsigned i
 void InputHandler::setInstrument(unsigned int instrument, unsigned int channel) {
 	assert(instrument < 128 && "Volume value must be between 0 and 127");
 	DWORD_PTR msg = instrument << 8 | PROGRAM_CHANGE << 4 | channel;
-	cout << "msg: " << hex << msg << endl;
 	midiOutShortMsg(midout, msg);
 }

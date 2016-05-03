@@ -75,6 +75,8 @@ private:
 	void drawBoxes(Player&, bool, bool, bool);
 	void FightState::move_camera(Player&, Player&);
 	void FightState::restrict_movement(Player&, Player&);
+	Player playerOne;
+	Player playerTwo;
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;

@@ -2,9 +2,12 @@
 #include "Character.h"
 #include "Player.h"
 #include "BeatIndicator.h"
+
+#include "tinyxml2.h"
 //#include "Game.h"
 #include <time.h> 
 #include <math.h>
+#include <sstream>
 
 #define WALL_WIDTH 1280
 #define INIT_XPOS 20
@@ -34,6 +37,30 @@ Player::Player()
 	jumping = false;
 	holdingBlock = false;
 	right = false;
+}
+
+bool Player::loadCharacter(string filename) {
+	// Load XML File
+	tinyxml2::XMLDocument characterFile;
+	characterFile.LoadFile(filename.c_str());
+
+	// Parse data from file into class variables
+	tinyxml2::XMLElement* characterData = characterFile.FirstChildElement("character");
+	spriteWidth = atoi(characterData->FirstChildElement("width")->GetText());
+	spriteHeight = atoi(characterData->FirstChildElement("height")->GetText());
+	walkspeed = atof(characterData->FirstChildElement("walkspeed")->GetText());
+	jumpX = atof(characterData->FirstChildElement("jumpX")->GetText());
+	jumpY = atof(characterData->FirstChildElement("jumpY")->GetText());
+	health = atoi(characterData->FirstChildElement("health")->GetText());
+	walloffset = atoi(characterData->FirstChildElement("walloffset")->GetText());
+
+	// Parse string of ints into int vector for super
+	string superStr = characterData->FirstChildElement("super")->GetText();
+	stringstream stream(superStr);
+	int n;
+	while (stream >> n)
+		super.push_back(n);
+	return true;
 }
 
 void Player::setCharacter(Character* c) {

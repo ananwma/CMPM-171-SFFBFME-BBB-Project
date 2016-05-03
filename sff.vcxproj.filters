@@ -153,6 +153,12 @@
     <ClInclude Include="Entity.h">
       <Filter>sff headers</Filter>
     </ClInclude>
+    <ClInclude Include="parser.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -224,6 +230,12 @@
     <ClCompile Include="Entity.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
+    <ClCompile Include="parser.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="sff.rc">
@@ -240,5 +252,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SFFProperties.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Bach.xml" />
   </ItemGroup>
 </Project>

@@ -3,18 +3,18 @@
 #include "Entity.h"
 
 void Entity::setTexture(sf::Texture texture) {
-	sprite.setTexture(texture);
+	e_sprite->setTexture(texture);
 }
 
 void Entity::setAnimTexture(sf::Texture texture, int width, int height, int framecount) {
-	sprite.setTexture(texture);
+	e_sprite->setTexture(texture);
 	spriteWidth = width;
 	spriteHeight = height;
 	numAnimFrames = framecount;
 }
 
 void Entity::setPosition(float x, float y) {
-	sprite.setPosition(x, y);
+	//sprite->setPosition(x, y);
 	xpos = x;
 	ypos = y;
 }
@@ -49,13 +49,13 @@ void Entity::updateAnimFrame() {
 			character->currentMove = IDLE;
 			canCancel = false;
 			getCurrentFrame().hit = false;
-			character->sprite.setTexture(character->moveList.at(IDLE)->spritesheet);
+			character->sprite->setTexture(character->moveList.at(IDLE)->spritesheet);
 			if (state != AIRBORNE_STATE)
 				state = NO_STATE;
 		}
 	}*/
 	if (side == LEFT) {
-		sprite.setTextureRect(sf::IntRect(
+		e_sprite->setTextureRect(sf::IntRect(
 			currAnimFrame * spriteWidth,
 			0,
 			spriteWidth,
@@ -64,7 +64,7 @@ void Entity::updateAnimFrame() {
 	}
 	// Draw flipped
 	else if (side == RIGHT) {
-		sprite.setTextureRect(sf::IntRect(
+		e_sprite->setTextureRect(sf::IntRect(
 			(currAnimFrame * spriteWidth) + spriteWidth,
 			0,
 			-spriteWidth,
@@ -95,7 +95,7 @@ void Entity::updatePhysics() {
 		//if (state != ATTACK_STATE)
 		//	state = NO_STATE;
 	}
-	//if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
+	//if (((character->sprite->getPosition().x + character->wall_offset <= 0) || (character->sprite->getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
 	//if((xpos <= 0)||(xpos >= 1280)){
 	//	xvel = 0;
 	//}
