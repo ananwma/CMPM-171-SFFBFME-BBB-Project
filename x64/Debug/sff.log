@@ -1,1 +1,12 @@
-﻿
+﻿  TutorialState.cpp
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(292): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(301): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(310): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(339): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(340): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(341): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(342): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(393): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\tutorialstate.cpp(400): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+  sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe

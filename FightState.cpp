@@ -218,15 +218,16 @@ void FightState::update() {
 		//cout << "game.beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
-		//flash indicator???
+		
+		if (quarterNote) {
+			bassline.playNextNote();
+			//metronomeSound.play();
+			//flash indicator???
 			indicatorFlashOn = true;
 			//cout << "indicatorflashon" << endl;
 			indicatorFlash = 5;
 			game.playerOne.indicator.updateIndicator(NONE);
 			game.playerTwo.indicator.updateIndicator(NONE);
-		if (quarterNote) {
-			bassline.playNextNote();
-			//metronomeSound.play();
 			quarterNote = false;
 			
 		}
@@ -409,7 +410,7 @@ void FightState::draw() {
 	game.window.draw(player_2_HP_box);
 	game.window.draw(player_1_meter_box);
 	game.window.draw(player_2_meter_box);
-	//game.window.draw(timer);
+	game.window.draw(timer);
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
@@ -667,6 +668,9 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 				if (attacker.state != GRAB_STATE && defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
 					defender.block(attacker.getCurrentMove());
 					blockSound.play();
+				}
+				else if (defender.state == AIRBORNE_STATE && attacker.state == GRAB_STATE) {
+					//nothing happens
 				}
 				else {
 					//if not blocking, player gets hit
