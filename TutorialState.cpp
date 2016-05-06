@@ -127,6 +127,9 @@ void TutorialState::init() {
 //Stage1
 stage1_tasks.push_back(TutorialTask("Move Backward"));
 stage1_tasks.push_back(TutorialTask("Move Forward"));
+//stage1_tasks.push_back(TutorialTask("Jump Straight Up"));
+//stage1_tasks.push_back(TutorialTask("Jump Forward"));
+//stage1_tasks.push_back(TutorialTask("Jump Backward"));
 stage1_pre.push("Welcome to the Super Fugue Fighter Tutorial. Let's start with movement.");
 stage1_post.push("Exquisite. Movement is important for positioning yourself correctly to hit your opponent.");
 tutorial.push_back(TutorialStage(stage1_pre, stage1_post, stage1_tasks));
@@ -213,7 +216,6 @@ void TutorialState::update() {
 	}
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	//update dialogue
-	dialogue_text.setString(current_dialogue);
 	
 	processInput(game.playerOne, inputP1);
 	//processInput(game.playerTwo, inputP2);
@@ -226,18 +228,25 @@ void TutorialState::update() {
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
 	//test current task, if true advance to next one
-	task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
+	if(current_task_num < tutorial.at(current_stage).tasks.size()){
+		task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
+		tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
+	}
 	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
 	task.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-	tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
-	if (tutorial.at(current_stage).tasks.at(current_task_num).taskComplete) {
+	//check if all tasks are true
+	if (current_task_num >= tutorial.at(current_stage).tasks.size()) {
+		tutorial.at(current_stage).stagecomplete = true;
+		inDialogue = true;
+		dialogue_stack = tutorial.at(current_stage).postText;
+		current_dialogue = dialogue_stack.top();
+		dialogue_text.setString(current_dialogue);
+		game.playerOne.doMove(IDLE);
+	}
+	else if (tutorial.at(current_stage).tasks.at(current_task_num).taskComplete) {
 		current_task_num += 1;
 	}
-	//check if all tasks are true
-	if(current_task_num > tutorial.at(current_stage).tasks.size()){
-	tutorial.at(current_stage).stagecomplete = true;
-	dialogue_stack = tutorial.at(current_stage).postText;
-	}
+	
 		//check if all tasks are true
 /*	if (checkAllCurrentTasks(tutorial.at(current_stage).tasks)) {
 		tutorial.at(current_stage).stagecomplete = true;
@@ -361,10 +370,10 @@ void TutorialState::draw() {
 	game.window.draw(task);
 	game.window.draw(task_text);
 	//cout << "currentdialoguetext: " << current_dialogue << endl;
-	cout << "currenttask: " << tutorial.at(current_stage).tasks.at(current_task_num).task << endl;
-	cout << "current task true??: " << tutorial.at(current_stage).tasks.at(current_task_num).taskComplete << endl;
-	cout << "playerstate: " << game.playerOne.state << endl;
-	cout << "playervel: " << game.playerOne.xvel << endl;
+	//cout << "currenttask: " << tutorial.at(current_stage).tasks.at(current_task_num).task << endl;
+	//cout << "current task true??: " << tutorial.at(current_stage).tasks.at(current_task_num).taskComplete << endl;
+	//cout << "playerstate: " << game.playerOne.state << endl;
+	//cout << "playervel: " << game.playerOne.xvel << endl;
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	game.window.draw(game.playerOne.indicator.bSprite);
@@ -702,7 +711,7 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 			/* This code is kind of hard to read; each note starting at 60 (Middle C) is
 			left shifted its distance away from middle C, ie C is 1, D is 10, E is 100,
 			and so on. These numbers are OR'd together to make something like 10010001,
-			which represents a C Major triad. To handle octaves, the number is right shifted
+			which resents a C Major triad. To handle octaves, the number is right shifted
 			12 times again and again until there are at most eleven trailing 0's in the
 			binary number. When that happens, we know the octave has been normalized. */
 			if (input.size() < 5) {
@@ -724,7 +733,6 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 				
 				if (inDialogue) {
 					if (!dialogue_stack.empty()) {
-						current_dialogue = dialogue_stack.top();
 						dialogue_stack.pop();
 					}
 					else {
@@ -781,13 +789,16 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	//test current task, if true advance to next one
-	task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
+
+	/*if (current_task_num < tutorial.at(current_stage).tasks.size()) {
+		task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
+		tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
+	}
 	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
 	task.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-	tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
 	if (tutorial.at(current_stage).tasks.at(current_task_num).taskComplete) {
 		current_task_num += 1;
-	}
+	}*/
 }
 
 // Everything here is run on its own thread!
