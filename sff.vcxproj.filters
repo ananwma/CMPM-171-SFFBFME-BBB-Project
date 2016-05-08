@@ -162,6 +162,9 @@
     <ClInclude Include="MainMenuState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -241,6 +244,9 @@
     <ResourceCompile Include="sff.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -309,5 +315,8 @@
     <Image Include="sprites\Ryu.png">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Tutorial.xml" />
   </ItemGroup>
 </Project>

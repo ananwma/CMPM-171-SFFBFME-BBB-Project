@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tutorial>
+  <stage id="0">
+    <complete>0</complete>
+    <pretext>Welcome to the Super Fugue Fighter Tutorial. Let's start with movement.</pretext>
+    <posttext>Exquisite. Movement is important for positioning yourself correctly to hit your opponent.</posttext>
+    <task id="0">
+      <name>Walk Backwards</name>
+    </task>
+    <task id="1">
+      <name>Walk Forwards</name>
+    </task>
+  </stage>
+  <stage id="1">
+    <complete>0</complete>
+    <pretext>Now let's try some attacks.</pretext>
+    <pretext>Be sure to hit the attack key on the beat.</pretext>
+    <posttext>Wow great job, you're #1!</posttext>
+    <task id="0">
+      <name>Correctly perform %num% unique attacks</name>
+    </task>
+  </stage>
+</tutorial>

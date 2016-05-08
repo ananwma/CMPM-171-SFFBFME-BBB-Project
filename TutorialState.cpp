@@ -9,6 +9,7 @@
 #include "PauseState.h"
 #include "ResultsState.h"
 #include "BeatIndicator.h"
+#include "tinyxml2.h"
 // tmp
 #include "CharacterBach.h"
 
@@ -21,6 +22,8 @@ void TutorialState::init() {
 	cout << game.playerOne.playerId << endl;
 	cout << game.playerTwo.playerId << endl;
 	running = true;
+
+	tinyxml2::
 
 	game.currentScreen.setStage(chstage);
 	game.currentScreen.stage.sprite.move(-200, 0);
