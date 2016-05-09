@@ -37,6 +37,13 @@ public:
 	sf::RectangleShape player_2_HP_box;
 	sf::RectangleShape player_1_meter_box;
 	sf::RectangleShape player_2_meter_box;
+	sf::RectangleShape overlay;
+	sf::Texture textBorderTex;
+	sf::Sprite textBorder;
+	sf::Texture keyboardTexSheet;
+	sf::Sprite keyboardIcon;
+	int keyboardWidth = 861;
+	int keyboardHeight = 602;
 	sf::RectangleShape task;
 	sf::Text task_text;
 	sf::Text text;
@@ -71,40 +78,15 @@ private:
 	bool colliding = false;
 
 	vector<TutorialStage> tutorial;
-	int current_stage;
-	int current_task_num;
+	int current_stage = 0;
+	int current_task_num = 0;
 	//string current_task;
 	string current_dialogue;
 	stack <string> dialogue_stack;
-	bool inDialogue = false;
-	bool inPreText = false;
-	bool checkAllCurrentTasks(vector<TutorialTask>);
-	/*
-	bool checkMovedLeft(Player&);
-	bool checkMovedRight(Player&);
-	bool checkJumped(Player&);
-	bool checkBlocked(Player&);
-	bool checkAttacked(Player&);
-	bool checkAttackedOnBeat(Player&);
-	bool checkSpecial(Player&);
-	bool checkSuper(Player&);
-	bool checkGrabbed(Player&);
-	*/
-	stack <string> stage1_pre;
-	stack <string> stage1_post;
-	vector <TutorialTask> stage1_tasks;
-	stack <string> stage2_pre;
-//	stack <string> stage2_pre;
-	vector <TutorialTask> stage2_tasks;
-	stack <string> stage3_pre;
-//	stack <string> stage3_pre;
-	vector <TutorialTask> stage3_tasks;
-	stack <string> stage4_pre;
-//	stack <string> stage4_pre;
-	vector <TutorialTask> stage4_tasks;
-	stack <string> stage5_pre;
-//	stack <string> stage5_pre;
-	vector <TutorialTask> stage5_tasks;
+	bool inPretext = true;
+	bool inPosttext = false;
+	bool stopState = false;
+	bool waitToChangeState = false;
 
 	bool played;
 	Bassline bassline;

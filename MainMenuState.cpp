@@ -15,7 +15,6 @@ MainMenuState::MainMenuState(Game &_game) : game(_game) { }
 void MainMenuState::init() {
 	running = true;
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
-
 	if (!Ctex.loadFromFile("sprites/C.png") || !Etex.loadFromFile("sprites/E.png") || !Gtex.loadFromFile("sprites/G.png")) {
 		std::cerr << "Error missing C/E/G sprites!\n";
 		exit(EXIT_FAILURE);

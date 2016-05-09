@@ -165,6 +165,9 @@
     <ClInclude Include="resource1.h">
       <Filter>sff headers</Filter>
     </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="MainMenuState.cpp">
       <Filter>GameStates\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
