@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tutorial>
+  
   <stage id="0">
-
     <complete>0</complete>
 
     <pretext>Welcome to the Super Fugue Fighter Tutorial. 
@@ -27,11 +27,9 @@
       </conditions>
       <lefticonframes>0 3</lefticonframes>
     </task>
-
   </stage>
 
   <stage id="1">
-
     <complete>0</complete>
 
     <pretext>Now let's try some attacks.</pretext>
@@ -45,7 +43,7 @@
       <conditions>
         <state>4</state>
       </conditions>
-      <lefticonframes>0 1</lefticonframes>
+      <lefticonframes>1 2 3</lefticonframes>
     </task>
 
     <task id="1">
@@ -53,7 +51,7 @@
       <conditions>
         <state>4</state>
       </conditions>
-      <lefticonframes>0 1</lefticonframes>
+      <lefticonframes>1 2 3</lefticonframes>
     </task>
 
     <task id="2">
@@ -61,8 +59,29 @@
       <conditions>
         <state>4</state>
       </conditions>
-      <lefticonframes>0 1</lefticonframes>
+      <lefticonframes>1 2 3</lefticonframes>
     </task>
-
   </stage>
+
+  <stage id="2">
+    <complete>0</complete>
+
+    <pretext>Now that you've mastered regular attacks, 
+         let's move on to special attacks.</pretext>
+    <pretext>
+      These require you to hit multiple keys simultaneously.
+    </pretext>
+    <posttext>
+      Wow, AMAZING, are you Mozart?
+    </posttext>
+
+    <task id="0">
+      <text>Perform a special attack</text>
+      <conditions>
+        <move>12</move>
+      </conditions>
+      <lefticonframes>0 7</lefticonframes>
+    </task>
+  </stage>
+
 </tutorial>

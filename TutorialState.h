@@ -80,6 +80,7 @@ private:
 	vector<TutorialStage> tutorial;
 	int current_stage = 0;
 	int current_task_num = 0;
+	int dontUpdateEveryFramePlease = 0;
 	//string current_task;
 	string current_dialogue;
 	stack <string> dialogue_stack;

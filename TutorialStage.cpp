@@ -42,3 +42,14 @@ string TutorialStage::popPosttext() {
 	postText.pop();
 	return ret;
 }
+
+int TutorialStage::getAnimFrame() {
+	if (hasTasks()) {
+		int ret = tasks.front().leftIconFrames.at(animFrame);
+		++animFrame %= tasks.front().leftIconFrames.size();
+		return ret;
+	}
+	else {
+		return 0;
+	}
+}

@@ -66,12 +66,8 @@ void TutorialState::init() {
 			task.taskText = nextTask->FirstChildElement("text")->GetText();
 			string ints = nextTask->FirstChildElement("lefticonframes")->GetText();
 			stringstream stream(ints);
-			while (1) {
-				int n;
-				stream >> n;
-				if (!stream)
-					break;
-			}
+			int n;
+			while (stream >> n) task.leftIconFrames.push_back(n);
 			if (conditions->FirstChildElement("state") != NULL)
 				task.checkState = atoi(conditions->FirstChildElement("state")->GetText());
 			if (conditions->FirstChildElement("xvelgreaterthan") != NULL)
@@ -124,6 +120,7 @@ void TutorialState::init() {
 	}
 	keyboardIcon.setTexture(keyboardTexSheet);
 	keyboardIcon.setTextureRect(sf::IntRect(0, 0, keyboardWidth, keyboardHeight));
+	keyboardIcon.scale(sf::Vector2f(0.2, 0.2));
 	keyboardIcon.setPosition(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4);
 	////////////////////////
 
@@ -331,6 +328,7 @@ void TutorialState::update() {
 		waitToChangeState = false;
 	}
 	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
+
 	///////////////////////
 
 
@@ -390,6 +388,15 @@ void TutorialState::update() {
 		}
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
+		
+		////TUTORIAL////
+		dontUpdateEveryFramePlease++;
+		if (dontUpdateEveryFramePlease == 5) {
+			dontUpdateEveryFramePlease = 0;
+			keyboardIcon.setTextureRect(sf::IntRect(0, tutorial.at(current_stage).getAnimFrame() * keyboardHeight,
+				keyboardWidth, keyboardHeight));
+		}
+		////////////////
 	}
 
 	move_camera(game.playerOne, game.playerTwo);
@@ -440,12 +447,17 @@ void TutorialState::draw() {
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
+
+	////TUTORIAL////
+	game.window.draw(keyboardIcon);
 	if (inPretext || inPosttext) {
 		game.window.draw(overlay);
 		game.window.draw(textBorder);
 		game.window.draw(dialogue);
 		game.window.draw(dialogue_text);
 	}
+	///////////////
+
 	game.window.display();
 }
 

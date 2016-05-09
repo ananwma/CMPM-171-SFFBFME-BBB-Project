@@ -8,8 +8,12 @@
 using namespace std;
 
 class TutorialStage {
-public:
+private:
+	queue <string> preText;
+	queue <string> postText;
 	queue<TutorialTask> tasks;
+	unsigned int animFrame = 0;
+public:
 	TutorialStage(queue<string>, queue<string>, queue<TutorialTask>);
 	bool testNextTask(Player&);
 	bool hasTasks();
@@ -18,6 +22,5 @@ public:
 	string getTaskText();
 	string popPretext();
 	string popPosttext();
-	queue <string> preText;
-	queue <string> postText;
+	int getAnimFrame();
 };
