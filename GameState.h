@@ -14,6 +14,7 @@ public:
 	virtual void receiveKeysDown(int, int) = 0;
 	virtual void receiveKeysUp(int, int) = 0;
 
-	// Can probably be defined here, most likely will be the same in all states
+	// Both can probably be defined/generalized here
 	virtual void unhookEvent() = 0;
+	virtual void hookEvent() = 0;
 };

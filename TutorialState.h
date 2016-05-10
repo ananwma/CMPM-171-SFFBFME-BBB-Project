@@ -26,6 +26,7 @@ public:
 	virtual void receiveKeysDown(int, int);
 	virtual void receiveKeysUp(int, int);
 	virtual void unhookEvent();
+	virtual void hookEvent();
 
 	sf::View camera_view;
 	sf::View HUD;

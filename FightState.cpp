@@ -131,6 +131,9 @@ void FightState::init() {
 	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
+	pauseOverlay.setFillColor(sf::Color(0, 0, 0, 200));
+	pauseOverlay.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+
 	camera_view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 	camera_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	HUD.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
@@ -161,9 +164,14 @@ void FightState::init() {
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(0);
 
+	clock.restart();
+}
+
+void FightState::hookEvent() {
+	time = saveTime;
+	clock.restart();
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
-	clock.restart();
 }
 
 void FightState::reset() {
@@ -205,6 +213,13 @@ void FightState::update() {
 			game.window.close();
 			break;
 		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		saveTime = time;
+		game.window.draw(pauseOverlay);
+		unhookEvent();
+		PauseState pauseState(game);
+		game.gsm.pauseState(*this, &pauseState);
 	}
 
 	onBeat = false;
@@ -388,7 +403,7 @@ void FightState::update() {
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
 
-	cout << dec<<game.currentScreen.stage.window_offset << endl;
+	//cout << dec<<game.currentScreen.stage.window_offset << endl;
 	//cout << dec << game.playerTwo.xpos << endl;
 	//cout << game.playerOne.roundWins << endl;
 }

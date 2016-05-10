@@ -20,6 +20,7 @@ public:
 	virtual void receiveKeysDown(int, int);
 	virtual void receiveKeysUp(int, int) {};
 	virtual void unhookEvent();
+	virtual void hookEvent();
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager

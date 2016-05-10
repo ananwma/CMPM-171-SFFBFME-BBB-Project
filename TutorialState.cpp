@@ -237,7 +237,9 @@ void TutorialState::init() {
 
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(6);
+}
 
+void TutorialState::hookEvent() {
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 }
