@@ -84,4 +84,25 @@
     </task>
   </stage>
 
+ <stage id="3">
+    <complete>0</complete>
+
+    <pretext>Try performing your Magnum Opus move.</pretext>
+    <pretext>
+      Remember, the first note has to be on beat, 
+      but the rest can be played off beat.
+    </pretext>
+    <posttext>
+      Great job! That completes the tutorial.
+    </posttext>
+
+    <task id="0">
+      <text>Perform your Magnum Opus</text>
+      <conditions>
+        <move>14</move>
+      </conditions>
+      <lefticonframes>0</lefticonframes>
+    </task>
+  </stage>
+
 </tutorial>

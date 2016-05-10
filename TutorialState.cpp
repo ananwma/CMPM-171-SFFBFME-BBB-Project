@@ -236,6 +236,7 @@ void TutorialState::init() {
 	hitSound.setVolume(50);
 
 	bassline.setInstrument(32);
+	
 	game.inputHandler->setInstrument(6);
 }
 
@@ -330,7 +331,10 @@ void TutorialState::update() {
 		waitToChangeState = false;
 	}
 	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-
+	game.playerOne.health = 1000;
+	game.playerTwo.health = 1000;
+	game.playerOne.meter = 1000;
+	game.playerTwo.meter = 1000;
 	///////////////////////
 
 
