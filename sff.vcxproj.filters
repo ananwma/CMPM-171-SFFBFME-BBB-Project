@@ -168,6 +168,9 @@
     <ClInclude Include="tinyxml2.h">
       <Filter>sff headers</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteEmitter.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -243,6 +246,9 @@
       <Filter>GameStates\Source</Filter>
     </ClCompile>
     <ClCompile Include="tinyxml2.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteEmitter.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
   </ItemGroup>

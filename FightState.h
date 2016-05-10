@@ -8,6 +8,7 @@
 #include "ConcertHallStage.h"
 #include "Bassline.h"
 #include "UI.h"
+#include "SpriteEmitter.h"
 #include <SFML/Audio.hpp>
 
 class FightState : public GameState {
@@ -64,6 +65,9 @@ private:
 	Player *player1;
 	sf::Clock clock;
 	sf::Clock metronome;
+	sf::Clock emitterClock;
+	SpriteEmitter dust1;
+	SpriteEmitter dust2;
 	bool onBeat;
 	float beat;
 	int intOnBeat;

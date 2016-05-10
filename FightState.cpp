@@ -14,7 +14,13 @@
 
 using namespace std;
 
-FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70) {
+FightState::FightState(Game &_game) : 
+	game(_game), 
+	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70), 
+	dust1(10, "sprites/smoke.png", 128, 128, 10),
+	dust2(10, "sprites/smoke.png", 128, 128, 10)
+
+{
 }
 
 void FightState::init() {
@@ -163,7 +169,6 @@ void FightState::init() {
 
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(0);
-
 	clock.restart();
 }
 
@@ -221,6 +226,14 @@ void FightState::update() {
 		PauseState pauseState(game);
 		game.gsm.pauseState(*this, &pauseState);
 	}
+
+	// gonna change this later
+	dust1.setEmitter(sf::Vector2f(game.playerOne.xpos, game.playerOne.ypos + 400));
+	dust2.setEmitter(sf::Vector2f(game.playerTwo.xpos, game.playerTwo.ypos + 400));
+	sf::Time elapsed = emitterClock.restart();
+	dust1.update(elapsed);
+	dust2.update(elapsed);
+	//
 
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > game.beat - beatThreshold) {
@@ -429,6 +442,16 @@ void FightState::draw() {
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
+
+	//gonna change this later
+	if (game.playerOne.xvel != 0 || game.playerOne.yvel != 0) {
+		game.window.draw(dust1);
+	}
+	if (game.playerTwo.xvel != 0 || game.playerTwo.yvel != 0) {
+		game.window.draw(dust2);
+	}
+	//
+
 	if (game.playerOne.roundWins > 0) {
 		game.window.draw(player_1_round_win_1);
 	}
