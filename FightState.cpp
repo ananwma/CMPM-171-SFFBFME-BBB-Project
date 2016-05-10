@@ -374,7 +374,9 @@ void FightState::update() {
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
-		game.beat = 275.0f;
+		//game.beat = 275.0f;
+		//temp fix
+		game.beat = 350.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
 		game.playerOne.setBeat(game.beat);
