@@ -12,17 +12,21 @@ public:
 	// Runs state, pushes onto stack
 	void runState(GameState&);
 
-	// Stops state, pops off stack
+	// Stops state, clears state stack
 	void stopState(GameState&);
 
-	// Stops current state and runs given state
+	// Stops current state, clears state stack, runs given state
 	void stopState(GameState&, GameState*);
 
 	// Stops current state, does not pop off stack
-	void pauseState(GameState&);
+	void pauseState(GameState & statePause, GameState * stateRun);
+
+	// Stops and pops current state; runs the next state on the stack
+	void resumeLastState();
 
 private:
 	bool state_is_running;
+	bool resuming_state = false;
 	std::stack<GameState*> state_stack;
 	std::unique_ptr<GameState> currentState;
 	sf::Clock updateClock;

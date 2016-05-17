@@ -10,7 +10,6 @@ ResultsState::ResultsState(Game &_game) : game(_game) { }
 
 void ResultsState::init() {
 	running = true;
-	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &ResultsState::receiveKeysDown);
 
 	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
 		cerr << "Font not found!\n";
@@ -29,6 +28,10 @@ void ResultsState::init() {
 	text.setStyle(sf::Text::Bold);
 	text.setPosition(100, 100);
 
+}
+
+void ResultsState::hookEvent() {
+	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &ResultsState::receiveKeysDown);
 }
 
 void ResultsState::update() {

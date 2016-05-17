@@ -11,7 +11,6 @@ PlayerSelectState::PlayerSelectState(Game &_game) : game(_game) { }
 
 void PlayerSelectState::init() {
 	running = true;
-	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	cout << "__Player 1 press a key__" << endl;
 
 	if (!keyboardTex.loadFromFile("sprites/keyboard_small.png")) {
@@ -39,6 +38,10 @@ void PlayerSelectState::init() {
 	pressAKey.setCharacterSize(100);
 	pressAKey.setString("Player one press a key");
 	pressAKey.setPosition(WINDOW_WIDTH / 2 - pressAKey.getLocalBounds().width / 2, WINDOW_HEIGHT / 4);
+}
+
+void PlayerSelectState::hookEvent() {
+	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 }
 
 void PlayerSelectState::update() {

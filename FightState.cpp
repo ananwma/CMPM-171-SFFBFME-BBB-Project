@@ -14,7 +14,13 @@
 
 using namespace std;
 
-FightState::FightState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70) {
+FightState::FightState(Game &_game) : 
+	game(_game), 
+	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70), 
+	dust1(10, "sprites/smoke.png", 128, 128, 10),
+	dust2(10, "sprites/smoke.png", 128, 128, 10)
+
+{
 }
 
 void FightState::init() {
@@ -22,8 +28,15 @@ void FightState::init() {
 	running = true;
 
 	game.currentScreen.setStage(chstage);
-	game.currentScreen.stage.sprite.move(-game.currentScreen.stage.window_offset, 0);
+	game.currentScreen.stage.front.move(-game.currentScreen.stage.window_offset, 0);
+	game.currentScreen.stage.med.move(-game.currentScreen.stage.window_offset, 0);
 	game.currentScreen.stage.window_offset = 0;
+
+	// CHANGE LATER // 
+	game.currentScreen.stage.front.setPosition(-230,WINDOW_HEIGHT-200);
+	game.currentScreen.stage.med.setPosition(-200,WINDOW_HEIGHT-400);
+	// CHANGE LATER // 
+
 
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100 * (BEAT_SPEED / 500);
@@ -131,6 +144,9 @@ void FightState::init() {
 	game.playerOne.indicator.bSprite.setPosition(0, 50);
 	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
 
+	pauseOverlay.setFillColor(sf::Color(0, 0, 0, 200));
+	pauseOverlay.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+
 	camera_view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 	camera_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	HUD.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
@@ -160,10 +176,14 @@ void FightState::init() {
 
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(0);
+	clock.restart();
+}
 
+void FightState::hookEvent() {
+	time = saveTime;
+	clock.restart();
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
-	clock.restart();
 }
 
 void FightState::reset() {
@@ -206,6 +226,21 @@ void FightState::update() {
 			break;
 		}
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		saveTime = time;
+		game.window.draw(pauseOverlay);
+		unhookEvent();
+		PauseState pauseState(game);
+		game.gsm.pauseState(*this, &pauseState);
+	}
+
+	// gonna change this later
+	dust1.setEmitter(sf::Vector2f(game.playerOne.xpos, game.playerOne.ypos + 400));
+	dust2.setEmitter(sf::Vector2f(game.playerTwo.xpos, game.playerTwo.ypos + 400));
+	sf::Time elapsed = emitterClock.restart();
+	dust1.update(elapsed);
+	dust2.update(elapsed);
+	//
 
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > game.beat - beatThreshold) {
@@ -346,7 +381,9 @@ void FightState::update() {
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
-		game.beat = 275.0f;
+		//game.beat = 275.0f;
+		//temp fix
+		game.beat = 350.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
 		game.playerOne.setBeat(game.beat);
@@ -388,7 +425,7 @@ void FightState::update() {
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
 
-	cout << dec<<game.currentScreen.stage.window_offset << endl;
+	//cout << dec<<game.currentScreen.stage.window_offset << endl;
 	//cout << dec << game.playerTwo.xpos << endl;
 	//cout << game.playerOne.roundWins << endl;
 }
@@ -396,7 +433,9 @@ void FightState::update() {
 void FightState::draw() {
 	game.window.clear();
 	game.window.setView(camera_view);
-	game.window.draw(game.currentScreen.stage.sprite);
+	game.window.draw(game.currentScreen.stage.base);
+	game.window.draw(game.currentScreen.stage.med);
+	game.window.draw(game.currentScreen.stage.front);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
@@ -414,6 +453,16 @@ void FightState::draw() {
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
+
+	//gonna change this later
+	if (game.playerOne.xvel != 0 || game.playerOne.yvel != 0) {
+		game.window.draw(dust1);
+	}
+	if (game.playerTwo.xvel != 0 || game.playerTwo.yvel != 0) {
+		game.window.draw(dust2);
+	}
+	//
+
 	if (game.playerOne.roundWins > 0) {
 		game.window.draw(player_1_round_win_1);
 	}
@@ -442,6 +491,8 @@ void FightState::move_camera(Player& cp, Player& op){
 	if ((!(op.xpos + op.character->wall_offset <= game.currentScreen.stage.window_offset))&&(cp.xpos + cp.getSpriteWidth() - cp.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
 		camera_view.move(cp.character->walkspeed, 0);
 		game.currentScreen.stage.window_offset += cp.character->walkspeed;
+		game.currentScreen.stage.base.move(cp.character->walkspeed, 0);
+		game.currentScreen.stage.med.move(cp.character->walkspeed/2, 0);
 	}
 
 	//left
@@ -449,6 +500,9 @@ void FightState::move_camera(Player& cp, Player& op){
 	if ((!(op.xpos + op.getSpriteWidth() - op.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset))&&(cp.xpos + cp.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
 		camera_view.move(-cp.character->walkspeed, 0);
 		game.currentScreen.stage.window_offset -= cp.character->walkspeed;
+		game.currentScreen.stage.base.move(-cp.character->walkspeed, 0);
+		game.currentScreen.stage.med.move(-cp.character->walkspeed/2, 0);
+			
 	}
 
 }

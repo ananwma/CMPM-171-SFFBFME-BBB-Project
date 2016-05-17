@@ -2,29 +2,16 @@
 #include "Player.h"
 #include "TutorialState.h"
 
-TutorialTask::TutorialTask()
-{
+bool TutorialTask::testTask(Player& player) {
 
-}
 
-TutorialTask::TutorialTask(string tsk)
-{
-	taskComplete = false;
-	task = tsk;
-	
-}
-
-void TutorialTask::testTask(Player& player) {
-	if (task == "Move Backward") {
-		if (player.state == WALK_STATE && player.xvel < 0) {
-			taskComplete = true;
-		}
+	if ((player.state == checkState || checkState == -1) &&
+		(player.xvel > checkXvelGreaterThan) && 
+		(player.xvel < checkXvelLessThan) &&
+		(player.yvel > checkYvelGreaterThan) &&
+		(player.yvel < checkYvelLessThan) && 
+		(player.getCurrentMoveNum() == checkMove || checkMove == -1)) {
+		numComplete++;
 	}
-	if (task == "Move Forward") {
-		if (player.state == WALK_STATE && player.xvel > 0) {
-			taskComplete = true;
-		}
-	}
-	
-	
+	return numComplete >= checkComplete;
 }

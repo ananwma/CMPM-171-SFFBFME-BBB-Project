@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 #include <bitset>
 
@@ -9,6 +10,8 @@
 #include "PauseState.h"
 #include "ResultsState.h"
 #include "BeatIndicator.h"
+#include "MainMenuState.h"
+#include "tinyxml2.h"
 // tmp
 #include "CharacterBach.h"
 
@@ -22,8 +25,114 @@ void TutorialState::init() {
 	cout << game.playerTwo.playerId << endl;
 	running = true;
 
+	textbox.setSize(sf::Vector2f(185, 75));
+	textbox.setFillColor(sf::Color(250, 250, 250));
+
+	/*unordered_map<string, unique_ptr<TutorialTask>> taskMap;
+	taskMap["move_back"] = MoveBack();
+	taskMap["move_forward"] = MoveForward();
+	taskMap["move_back"].testTask(Player());
+	taskMap["move_forward"].testTask(Player());*/
+
+
+	//////TUTORIAL INIT//////
+	//Load tutorial file
+	tinyxml2::XMLDocument tutorialFile;
+	tutorialFile.LoadFile("Tutorial.xml");
+	tinyxml2::XMLElement* tutorialData = tutorialFile.FirstChildElement("tutorial");
+	tinyxml2::XMLElement* nextStage = tutorialData->FirstChildElement("stage");
+	while (nextStage != NULL) {
+		//Get pretexts
+		tinyxml2::XMLElement* nextPretext = nextStage->FirstChildElement("pretext");
+		queue<string> pretextQueue;
+		while (nextPretext != NULL) {
+			pretextQueue.push(nextPretext->GetText());
+			nextStage->DeleteChild(nextPretext);
+			nextPretext = nextStage->FirstChildElement("pretext");
+		}
+
+		//Get posttexts
+		tinyxml2::XMLElement* nextPosttext = nextStage->FirstChildElement("posttext");
+		queue<string> posttextQueue;
+		while (nextPosttext != NULL) {
+			posttextQueue.push(nextPosttext->GetText());
+			nextStage->DeleteChild(nextPosttext);
+			nextPosttext = nextStage->FirstChildElement("posttext");
+		}
+
+		//Get tasks
+		queue<TutorialTask> taskQueue;
+		tinyxml2::XMLElement* nextTask = nextStage->FirstChildElement("task");
+		while (nextTask != NULL) {
+			tinyxml2::XMLElement* conditions = nextTask->FirstChildElement("conditions");
+			TutorialTask task;
+			task.taskText = nextTask->FirstChildElement("text")->GetText();
+			string ints = nextTask->FirstChildElement("lefticonframes")->GetText();
+			stringstream stream(ints);
+			int n;
+			while (stream >> n) task.leftIconFrames.push_back(n);
+			if (conditions->FirstChildElement("state") != NULL)
+				task.checkState = atoi(conditions->FirstChildElement("state")->GetText());
+			if (conditions->FirstChildElement("xvelgreaterthan") != NULL)
+				task.checkXvelGreaterThan = atoi(conditions->FirstChildElement("xvelgreaterthan")->GetText());
+			if (conditions->FirstChildElement("xvellessthan") != NULL)
+				task.checkXvelLessThan = atoi(conditions->FirstChildElement("xvellessthan")->GetText());
+			if (conditions->FirstChildElement("yvelgreaterthan") != NULL)
+				task.checkYvelGreaterThan = atoi(conditions->FirstChildElement("yvelgreaterthan")->GetText());
+			if (conditions->FirstChildElement("yvellessthan") != NULL)
+				task.checkYvelLessThan = atoi(conditions->FirstChildElement("yvellessthan")->GetText());
+			if (conditions->FirstChildElement("move") != NULL)
+				task.checkMove = atoi(conditions->FirstChildElement("move")->GetText());
+			if (conditions->FirstChildElement("completenum") != NULL)
+				task.checkComplete = atoi(conditions->FirstChildElement("completenum")->GetText());
+			taskQueue.push(task);
+			nextStage->DeleteChild(nextTask);
+			nextTask = nextStage->FirstChildElement("task");
+		}
+
+		tutorial.push_back(TutorialStage(pretextQueue, posttextQueue, taskQueue));
+		tutorialData->DeleteChild(nextStage);
+		nextStage = tutorialData->FirstChildElement("stage");
+	}
+
+	task_text.setFont(font);
+	task_text.setColor(sf::Color(0, 0, 0));
+	task_text.setCharacterSize(20);
+	task_text.setPosition(-WINDOW_WIDTH, 0);
+	task_text.setString(tutorial.at(current_stage).getTaskText());
+
+	dialogue_text.setFont(font);
+	dialogue_text.setColor(sf::Color(200, 220, 200));
+	dialogue_text.setCharacterSize(30);
+	dialogue_text.setString(tutorial.at(current_stage).popPretext());
+
+	overlay.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+	overlay.scale(sf::Vector2f(5, 5));
+	overlay.setFillColor(sf::Color(0, 0, 0, 200));
+
+	if (!textBorderTex.loadFromFile("sprites/border.png")) {
+		cerr << "Could not load text border!\n";
+		exit(EXIT_FAILURE);
+	}
+	textBorder.setTexture(textBorderTex);
+	textBorder.setColor(sf::Color(255, 174, 1));
+
+	if (!keyboardTexSheet.loadFromFile("sprites/keyboard_highlighted_lh_861x602.png")) {
+		cerr << "Could not load keyboard.png!\n";
+		exit(EXIT_FAILURE);
+	}
+	if (!keyboardTexSheet2.loadFromFile("sprites/keyboard_highlighted_rh.png")) {
+		cerr << "Could not load keyboardrh.png!\n";
+		exit(EXIT_FAILURE);
+	}
+	keyboardIcon.setTextureRect(sf::IntRect(0, 0, keyboardWidth, keyboardHeight));
+	keyboardIcon.scale(sf::Vector2f(0.2, 0.2));
+	keyboardIcon.setPosition(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4);
+	////////////////////////
+
+
 	game.currentScreen.setStage(chstage);
-	game.currentScreen.stage.sprite.move(-200, 0);
+	game.currentScreen.stage.front.move(-200, 0);
 	game.currentScreen.stage.window_offset = 0;
 
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
@@ -75,23 +184,11 @@ void TutorialState::init() {
 	//dialogue.setSize(sf::Vector2f(300, 300));
 	//dialogue.setFillColor(sf::Color(250, 250, 250));
 //	dialogue.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-	
-	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
+
+	if (!font.loadFromFile("fonts/asul.regular.ttf")) {
 		cerr << "Font not found!\n";
 		exit(EXIT_FAILURE);
 	}
-
-	task_text.setFont(font);
-	task_text.setColor(sf::Color(0, 0, 0));
-	task_text.setString("");
-	task_text.setCharacterSize(50);
-	task_text.setPosition(WINDOW_WIDTH / 2 - 30, 0);
-
-	dialogue_text.setFont(font);
-	dialogue_text.setColor(sf::Color(0, 0, 0));
-	dialogue_text.setString("");
-	dialogue_text.setCharacterSize(50);
-	dialogue_text.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	player_1_meter.setPosition(0, 35);
 	player_1_meter.setSize(sf::Vector2f(400, 30));
@@ -122,56 +219,51 @@ void TutorialState::init() {
 	HUD.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.window.setView(camera_view);
 
+
+	// Possibly move this to asset manager in future
+	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
+		cerr << "Could not load sound!\n";
+		exit(EXIT_FAILURE);
+	}
+	metronomeSound.setBuffer(metronomeSoundBuffer);
+
+	if (!hitSoundBuffer.loadFromFile("sounds/hit.wav")) {
+		cerr << "Could not load sound!\n";
+		exit(EXIT_FAILURE);
+	}
+	hitSound.setBuffer(hitSoundBuffer);
+
+	if (!blockSoundBuffer.loadFromFile("sounds/block.wav")) {
+		cerr << "Could not load sound!\n";
+		exit(EXIT_FAILURE);
+	}
+	blockSound.setBuffer(blockSoundBuffer);
+
+	hitSound.setVolume(50);
+
+	bassline.setInstrument(32);
 	
-//initialize and push tutorialstages to tutorial
-//Stage1
-stage1_tasks.push_back(TutorialTask("Move Backward"));
-stage1_tasks.push_back(TutorialTask("Move Forward"));
-//stage1_tasks.push_back(TutorialTask("Jump Straight Up"));
-//stage1_tasks.push_back(TutorialTask("Jump Forward"));
-//stage1_tasks.push_back(TutorialTask("Jump Backward"));
-stage1_pre.push("Welcome to the Super Fugue Fighter Tutorial. Let's start with movement.");
-stage1_post.push("Exquisite. Movement is important for positioning yourself correctly to hit your opponent.");
-tutorial.push_back(TutorialStage(stage1_pre, stage1_post, stage1_tasks));
-
-current_stage = 0;
-current_task_num = 0;
-dialogue_stack = tutorial.at(current_stage).preText;
-current_dialogue = dialogue_stack.top();
-dialogue_stack.pop();
-dialogue_text.setString(current_dialogue);
-inDialogue = true;
-//inPreText = true;
-
-// Possibly move this to asset manager in future
-if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
-	cerr << "Could not load sound!\n";
-	exit(EXIT_FAILURE);
+	game.inputHandler->setInstrument(6);
 }
-metronomeSound.setBuffer(metronomeSoundBuffer);
 
-if (!hitSoundBuffer.loadFromFile("sounds/hit.wav")) {
-	cerr << "Could not load sound!\n";
-	exit(EXIT_FAILURE);
-}
-hitSound.setBuffer(hitSoundBuffer);
-
-if (!blockSoundBuffer.loadFromFile("sounds/block.wav")) {
-	cerr << "Could not load sound!\n";
-	exit(EXIT_FAILURE);
-}
-blockSound.setBuffer(blockSoundBuffer);
-
-hitSound.setVolume(50);
-
-bassline.setInstrument(32);
-game.inputHandler->setInstrument(6);
-
-__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
-__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
+void TutorialState::hookEvent() {
+	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
+	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 }
 
 void TutorialState::update() {
+	if (current_stage < 1) {
+		keyboardIcon.setTexture(keyboardTexSheet);
+	}
+	else {
+		keyboardIcon.setTexture(keyboardTexSheet2);
+	}
+	if (current_stage == 1) {
+		game.playerTwo.doMove(10);
+	}
+	else {
+		game.playerTwo.doMove(IDLE);
+	}
 	//cout << "State #1" << endl;
 	if (!running) {
 		PauseState pauseState(game);
@@ -216,7 +308,7 @@ void TutorialState::update() {
 	}
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	//update dialogue
-	
+
 	processInput(game.playerOne, inputP1);
 	//processInput(game.playerTwo, inputP2);
 	//cout << "P1 vel: " << game.playerOne.xvel << endl << "P2 vel: " << game.playerTwo.xvel << endl << endl;
@@ -227,50 +319,43 @@ void TutorialState::update() {
 	restrict_movement(game.playerTwo, game.playerOne);
 	game.playerOne.updatePhysics();
 	game.playerTwo.updatePhysics();
+
+
+	///////TUTORIAL////////
+	dialogue_text.setPosition(WINDOW_WIDTH / 2 - dialogue_text.getLocalBounds().width / 2, WINDOW_HEIGHT / 4);
+	textBorder.setScale(sf::Vector2f(0.1, 0.1));
+	textBorder.setPosition(sf::Vector2f(dialogue_text.getPosition().x - textBorder.getGlobalBounds().width / 4,
+									    dialogue_text.getPosition().y - textBorder.getGlobalBounds().height / 4));
+	if (stopState) {
+		unhookEvent();
+		MainMenuState menu(game);
+		game.gsm.stopState(*this, &menu);
+	}
 	//test current task, if true advance to next one
-	if(current_task_num < tutorial.at(current_stage).tasks.size()){
-		task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
-		tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
+	if (tutorial.at(current_stage).hasTasks()) {
+		task_text.setString(tutorial.at(current_stage).getTaskText());
+		if (!waitToChangeState) {
+			if (tutorial.at(current_stage).testNextTask(game.playerOne)) {
+				if (game.playerOne.state != NO_STATE) {
+					waitToChangeState = true;
+				}
+				if (!tutorial.at(current_stage).hasTasks()) {
+					inPosttext = true;
+				}
+			}
+		}
 	}
+	if (game.playerOne.state == NO_STATE) {
+		waitToChangeState = false;
+	}
+	textbox.setPosition(game.playerOne.xpos, game.playerOne.ypos);
 	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-	task.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-	//check if all tasks are true
-	if (current_task_num >= tutorial.at(current_stage).tasks.size()) {
-		tutorial.at(current_stage).stagecomplete = true;
-		inDialogue = true;
-		dialogue_stack = tutorial.at(current_stage).postText;
-		current_dialogue = dialogue_stack.top();
-		dialogue_text.setString(current_dialogue);
-		game.playerOne.doMove(IDLE);
-	}
-	else if (tutorial.at(current_stage).tasks.at(current_task_num).taskComplete) {
-		current_task_num += 1;
-	}
-	
-		//check if all tasks are true
-/*	if (checkAllCurrentTasks(tutorial.at(current_stage).tasks)) {
-		tutorial.at(current_stage).stagecomplete = true;
-		dialogue_stack = tutorial.at(current_stage).postText;
-	}
-	*/
-	//checkMoveBoxes(game.playerOne, game.playerTwo);
+	game.playerOne.health = 1000;
+	game.playerTwo.health = 1000;
+	game.playerOne.meter = 1000;
+	game.playerTwo.meter = 1000;
+	///////////////////////
 
-	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
-
-	//***********************
-	//** TEMP CAMERA STUFF **
-	//***********************
-
-	//if (game.playerOne.xpos <= -game.playerOne.character->wall_offset) {
-	//game.currentScreen.move_camera_left(game.currentScreen.stage, game.playerTwo, game.playerOne);
-	//camera_view.move(-1, 0);
-	//}
-	/*
-	if (game.playerOne.xpos + game.playerOne.getSpriteWidth() >= 1280) {
-	game.currentScreen.move_camera_right(game.currentScreen.stage, game.playerTwo, game.playerOne);
-	if (game.playerOne.xpos > 1480)
-	game.playerOne.setPosition(1480, game.playerOne.ypos);
-	}*/
 
 	collision.flip_sprites(game.playerOne, game.playerTwo);
 	collision.flip_sprites(game.playerTwo, game.playerOne);
@@ -328,6 +413,15 @@ void TutorialState::update() {
 		}
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
+		
+		////TUTORIAL////
+		dontUpdateEveryFramePlease++;
+		if (dontUpdateEveryFramePlease == 5) {
+			dontUpdateEveryFramePlease = 0;
+			keyboardIcon.setTextureRect(sf::IntRect(0, tutorial.at(current_stage).getAnimFrame() * keyboardHeight,
+				keyboardWidth, keyboardHeight));
+		}
+		////////////////
 	}
 
 	move_camera(game.playerOne, game.playerTwo);
@@ -353,7 +447,7 @@ void TutorialState::update() {
 void TutorialState::draw() {
 	game.window.clear();
 	game.window.setView(camera_view);
-	game.window.draw(game.currentScreen.stage.sprite);
+	game.window.draw(game.currentScreen.stage.front);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
@@ -368,6 +462,7 @@ void TutorialState::draw() {
 	game.window.draw(player_1_meter_box);
 	game.window.draw(player_2_meter_box);
 	game.window.draw(task);
+	game.window.draw(textbox);
 	game.window.draw(task_text);
 	//cout << "currentdialoguetext: " << current_dialogue << endl;
 	//cout << "currenttask: " << tutorial.at(current_stage).tasks.at(current_task_num).task << endl;
@@ -378,10 +473,17 @@ void TutorialState::draw() {
 	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
-	if (inDialogue) {
+
+	////TUTORIAL////
+	game.window.draw(keyboardIcon);
+	if (inPretext || inPosttext) {
+		game.window.draw(overlay);
+		game.window.draw(textBorder);
 		game.window.draw(dialogue);
 		game.window.draw(dialogue_text);
 	}
+	///////////////
+
 	game.window.display();
 }
 
@@ -405,13 +507,13 @@ void TutorialState::move_camera(Player& cp, Player& op) {
 void TutorialState::restrict_movement(Player& p1, Player& p2) {
 	//right
 
-	if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel>0)) {
+	if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel > 0)) {
 		p1.xvel = 0;
 	}
 
 	//left
 
-	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel<0)) {
+	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel < 0)) {
 		p1.xvel = 0;
 	}
 }
@@ -650,8 +752,6 @@ void TutorialState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 }
 
 void TutorialState::processInput(Player& player, vector<int>& input) {
-	if(!inDialogue){
-	
 	// Handle every possible combination of movement keys
 	if (player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
@@ -698,7 +798,6 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 		player.holdingBlock = false;
 		player.doMove(IDLE);
 	}
-}
 
 
 	if (!input.empty()) {
@@ -730,18 +829,7 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				//cout << hex << acc << endl;
 				//cout << "indicatorflashon" << endl;
-				
-				if (inDialogue) {
-					if (!dialogue_stack.empty()) {
-						dialogue_stack.pop();
-					}
-					else {
-						inDialogue = false;
-					}
-						
-				
-				}
-				else {
+
 				indicatorFlashOn = true;
 
 				player.indicator.updateIndicator(ONBEAT);
@@ -763,6 +851,9 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 				else if (acc == A_NATURAL) {
 					player.doMove(ROUNDHOUSE);
 				}
+				else if (acc == B_NATURAL) {
+					player.doMove(GRAB);
+				}
 				else if (acc == C_MAJOR) {
 					player.doMove(CMAJ);
 				}
@@ -781,7 +872,6 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 					player.doMove(HITSTUN);
 					player.health -= 50;
 				}
-			}
 			}
 			else {
 				input.clear();
@@ -803,6 +893,10 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 
 // Everything here is run on its own thread!
 void TutorialState::receiveKeysDown(int note, int playerId) {
+	////Tutorial////
+	if (inPretext || inPosttext) return;
+	///////////////
+
 	if (playerId == game.playerOne.playerId) {
 		// Movement keys
 		if (note == 48) game.playerOne.left = true;
@@ -841,6 +935,39 @@ void TutorialState::receiveKeysDown(int note, int playerId) {
 }
 
 void TutorialState::receiveKeysUp(int note, int playerId) {
+	////Tutorial////
+	if (inPretext) {
+		if (tutorial.at(current_stage).hasPretext()) {
+			dialogue_text.setString(tutorial.at(current_stage).popPretext());
+		}
+		else {
+			dialogue_text.setString("");
+			inPretext = false;
+		}
+		return;
+	}
+	else if (inPosttext) {
+		game.playerOne.right = false;
+		game.playerOne.left = false;
+		if (tutorial.at(current_stage).hasPosttext()) {
+			dialogue_text.setString(tutorial.at(current_stage).popPosttext());
+		}
+		else {
+			inPosttext = false;
+			inPretext = true;
+			current_stage++;
+			if (current_stage > tutorial.size() - 1) {
+				// Never break out of state from within threaded event function
+				stopState = true;
+			}
+			else {
+				dialogue_text.setString(tutorial.at(current_stage).popPretext());
+			}
+		}
+		return;
+	}
+	////////////
+
 	if (playerId == game.playerOne.playerId) {
 		// Movement keys
 		if (note == 48) game.playerOne.left = false;
@@ -869,15 +996,6 @@ void TutorialState::unhookEvent() {
 	__unhook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 }
 
-//checks if every task in the current tutorial stage is complete. if so, returns true
-bool TutorialState::checkAllCurrentTasks(vector<TutorialTask> v) {
-	for (int i = 0; i < v.size(); i++) {
-		if (v.at(i).taskComplete == false) {
-			return false;
-		}
-	}
-	return true;
-}
 
 TutorialState::~TutorialState() {
 	//delete player1;

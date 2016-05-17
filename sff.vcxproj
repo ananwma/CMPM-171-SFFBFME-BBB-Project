@@ -191,11 +191,14 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerSelectState.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="ResultsState.h" />
     <ClInclude Include="sff.h" />
+    <ClInclude Include="SpriteEmitter.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tinyxml2.h" />
     <ClInclude Include="TutorialStage.h" />
     <ClInclude Include="TutorialState.h" />
     <ClInclude Include="TutorialTask.h" />
@@ -220,6 +223,7 @@
     <ClCompile Include="PlayerSelectState.cpp" />
     <ClCompile Include="ResultsState.cpp" />
     <ClCompile Include="sff.cpp" />
+    <ClCompile Include="SpriteEmitter.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -227,12 +231,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="tinyxml2.cpp" />
     <ClCompile Include="TutorialStage.cpp" />
     <ClCompile Include="TutorialState.cpp" />
     <ClCompile Include="TutorialTask.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
     <ResourceCompile Include="sff.rc" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +264,11 @@
     <Image Include="sprites\hit_spark.png" />
     <Image Include="sprites\metro_indicator.png" />
     <Image Include="sprites\Ryu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Tutorial.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

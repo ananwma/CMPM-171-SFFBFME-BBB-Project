@@ -39,7 +39,7 @@ void Player::setCharacter(Character* c) {
 	health = character->health;
 	side = LEFT;
 	srand(time(NULL));
-	character->sprite.setColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+	//character->sprite.setColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
 }
 
 void Player::setPosition(float x, float y) {

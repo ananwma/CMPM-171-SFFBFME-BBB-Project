@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tutorial>
+  
+  <stage id="0">
+    <complete>0</complete>
+
+    <pretext>Welcome to the Super Fugue Fighter Tutorial. 
+      Let's start with movement.</pretext>
+    <posttext>Exquisite. Movement is important for 
+    positioning yourself correctly to hit 
+    your opponent.</posttext>
+
+    <task id="0">
+      <text>Walk Backwards</text>
+      <conditions>
+        <state>1</state>
+        <xvellessthan>0</xvellessthan>
+      </conditions>
+      <lefticonframes>0 1</lefticonframes>
+    </task>
+
+    <task id="1">
+      <text>Walk Forwards</text>
+      <conditions>
+        <state>1</state>
+        <xvelgreaterthan>0</xvelgreaterthan>
+      </conditions>
+      <lefticonframes>0 3</lefticonframes>
+    </task>
+  </stage>
+  
+  <stage id="1">
+    <complete>0</complete>
+    <pretext>
+      Try blocking!
+    </pretext>
+    <posttext>
+      Great! Blocking helps mitigate damage.
+    </posttext>
+
+    <task id="0">
+      <text>Block incoming 
+      attacks</text>
+      <conditions>
+        <state>5</state>
+      </conditions>
+      <lefticonframes>0 1</lefticonframes>
+    </task>
+  </stage>
+
+  <stage id="2">
+    <complete>0</complete>
+
+    <pretext>Now let's try some attacks.</pretext>
+    <pretext>Try performing at least 3, 
+    and remember to stay on the beat!</pretext>
+    <posttext>Great job, you're well on your way to 
+    being a Super Fugue Fighter virtuoso!</posttext>
+
+    <task id="0">
+      <text>Perform 3 attacks</text>
+      <conditions>
+        <state>4</state>
+      </conditions>
+      <lefticonframes>1 2 3 4 5 6 7 </lefticonframes>
+    </task>
+
+    <task id="1">
+      <text>Perform 2 attacks</text>
+      <conditions>
+        <state>4</state>
+      </conditions>
+      <lefticonframes>1 2 3 4 5 6 7</lefticonframes>
+    </task>
+
+    <task id="2">
+      <text>Perform 1 attack</text>
+      <conditions>
+        <state>4</state>
+      </conditions>
+      <lefticonframes>1 2 3 4 5 6 7</lefticonframes>
+    </task>
+  </stage>
+  
+  <stage id="3">
+    <complete>0</complete>
+
+    <pretext>Let's try grabs.</pretext>
+    <posttext>
+      Excellent! Grabs are great against blocking.
+    </posttext>
+
+    <task id="0">
+      <text>Grab your 
+      opponent</text>
+      <conditions>
+        <move>11</move>
+      </conditions>
+      <lefticonframes>7 </lefticonframes>
+    </task>
+  </stage>
+  
+  <stage id="4">
+    <complete>0</complete>
+
+    <pretext>Now that you've mastered regular attacks, 
+         let's move on to special attacks.</pretext>
+    <pretext>
+      These require you to hit multiple keys simultaneously.
+    </pretext>
+    <posttext>
+      Wow, AMAZING, are you Mozart?
+    </posttext>
+
+    <task id="0">
+      <text>Perform a 
+      special attack</text>
+      <conditions>
+        <move>12</move>
+      </conditions>
+      <lefticonframes>0 8</lefticonframes>
+    </task>
+  </stage>
+  
+  <stage id="5">
+    <complete>0</complete>
+
+    <pretext>
+      Okay, now let's try to play a simple combo.
+    </pretext>
+    <posttext>
+      Superb! Combos are essential to maximizing damage.
+    </posttext>
+
+    <task id="0">
+      <text>Light punch</text>
+      <conditions>
+        <move>3</move>
+      </conditions>
+      <lefticonframes>0 1</lefticonframes>
+    </task>
+    <task id="1">
+      <text>Medium punch</text>
+      <conditions>
+        <move>2</move>
+      </conditions>
+      <lefticonframes>0 2</lefticonframes>
+    </task>
+    <task id="2">
+      <text>Hard punch</text>
+      <conditions>
+        <move>6</move>
+      </conditions>
+      <lefticonframes>0 3</lefticonframes>
+    </task>
+  </stage>
+  
+ <stage id="6">
+    <complete>0</complete>
+
+    <pretext>Try performing your Magnum Opus move.</pretext>
+    <pretext>
+      Remember, the first note has to be on beat, 
+      but the rest can be played off beat.
+    </pretext>
+    <posttext>
+      Great job! That completes the tutorial.
+    </posttext>
+
+    <task id="0">
+      <text> Play the notes in 
+      quick succession</text>
+      <conditions>
+        <move>14</move>
+      </conditions>
+      <lefticonframes>0 5 1 2 3 4 5 1 0 1 0 0 0 </lefticonframes>
+    </task>
+  </stage>
+
+</tutorial>

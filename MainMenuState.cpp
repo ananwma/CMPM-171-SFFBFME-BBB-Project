@@ -14,8 +14,6 @@ MainMenuState::MainMenuState(Game &_game) : game(_game) { }
 
 void MainMenuState::init() {
 	running = true;
-	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
-
 	if (!Ctex.loadFromFile("sprites/C.png") || !Etex.loadFromFile("sprites/E.png") || !Gtex.loadFromFile("sprites/G.png")) {
 		std::cerr << "Error missing C/E/G sprites!\n";
 		exit(EXIT_FAILURE);
@@ -70,6 +68,10 @@ void MainMenuState::init() {
 	C.setPosition(WINDOW_WIDTH, versus.getPosition().y + PADDING);
 	E.setPosition(WINDOW_WIDTH, tutorial.getPosition().y + PADDING);
 	G.setPosition(WINDOW_WIDTH, options.getPosition().y+ PADDING);
+}
+
+void MainMenuState::hookEvent() {
+	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 }
 
 void MainMenuState::update() {

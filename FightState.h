@@ -8,6 +8,7 @@
 #include "ConcertHallStage.h"
 #include "Bassline.h"
 #include "UI.h"
+#include "SpriteEmitter.h"
 #include <SFML/Audio.hpp>
 
 class FightState : public GameState {
@@ -25,6 +26,7 @@ public:
 	virtual void receiveKeysDown(int, int);
 	virtual void receiveKeysUp(int, int);
 	virtual void unhookEvent();
+	virtual void hookEvent();
 
 	sf::View camera_view;
 	sf::View HUD;
@@ -40,6 +42,7 @@ public:
 	sf::RectangleShape player_1_round_win_2;
 	sf::RectangleShape player_2_round_win_1;
 	sf::RectangleShape player_2_round_win_2;
+	sf::RectangleShape pauseOverlay;
 	sf::RectangleShape timer;
 	sf::Text timer_text;
 	sf::Font font;
@@ -62,6 +65,9 @@ private:
 	Player *player1;
 	sf::Clock clock;
 	sf::Clock metronome;
+	sf::Clock emitterClock;
+	SpriteEmitter dust1;
+	SpriteEmitter dust2;
 	bool onBeat;
 	float beat;
 	int intOnBeat;
@@ -70,6 +76,8 @@ private:
 	bool indicatorFlashOn;
 	bool octave;
 	bool colliding = false;
+
+	float saveTime = 60.0f;
 
 	bool played;
 	Bassline bassline;
