@@ -162,24 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
-    <ClInclude Include="BachBlockstun.h" />
-    <ClInclude Include="BachFierce.h" />
-    <ClInclude Include="BachForward.h" />
-    <ClInclude Include="BachGrab.h" />
-    <ClInclude Include="BachHitstun.h" />
-    <ClInclude Include="BachIdle.h" />
-    <ClInclude Include="BachJab.h" />
-    <ClInclude Include="BachRoundhouse.h" />
-    <ClInclude Include="BachShort.h" />
-    <ClInclude Include="BachShoryuken.h" />
-    <ClInclude Include="BachStrong.h" />
-    <ClInclude Include="BachSuper.h" />
-    <ClInclude Include="BachTatsu.h" />
     <ClInclude Include="BeatIndicator.h" />
     <ClInclude Include="Bassline.h" />
     <ClInclude Include="CameraControl.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="CharacterBach.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConcertHallStage.h" />
@@ -211,7 +197,6 @@
     <ClCompile Include="Bassline.cpp" />
     <ClCompile Include="CameraControl.cpp" />
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="CharacterBach.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConcertHallStage.cpp" />
@@ -221,6 +206,7 @@
     <ClCompile Include="GameStateManager.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="Move.cpp" />
     <ClCompile Include="parser.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -248,7 +234,9 @@
     <None Include="SFFProperties.props" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="Bach.xml" />
+    <Xml Include="Bach.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

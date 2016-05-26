@@ -23,12 +23,7 @@ Player::Player()
 	playerId = -1;
 	hitstunFrames = 0;
 	meter = 1000.0f;
-	xpos = INIT_XPOS;
-	ypos = INIT_YPOS;
-	xvel = 0.0f;
-	yvel = 0.0f;
-	xacc = 0.0f;
-	yacc = 0.0f;
+	gravity = 0.98f;
 	state = NO_STATE;
 	colliding = false;
 	canCancel = false;
@@ -40,6 +35,15 @@ Player::Player()
 }
 
 bool Player::loadCharacter(string filename) {
+
+	unordered_map<string, State> stateMap = { 
+		{"NO_STATE", NO_STATE}, 
+		{"WALK_STATE", WALK_STATE}, 
+		{"AIRBORNE_STATE", AIRBORNE_STATE}, 
+		{"HITSTUN_STATE", HITSTUN_STATE}, 
+		{"ATTACK_STATE", ATTACK_STATE}, 
+		{"BLOCKSTUN_STATE", BLOCKSTUN_STATE} };
+
 	// Load XML File
 	tinyxml2::XMLDocument characterFile;
 	characterFile.LoadFile(filename.c_str());
@@ -60,33 +64,84 @@ bool Player::loadCharacter(string filename) {
 	int n;
 	while (stream >> n)
 		super.push_back(n);
+
+	tinyxml2::XMLElement* nextMove = characterData->FirstChildElement("move");
+	while (nextMove != NULL) {
+		string movename = nextMove->FirstAttribute()->Value();
+		Move move;
+		move.spritesheet.loadFromFile(nextMove->FirstChildElement("sprite")->GetText());
+		move.frameCount = atoi(nextMove->FirstChildElement("framecount")->GetText());
+		move.damage = atoi(nextMove->FirstChildElement("damage")->GetText());
+		move.hitstun = atoi(nextMove->FirstChildElement("hitstun")->GetText());
+		move.blockstun = atoi(nextMove->FirstChildElement("blockstun")->GetText());
+		move.velX = atof(nextMove->FirstChildElement("velx")->GetText());
+		move.velY = atof(nextMove->FirstChildElement("vely")->GetText());
+		move.pushX = atof(nextMove->FirstChildElement("pushx")->GetText());
+		move.pushY = atof(nextMove->FirstChildElement("pushy")->GetText());
+		move.knockback = atof(nextMove->FirstChildElement("knockback")->GetText());
+		move.state = stateMap[nextMove->FirstChildElement("state")->GetText()];
+
+		tinyxml2::XMLElement* frameData = nextMove->FirstChildElement("framedata");
+		tinyxml2::XMLElement* nextBox = frameData->FirstChildElement("hitbox");
+		unordered_map<int, Frame> frameMap;
+		while (nextBox != NULL) {
+			int frameIndex = atoi(nextBox->Attribute("frame"));
+
+			//If not found create new
+			if (frameMap.find(frameIndex) == frameMap.end()) 
+				frameMap[frameIndex] = Frame();
+
+			frameMap.at(frameIndex).addBox(nextBox->Attribute("userdata"), sf::FloatRect( atof(nextBox->Attribute("x")), 
+																				          atof(nextBox->Attribute("y")), 
+																				          atof(nextBox->Attribute("width")), 
+																				          atof(nextBox->Attribute("height") )));
+
+			frameData->DeleteChild(nextBox); 
+			nextBox = frameData->FirstChildElement("hitbox");
+		}
+		move.frameMap = frameMap;
+
+
+		moveMap[nextMove->Attribute("name")] = move;
+		characterData->DeleteChild(nextMove);
+		nextMove = characterData->FirstChildElement("move");
+	}
+
 	return true;
 }
 
-void Player::setCharacter(Character* c) {
-	character = c;
-	health = character->health;
-	side = LEFT;
-	srand(time(NULL));
-	character->sprite.setColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+void Player::update() {
+	updatePhysics();
+	if (state == ATTACK_STATE && currAnimFrame == numAnimFrames - 1) {
+		state = NO_STATE;
+		//doMove("idle");
+	}
+	else if (state == AIRBORNE_STATE && ypos == GROUND) {
+		state = NO_STATE;
+		doMove("idle");
+	}
+
 }
 
-/*void Player::setPosition(float x, float y) {
-	character->sprite.setPosition(x, y);
-	xpos = x;
-	ypos = y;
-}*/
+void Player::doMove(string moveName) {
+	if (state == NO_STATE) {
+		currentMove = &moveMap[moveName];
 
-void Player::doMove(int move) {
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+		setAnimTexture(currentMove->spritesheet, 438, 548, currentMove->frameCount);
+
+		xvel = currentMove->velX;
+		yvel = currentMove->velY;
+		state = currentMove->state;
+	}
+	/*if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
 		if (state == WALK_STATE)
 			xvel = 0;
-		if (move == IDLE)
+		if (moveName == IDLE)
 			xvel = 0;
 		character->currentMove = move;
 		getCurrentMove()->setHitFalse();
 		//character->sprite.setTexture(character->moveList.at(move)->spritesheet);
-		setAnimTexture(character->moveList.at(move)->spritesheet, 438, 548, character->moveList.at(move)->frameCount);
+		setAnimTexture(character->moveList.at(moveName)->spritesheet, 438, 548, character->moveList.at(moveName)->frameCount);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
 		yvel = getCurrentMove()->velY * (500 / beat);
@@ -95,12 +150,12 @@ void Player::doMove(int move) {
 		else if (side == RIGHT)
 			xvel = -getCurrentMove()->velX * (500 / beat);
 	}
-	else if (state == ATTACK_STATE && canCancel && moveCancelable(character->currentMove, move)) {
-		character->currentMove = move;
-		character->sprite.setTexture(character->moveList.at(move)->spritesheet);
+	else if (state == ATTACK_STATE && canCancel && moveCancelable(character->currentMove, moveName)) {
+		character->currentMove = moveName;
+		character->sprite.setTexture(character->moveList.at(moveName)->spritesheet);
 		character->currentMoveFrame = 0;
 		state = getCurrentMove()->state;
-	}
+	}*/
 }
 
 void Player::getHit(Move *move) {
@@ -215,83 +270,12 @@ void Player::jump(direction dir) {
 	}
 }
 
-
-/*void Player::updateAnimFrame() {
-	character->currentMoveFrame++;
-	int animFrames = ((getCurrentMove()->getFrameCount()) - 1);
-	if (getCurrentFrameNum() > animFrames) {
-
-		if (state == HITSTUN_STATE && hitstunFrames != 0) {
-			character->currentMoveFrame = animFrames;
-			hitstunFrames -= 1;
-		}
-		else if (state == BLOCKSTUN_STATE && blockstunFrames != 0) {
-			character->currentMoveFrame = animFrames;
-			blockstunFrames -= 1;
-		}
-		else if (state == WALK_STATE || state == NO_STATE) {
-			character->currentMoveFrame = 0;
-		}
-		else if (state == NO_STATE || state == ATTACK_STATE || state == HITSTUN_STATE || state == AIRBORNE_STATE || state == BLOCKSTUN_STATE) {
-			character->currentMoveFrame = 0;
-			character->currentMove = IDLE;
-			canCancel = false;
-			getCurrentFrame().hit = false;
-			character->sprite.setTexture(character->moveList.at(IDLE)->spritesheet);
-			if (state != AIRBORNE_STATE)
-				state = NO_STATE;
-		}
-	}
-	if (side == LEFT) {
-		character->sprite.setTextureRect(sf::IntRect(
-			getCurrentFrameNum() * character->width,
-			0,
-			character->width,
-			character->height
-			));
-	}
-	// Draw flipped
-	else if (side == RIGHT) {
-		character->sprite.setTextureRect(sf::IntRect(
-			(getCurrentFrameNum() * character->width) + character->width,
-			0,
-			-character->width,
-			character->height
-			));
-	}
-}*/
-
-/*void Player::updatePhysics() {
-	//Add acceleration to velocity
-	xvel += xacc;
-	yvel += yacc;
-	//Update positions based on velocity
-	xpos += xvel;
-	ypos += yvel;
-	//Add gravitational acceleration if AIRBORNE_STATE
-	if (ypos < GROUND) {
-		yvel += gravity;
-	}
-	if (ypos + yvel > GROUND) {
-		ypos = GROUND;
-		yvel = 0.0f;
-		xvel = 0.0f;
-		if (state != ATTACK_STATE)
-			state = NO_STATE;
-	}
-	//if (((character->sprite.getPosition().x + character->wall_offset <= 0) || (character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH)) && state == AIRBORNE_STATE) {
-	//if((xpos <= 0)||(xpos >= 1280)){
-	//	xvel = 0;
-	//}
-	character->sprite.setPosition(xpos, ypos);
-}*/
-
 void Player::checkSuper(int note) {
-	if (character->super.at(superIndex) == note && superTimeout.restart().asMilliseconds() < SUPER_TIMEOUT) {
+	if (super.at(superIndex) == note && superTimeout.restart().asMilliseconds() < SUPER_TIMEOUT) {
 		superIndex++;
-		if (superIndex == character->super.size()) {
+		if (superIndex == super.size()) {
 			state = NO_STATE;
-			doMove(SUPER);
+			doMove("super");
 			superIndex = 0;
 		}
 	}
@@ -319,7 +303,7 @@ Move* Player::getCurrentMove() {
 }
 
 Frame& Player::getCurrentFrame() {
-	return getCurrentMove()->frameVector.at(character->currentMoveFrame);
+	return getCurrentMove()->frameMap.at(character->currentMoveFrame);
 }
 
 float Player::getSpriteWidth() {

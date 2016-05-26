@@ -1416,9 +1416,10 @@ const char* XMLElement::Attribute( const char* name, const char* value ) const
 
 const char* XMLElement::GetText() const
 {
-    if ( FirstChild() && FirstChild()->ToText() ) {
-        return FirstChild()->Value();
-    }
+	TIXMLASSERT (this != NULL && "Bad XML");
+	if (FirstChild() && FirstChild()->ToText()) {
+		return FirstChild()->Value();
+	}
     return 0;
 }
 

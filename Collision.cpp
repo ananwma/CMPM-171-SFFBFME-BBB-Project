@@ -6,7 +6,7 @@
 Collision::Collision()
 {
 }
-
+/*
 void Collision::flip_sprites(Player &p1, Player &p2) {
 	if (p1.xpos < p2.xpos && p1.side == RIGHT) {
 		p1.side = LEFT;
@@ -15,7 +15,7 @@ void Collision::flip_sprites(Player &p1, Player &p2) {
 		p1.side = RIGHT;
 	}
 }
-
+*/
 //****************************************
 // GETPOSITION() IS TOP LEFT NOT MIDDLE
 //****************************************

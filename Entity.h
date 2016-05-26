@@ -16,18 +16,21 @@ public:
 	Entity& operator= (const Entity&) = delete;
 	Entity& operator= (Entity&&) = delete;
 
-	void setTexture(sf::Texture);
-	void setAnimTexture(sf::Texture, int, int, int);
+	void setTexture(sf::Texture&);
+	void setAnimTexture(sf::Texture&, int, int, int);
 	void setPosition(float, float);
 	void updateSide(Entity&);
-	void updateAnimFrame();
+	int updateAnimFrame();
 
 	void updatePhysics();
+
+	void setSide(direction);
 
 
 	~Entity() = default;
 
-	sf::Sprite *e_sprite = new sf::Sprite();
+	sf::Sprite sprite;
+	sf::Texture texture;
 
 protected:
 
@@ -42,7 +45,7 @@ protected:
 
 	int spriteWidth;
 	int spriteHeight;
-	int numAnimFrames;
+	int numAnimFrames = 1;
 	int currAnimFrame = 0;
 	direction side;
 };

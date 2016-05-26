@@ -1,5 +1,6 @@
 #pragma once
 #include "Frame.h"
+#include <unordered_map>
 #include <iostream>
 
 
@@ -7,22 +8,22 @@ using namespace std;
 using BoxVec = vector<sf::FloatRect>;
 using FrameVec = vector<Frame>;
 
-enum state { NO_STATE, WALK_STATE, AIRBORNE_STATE, HITSTUN_STATE, ATTACK_STATE, BLOCKSTUN_STATE };
+enum State { NO_STATE, WALK_STATE, AIRBORNE_STATE, HITSTUN_STATE, ATTACK_STATE, BLOCKSTUN_STATE };
 
 class Move {
 	friend class Player;
 public:
-	//Move() = default;
-	//~Move() = default;
-	virtual void initFrames() = 0;
-	virtual void initCancelMoves() = 0;
-	virtual int getFrameCount() { return frameCount; };
-	virtual int getDamage() { return damage; };
-	void setHitFalse() { for (auto &i : frameVector) i.hit = false; }
+	Move() = default;
+	~Move() = default;
+	//virtual void initFrames();
+	//virtual void initCancelMoves();
+	unordered_map<int, Frame> frameMap;
+	int getFrameCount() { return frameCount; };
+	int getDamage() { return damage; };
+	void setHitFalse() { for (auto &i : frameMap) i.second.hit = false; }
 protected:
 	sf::Texture spritesheet;
 	int frameCount;
-	vector<Frame> frameVector;
 	int damage;
 	int hitstun;
 	int blockstun;
@@ -32,7 +33,8 @@ protected:
 	float accY = 0;
 	float pushX = 0;
 	float pushY = 0;
+	float knockback = 0;
 	vector<int> cancelMoves;
-	state state;
+	State state;
 };
 

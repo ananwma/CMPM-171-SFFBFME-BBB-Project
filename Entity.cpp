@@ -1,34 +1,35 @@
 #include "stdafx.h"
-
+#include <iostream>
 #include "Entity.h"
 
-void Entity::setTexture(sf::Texture texture) {
-	e_sprite->setTexture(texture);
+void Entity::setTexture(sf::Texture &_texture) {
+	texture = _texture;
+	sprite.setTexture(texture);
 }
 
-void Entity::setAnimTexture(sf::Texture texture, int width, int height, int framecount) {
-	e_sprite->setTexture(texture);
+void Entity::setAnimTexture(sf::Texture &_texture, int width, int height, int framecount) {
+	texture = _texture;
+	sprite.setTexture(texture);
 	spriteWidth = width;
 	spriteHeight = height;
 	numAnimFrames = framecount;
+	currAnimFrame = 0;
 }
 
 void Entity::setPosition(float x, float y) {
-	//sprite->setPosition(x, y);
+	sprite.setPosition(x, y);
 	xpos = x;
 	ypos = y;
 }
 
 void Entity::updateSide(Entity &relativeTo) {
-	if (xpos < relativeTo.xpos && side == RIGHT) {
+	if (xpos < relativeTo.xpos)
 		side = LEFT;
-	}
-	else if (xpos > relativeTo.xpos && side == LEFT) {
+	else
 		side = RIGHT;
-	}
 } 
 
-void Entity::updateAnimFrame() {
+int Entity::updateAnimFrame() {
 	//MOVE TO PLAYER
 	/*int animFrames = ((getCurrentMove()->getFrameCount()) - 1);
 	if (getCurrentFrameNum() > animFrames) {
@@ -55,7 +56,7 @@ void Entity::updateAnimFrame() {
 		}
 	}*/
 	if (side == LEFT) {
-		e_sprite->setTextureRect(sf::IntRect(
+		sprite.setTextureRect(sf::IntRect(
 			currAnimFrame * spriteWidth,
 			0,
 			spriteWidth,
@@ -64,13 +65,19 @@ void Entity::updateAnimFrame() {
 	}
 	// Draw flipped
 	else if (side == RIGHT) {
-		e_sprite->setTextureRect(sf::IntRect(
+		sprite.setTextureRect(sf::IntRect(
 			(currAnimFrame * spriteWidth) + spriteWidth,
 			0,
 			-spriteWidth,
 			spriteHeight
 			));
 	}
+	++currAnimFrame;
+	if (currAnimFrame == numAnimFrames)
+		std::cout << "here";
+
+	//++currAnimFrame %= numAnimFrames;
+	return currAnimFrame;
 }
 
 void Entity::updatePhysics() {
@@ -101,3 +108,7 @@ void Entity::updatePhysics() {
 	//}
 	setPosition(xpos, ypos);
 }
+
+void Entity::setSide(direction _side) {
+	side = _side;
+}  

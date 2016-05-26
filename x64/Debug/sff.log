@@ -1,10 +1,2 @@
-﻿  Player.cpp
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(52): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(65): warning C4101: 'e': unreferenced local variable
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(75): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(331): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(334): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-c:\users\michael\source\repos\super fugue fighter\sff\sff\player.cpp(338): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  sff.vcxproj -> C:\Users\Michael\Source\Repos\Super Fugue Fighter\sff\x64\Debug\sff.exe
+﻿  Entity.cpp
+  sff.vcxproj -> C:\Users\mhgun\Source\Repos\sff2\x64\Debug\sff.exe
