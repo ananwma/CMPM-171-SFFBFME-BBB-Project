@@ -30,7 +30,7 @@ public:
 	~Entity() = default;
 
 	sf::Sprite sprite;
-	sf::Texture texture;
+	sf::Texture *texture;
 
 protected:
 

@@ -11,7 +11,7 @@
 
   <move name="jab">
     <sprite>sprites/bach_jab.png</sprite>
-    <framecount>4</framecount>
+    <framecount>5</framecount>
     <damage>20</damage>
     <hitstun>6</hitstun>
     <blockstun>1</blockstun>
@@ -465,8 +465,8 @@
   </move>
 
   <move name="idle">
-    <sprite>sprites/bach_idle.png</sprite>
-    <framecount>1</framecount>
+    <sprite>sprites/bach_jab.png</sprite>
+    <framecount>2</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>
@@ -484,8 +484,8 @@
   </move>
 
   <move name="walk">
-    <sprite>sprites/bach_idle.png</sprite>
-    <framecount>1</framecount>
+    <sprite>sprites/bach_forward.png</sprite>
+    <framecount>3</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>

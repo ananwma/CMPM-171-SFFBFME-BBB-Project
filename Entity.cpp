@@ -3,13 +3,12 @@
 #include "Entity.h"
 
 void Entity::setTexture(sf::Texture &_texture) {
-	texture = _texture;
-	sprite.setTexture(texture);
+	texture = &_texture;
+	sprite.setTexture(*texture);
 }
 
 void Entity::setAnimTexture(sf::Texture &_texture, int width, int height, int framecount) {
-	texture = _texture;
-	sprite.setTexture(texture);
+	texture = &_texture;
 	spriteWidth = width;
 	spriteHeight = height;
 	numAnimFrames = framecount;
@@ -55,7 +54,9 @@ int Entity::updateAnimFrame() {
 				state = NO_STATE;
 		}
 	}*/
+	sprite.setTexture(*texture);
 	if (side == LEFT) {
+		std::cout << currAnimFrame << std::endl;
 		sprite.setTextureRect(sf::IntRect(
 			currAnimFrame * spriteWidth,
 			0,
@@ -72,11 +73,9 @@ int Entity::updateAnimFrame() {
 			spriteHeight
 			));
 	}
-	++currAnimFrame;
-	if (currAnimFrame == numAnimFrames)
-		std::cout << "here";
+	//++currAnimFrame;
 
-	//++currAnimFrame %= numAnimFrames;
+	++currAnimFrame %= numAnimFrames;
 	return currAnimFrame;
 }
 

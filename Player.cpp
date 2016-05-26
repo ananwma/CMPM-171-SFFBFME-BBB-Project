@@ -114,11 +114,9 @@ void Player::update() {
 	updatePhysics();
 	if (state == ATTACK_STATE && currAnimFrame == numAnimFrames - 1) {
 		state = NO_STATE;
-		//doMove("idle");
 	}
 	else if (state == AIRBORNE_STATE && ypos == GROUND) {
 		state = NO_STATE;
-		doMove("idle");
 	}
 
 }
@@ -126,7 +124,6 @@ void Player::update() {
 void Player::doMove(string moveName) {
 	if (state == NO_STATE) {
 		currentMove = &moveMap[moveName];
-
 		setAnimTexture(currentMove->spritesheet, 438, 548, currentMove->frameCount);
 
 		xvel = currentMove->velX;
