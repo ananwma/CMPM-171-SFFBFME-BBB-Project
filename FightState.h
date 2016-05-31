@@ -44,6 +44,7 @@ public:
 	sf::RectangleShape player_2_round_win_2;
 	sf::RectangleShape pauseOverlay;
 	sf::RectangleShape timer;
+	sf::RectangleShape HUDOverlay;
 	sf::Text timer_text;
 	sf::Font font;
 	float time;

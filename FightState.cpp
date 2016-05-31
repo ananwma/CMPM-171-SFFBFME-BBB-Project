@@ -62,6 +62,10 @@ void FightState::init() {
 	game.playerTwo.setPosition(WINDOW_WIDTH / 1.4, GROUND);
 	game.playerTwo.side = RIGHT;
 
+	//sf::Texture HUDTexture;
+
+	//HUDOverlay.setTexture(HUDTexture);
+
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
 
@@ -434,8 +438,8 @@ void FightState::draw() {
 	game.window.clear();
 	game.window.setView(camera_view);
 	game.window.draw(game.currentScreen.stage.base);
-	game.window.draw(game.currentScreen.stage.med);
-	game.window.draw(game.currentScreen.stage.front);
+	//game.window.draw(game.currentScreen.stage.med);
+	//game.window.draw(game.currentScreen.stage.front);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
