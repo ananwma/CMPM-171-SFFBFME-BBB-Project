@@ -19,7 +19,7 @@ private:
 	int walloffset;
 	vector<int> super;
 	unordered_map<string, Move> moveMap;
-	Move* currentMove;
+	Move* currentMove = NULL;
 
 public:
 	// No copy constructor
@@ -48,7 +48,7 @@ public:
 	int blockstunFrames;
 	int roundWins;
 	int playerId;
-	direction side;
+	//direction side;
 	State state;
 	bool colliding;
 	bool againstWall = false;

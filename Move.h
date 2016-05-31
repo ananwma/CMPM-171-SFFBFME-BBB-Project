@@ -12,6 +12,7 @@ enum State { NO_STATE, WALK_STATE, AIRBORNE_STATE, HITSTUN_STATE, ATTACK_STATE, 
 
 class Move {
 	friend class Player;
+	friend class CollisionManager;
 public:
 	Move() = default;
 	~Move() = default;
@@ -21,6 +22,7 @@ public:
 	int getFrameCount() { return frameCount; };
 	int getDamage() { return damage; };
 	void setHitFalse() { for (auto &i : frameMap) i.second.hit = false; }
+	string moveName;
 protected:
 	sf::Texture spritesheet;
 	int frameCount;
@@ -34,6 +36,7 @@ protected:
 	float pushX = 0;
 	float pushY = 0;
 	float knockback = 0;
+	bool inAir = 0;
 	vector<int> cancelMoves;
 	State state;
 };

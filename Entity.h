@@ -9,7 +9,9 @@
 enum direction { LEFT, RIGHT, NEUTRAL };
 
 class Entity {
+
 public:
+
 	Entity() = default;
 	Entity(const Entity&) = delete;
 	Entity(Entity&&) = delete;
@@ -25,12 +27,17 @@ public:
 	void updatePhysics();
 
 	void setSide(direction);
+	direction getSide();
 
 
 	~Entity() = default;
 
 	sf::Sprite sprite;
 	sf::Texture *texture;
+
+	std::vector<sf::FloatRect> collisionVolumes;
+	sf::FloatRect collisionVolume;
+	void setCollisionVolume(sf::FloatRect);
 
 protected:
 
@@ -48,4 +55,7 @@ protected:
 	int numAnimFrames = 1;
 	int currAnimFrame = 0;
 	direction side;
+
+	friend class CollisionManager;
+
 };

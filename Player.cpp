@@ -36,12 +36,12 @@ Player::Player()
 
 bool Player::loadCharacter(string filename) {
 
-	unordered_map<string, State> stateMap = { 
-		{"NO_STATE", NO_STATE}, 
-		{"WALK_STATE", WALK_STATE}, 
-		{"AIRBORNE_STATE", AIRBORNE_STATE}, 
-		{"HITSTUN_STATE", HITSTUN_STATE}, 
-		{"ATTACK_STATE", ATTACK_STATE}, 
+	unordered_map<string, State> stateMap = {
+		{"NO_STATE", NO_STATE},
+		{"WALK_STATE", WALK_STATE},
+		{"AIRBORNE_STATE", AIRBORNE_STATE},
+		{"HITSTUN_STATE", HITSTUN_STATE},
+		{"ATTACK_STATE", ATTACK_STATE},
 		{"BLOCKSTUN_STATE", BLOCKSTUN_STATE} };
 
 	// Load XML File
@@ -67,8 +67,8 @@ bool Player::loadCharacter(string filename) {
 
 	tinyxml2::XMLElement* nextMove = characterData->FirstChildElement("move");
 	while (nextMove != NULL) {
-		string movename = nextMove->FirstAttribute()->Value();
 		Move move;
+		move.moveName = nextMove->FirstAttribute()->Value();
 		move.spritesheet.loadFromFile(nextMove->FirstChildElement("sprite")->GetText());
 		move.frameCount = atoi(nextMove->FirstChildElement("framecount")->GetText());
 		move.damage = atoi(nextMove->FirstChildElement("damage")->GetText());
@@ -79,6 +79,7 @@ bool Player::loadCharacter(string filename) {
 		move.pushX = atof(nextMove->FirstChildElement("pushx")->GetText());
 		move.pushY = atof(nextMove->FirstChildElement("pushy")->GetText());
 		move.knockback = atof(nextMove->FirstChildElement("knockback")->GetText());
+		move.inAir = atoi(nextMove->FirstChildElement("inair")->GetText());
 		move.state = stateMap[nextMove->FirstChildElement("state")->GetText()];
 
 		tinyxml2::XMLElement* frameData = nextMove->FirstChildElement("framedata");
@@ -88,15 +89,15 @@ bool Player::loadCharacter(string filename) {
 			int frameIndex = atoi(nextBox->Attribute("frame"));
 
 			//If not found create new
-			if (frameMap.find(frameIndex) == frameMap.end()) 
+			if (frameMap.find(frameIndex) == frameMap.end())
 				frameMap[frameIndex] = Frame();
 
-			frameMap.at(frameIndex).addBox(nextBox->Attribute("userdata"), sf::FloatRect( atof(nextBox->Attribute("x")), 
-																				          atof(nextBox->Attribute("y")), 
-																				          atof(nextBox->Attribute("width")), 
-																				          atof(nextBox->Attribute("height") )));
+			frameMap.at(frameIndex).addBox(nextBox->Attribute("userdata"), sf::FloatRect(atof(nextBox->Attribute("x")),
+				atof(nextBox->Attribute("y")),
+				atof(nextBox->Attribute("width")),
+				atof(nextBox->Attribute("height"))));
 
-			frameData->DeleteChild(nextBox); 
+			frameData->DeleteChild(nextBox);
 			nextBox = frameData->FirstChildElement("hitbox");
 		}
 		move.frameMap = frameMap;
@@ -112,24 +113,44 @@ bool Player::loadCharacter(string filename) {
 
 void Player::update() {
 	updatePhysics();
+	setCollisionVolume(currentMove->frameMap[0].clipboxes[0]);
 	if (state == ATTACK_STATE && currAnimFrame == numAnimFrames - 1) {
 		state = NO_STATE;
+		doMove("idle");
 	}
 	else if (state == AIRBORNE_STATE && ypos == GROUND) {
 		state = NO_STATE;
+		doMove("idle");
 	}
-
+	else if (state == AIRBORNE_STATE && yvel > 0) {
+		doMove("fall");
+	}
 }
 
 void Player::doMove(string moveName) {
-	if (state == NO_STATE) {
-		currentMove = &moveMap[moveName];
-		setAnimTexture(currentMove->spritesheet, 438, 548, currentMove->frameCount);
+		if (state == NO_STATE || state == WALK_STATE) {
+			if (currentMove != &moveMap[moveName]) {
+				currentMove = &moveMap[moveName];
+				setAnimTexture(currentMove->spritesheet, 438, 548, currentMove->frameCount);
+			}
 
-		xvel = currentMove->velX;
-		yvel = currentMove->velY;
-		state = currentMove->state;
-	}
+			xvel = currentMove->velX;
+			yvel = currentMove->velY;
+			state = currentMove->state;
+
+		}
+		else if (state == AIRBORNE_STATE) {
+			if (moveMap[moveName].inAir) {
+				if (currentMove != &moveMap[moveName]) {
+					currentMove = &moveMap[moveName];
+					setAnimTexture(currentMove->spritesheet, 438, 548, currentMove->frameCount);
+				}
+				xvel += currentMove->velX;
+				yvel += currentMove->velY;
+				state = currentMove->state;
+			}
+		}
+	
 	/*if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
 		if (state == WALK_STATE)
 			xvel = 0;
@@ -296,11 +317,11 @@ int Player::getCurrentFrameNum() {
 
 
 Move* Player::getCurrentMove() {
-	return character->moveList.at(character->currentMove);
+	return currentMove;
 }
 
 Frame& Player::getCurrentFrame() {
-	return getCurrentMove()->frameMap.at(character->currentMoveFrame);
+	return currentMove->frameMap[currAnimFrame];
 }
 
 float Player::getSpriteWidth() {

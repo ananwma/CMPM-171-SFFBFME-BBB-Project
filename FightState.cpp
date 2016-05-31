@@ -53,7 +53,12 @@ void FightState::init() {
 	//100 = ground level
 	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
 	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
-	game.playerTwo.side = LEFT;
+
+	game.collisionManager.registerEntity(game.playerOne);
+	game.collisionManager.registerEntity(game.playerTwo);
+
+	game.playerOne.setSide(LEFT);
+	game.playerTwo.setSide(RIGHT);
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
@@ -159,6 +164,7 @@ void FightState::update() {
 	//restrict_movement(game.playerTwo, game.playerOne);
 
 	//keep here or move to fightstate?
+	game.collisionManager.checkClipBoxes(game.playerOne, game.playerTwo);
 	game.playerOne.update();
 	game.playerTwo.update();
 	game.playerOne.updateSide(game.playerTwo);
@@ -238,7 +244,7 @@ void FightState::update() {
 			indicatorFlashOn = false;    
 			indicatorFlash = 5;
 		}
-		cout << game.playerTwo.updateAnimFrame() << endl;
+		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
 	}
 
@@ -455,7 +461,7 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 	}
 }*/
 
-void FightState::checkBoxes(Player& attacker, Player& defender) {
+/*void FightState::checkBoxes(Player& attacker, Player& defender) {
 	sf::Vector2f attPos = attacker.character->sprite.getPosition();
 	sf::Vector2f defPos = defender.character->sprite.getPosition();
 	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
@@ -500,9 +506,9 @@ void FightState::checkBoxes(Player& attacker, Player& defender) {
 			}
 		}
 	}
-}
+}*/
 
-void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
+/*void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	// Anan's super secret math formula
 	sf::Vector2f v = player.character->sprite.getPosition();
 	Frame &frame = player.getCurrentFrame();
@@ -542,17 +548,17 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 			game.window.draw(drawRect);
 		}
 	}
-}
+}*/
 
 void FightState::processInput(Player& player, vector<int>& input) {
 	// Handle every possible combination of movement keys
 	if (player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
-		player.doMove("jump");
+		player.doMove("njump");
 	}
 	else if (!player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
-		player.jump(RIGHT);
+		player.doMove("fjump");
 	}
 	else if (player.left && !player.jumping && player.right) {
 		player.holdingBlock = true;
@@ -560,13 +566,13 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	}
 	else if (player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.jump(LEFT);
+		player.doMove("bjump");
 	}
 	else if (!player.left && !player.jumping && player.right) {
 
-		player.walk(RIGHT);
+		player.doMove("walk");
 		//check if player is holding correct direction to block
-		if (player.side == RIGHT) {
+		if (player.getSide() == RIGHT) {
 			player.holdingBlock = true;
 		}
 		else {
@@ -574,9 +580,9 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	else if (player.left && !player.jumping && !player.right) {
-		player.doMove("walk");
+		player.doMove("backwalk");
 		//check if player is holding correct direction to block
-		if (player.side == LEFT) {
+		if (player.getSide() == LEFT) {
 			player.holdingBlock = true;
 		}
 		else {
@@ -585,7 +591,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	}
 	else if (!player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.doMove("jump");
+		player.doMove("njump");
 	}
 	else if (!player.left && !player.jumping && !player.right) {
 		player.holdingBlock = false;

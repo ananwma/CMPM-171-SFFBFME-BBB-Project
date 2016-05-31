@@ -27,14 +27,14 @@ void AssetManager::setStage(Stage & s)
 	stage = s;
 }
 void AssetManager::move_camera_left(Stage &stage, Player &p1, Player &p2) {
-	if (p1.side == RIGHT && (p2.character->sprite.getPosition().x + p2.getSpriteWidth()/2 != window_width) && (stage.window_offset > 0)) {
+	if (p1.getSide() == RIGHT && (p2.character->sprite.getPosition().x + p2.getSpriteWidth()/2 != window_width) && (stage.window_offset > 0)) {
 		stage.sprite.move(2.0000000f, 0);
 		stage.window_offset = stage.window_offset - 2;
 		cout << stage.window_offset << endl;
 	}
 }
 void AssetManager::move_camera_right(Stage &stage, Player &p1, Player &p2) {
-	if (p1.side == LEFT && p2.character->sprite.getPosition().x - p2.getSpriteWidth() / 2 != 0 && stage.window_offset < stage.window_limit) {
+	if (p1.getSide() == LEFT && p2.character->sprite.getPosition().x - p2.getSpriteWidth() / 2 != 0 && stage.window_offset < stage.window_limit) {
 		stage.sprite.move(-2.0000000f, 0);
 		stage.window_offset = stage.window_offset + 2;
 		cout << stage.window_offset << endl;

@@ -56,7 +56,6 @@ int Entity::updateAnimFrame() {
 	}*/
 	sprite.setTexture(*texture);
 	if (side == LEFT) {
-		std::cout << currAnimFrame << std::endl;
 		sprite.setTextureRect(sf::IntRect(
 			currAnimFrame * spriteWidth,
 			0,
@@ -110,4 +109,12 @@ void Entity::updatePhysics() {
 
 void Entity::setSide(direction _side) {
 	side = _side;
-}  
+}
+
+direction Entity::getSide() {
+	return side;
+}
+
+void Entity::setCollisionVolume(sf::FloatRect rect) {
+	collisionVolume = rect;
+}

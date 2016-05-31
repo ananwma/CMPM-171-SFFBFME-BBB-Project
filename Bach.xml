@@ -20,6 +20,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>1</knockback>
+    <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
@@ -52,6 +53,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>2</knockback>
+    <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
@@ -99,6 +101,7 @@
     <pushx>2</pushx>
     <pushy>0</pushy>
     <knockback>3</knockback>
+    <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
@@ -169,6 +172,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>1</knockback>
+    <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
@@ -216,6 +220,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>3</knockback>
+    <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
@@ -263,6 +268,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>3</knockback>
+    <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
@@ -311,6 +317,7 @@
     <pushx>-20</pushx>
     <pushy>15</pushy>
     <knockback>4</knockback>
+    <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="16711680" frame="4" height="246" userdata="hit" width="114" x="274" y="5"/>
@@ -329,6 +336,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>5</knockback>
+    <inair>1</inair>
     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="65280" frame="0" height="241" userdata="hurt" width="182" x="135" y="99"/>
@@ -413,6 +421,7 @@
     <pushx>15</pushx>
     <pushy>15</pushy>
     <knockback>0</knockback>
+    <inair>0</inair>
     <state>GRAB_STATE</state>
     <framedata>
       <hitbox color="65280" frame="0" height="221" userdata="hurt" width="139" x="53" y="8"/>
@@ -454,7 +463,8 @@
     <pushx>20</pushx>
     <pushy>0</pushy>
     <knockback>8</knockback>
-    <state>ATTACK_STATE</state>
+     <inair>0</inair>
+     <state>ATTACK_STATE</state>
     <framedata>
       <hitbox color="16711680" frame="7" height="482" userdata="hit" width="442" x="4" y="33"/>
       <hitbox color="4278255360" frame="12" height="493" userdata="hurt" width="216" x="142" y="22"/>
@@ -465,8 +475,8 @@
   </move>
 
   <move name="idle">
-    <sprite>sprites/bach_jab.png</sprite>
-    <framecount>2</framecount>
+    <sprite>sprites/bach_idle.png</sprite>
+    <framecount>1</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>
@@ -474,6 +484,7 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
+    <inair>0</inair>
     <knockback>0</knockback>
     <state>NO_STATE</state>
     <framedata>
@@ -484,8 +495,8 @@
   </move>
 
   <move name="walk">
-    <sprite>sprites/bach_forward.png</sprite>
-    <framecount>3</framecount>
+    <sprite>sprites/bach_idle.png</sprite>
+    <framecount>1</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>
@@ -494,6 +505,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <inair>0</inair>
     <state>WALK_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
@@ -502,8 +514,28 @@
     </framedata>
   </move>
 
-  <move name="jump">
+  <move name="backwalk">
     <sprite>sprites/bach_idle.png</sprite>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>-8</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <inair>0</inair>
+    <state>WALK_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
+      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
+      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+    </framedata>
+  </move>
+
+  <move name="njump">
+    <sprite>sprites/bach_short.png</sprite>
     <framecount>1</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
@@ -513,6 +545,67 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <inair>0</inair>
+    <state>AIRBORNE_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
+      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
+      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+    </framedata>
+  </move>
+
+  <move name="bjump">
+    <sprite>sprites/bach_short.png</sprite>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>-8</velx>
+    <vely>-35</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <inair>0</inair>
+    <state>AIRBORNE_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
+      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
+      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+    </framedata>
+  </move>
+
+  <move name="fjump">
+    <sprite>sprites/bach_short.png</sprite>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>8</velx>
+    <vely>-35</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <inair>0</inair>
+    <state>AIRBORNE_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
+      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
+      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+    </framedata>
+  </move>
+
+  <move name="fall">
+    <sprite>sprites/bach_roundhouse.png</sprite>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <inair>1</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
       <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
@@ -533,6 +626,7 @@
     <pushy>0</pushy>
     <knockback>0</knockback>
     <state>HITSTUN_STATE</state>
+    <inair>1</inair>
     <framedata>
       <hitbox color="4278255360" frame="0" height="284" userdata="hurt" width="221" x="100" y="24"/>
       <hitbox color="65280" frame="0" height="226" userdata="hurt" width="223" x="148" y="277"/>
@@ -551,6 +645,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <inair>0</inair>
     <state>BLOCKSTUN_STATE</state>
     <framedata>
       <hitbox color="65280" frame="0" height="161" userdata="hurt" width="176" x="183" y="37"/>

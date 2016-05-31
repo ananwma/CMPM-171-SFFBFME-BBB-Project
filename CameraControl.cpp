@@ -8,12 +8,12 @@ CameraControl::CameraControl()
 }
 
 void move_camera_left(Player &p1, Player &p2, int window_width, int window_offset, int window_limit) {
-	if (p1.side == RIGHT && p1.character->sprite.getPosition().x == 0 && p1.character->sprite.getPosition().x == window_width && window_offset >= -window_limit) {
+	if (p1.getSide() == RIGHT && p1.character->sprite.getPosition().x == 0 && p1.character->sprite.getPosition().x == window_width && window_offset >= -window_limit) {
 		
 	}
 }
 void move_camera_right(Player &p1, Player &p2, int window_width, int window_offset, int window_limit) {
-	if (p1.side == LEFT && p1.character->sprite.getPosition().x == 0 && p1.character->sprite.getPosition().x == window_width) {
+	if (p1.getSide() == LEFT && p1.character->sprite.getPosition().x == 0 && p1.character->sprite.getPosition().x == window_width) {
 
 	}
 }
