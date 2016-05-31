@@ -28,6 +28,8 @@ public:
 	virtual void unhookEvent();
 	virtual void hookEvent();
 
+	int BARSIZE = 628;
+
 	sf::View camera_view;
 	sf::View HUD;
 	sf::RectangleShape player_1_HP;
@@ -38,13 +40,17 @@ public:
 	sf::RectangleShape player_2_HP_box;
 	sf::RectangleShape player_1_meter_box;
 	sf::RectangleShape player_2_meter_box;
-	sf::RectangleShape player_1_round_win_1;
-	sf::RectangleShape player_1_round_win_2;
-	sf::RectangleShape player_2_round_win_1;
-	sf::RectangleShape player_2_round_win_2;
+	sf::CircleShape player_1_round_win_1;
+	sf::CircleShape player_1_round_win_2;
+	sf::CircleShape player_2_round_win_1;
+	sf::CircleShape player_2_round_win_2;
+	sf::Sprite player1portraitart;
+	sf::Sprite player2portraitart;
 	sf::RectangleShape pauseOverlay;
 	sf::RectangleShape timer;
-	sf::RectangleShape HUDOverlay;
+	sf::Sprite HUDOverlay;
+	sf::Texture HUDTexture;
+
 	sf::Text timer_text;
 	sf::Font font;
 	float time;

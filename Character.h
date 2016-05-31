@@ -20,6 +20,8 @@ protected:
 	int health;
 	vector<int> super;
 public:
+
+	sf::Texture portrait_art;
 	float jumpX;
 
 	float walkspeed;

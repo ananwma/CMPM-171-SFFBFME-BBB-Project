@@ -28,6 +28,11 @@ Bach::Bach() {
 	health = 1000;
 	wall_offset = 100;
 	super = { 7, 0, 2, 4, 5, 7, 0, 0 };
+
+	if (!portrait_art.loadFromFile("BachPortrait.png")) {
+		std::cerr << "Could not find image file!\n";
+		exit(EXIT_FAILURE);
+	}
 }
 
 void Bach::walk() {

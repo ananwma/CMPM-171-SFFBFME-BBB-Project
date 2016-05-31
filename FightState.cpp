@@ -62,27 +62,57 @@ void FightState::init() {
 	game.playerTwo.setPosition(WINDOW_WIDTH / 1.4, GROUND);
 	game.playerTwo.side = RIGHT;
 
-	//sf::Texture HUDTexture;
+	if (!HUDTexture.loadFromFile("UIDraft.png")) {
+		std::cerr << "Could not find image file!\n";
+		exit(EXIT_FAILURE);
+	}
+	HUDOverlay.setTexture(HUDTexture);
+	
+	player1portraitart.setPosition(70,39);
+	player1portraitart.setTexture(game.playerOne.character->portrait_art);
 
-	//HUDOverlay.setTexture(HUDTexture);
+	player2portraitart.setPosition(WINDOW_WIDTH - 66, 39);
+	player2portraitart.setTexture(game.playerOne.character->portrait_art);
+	player2portraitart.scale(sf::Vector2f(-1, 1));
 
-	player_1_HP.setSize(sf::Vector2f(400, 30));
+	player_1_HP.setSize(sf::Vector2f(BARSIZE, 28));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
+	player_1_HP.setPosition(190, 80);
 
-	player_1_HP_box.setSize(sf::Vector2f(400, 30));
+	player_2_HP.setSize(sf::Vector2f(BARSIZE, 28));
+	player_2_HP.setFillColor(sf::Color(100, 250, 50));
+	player_2_HP.setPosition(WINDOW_WIDTH - BARSIZE - 188, 80);
+
+	player_1_meter.setPosition(155, 116);
+	player_1_meter.setSize(sf::Vector2f(BARSIZE, 28));
+	player_1_meter.setFillColor(sf::Color(0, 255, 255));
+
+	player_2_meter.setPosition(WINDOW_WIDTH - BARSIZE-151, 116);
+	player_2_meter.setSize(sf::Vector2f(BARSIZE, 28));
+	player_2_meter.setFillColor(sf::Color(0, 255, 255));
+
+	/*player_1_HP_box.setSize(sf::Vector2f(400, 30));
 	player_1_HP_box.setOutlineThickness(5);
 	player_1_HP_box.setOutlineColor(sf::Color(250, 250, 250));
 	player_1_HP_box.setFillColor(sf::Color::Transparent);
 
-	player_2_HP.setSize(sf::Vector2f(400, 30));
-	player_2_HP.setFillColor(sf::Color(100, 250, 50));
-	player_2_HP.setPosition(WINDOW_WIDTH - 400, 0);
-
-	player_2_HP_box.setSize(sf::Vector2f(400, 30));
+	player_2_HP_box.setSize(sf::Vector2f(700, 30));
 	player_2_HP_box.setPosition(WINDOW_WIDTH - 400, 0);
 	player_2_HP_box.setOutlineThickness(5);
 	player_2_HP_box.setOutlineColor(sf::Color(250,250,250));
 	player_2_HP_box.setFillColor(sf::Color::Transparent);
+
+	player_1_meter_box.setOutlineThickness(5);
+	player_1_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_1_meter_box.setPosition(0, 35);
+	player_1_meter_box.setSize(sf::Vector2f(400, 30));
+	player_1_meter_box.setFillColor(sf::Color::Transparent);
+
+	player_2_meter_box.setOutlineThickness(5);
+	player_2_meter_box.setOutlineColor(sf::Color(250, 250, 250));
+	player_2_meter_box.setSize(sf::Vector2f(400, 30));
+	player_2_meter_box.setPosition(WINDOW_WIDTH - 400, 35);
+	player_2_meter_box.setFillColor(sf::Color::Transparent);*/
 
 	timer.setSize(sf::Vector2f(175,75));
 	timer.setFillColor(sf::Color(250,250,250));
@@ -95,20 +125,20 @@ void FightState::init() {
 	game.playerOne.meter = 0;
 	game.playerTwo.meter = 0;
 
-	player_1_round_win_1.setSize(sf::Vector2f(30, 30));
-	player_1_round_win_1.setPosition(WINDOW_WIDTH / 2 - 160, 70);
+	player_1_round_win_1.setRadius(13);
+	player_1_round_win_1.setPosition(WINDOW_WIDTH / 2 - 170, 169);
 	player_1_round_win_1.setFillColor(sf::Color(255,255,0));
 
-	player_1_round_win_2.setSize(sf::Vector2f(30, 30));
-	player_1_round_win_2.setPosition(WINDOW_WIDTH / 2 - 200, 70);
+	player_1_round_win_2.setRadius(13);
+	player_1_round_win_2.setPosition(WINDOW_WIDTH / 2 - 125, 169);
 	player_1_round_win_2.setFillColor(sf::Color(255, 255, 0));
 
-	player_2_round_win_1.setSize(sf::Vector2f(30, 30));
-	player_2_round_win_1.setPosition(WINDOW_WIDTH / 2 + 100, 70);
+	player_2_round_win_1.setRadius(13);
+	player_2_round_win_1.setPosition(WINDOW_WIDTH / 2 + 147, 169);
 	player_2_round_win_1.setFillColor(sf::Color(255, 255, 0));
 
-	player_2_round_win_2.setSize(sf::Vector2f(30, 30));
-	player_2_round_win_2.setPosition(WINDOW_WIDTH / 2 + 140, 70);
+	player_2_round_win_2.setRadius(13);
+	player_2_round_win_2.setPosition(WINDOW_WIDTH / 2 + 102, 169);
 	player_2_round_win_2.setFillColor(sf::Color(255, 255, 0));
 
 	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
@@ -116,37 +146,16 @@ void FightState::init() {
 		exit(EXIT_FAILURE);
 	}
 	timer_text.setFont(font);
-	timer_text.setColor(sf::Color(0, 0, 0));
+	timer_text.setColor(sf::Color(250, 250, 250));
 	time = 60.0f;
 	char temp[256];
 	sprintf(temp, "%f", time);
 	timer_text.setString(temp);
-	timer_text.setCharacterSize(50);
-	timer_text.setPosition(WINDOW_WIDTH / 2 - 30, 0);
+	timer_text.setCharacterSize(80);
+	timer_text.setPosition(WINDOW_WIDTH / 2 - 30, 42);
 
-
-	player_1_meter.setPosition(0, 35);
-	player_1_meter.setSize(sf::Vector2f(400, 30));
-	player_1_meter.setFillColor(sf::Color(0, 255, 255));
-
-	player_1_meter_box.setOutlineThickness(5);
-	player_1_meter_box.setOutlineColor(sf::Color(250, 250, 250));
-	player_1_meter_box.setPosition(0, 35);
-	player_1_meter_box.setSize(sf::Vector2f(400, 30));
-	player_1_meter_box.setFillColor(sf::Color::Transparent);
-
-	player_2_meter.setSize(sf::Vector2f(400, 30));
-	player_2_meter.setFillColor(sf::Color(0, 255, 255));
-	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
-
-	player_2_meter_box.setOutlineThickness(5);
-	player_2_meter_box.setOutlineColor(sf::Color(250, 250, 250));
-	player_2_meter_box.setSize(sf::Vector2f(400, 30));
-	player_2_meter_box.setPosition(WINDOW_WIDTH - 400, 35);
-	player_2_meter_box.setFillColor(sf::Color::Transparent);
-
-	game.playerOne.indicator.bSprite.setPosition(0, 50);
-	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
+	game.playerOne.indicator.bSprite.setPosition(0, 150);
+	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 150, 150);
 
 	pauseOverlay.setFillColor(sf::Color(0, 0, 0, 200));
 	pauseOverlay.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -216,6 +225,7 @@ void FightState::reset() {
 }
 
 void FightState::update() {
+
 	//cout << "State #1" << endl;
 	if (!running) {
 		PauseState pauseState(game);
@@ -418,10 +428,10 @@ void FightState::update() {
 	//cout << "offset" << endl;
 	//cout << game.currentScreen.stage.window_offset << endl;
 
-	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
-	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
-	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
-	sf::Vector2<float> p2M(400.0*(game.playerTwo.meter / 1000.0), 30);
+	sf::Vector2<float> p1HP(BARSIZE*(game.playerOne.health / 1000.0), 30);
+	sf::Vector2<float> p2HP(BARSIZE*(game.playerTwo.health / 1000.0), 30);
+	sf::Vector2<float> p1M(BARSIZE*(game.playerOne.meter / 1000.0), 30);
+	sf::Vector2<float> p2M(BARSIZE*(game.playerTwo.meter / 1000.0), 30);
 	//cout << game.playerOne.meter << endl;
 	//cout << p2HP.x << endl;
 	player_1_HP.setSize(p1HP);
@@ -445,15 +455,18 @@ void FightState::draw() {
 	drawBoxes(game.playerOne, 0, 0, 0);
 	drawBoxes(game.playerTwo, 0, 0, 0);
 	game.window.setView(HUD);
+	game.window.draw(HUDOverlay);
 	game.window.draw(player_1_HP);
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
-	game.window.draw(player_1_HP_box);
-	game.window.draw(player_2_HP_box);
-	game.window.draw(player_1_meter_box);
-	game.window.draw(player_2_meter_box);
-	game.window.draw(timer);
+	//game.window.draw(player_1_HP_box);
+	//game.window.draw(player_2_HP_box);
+	//game.window.draw(player_1_meter_box);
+	//game.window.draw(player_2_meter_box);
+	//game.window.draw(timer);
+	game.window.draw(player1portraitart);
+	game.window.draw(player2portraitart);
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
