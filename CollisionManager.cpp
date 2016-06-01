@@ -11,33 +11,7 @@ void CollisionManager::registerEntity(Entity& entity) {
 	entities.push(&entity);
 }
 
-/*void CollisionManager::updateCollision() {
-	while (!entities.empty()) {
-		Entity* entity = entities.top();
-		entities.pop();
-	}
-
-
-	for (auto &entity : entities) {
-		for (auto &other : entities) {
-			sf::FloatRect offsetClipBox1;
-			sf::FloatRect offsetClipBox2;
-			//if (entity->side == LEFT)
-				offsetClipBox1 = sf::FloatRect(entity->collisionVolume.left + entity->xpos, entity->collisionVolume.top + entity->ypos, entity->collisionVolume.width, entity->collisionVolume.height);
-		//	else if (entity->side == RIGHT)
-		//		offsetClipBox1 = sf::FloatRect(entity->xpos - entity->collisionVolume.width - entity->collisionVolume.left + entity->spriteWidth, entity->collisionVolume.top + entity->ypos, entity->collisionVolume.width, entity->collisionVolume.height);
-		//	if (other->side == LEFT)
-				offsetClipBox2 = sf::FloatRect(other->collisionVolume.left + other->xpos, other->collisionVolume.top + other->ypos, other->collisionVolume.width, other->collisionVolume.height);
-		//	else if (other->side == RIGHT)
-	//			offsetClipBox2 = sf::FloatRect(other->xpos - other->collisionVolume.width - other->collisionVolume.left + other->spriteWidth, other->collisionVolume.top + other->ypos, other->collisionVolume.width, other->collisionVolume.height);
-
-			if (offsetClipBox1.intersects(offsetClipBox2)) {
-				std::cout << "now";
-			}
-		}
-	}
-}*/
-
+// still want to generalize this further but its too late so w/e
 void CollisionManager::checkClipBoxes(Player& p1, Player& p2) {
 	if (!p1.getCurrentFrame().clipboxes.empty() && !p2.getCurrentFrame().clipboxes.empty()) {
 		sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
@@ -99,61 +73,27 @@ void CollisionManager::checkClipBoxes(Player& p1, Player& p2) {
 
 			// Airborne stuff
 			if (abs(p1.yvel) > 0.0f) {
-				float p1Center = (offsetClipBox1.left + offsetClipBox1.width / 2);
-				float p2Center = (offsetClipBox2.left + offsetClipBox2.width / 2);
-				if (p1Center < p2Center) {
+				if (p1.side == LEFT) {
+					p1.xvel = -8;
 					p2.xvel = 8;
-					cout << "left";
-				} 
-				else if (p1Center > p2Center) {
+				}
+				else if (p1.side == RIGHT) {
+					p1.xvel = 8;
 					p2.xvel = -8;
-					cout << intersectBox.width / 6 <<endl;
-					cout << "right";
 				}
-
-
-				/*if (p1.jumpSide == LEFT) {
-					if (p2.side == RIGHT) {
-						p1.xvel = 0;
-						p2.xvel = p1.character->jumpX;
-					}
-					else if (p2.side == LEFT) {
-						p2.xvel = -p1.character->jumpX;
-					}
-				}
-				else if (p1.jumpSide == RIGHT) {
-					if (p2.side == LEFT) {
-						p1.xvel = 0;
-						p2.xvel = -p1.character->jumpX;
-					}
-					else if (p2.side == RIGHT) {
-						p2.xvel = p1.character->jumpX;
-					}
-				}*/
 			}
-			/*else if (abs(p2.yvel) > 0.0f) {
-
-				if (p2.jumpSide == LEFT) {
-					if (p1.side == RIGHT) {
-						p2.xvel = 0;
-						p1.xvel = p2.character->jumpX;
-					}
-					else if (p1.side == LEFT) {
-						p1.xvel = -p2.character->jumpX;
-					}
+			if (abs(p2.yvel) > 0.0f) {
+				if (p2.side == LEFT) {
+					p2.xvel = -8;
+					p1.xvel = 8;
 				}
-				else if (p2.jumpSide == RIGHT) {
-					if (p1.side == LEFT) {
-						p2.xvel = 0;
-						p1.xvel = -p2.character->jumpX;
-					}
-					else if (p1.side == RIGHT) {
-						p1.xvel = p2.character->jumpX;
-					}
+				else if (p2.side == RIGHT) {
+					p2.xvel = 8;
+					p1.xvel = -8;
 				}
-			}*/
+			}
 		}
-		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
+		if ((offsetClipBox1.left < 0 && p1.side == LEFT) || (offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) && p1.side == RIGHT) {
 			if (p1.xvel < 0 && p1.side == LEFT)
 				p1.xvel = 0;
 			if (p1.xvel > 0 && p1.side == RIGHT)
@@ -162,7 +102,7 @@ void CollisionManager::checkClipBoxes(Player& p1, Player& p2) {
 		}
 		else
 			p1.againstWall = false;
-		if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
+		if ((offsetClipBox2.left < 0 && p2.side == LEFT) || (offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) && p2.side == RIGHT) {
 			if (p2.xvel < 0 && p2.side == LEFT)
 				p2.xvel = 0;
 			if (p2.xvel > 0 && p2.side == RIGHT)
@@ -184,6 +124,51 @@ void CollisionManager::checkClipBoxes(Player& p1, Player& p2) {
 	}
 	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
 		p1.xvel = p2.character->jumpX;
+	}
+}
+
+void CollisionManager::checkBoxes(Player& attacker, Player& defender) {
+	sf::Vector2f attPos = attacker.character->sprite.getPosition();
+	sf::Vector2f defPos = defender.character->sprite.getPosition();
+	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
+		for (auto hurtbox : defender.getCurrentFrame().hurtboxes) {
+			// Make new rects offset by players' current positions and orientations
+			sf::FloatRect offsetHit;
+			if (attacker.side == LEFT) {
+				sf::FloatRect tmp(hitbox.left + attPos.x, hitbox.top + attPos.y, hitbox.width, hitbox.height);
+				offsetHit = tmp;
+			}
+			else if (attacker.side == RIGHT) {
+				sf::FloatRect tmp(attPos.x - hitbox.width - hitbox.left + attacker.getSpriteWidth(), hitbox.top + attPos.y, hitbox.width, hitbox.height);
+				offsetHit = tmp;
+			}
+
+			sf::FloatRect offsetHurt;
+			if (defender.side == LEFT) {
+				sf::FloatRect tmp(hurtbox.left + defPos.x, hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
+				offsetHurt = tmp;
+			}
+			else if (defender.side == RIGHT) {
+				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
+				offsetHurt = tmp;
+			}
+			if (offsetHit.intersects(offsetHurt)) {
+				//on collision, checks first if player getting hit was holding block while being in the correct state
+				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
+					defender.block(attacker.getCurrentMove());
+				}
+				else {
+					//if not blocking, player gets hit
+					if (!attacker.getCurrentFrame().hit) {
+						//cout << "hit!" << endl;
+						defender.getHit(attacker.getCurrentMove());
+						attacker.getCurrentFrame().hit = true;
+					}
+					attacker.canCancel = true;
+					return;
+				}
+			}
+		}
 	}
 }
 

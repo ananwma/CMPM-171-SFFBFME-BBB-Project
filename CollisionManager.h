@@ -16,6 +16,8 @@ public:
 
 	void checkClipBoxes(Player & p1, Player & p2);
 
+	void checkBoxes(Player &, Player &);
+
 	~CollisionManager();
 
 private:
