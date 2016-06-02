@@ -12,7 +12,7 @@
 // tmp
 #include "CharacterBach.h"
 
-using namespace std;
+using namespace std; 
 
 FightState::FightState(Game &_game) : 
 	game(_game), 
