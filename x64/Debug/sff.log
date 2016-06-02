@@ -1,27 +1,24 @@
 ﻿  FightState.cpp
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(42): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(62): warning C4305: 'argument': truncation from 'double' to 'float'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(82): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(84): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(90): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(91): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(152): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(43): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(78): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(80): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(86): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(141): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(217): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(200): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(381): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(390): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(401): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(431): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(432): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(433): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(434): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(323): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(353): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(362): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(373): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(407): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(408): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(409): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(410): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgun\source\repos\fuck\fightstate.cpp(295): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: see declaration of 'sprintf'
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(510): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\anan\source\repos\cmpm-171-sffbfme-bbb-project\fightstate.cpp(519): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-  sff.vcxproj -> C:\Users\Anan\Source\Repos\CMPM-171-SFFBFME-BBB-Project\x64\Debug\sff.exe
+  sff.vcxproj -> C:\Users\mhgun\Source\Repos\fuck\x64\Debug\sff.exe

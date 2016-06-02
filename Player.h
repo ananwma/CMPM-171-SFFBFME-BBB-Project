@@ -3,62 +3,63 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include "Character.h"
+#include <unordered_map>
+#include "Entity.h"
 #include "Move.h"
 #include "BeatIndicator.h"
 
-using namespace std;
-enum direction { LEFT, RIGHT, NEUTRAL };
-
-class Player {
+class Player : public Entity {
 private:
 	//Character* character;
+	float walkspeed;
+	float jumpX;
+	float jumpY;
+	//int health;
+	int walloffset;
+	vector<int> super;
+	unordered_map<string, Move> moveMap;
+	Move* currentMove = NULL;
+
 public:
 	// No copy constructor
 	Player(const Player&) = delete;
-	Character* character;
 	BeatIndicator indicator;
 	bool isMoveValid();
-	void setCharacter(Character*);
-	void setPosition(float, float);
+	//void setPosition(float, float);
 	void jump(direction dir);
 	bool left, jumping, right;
 	direction jumpSide;
-	float xpos;
-	float ypos;
-	float xvel;
-	float yvel;
-	float xacc;
-	float yacc;
+	//float xvel;
+	//float yvel;
+	//float xacc;
+	//float yacc;
 
-	//Need to keep track of where the player has moved to update hitboxes
-	float deltaX;
-	float deltaY;
-	float health;
-	float meter;
+	int health;
+	int maxHealth;
+	float meter = 0;
 
 	// change where this is initialized later
 	float beat = 500.0f;
-	float gravity = 0.98f * pow((500.0f / 500.0f), 2.0f);
+	//float gravity = 0.98f * pow((500.0f / 500.0f), 2.0f);
 
-	int hitstunFrames;
-	int blockstunFrames;
-	int roundWins;
+	int hitstunFrames = 0;
+	int blockstunFrames = 0;
+	int roundWins = 0;
 	int playerId;
-	direction side;
-	state state;
+	//direction side;
+	State state;
 	bool colliding;
 	bool againstWall = false;
 	bool lastMoveHit;
 	int superIndex = 0;
-	sf::Texture pTexture;
-	sf::Sprite pImage;
+	//sf::Texture pTexture;
+	//sf::Sprite pImage;
 	sf::RectangleShape hitboxes_v;
 	sf::RectangleShape hurtboxes_v;
 	sf::Clock superTimeout;
 
 	//Move currentMove;
-	
+
 	int inputBuffer;
 	bool canCancel;
 	bool holdingBlock;
@@ -66,27 +67,34 @@ public:
 	//int currentFrame;
 	int ezmode = 0;
 
-	void doMove(int, int = 0, int = 0);
+	void update();
+
+	void doMove(string);
 	void getHit(Move*);
 	void block(Move*);
 	bool moveCancelable(int, int);
 	void walk(direction);
-	void updateAnimFrame();
-	void updatePhysics();
+	//void updateAnimFrame();
+	//void updatePhysics();
 	Move* getCurrentMove();
 	Frame& getCurrentFrame();
 	void checkSuper(int);
 	bool isInSuper();
 
-	int getCurrentMoveNum();
+	sf::Vector2f getRealPos();
+
+	string getCurrentMoveName();
 	int getCurrentFrameNum();
 	float getSpriteHeight();
 	float getSpriteWidth();
-	float getMaxHealth();
+	int getMaxHealth();
+	int getHealth();
+	State getState();
 	void setBeat(float);
+
+	bool loadCharacter(string);
 
 	Player();
 	~Player();
-	
-};
 
+};

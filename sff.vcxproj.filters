@@ -57,15 +57,6 @@
     <ClInclude Include="input.h">
       <Filter>sff headers</Filter>
     </ClInclude>
-    <ClInclude Include="CharacterBach.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachJab.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachIdle.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="PauseState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
@@ -80,12 +71,6 @@
     </ClInclude>
     <ClInclude Include="PlayerSelectState.h">
       <Filter>GameStates\Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="BachHitstun.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachStrong.h">
-      <Filter>Bach</Filter>
     </ClInclude>
     <ClInclude Include="AssetManager.h">
       <Filter>sff headers</Filter>
@@ -105,35 +90,11 @@
     <ClInclude Include="ResultsState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
-    <ClInclude Include="BachShoryuken.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachBlockstun.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachRoundhouse.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachForward.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachShort.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachFierce.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
-    <ClInclude Include="BachTatsu.h">
-      <Filter>Bach</Filter>
-    </ClInclude>
     <ClInclude Include="BeatIndicator.h">
       <Filter>sff headers</Filter>
     </ClInclude>
     <ClInclude Include="Bassline.h">
       <Filter>sff headers</Filter>
-    </ClInclude>
-    <ClInclude Include="BachSuper.h">
-      <Filter>Bach</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>sff headers</Filter>
@@ -149,9 +110,6 @@
     </ClInclude>
     <ClInclude Include="BachGrab.h">
       <Filter>sff headers</Filter>
-    </ClInclude>
-    <ClInclude Include="TutorialState.h">
-      <Filter>GameStates\Headers</Filter>
     </ClInclude>
     <ClInclude Include="TutorialStage.h">
       <Filter>sff headers</Filter>
@@ -170,6 +128,15 @@
     </ClInclude>
     <ClInclude Include="SpriteEmitter.h">
       <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TutorialState.h">
+      <Filter>GameStates\Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -190,9 +157,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>sff source</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterBach.cpp">
-      <Filter>Bach</Filter>
     </ClCompile>
     <ClCompile Include="PauseState.cpp">
       <Filter>GameStates\Source</Filter>
@@ -233,9 +197,6 @@
     <ClCompile Include="UI.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
-    <ClCompile Include="TutorialState.cpp">
-      <Filter>GameStates\Source</Filter>
-    </ClCompile>
     <ClCompile Include="TutorialStage.cpp">
       <Filter>sff source</Filter>
     </ClCompile>
@@ -250,6 +211,15 @@
     </ClCompile>
     <ClCompile Include="SpriteEmitter.cpp">
       <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>sff source</Filter>
+    </ClCompile>
+    <ClCompile Include="TutorialState.cpp">
+      <Filter>GameStates\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -330,5 +300,6 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Tutorial.xml" />
+    <Xml Include="Bach.xml" />
   </ItemGroup>
 </Project>

@@ -108,12 +108,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\Visual Leak Detector\include;\\psf\Home\Desktop\SFML\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Visual Leak Detector\include;%userprofile%\Desktop\SFML-2.3.2\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Visual Leak Detector\lib\Win64;\\psf\Home\Desktop\SFML\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Visual Leak Detector\lib\Win64;%userprofile%\Desktop\SFML-2.3.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;sfml-main-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;Winmm.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -159,26 +159,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
-    <ClInclude Include="BachBlockstun.h" />
-    <ClInclude Include="BachFierce.h" />
-    <ClInclude Include="BachForward.h" />
     <ClInclude Include="BachGrab.h" />
-    <ClInclude Include="BachHitstun.h" />
-    <ClInclude Include="BachIdle.h" />
-    <ClInclude Include="BachJab.h" />
-    <ClInclude Include="BachRoundhouse.h" />
-    <ClInclude Include="BachShort.h" />
-    <ClInclude Include="BachShoryuken.h" />
-    <ClInclude Include="BachStrong.h" />
-    <ClInclude Include="BachSuper.h" />
-    <ClInclude Include="BachTatsu.h" />
     <ClInclude Include="BeatIndicator.h" />
     <ClInclude Include="Bassline.h" />
     <ClInclude Include="CameraControl.h" />
     <ClInclude Include="Character.h" />
-    <ClInclude Include="CharacterBach.h" />
     <ClInclude Include="Collision.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="ConcertHallStage.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="FightState.h" />
@@ -199,8 +188,8 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="tinyxml2.h" />
-    <ClInclude Include="TutorialStage.h" />
     <ClInclude Include="TutorialState.h" />
+    <ClInclude Include="TutorialStage.h" />
     <ClInclude Include="TutorialTask.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
@@ -210,9 +199,10 @@
     <ClCompile Include="Bassline.cpp" />
     <ClCompile Include="CameraControl.cpp" />
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="CharacterBach.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="ConcertHallStage.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FightState.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameStateManager.cpp" />
@@ -232,8 +222,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="tinyxml2.cpp" />
-    <ClCompile Include="TutorialStage.cpp" />
     <ClCompile Include="TutorialState.cpp" />
+    <ClCompile Include="TutorialStage.cpp" />
     <ClCompile Include="TutorialTask.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -266,6 +256,7 @@
     <Image Include="sprites\Ryu.png" />
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="Bach.xml" />
     <Xml Include="Tutorial.xml">
       <SubType>Designer</SubType>
     </Xml>

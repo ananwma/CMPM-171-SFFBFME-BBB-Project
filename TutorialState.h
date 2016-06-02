@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GameState.h"
 #include "Game.h"
 #include "Player.h"
@@ -6,10 +7,9 @@
 #include "BeatIndicator.h"
 #include "ConcertHallStage.h"
 #include "Bassline.h"
-#include "TutorialTask.h"
-#include "TutorialStage.h"
+#include "UI.h"
+#include "SpriteEmitter.h"
 #include <SFML/Audio.hpp>
-#include <string>
 
 class TutorialState : public GameState {
 public:
@@ -28,9 +28,10 @@ public:
 	virtual void unhookEvent();
 	virtual void hookEvent();
 
+	int BARSIZE = 628;
+
 	sf::View camera_view;
 	sf::View HUD;
-	sf::RectangleShape textbox;
 	sf::RectangleShape player_1_HP;
 	sf::RectangleShape player_2_HP;
 	sf::RectangleShape player_1_meter;
@@ -39,20 +40,20 @@ public:
 	sf::RectangleShape player_2_HP_box;
 	sf::RectangleShape player_1_meter_box;
 	sf::RectangleShape player_2_meter_box;
-	sf::RectangleShape overlay;
-	sf::Texture textBorderTex;
-	sf::Sprite textBorder;
-	sf::Texture keyboardTexSheet;
-	sf::Texture keyboardTexSheet2;
-	sf::Sprite keyboardIcon;
-	int keyboardWidth = 861;
-	int keyboardHeight = 602;
-	sf::RectangleShape task;
-	sf::Text task_text;
-	sf::Text text;
-	sf::RectangleShape dialogue;
-	sf::Text dialogue_text;
+	sf::CircleShape player_1_round_win_1;
+	sf::CircleShape player_1_round_win_2;
+	sf::CircleShape player_2_round_win_1;
+	sf::CircleShape player_2_round_win_2;
+	sf::Sprite player1portraitart;
+	sf::Sprite player2portraitart;
+	sf::RectangleShape pauseOverlay;
+	sf::RectangleShape timer;
+	sf::Sprite HUDOverlay;
+	sf::Texture HUDTexture;
+
+	sf::Text timer_text;
 	sf::Font font;
+	float time;
 	sf::RectangleShape player_1_round_wins;
 	sf::RectangleShape player_2_round_wins;
 	void processInput(Player&, vector<int>&);
@@ -71,6 +72,9 @@ private:
 	Player *player1;
 	sf::Clock clock;
 	sf::Clock metronome;
+	sf::Clock emitterClock;
+	SpriteEmitter dust1;
+	SpriteEmitter dust2;
 	bool onBeat;
 	float beat;
 	int intOnBeat;
@@ -80,17 +84,7 @@ private:
 	bool octave;
 	bool colliding = false;
 
-	vector<TutorialStage> tutorial;
-	int current_stage = 0;
-	int current_task_num = 0;
-	int dontUpdateEveryFramePlease = 0;
-	//string current_task;
-	string current_dialogue;
-	stack <string> dialogue_stack;
-	bool inPretext = true;
-	bool inPosttext = false;
-	bool stopState = false;
-	bool waitToChangeState = false;
+	float saveTime = 60.0f;
 
 	bool played;
 	Bassline bassline;
@@ -110,6 +104,9 @@ private:
 	void drawBoxes(Player&, bool, bool, bool);
 	void TutorialState::move_camera(Player&, Player&);
 	void TutorialState::restrict_movement(Player&, Player&);
+	void TutorialState::reset();
+	void drawHud();
+	//UI timer;
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;
@@ -117,4 +114,9 @@ private:
 	sf::Sound hitSound;
 	sf::SoundBuffer blockSoundBuffer;
 	sf::Sound blockSound;
+
+	sf::Text text;
+	//sf::Font font;
+	//sf::Text text;
+	//	sf::Font font;
 };

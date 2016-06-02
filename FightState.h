@@ -50,6 +50,7 @@ public:
 	sf::RectangleShape timer;
 	sf::Sprite HUDOverlay;
 	sf::Texture HUDTexture;
+	sf::Vector2f camera_center;
 
 	sf::Text timer_text;
 	sf::Font font;
