@@ -55,8 +55,9 @@ bool Player::loadCharacter(string filename) {
 	walkspeed = atof(characterData->FirstChildElement("walkspeed")->GetText());
 	jumpX = atof(characterData->FirstChildElement("jumpX")->GetText());
 	jumpY = atof(characterData->FirstChildElement("jumpY")->GetText());
-	health = atoi(characterData->FirstChildElement("health")->GetText());
+	maxHealth = atoi(characterData->FirstChildElement("health")->GetText());
 	walloffset = atoi(characterData->FirstChildElement("walloffset")->GetText());
+	health = maxHealth;
 
 	// Parse string of ints into int vector for super
 	string superStr = characterData->FirstChildElement("super")->GetText();
@@ -113,7 +114,6 @@ bool Player::loadCharacter(string filename) {
 
 void Player::update() {
 	updatePhysics();
-	setCollisionVolume(currentMove->frameMap[0].clipboxes[0]);
 	if (state == ATTACK_STATE && currAnimFrame == numAnimFrames - 1) {
 		state = NO_STATE;
 		doMove("idle");
@@ -125,6 +125,18 @@ void Player::update() {
 	else if (state == AIRBORNE_STATE && yvel > 0) {
 		doMove("fall");
 	}
+	else if (state == HITSTUN_STATE) {
+		if (hitstunFrames == 0) {
+			state = NO_STATE;
+			doMove("idle");
+		}
+	}
+	else if (state == BLOCKSTUN_STATE) {
+		if (blockstunFrames == 0) {
+			state = NO_STATE;
+			doMove("idle");
+		}
+	}
 }
 
 void Player::doMove(string moveName) {
@@ -133,11 +145,10 @@ void Player::doMove(string moveName) {
 				currentMove = &moveMap[moveName];
 				setAnimTexture(currentMove->spritesheet, 438, 548, currentMove->frameCount);
 			}
-
+			currentMove->setHitFalse();
 			xvel = currentMove->velX;
 			yvel = currentMove->velY;
 			state = currentMove->state;
-
 		}
 		else if (state == AIRBORNE_STATE) {
 			if (moveMap[moveName].inAir) {
@@ -177,8 +188,21 @@ void Player::doMove(string moveName) {
 }
 
 void Player::getHit(Move *move) {
+	if (holdingBlock) {
+		blockstunFrames = move->blockstun;
+		xvel = move->pushX;
+		yvel = move->pushY;
+		doMove("blockstun");
+	}
+	else {
+		hitstunFrames = move->hitstun;
+		health -= move->damage;
+		xvel = move->pushX;
+		yvel = move->pushY;
+		doMove("hitstun");
+	}
 	//if (state != BLOCKING) {
-	character->currentMove = HITSTUN;
+	/*character->currentMove = HITSTUN;
 	character->currentMoveFrame = 0;
 	hitstunFrames = move->hitstun + ezmode;
 
@@ -207,7 +231,7 @@ void Player::getHit(Move *move) {
 
 void Player::block(Move *move) {
 	//if (state != BLOCKING) {
-	character->currentMove = BLOCK;
+	/*character->currentMove = BLOCK;
 	character->currentMoveFrame = 0;
 	blockstunFrames = move->blockstun;
 	character->sprite.setTexture(character->moveList.at(BLOCK)->spritesheet);
@@ -234,17 +258,18 @@ void Player::block(Move *move) {
 }
 
 bool Player::moveCancelable(int currMove, int newMove) {
-	for (int i = 0; i < character->moveList.at(currMove)->cancelMoves.size(); i++) {
+	/*for (int i = 0; i < character->moveList.at(currMove)->cancelMoves.size(); i++) {
 		if (newMove == character->moveList.at(currMove)->cancelMoves.at(i)) {
 			return true;
 		}
 	}
-	return false;
+	return false;*/
+	return 0;
 }
 
 void Player::walk(direction dir) {
 	// will need to add more later for figuring out which side player is on
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	/*if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = WALK_STATE;
@@ -262,11 +287,11 @@ void Player::walk(direction dir) {
 				xvel = character->walkspeed * (500 / beat);
 			}
 		}
-	}
+	}*/
 }
 
 void Player::jump(direction dir) {
-	if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
+	/*if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
 		character->currentMove = WALK;
 		character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
 		state = AIRBORNE_STATE;
@@ -285,7 +310,7 @@ void Player::jump(direction dir) {
 			// Neutral jump = opposite side for crossunders
 			side == LEFT ? jumpSide = RIGHT : jumpSide = LEFT;
 		}
-	}
+	}*/
 }
 
 void Player::checkSuper(int note) {
@@ -307,12 +332,12 @@ bool Player::isInSuper() {
 }
 
 
-int Player::getCurrentMoveNum() {
-	return character->currentMove;
+string Player::getCurrentMoveName() {
+	return currentMove->moveName;
 }
 
 int Player::getCurrentFrameNum() {
-	return character->currentMoveFrame;
+	return currAnimFrame;
 }
 
 
@@ -325,14 +350,18 @@ Frame& Player::getCurrentFrame() {
 }
 
 float Player::getSpriteWidth() {
-	return character->width;
+	return spriteWidth;
 }
 float Player::getSpriteHeight() {
-	return character->height;
+	return spriteHeight;
 }
 
-float Player::getMaxHealth() {
-	return character->health;
+int Player::getMaxHealth() {
+	return maxHealth;
+}
+
+int Player::getHealth() {
+	return health;
 }
 
 void Player::setBeat(float beat) {

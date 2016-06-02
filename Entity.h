@@ -21,6 +21,7 @@ public:
 	void setTexture(sf::Texture&);
 	void setAnimTexture(sf::Texture&, int, int, int);
 	void setPosition(float, float);
+	sf::Vector2f getPosition();
 	void updateSide(Entity&);
 	int updateAnimFrame();
 

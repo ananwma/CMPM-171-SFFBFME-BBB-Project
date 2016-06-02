@@ -34,31 +34,20 @@ void FightState::init() {
 	indicatorFlashOn = false;
 
 	// Later move this to character selection state
-	//Bach* bach = new Bach();
-	//Bach* bach2 = new Bach();
-
-	
 	game.playerOne.loadCharacter("Bach.xml");
-	//game.playerOne.setCharacter(bach);
-	//game.playerOne.character->initMoves();
 	game.playerOne.doMove("idle");
-	// Entities must be dynamically allocated so textures aren't lost 
-	//game.playerOne.character->currentMoveFrame = 0;
-	//game.playerOne.setPosition(20, 100);
-	//game.playerTwo.setCharacter(bach2);
-	//game.playerTwo.character->initMoves();
+
 	game.playerTwo.loadCharacter("Bach.xml");
 	game.playerTwo.doMove("idle");
-//	game.playerTwo.character->currentMoveFrame = 0;
-	//100 = ground level
+
 	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
 	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
 
 	game.collisionManager.registerEntity(game.playerOne);
 	game.collisionManager.registerEntity(game.playerTwo);
 
-	game.playerOne.setSide(LEFT);
-	game.playerTwo.setSide(RIGHT);
+	//game.playerOne.setSide(LEFT);
+	//game.playerTwo.setSide(RIGHT);
 
 	player_1_HP.setSize(sf::Vector2f(400, 30));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
@@ -111,7 +100,7 @@ void FightState::init() {
 }
 
 void FightState::update() {
-	//cout << "State #1" << endl;
+
 	if (!running) {
 		PauseState pauseState(game);
 		game.gsm.stopState(*this, &pauseState);
@@ -134,12 +123,10 @@ void FightState::update() {
 
 
 	if (metronome.getElapsedTime().asMilliseconds() > game.beat) {
-		//cout << "game.beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
 		//flash indicator???
 			indicatorFlashOn = true;
-			//cout << "indicatorflashon" << endl;
 			indicatorFlash = 5;
 			game.playerOne.indicator.updateIndicator(NONE);
 			game.playerTwo.indicator.updateIndicator(NONE);
@@ -153,15 +140,10 @@ void FightState::update() {
 			quarterNote = true;
 		}
 	}
-	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
-	//cout << "P1 vel: " << game.playerOne.xvel << endl << "P2 vel: " << game.playerTwo.xvel << endl << endl;
-	//checkBoxes(game.playerOne, game.playerTwo);
-	//checkBoxes(game.playerTwo, game.playerOne);
-	//checkClipBoxes(game.playerOne, game.playerTwo);
-	//restrict_movement(game.playerOne, game.playerTwo);
-	//restrict_movement(game.playerTwo, game.playerOne);
+	game.collisionManager.checkBoxes(game.playerOne, game.playerTwo);
+	game.collisionManager.checkBoxes(game.playerTwo, game.playerOne);
 
 	//keep here or move to fightstate?
 	game.collisionManager.checkClipBoxes(game.playerOne, game.playerTwo);
@@ -169,31 +151,8 @@ void FightState::update() {
 	game.playerTwo.update();
 	game.playerOne.updateSide(game.playerTwo);
 	game.playerTwo.updateSide(game.playerOne);
-	//checkMoveBoxes(game.playerOne, game.playerTwo);
 
-	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
-
-	//***********************
-	//** TEMP CAMERA STUFF **
-	//***********************
-
-	//if (game.playerOne.xpos <= -game.playerOne.character->wall_offset) {
-		//game.currentScreen.move_camera_left(game.currentScreen.stage, game.playerTwo, game.playerOne);
-		//camera_view.move(-1, 0);
-	//}
-	/*
-	if (game.playerOne.xpos + game.playerOne.getSpriteWidth() >= 1280) {
-		game.currentScreen.move_camera_right(game.currentScreen.stage, game.playerTwo, game.playerOne);
-		if (game.playerOne.xpos > 1480)
-			game.playerOne.setPosition(1480, game.playerOne.ypos);
-	}*/
-
-		//collision.flip_sprites(game.playerOne, game.playerTwo);
-		//collision.flip_sprites(game.playerTwo, game.playerOne);
-	//game.playerOne.updateSide(game.playerTwo);
-	//game.playerTwo.updateSide(game.playerOne);
-
-	/*if (game.playerOne.health <= 0) {
+	if (game.playerOne.health <= 0) {
 		game.playerTwo.roundWins++;
 		ResultsState results(game);
 		game.gsm.stopState(*this, &results);
@@ -230,8 +189,10 @@ void FightState::update() {
 		game.playerOne.setBeat(game.beat);
 		game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
-	}*/
+	}
 	
+
+	//possibly move into entity updateanimframe
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
@@ -244,22 +205,20 @@ void FightState::update() {
 			indicatorFlashOn = false;    
 			indicatorFlash = 5;
 		}
+		game.playerOne.hitstunFrames--;
+		game.playerOne.blockstunFrames--;
+		game.playerTwo.hitstunFrames--;
+		game.playerTwo.blockstunFrames--;
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
 	}
 
-	//move_camera(game.playerOne, game.playerTwo);
-	//move_camera(game.playerTwo, game.playerOne);
-
-	//cout << "offset" << endl;
-	//cout << game.currentScreen.stage.window_offset << endl;
 
 	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
 	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
 	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
 	sf::Vector2<float> p2M(400.0*(game.playerOne.meter / 1000.0), 30);
-	//cout << game.playerOne.meter << endl;
-	//cout << p2HP.x << endl;
+
 	player_1_HP.setSize(p1HP);
 	player_2_HP.setSize(p2HP);
 	player_1_meter.setSize(p1M);
@@ -274,8 +233,8 @@ void FightState::draw() {
 	game.window.draw(game.currentScreen.stage.sprite);
 	game.window.draw(game.playerOne.sprite);
 	game.window.draw(game.playerTwo.sprite);
-	//drawBoxes(game.playerOne, 0, 0, 0);
-	//drawBoxes(game.playerTwo, 0, 0, 0);
+	drawBoxes(game.playerOne, 1, 1, 1);
+	drawBoxes(game.playerTwo, 1, 1, 1);
 	game.window.setView(HUD);
 	game.window.draw(player_1_HP);
 	game.window.draw(player_2_HP);
@@ -286,237 +245,14 @@ void FightState::draw() {
 	game.window.display();
 }
 
-/*void FightState::move_camera(Player& cp, Player& op){
-	//right
 
-	if ((!(op.xpos + op.character->wall_offset <= game.currentScreen.stage.window_offset))&&(cp.xpos + cp.getSpriteWidth() - cp.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-		camera_view.move(cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset += cp.character->walkspeed;
-	}
-
-	//left
-
-	if ((!(op.xpos + op.getSpriteWidth() - op.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset))&&(cp.xpos + cp.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-		camera_view.move(-cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset -= cp.character->walkspeed;
-	}
-
-}
-
-/*void FightState::restrict_movement(Player& p1, Player& p2) {
-	//right
-
-	if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) &&(p1.xvel>0)){
-		p1.xvel = 0;
-	}
-
-	//left
-
-	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel<0)){
-		p1.xvel = 0;
-	}
-}
-
-
-//Change some copies to moves in future
-void FightState::checkClipBoxes(Player& p1, Player& p2) {
-	if (!p1.getCurrentFrame().clipboxes.empty() && !p2.getCurrentFrame().clipboxes.empty()) {
-		sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
-		sf::FloatRect clipbox2 = p2.getCurrentFrame().clipboxes.at(0);
-		sf::FloatRect offsetClipBox1;
-		sf::FloatRect offsetClipBox2;
-		if (p1.side == LEFT)
-			offsetClipBox1 = sf::FloatRect(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		else if (p1.side == RIGHT)
-			offsetClipBox1 = sf::FloatRect(p1.xpos - clipbox1.width - clipbox1.left + p1.getSpriteWidth(), clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		if (p2.side == LEFT)
-			offsetClipBox2 = sf::FloatRect(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-		else if (p2.side == RIGHT)
-			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-		sf::FloatRect intersectBox;
-		if (offsetClipBox1.intersects(offsetClipBox2)) {
-			// If player 1 is moving in the x direction and player 2 is standing still
-			if (abs(p1.xvel) > 0 && p2.xvel == 0) {
-				if (p1.xvel > 0 && p1.side == LEFT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
-				}
-				else if (p1.xvel < 0 && p1.side == RIGHT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
-				}
-			}
-			// If player 2 is moving in the x direction and player 1 is standing still
-			else if (abs(p2.xvel) > 0 && p1.xvel == 0) {
-				if (p2.xvel > 0 && p2.side == LEFT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
-				}
-				else if (p2.xvel < 0 && p2.side == RIGHT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
-				}
-			}
-			// If both are moving in opposing directions, set both vels to 0
-			else if (abs(p1.xvel) > 0 && abs(p2.xvel) > 0) {
-				if ((p1.xvel > 0) != (p2.xvel > 0)) {
-					p2.xvel = 0;
-					p1.xvel = 0;
-				}
-			}
-
-			if (p2.againstWall && p2.state == WALK_STATE && p1.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
-			}
-			else if (p1.againstWall && p1.state == WALK_STATE && p2.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
-			}
-
-			// Airborne stuff
-			if (abs(p1.yvel) > 0.0f) {
-				float p1Center = (offsetClipBox1.left + offsetClipBox1.width / 2);
-				float p2Center = (offsetClipBox2.left + offsetClipBox2.width / 2);
-				if (p1Center < p2Center) {
-					
-				}
-
-				if (p1.jumpSide == LEFT) {
-					if (p2.side == RIGHT) {
-						p1.xvel = 0;
-						p2.xvel = p1.character->jumpX;
-					}
-					else if (p2.side == LEFT) {
-						p2.xvel = -p1.character->jumpX;
-					}
-			}
-				else if (p1.jumpSide == RIGHT) {
-					if (p2.side == LEFT) {
-				p1.xvel = 0;
-						p2.xvel = -p1.character->jumpX;
-					}
-					else if (p2.side == RIGHT) {
-						p2.xvel = p1.character->jumpX;
-					}
-				}
-			}
-			else if (abs(p2.yvel) > 0.0f) {
-
-				if (p2.jumpSide == LEFT) {
-					if (p1.side == RIGHT) {
-						p2.xvel = 0;
-						p1.xvel = p2.character->jumpX;
-					}
-					else if (p1.side == LEFT) {
-						p1.xvel = -p2.character->jumpX;
-					}
-				}
-				else if (p2.jumpSide == RIGHT) {
-					if (p1.side == LEFT) {
-				p2.xvel = 0;
-						p1.xvel = -p2.character->jumpX;
-					}
-					else if (p1.side == RIGHT) {
-						p1.xvel = p2.character->jumpX;
-					}
-				}
-			}
-		}
-		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
-			if (p1.xvel < 0 && p1.side == LEFT)
-				p1.xvel = 0;
-			if (p1.xvel > 0 && p1.side == RIGHT)
-				p1.xvel = 0;
-			p1.againstWall = true;
-		}
-		else
-			p1.againstWall = false;
-		if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
-			if (p2.xvel < 0 && p2.side == LEFT)
-				p2.xvel = 0;
-			if (p2.xvel > 0 && p2.side == RIGHT)
-				p2.xvel = 0;
-			p2.againstWall = true;
-		}
-		else
-			p2.againstWall = false;
-	}
-
-	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
-		p2.xvel = -p1.character->jumpX;
-	}
-	else if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == RIGHT) {
-		p2.xvel = p1.character->jumpX;
-	}
-	if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == LEFT) {
-		p1.xvel = -p2.character->jumpX;
-	}
-	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
-		p1.xvel = p2.character->jumpX;
-	}
-}*/
-
-/*void FightState::checkBoxes(Player& attacker, Player& defender) {
-	sf::Vector2f attPos = attacker.character->sprite.getPosition();
-	sf::Vector2f defPos = defender.character->sprite.getPosition();
-	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
-		for (auto hurtbox : defender.getCurrentFrame().hurtboxes) {
-			// Make new rects offset by players' current positions and orientations
-			sf::FloatRect offsetHit;
-			if (attacker.side == LEFT) {
-				sf::FloatRect tmp(hitbox.left + attPos.x, hitbox.top + attPos.y, hitbox.width, hitbox.height);
-				offsetHit = tmp;
-			}
-			else if (attacker.side == RIGHT) {
-				sf::FloatRect tmp(attPos.x - hitbox.width - hitbox.left + attacker.getSpriteWidth(), hitbox.top + attPos.y, hitbox.width, hitbox.height);
-				offsetHit = tmp;
-			}
-
-			sf::FloatRect offsetHurt;
-			if (defender.side == LEFT) {
-				sf::FloatRect tmp(hurtbox.left + defPos.x, hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
-				offsetHurt = tmp;
-			}
-			else if (defender.side == RIGHT) {
-				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
-				offsetHurt = tmp;
-			}
-			if (offsetHit.intersects(offsetHurt)) {
-				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
-					defender.block(attacker.getCurrentMove());
-					blockSound.play();
-				}
-				else {
-					//if not blocking, player gets hit
-					if (!attacker.getCurrentFrame().hit) {
-						//cout << "hit!" << endl;
-						defender.getHit(attacker.getCurrentMove());
-						attacker.getCurrentFrame().hit = true;
-						hitSound.play();
-					}
-					attacker.canCancel = true;
-					return;
-				}
-			}
-		}
-	}
-}*/
-
-/*void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
-	// Anan's super secret math formula
-	sf::Vector2f v = player.character->sprite.getPosition();
+void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	Frame &frame = player.getCurrentFrame();
 	if (hit) {
 		for (auto box : frame.hitboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -527,8 +263,8 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 	if (hurt) {
 		for (auto box : frame.hurtboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -539,8 +275,8 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 	if (clip) {
 		for (auto box : frame.clipboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -548,7 +284,7 @@ void FightState::checkClipBoxes(Player& p1, Player& p2) {
 			game.window.draw(drawRect);
 		}
 	}
-}*/
+}
 
 void FightState::processInput(Player& player, vector<int>& input) {
 	// Handle every possible combination of movement keys
@@ -625,8 +361,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 				}
 				input.clear();
 				while (!(acc & 0xFFF)) acc = acc >> 12;
-				//cout << hex << acc << endl;
-				//cout << "indicatorflashon" << endl;
 				indicatorFlashOn = true;
 
 				player.indicator.updateIndicator(ONBEAT);
@@ -745,5 +479,4 @@ void FightState::unhookEvent() {
 }
 
 FightState::~FightState() {
-	//delete player1;
 }

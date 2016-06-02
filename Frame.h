@@ -12,7 +12,7 @@ public:
 	vector<sf::FloatRect> clipboxes;
 	int x_move;
 	int y_move;
-	bool hit;
+	bool hit = 0;
 	//boolean endofmove_flag;
 	Frame();
 	// No copy constructor

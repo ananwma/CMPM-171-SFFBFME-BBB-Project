@@ -113,7 +113,7 @@ void CollisionManager::checkClipBoxes(Player& p1, Player& p2) {
 			p2.againstWall = false;
 	}
 
-	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
+	/*if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
 		p2.xvel = -p1.character->jumpX;
 	}
 	else if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == RIGHT) {
@@ -124,43 +124,43 @@ void CollisionManager::checkClipBoxes(Player& p1, Player& p2) {
 	}
 	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
 		p1.xvel = p2.character->jumpX;
-	}
+	}*/
 }
 
 void CollisionManager::checkBoxes(Player& attacker, Player& defender) {
-	sf::Vector2f attPos = attacker.character->sprite.getPosition();
-	sf::Vector2f defPos = defender.character->sprite.getPosition();
 	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
 		for (auto hurtbox : defender.getCurrentFrame().hurtboxes) {
 			// Make new rects offset by players' current positions and orientations
 			sf::FloatRect offsetHit;
 			if (attacker.side == LEFT) {
-				sf::FloatRect tmp(hitbox.left + attPos.x, hitbox.top + attPos.y, hitbox.width, hitbox.height);
+				sf::FloatRect tmp(hitbox.left + attacker.xpos, hitbox.top + attacker.ypos, hitbox.width, hitbox.height);
 				offsetHit = tmp;
 			}
 			else if (attacker.side == RIGHT) {
-				sf::FloatRect tmp(attPos.x - hitbox.width - hitbox.left + attacker.getSpriteWidth(), hitbox.top + attPos.y, hitbox.width, hitbox.height);
+				sf::FloatRect tmp(attacker.xpos - hitbox.width - hitbox.left + attacker.spriteWidth, hitbox.top + attacker.ypos, hitbox.width, hitbox.height);
 				offsetHit = tmp;
 			}
 
 			sf::FloatRect offsetHurt;
 			if (defender.side == LEFT) {
-				sf::FloatRect tmp(hurtbox.left + defPos.x, hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
+				sf::FloatRect tmp(hurtbox.left + defender.xpos, hurtbox.top + defender.ypos, hurtbox.width, hurtbox.height);
 				offsetHurt = tmp;
 			}
 			else if (defender.side == RIGHT) {
-				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
+				sf::FloatRect tmp(defender.xpos - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defender.ypos, hurtbox.width, hurtbox.height);
 				offsetHurt = tmp;
 			}
 			if (offsetHit.intersects(offsetHurt)) {
+				cout << "!!!" << endl;
 				//on collision, checks first if player getting hit was holding block while being in the correct state
 				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
-					defender.block(attacker.getCurrentMove());
+					defender.getHit(attacker.getCurrentMove());
+					cout << "blocked?";
 				}
 				else {
 					//if not blocking, player gets hit
 					if (!attacker.getCurrentFrame().hit) {
-						//cout << "hit!" << endl;
+						cout << "hit!" << endl;
 						defender.getHit(attacker.getCurrentMove());
 						attacker.getCurrentFrame().hit = true;
 					}

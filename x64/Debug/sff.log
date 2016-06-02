@@ -1,2 +1,10 @@
-﻿  CollisionManager.cpp
-  sff.vcxproj -> C:\Users\mhgun\Source\Repos\sff2\x64\Debug\sff.exe
+﻿  FightState.cpp
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(194): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(203): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(212): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(247): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(248): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(249): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\mhgun\source\repos\sffff\fightstate.cpp(250): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  sff.vcxproj -> C:\Users\mhgun\Source\Repos\sffff\x64\Debug\sff.exe

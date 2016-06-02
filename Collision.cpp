@@ -20,7 +20,7 @@ void Collision::flip_sprites(Player &p1, Player &p2) {
 // GETPOSITION() IS TOP LEFT NOT MIDDLE
 //****************************************
 
-void Collision::move_right(Player &p1, Player &p2, int window_width, AssetManager &current_screen) {
+/*void Collision::move_right(Player &p1, Player &p2, int window_width, AssetManager &current_screen) {
 	if (((p1.character->sprite.getPosition().x + p1.getSpriteWidth()) >= (p2.character->sprite.getPosition().x)) && p1.getSide() == RIGHT && ((p1.character->sprite.getPosition().y + p1.getSpriteHeight() / 2) >= (p2.character->sprite.getPosition().y - p2.getSpriteHeight() / 2))) {
 	}
 	
@@ -49,7 +49,7 @@ void Collision::move_left(Player &p1, Player &p2, AssetManager &current_screen) 
 	}
 	p1.character->currentMove = 1;
 	p1.character->currentMoveFrame = 0;
-}
+}*/
 Collision::~Collision()
 {
 }

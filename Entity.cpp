@@ -115,6 +115,10 @@ direction Entity::getSide() {
 	return side;
 }
 
+sf::Vector2f Entity::getPosition() {
+	return sf::Vector2f(xpos, ypos);
+}
+
 void Entity::setCollisionVolume(sf::FloatRect rect) {
 	collisionVolume = rect;
 }

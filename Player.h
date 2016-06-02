@@ -5,7 +5,6 @@
 #include <string>
 #include <unordered_map>
 #include "Entity.h"
-#include "Character.h"
 #include "Move.h"
 #include "BeatIndicator.h"
 
@@ -24,10 +23,8 @@ private:
 public:
 	// No copy constructor
 	Player(const Player&) = delete;
-	Character* character;
 	BeatIndicator indicator;
 	bool isMoveValid();
-	void setCharacter(Character*);
 	//void setPosition(float, float);
 	void jump(direction dir);
 	bool left, jumping, right;
@@ -38,14 +35,15 @@ public:
 	//float yacc;
 
 	int health;
+	int maxHealth;
 	float meter;
 
 	// change where this is initialized later
 	float beat = 500.0f;
 	//float gravity = 0.98f * pow((500.0f / 500.0f), 2.0f);
 
-	int hitstunFrames;
-	int blockstunFrames;
+	int hitstunFrames = 0;
+	int blockstunFrames = 0;
 	int roundWins;
 	int playerId;
 	//direction side;
@@ -83,11 +81,12 @@ public:
 	void checkSuper(int);
 	bool isInSuper();
 
-	int getCurrentMoveNum();
+	string getCurrentMoveName();
 	int getCurrentFrameNum();
 	float getSpriteHeight();
 	float getSpriteWidth();
-	float getMaxHealth();
+	int getMaxHealth();
+	int getHealth();
 	void setBeat(float);
 
 	bool loadCharacter(string);
