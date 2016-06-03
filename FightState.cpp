@@ -17,9 +17,10 @@ using namespace std;
 FightState::FightState(Game &_game) :
 	game(_game),
 	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70),
-	dust1(10, "sprites/smoke.png", 128, 128, 10),
-	dust2(10, "sprites/smoke.png", 128, 128, 10)
-
+	dust1(10, "sprites/smoke.png", 128, 128, 10, 0),
+	dust2(10, "sprites/smoke.png", 128, 128, 10, 0),
+	hitspark1(10, "sprites/hit_spark2.png", 245, 260, 10, 255),
+	hitspark2(10, "sprites/hit_spark2.png", 245, 260, 10, 255)
 {
 }
 
@@ -37,7 +38,9 @@ void FightState::init() {
 	game.currentScreen.stage.front.setPosition(-230, WINDOW_HEIGHT - 200);
 	game.currentScreen.stage.med.setPosition(-200, WINDOW_HEIGHT - 400);
 	// CHANGE LATER // 
-
+	
+	hitspark1.setContinuous(false);
+	hitspark2.setContinuous(false);
 
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100 * (BEAT_SPEED / 500);
@@ -205,6 +208,12 @@ void FightState::reset() {
 	game.playerOne.meter = 0;
 	game.playerTwo.health = game.playerOne.getMaxHealth();
 	game.playerTwo.meter = 0;
+	game.beat = 425.0f;
+	beatThreshold = 100 * (game.beat / 500);
+	frameSpeed = 1000 * (500 / game.beat);
+	game.playerOne.setBeat(game.beat);
+	game.playerTwo.setBeat(game.beat);
+	bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
 }
 
 void FightState::update() {
@@ -232,8 +241,14 @@ void FightState::update() {
 	}
 
 	// gonna change this later
-	dust1.setEmitter(sf::Vector2f(game.playerOne.getPosition().x, game.playerOne.getPosition().y + 400));
-	dust1.setEmitter(sf::Vector2f(game.playerTwo.getPosition().x, game.playerTwo.getPosition().y + 400));
+	if (game.playerOne.getSide() == LEFT) {
+		dust1.setEmitter(sf::Vector2f(game.playerOne.getPosition().x + 100, game.playerOne.getPosition().y + 400));
+		dust2.setEmitter(sf::Vector2f(game.playerTwo.getPosition().x + 80, game.playerTwo.getPosition().y + 400));
+	}
+	else if (game.playerOne.getSide() == RIGHT) {
+		dust1.setEmitter(sf::Vector2f(game.playerOne.getPosition().x + 80, game.playerOne.getPosition().y + 400));
+		dust2.setEmitter(sf::Vector2f(game.playerTwo.getPosition().x + 100, game.playerTwo.getPosition().y + 400));
+	}
 	sf::Time elapsed = emitterClock.restart();
 	dust1.update(elapsed);
 	dust2.update(elapsed);
@@ -272,7 +287,7 @@ void FightState::update() {
 	processInput(game.playerOne, inputP1);
 	processInput(game.playerTwo, inputP2);
 
-	//these random af numbers lol
+	//camera controls 
 	camera_center = sf::Vector2f((game.playerOne.getPosition().x + game.playerTwo.getPosition().x + 438) / 2, WINDOW_HEIGHT / 2);
 	if (camera_center.x > WINDOW_WIDTH - 550) camera_center.x = WINDOW_WIDTH - 550;
 	if (camera_center.x < 550) camera_center.x = 550;
@@ -281,8 +296,21 @@ void FightState::update() {
 	//constrain like camera
 	game.currentScreen.stage.med.setPosition((game.playerOne.getPosition().x + game.playerTwo.getPosition().x + 438) / 4 - 1000, WINDOW_HEIGHT - 400);
 
-	game.collisionManager.checkBoxes(game.playerOne, game.playerTwo);
-	game.collisionManager.checkBoxes(game.playerTwo, game.playerOne);
+	//collision and hitsparks
+	sf::FloatRect* collisionPoint1 = game.collisionManager.checkBoxes(game.playerOne, game.playerTwo);
+	if (collisionPoint1 != NULL) {
+		hitspark1.setEmitter(sf::Vector2f(collisionPoint1->left - 245, collisionPoint1->top - 260));
+		hitspark1.activate();
+		hitSound.play();
+	}
+	sf::FloatRect* collisionPoint2 = game.collisionManager.checkBoxes(game.playerTwo, game.playerOne);
+	if (collisionPoint2 != NULL) {
+		hitspark2.setEmitter(sf::Vector2f(collisionPoint2->left - 245, collisionPoint2->top - 260));
+		hitspark2.activate();
+		hitSound.play();
+	}
+	hitspark1.update(elapsed);
+	hitspark2.update(elapsed);
 	game.collisionManager.checkClipBoxes(game.playerOne, game.playerTwo, camera_view.getCenter().x - 988, camera_view.getCenter().x + 988);
 
 	game.playerOne.update();
@@ -431,6 +459,18 @@ void FightState::draw() {
 	game.window.draw(game.playerTwo.sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
 	drawBoxes(game.playerTwo, 0, 0, 0);
+
+	//gonna change this later
+	if (game.playerOne.getVelocity().x != 0 || game.playerOne.getVelocity().y != 0) {
+		game.window.draw(dust1);
+	}
+	if (game.playerTwo.getVelocity().x != 0 || game.playerTwo.getVelocity().y != 0) {
+		game.window.draw(dust2);
+	}
+	//
+	game.window.draw(hitspark1);
+	game.window.draw(hitspark2);
+
 	game.window.setView(HUD);
 	game.window.draw(HUDOverlay);
 	game.window.draw(player_1_HP);
@@ -447,15 +487,6 @@ void FightState::draw() {
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
-
-	//gonna change this later
-	/*if (game.playerOne.xvel != 0 || game.playerOne.yvel != 0) {
-		game.window.draw(dust1);
-	}
-	if (game.playerTwo.xvel != 0 || game.playerTwo.yvel != 0) {
-		game.window.draw(dust2);
-	}*/
-	//
 
 	if (game.playerOne.roundWins > 0) {
 		game.window.draw(player_1_round_win_1);
@@ -477,42 +508,6 @@ void FightState::draw() {
 
 
 	game.window.display();
-}
-
-void FightState::move_camera(Player& cp, Player& op) {
-	//right
-
-	/*if ((!(op.xpos + op.character->wall_offset <= game.currentScreen.stage.window_offset)) && (cp.xpos + cp.getSpriteWidth() - cp.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-		camera_view.move(cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset += cp.character->walkspeed;
-		game.currentScreen.stage.base.move(cp.character->walkspeed, 0);
-		game.currentScreen.stage.med.move(cp.character->walkspeed / 2, 0);
-	}
-
-	//left
-
-	if ((!(op.xpos + op.getSpriteWidth() - op.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset)) && (cp.xpos + cp.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-		camera_view.move(-cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset -= cp.character->walkspeed;
-		game.currentScreen.stage.base.move(-cp.character->walkspeed, 0);
-		game.currentScreen.stage.med.move(-cp.character->walkspeed / 2, 0);
-
-	}*/
-
-}
-
-void FightState::restrict_movement(Player& p1, Player& p2) {
-	//right
-
-	/*if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel > 0)) {
-		p1.xvel = 0;
-	}
-
-	//left
-
-	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel < 0)) {
-		p1.xvel = 0;
-	}*/
 }
 
 void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
@@ -563,7 +558,10 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	}
 	else if (!player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
-		player.doMove("fjump");
+		if (player.getSide() == LEFT)
+			player.doMove("fjump");
+		else if(player.getSide() == RIGHT)
+			player.doMove("bjump");
 	}
 	else if (player.left && !player.jumping && player.right) {
 		player.holdingBlock = true;
@@ -571,11 +569,17 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	}
 	else if (player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.doMove("bjump");
+		if (player.getSide() == LEFT)
+			player.doMove("bjump");
+		else if (player.getSide() == RIGHT)
+			player.doMove("fjump");
 	}
 	else if (!player.left && !player.jumping && player.right) {
 
-		player.doMove("walk");
+		if (player.getSide() == LEFT)
+			player.doMove("walk");
+		else if (player.getSide() == RIGHT)
+			player.doMove("backwalk");
 		//check if player is holding correct direction to block
 		if (player.getSide() == RIGHT) {
 			player.holdingBlock = true;
@@ -585,7 +589,10 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	else if (player.left && !player.jumping && !player.right) {
-		player.doMove("backwalk");
+		if (player.getSide() == LEFT)
+			player.doMove("backwalk");
+		else if (player.getSide() == RIGHT)
+			player.doMove("walk");
 		//check if player is holding correct direction to block
 		if (player.getSide() == LEFT) {
 			player.holdingBlock = true;
@@ -636,7 +643,6 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 				player.indicator.updateIndicator(ONBEAT);
 
-
 				if (acc == C_NATURAL) {
 					player.doMove("jab");
 				}
@@ -677,7 +683,7 @@ void FightState::processInput(Player& player, vector<int>& input) {
 					player.doMove("tatsu");
 				}
 				else if (acc == G_MAJOR_6) {
-					player.doMove("shoryuken");
+					player.doMove("tatsu");
 					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == G_MAJOR_64) {

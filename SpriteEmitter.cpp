@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "SpriteEmitter.h"
 
-SpriteEmitter::SpriteEmitter(int _count, std::string filename, int _width, int _height, int _framecount) : 
+SpriteEmitter::SpriteEmitter(int _count, std::string filename, int _width, int _height, int _framecount, int _alpha) : 
 	count(_count), 
 	width(_width),
 	height(_height),
 	framecount(_framecount),
+	alpha(_alpha),
 	maxLifetime(sf::seconds(3))
 {
 	texture.loadFromFile(filename);
@@ -30,7 +31,7 @@ void SpriteEmitter::update(sf::Time elapsed) {
 		particle.sprite.move(particle.velocity);
 
 		// update the alpha (transparency) of the particle according to its lifetime
-		float ratio = particle.lifetime.asSeconds() / maxLifetime.asSeconds();
+		float ratio = (particle.lifetime.asSeconds() + alpha) / maxLifetime.asSeconds();
 		particle.sprite.setColor(sf::Color(255, 255, 255, ratio * 255));
 
 		// update anim frame based on lifetime
@@ -55,16 +56,33 @@ void SpriteEmitter::resetParticle(Particle& particle) {
 	particle.currFrame = 0;
 
 	particle.sprite.setPosition(emitterPos);
+	if (!continuous)
+		particle.active = false;
 }
 
 void SpriteEmitter::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	// draw particles
-	for (auto &particle : particleVector)
-		target.draw(particle.sprite);
+	for (auto &particle : particleVector) {
+		if (particle.active) 
+			target.draw(particle.sprite);
+	}
 }
 
 void SpriteEmitter::setEmitter(sf::Vector2f position) {
 	emitterPos = position;
+	if (!continuous)
+		for (auto &particle : particleVector) 
+			particle.sprite.setPosition(emitterPos);
+}
+
+void SpriteEmitter::setContinuous(bool set) {
+	continuous = set;
+}
+
+void SpriteEmitter::activate() {
+	for (auto &particle : particleVector) {
+		particle.active = true;
+	}
 }
 
 

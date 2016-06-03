@@ -14,7 +14,7 @@ public:
 
 	void checkClipBoxes(Player & p1, Player & p2, float, float);
 
-	void checkBoxes(Player &, Player &);
+	sf::FloatRect* checkBoxes(Player &, Player &);
 
 	~CollisionManager();
 

@@ -1,3 +1,4 @@
+#include <memory>
 #include "stdafx.h"
 #include "Character.h"
 #include "Player.h"
@@ -54,8 +55,19 @@ bool Player::loadCharacter(string filename) {
 	jumpX = atof(characterData->FirstChildElement("jumpX")->GetText());
 	jumpY = atof(characterData->FirstChildElement("jumpY")->GetText());
 	maxHealth = atoi(characterData->FirstChildElement("health")->GetText());
-	walloffset = atoi(characterData->FirstChildElement("walloffset")->GetText());
 	health = maxHealth;
+	walloffset = atoi(characterData->FirstChildElement("walloffset")->GetText());
+	portrait.loadFromFile(characterData->FirstChildElement("portrait")->GetText());
+	tinyxml2::XMLElement* sounds = characterData->FirstChildElement("sounds");
+	tinyxml2::XMLElement* nextSound = sounds->FirstChildElement("sound");
+	while (nextSound != NULL) {
+		shared_ptr<sfx> tmp(new sfx(nextSound->Attribute("file")));
+		sfxMap[nextSound->Attribute("name")] = tmp;
+		//sfxMap.emplace(nextSound->Attribute("name"), sfx(nextSound->Attribute("file")));
+		sounds->DeleteChild(nextSound);
+		nextSound = sounds->FirstChildElement("sound");
+	}
+
 
 	// Parse string of ints into int vector for super
 	string superStr = characterData->FirstChildElement("super")->GetText();
@@ -146,18 +158,25 @@ void Player::doMove(string moveName) {
 			setAnimTexture(currentMove->spritesheet, currentMove->width, currentMove->height, currentMove->frameCount);
 		}
 		currentMove->setHitFalse();
-		xvel = currentMove->velX;
-		yvel = currentMove->velY;
+		xvel = currentMove->velX * side * (500 / beat);
+		yvel += currentMove->velY * (500 / beat);
 		state = currentMove->state;
+
+		if (moveName == "jab" || moveName == "strong" || moveName == "fierce" || moveName == "short" || moveName == "forward" || moveName == "roundhouse")
+			playSound("attack" + to_string(rand() % 3 + 1));
+		else if (moveName == "shoryuken")
+			playSound("uppercut");
+		else if (moveName == "toccata")
+			playSound("toccata");
 	}
 	else if (state == AIRBORNE_STATE) {
 		if (moveMap[moveName].inAir) {
 			if (currentMove != &moveMap[moveName]) {
 				currentMove = &moveMap[moveName];
-				setAnimTexture(currentMove->spritesheet, 438, 548, currentMove->frameCount);
+				setAnimTexture(currentMove->spritesheet, currentMove->width, currentMove->height, currentMove->frameCount);
 			}
-			xvel += currentMove->velX;
-			yvel += currentMove->velY;
+			xvel += currentMove->velX * (500 / beat);
+			yvel += currentMove->velY * (500 / beat);
 			state = currentMove->state;
 		}
 	}
@@ -188,17 +207,18 @@ void Player::doMove(string moveName) {
 }
 
 void Player::getHit(Move *move) {
-	if (holdingBlock) {
+	if (holdingBlock && move->moveName != "grab") {
 		blockstunFrames = move->blockstun;
-		xvel = move->pushX;
-		yvel = move->pushY;
+		//xvel = move->pushX;
+		//yvel = move->pushY;
 		doMove("blockstun");
 	}
 	else {
 		hitstunFrames = move->hitstun;
 		health -= move->damage;
-		xvel = move->pushX;
-		yvel = move->pushY;
+		xvel = move->pushX* (500 / beat);
+		yvel = move->pushY* (500 / beat);
+		state = NO_STATE;
 		doMove("hitstun");
 	}
 	//if (state != BLOCKING) {
@@ -226,6 +246,10 @@ void Player::getHit(Move *move) {
 	state = BLOCKSTUN_STATE;
 	health -= move->damage;
 	}*/
+}
+
+void Player::playSound(string name) {
+	sfxMap[name]->play();
 }
 
 void Player::block(Move *move) {

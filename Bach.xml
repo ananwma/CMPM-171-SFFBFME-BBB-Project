@@ -6,6 +6,20 @@
   <health>1000</health>
   <walloffset>100</walloffset>
   <super>7 0 2 4 5 7 0 0</super>
+  <portrait>sprites/BachPortrait.png</portrait>
+  <sounds>
+    <sound name="uppercut" file="sounds/uppercut.wav"/>
+    <sound name="toccata" file="sounds/toccata.wav"/>
+    <sound name="minuet_in_c" file="sounds/minuet_in_c.wav"/>
+    <sound name="attack1" file="sounds/attack1.wav"/>
+    <sound name="attack2" file="sounds/attack2.wav"/>
+    <sound name="attack3" file="sounds/attack3.wav"/>
+    <sound name="hit1" file="sounds/hit1.wav"/>
+    <sound name="hit2" file="sounds/hit1.wav"/>
+    <sound name="hit3" file="sounds/hit1.wav"/>
+    <sound name="victory" file="sounds/victory.wav"/>
+    <sound name="defeat" file="sounds/defeat.wav"/>
+  </sounds>
 
   <move name="jab">
     <sprite>sprites/bach_jab.png</sprite>
@@ -327,7 +341,7 @@
     <velx>-20</velx>
     <vely>3</vely>
     <pushx>-20</pushx>
-    <pushy>15</pushy>
+    <pushy>-15</pushy>
     <knockback>4</knockback>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -435,7 +449,7 @@
     <velx>0</velx>
     <vely>0</vely>
     <pushx>15</pushx>
-    <pushy>15</pushy>
+    <pushy>-15</pushy>
     <knockback>0</knockback>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -559,10 +573,10 @@
   </move>
 
   <move name="njump">
-    <sprite>sprites/bach_jump.png</sprite>
-    <width>288</width>
-    <height>548</height>
-    <framecount>3</framecount>
+    <sprite>sprites/bach_jump2.png</sprite>
+    <width>438</width>
+    <height>603</height>
+    <framecount>1</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>
@@ -574,17 +588,18 @@
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
-      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
-      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
-      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+      <hitbox color="65280" frame="0" height="110" userdata="hurt" width="93" x="141" y="-2"/>
+      <hitbox color="65280" frame="0" height="492" userdata="hurt" width="181" x="92" y="98"/>
+      <hitbox color="65280" frame="0" height="267" userdata="hurt" width="144" x="216" y="111"/>
+      <hitbox color="16776960" frame="0" height="125" userdata="clip" width="159" x="112" y="7"/>
     </framedata>
   </move>
 
   <move name="bjump">
-    <sprite>sprites/bach_jump.png</sprite>
-    <width>288</width>
-    <height>548</height>
-    <framecount>3</framecount>
+    <sprite>sprites/bach_jump2.png</sprite>
+    <width>438</width>
+    <height>603</height>
+    <framecount>1</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>
@@ -596,17 +611,18 @@
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
-      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
-      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
-      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+      <hitbox color="65280" frame="0" height="110" userdata="hurt" width="93" x="141" y="-2"/>
+      <hitbox color="65280" frame="0" height="492" userdata="hurt" width="181" x="92" y="98"/>
+      <hitbox color="65280" frame="0" height="267" userdata="hurt" width="144" x="216" y="111"/>
+      <hitbox color="16776960" frame="0" height="125" userdata="clip" width="159" x="112" y="7"/>
     </framedata>
   </move>
 
   <move name="fjump">
-    <sprite>sprites/bach_jump.png</sprite>
-    <width>288</width>
-    <height>548</height>
-    <framecount>3</framecount>
+    <sprite>sprites/bach_jump2.png</sprite>
+    <width>438</width>
+    <height>603</height>
+    <framecount>1</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>
@@ -618,16 +634,17 @@
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
-      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
-      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
-      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+      <hitbox color="65280" frame="0" height="110" userdata="hurt" width="93" x="141" y="-2"/>
+      <hitbox color="65280" frame="0" height="492" userdata="hurt" width="181" x="92" y="98"/>
+      <hitbox color="65280" frame="0" height="267" userdata="hurt" width="144" x="216" y="111"/>
+      <hitbox color="16776960" frame="0" height="125" userdata="clip" width="159" x="112" y="7"/>
     </framedata>
   </move>
 
   <move name="fall">
-    <sprite>sprites/bach_fall.png</sprite>
-    <width>288</width>
-    <height>548</height>
+    <sprite>sprites/bach_fall2.png</sprite>
+    <width>438</width>
+    <height>642</height>
     <framecount>1</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
@@ -640,9 +657,9 @@
     <inair>1</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
-      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
-      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
-      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+      <hitbox color="4278255360" frame="0" height="411" userdata="hurt" width="201" x="86" y="6"/>
+      <hitbox color="65280" frame="0" height="311" userdata="hurt" width="132" x="130" y="319"/>
+      <hitbox color="16776960" frame="0" height="367" userdata="clip" width="160" x="114" y="148"/>
     </framedata>
   </move>
 

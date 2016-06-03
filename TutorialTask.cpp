@@ -1,5 +1,4 @@
 #include "TutorialTask.h"
-#include "Player.h"
 #include "TutorialState.h"
 
 bool TutorialTask::testTask(Player& player) {

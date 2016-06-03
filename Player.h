@@ -4,9 +4,12 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+#include <memory>
+#include <SFML/Audio.hpp>
 #include "Entity.h"
 #include "Move.h"
 #include "BeatIndicator.h"
+#include "sfx.h"
 
 class Player : public Entity {
 private:
@@ -19,6 +22,8 @@ private:
 	vector<int> super;
 	unordered_map<string, Move> moveMap;
 	Move* currentMove = NULL;
+	unordered_map<string, shared_ptr<sfx>> sfxMap;
+	sf::Texture portrait;
 
 public:
 	// No copy constructor
@@ -71,6 +76,7 @@ public:
 
 	void doMove(string);
 	void getHit(Move*);
+	void playSound(string name);
 	void block(Move*);
 	bool moveCancelable(int, int);
 	void walk(direction);

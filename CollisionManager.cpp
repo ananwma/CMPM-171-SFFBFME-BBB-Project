@@ -114,7 +114,7 @@ void CollisionManager::checkClipBoxes(Player& p1, Player& p2, float leftWall, fl
 	}
 }
 
-void CollisionManager::checkBoxes(Player& attacker, Player& defender) {
+sf::FloatRect* CollisionManager::checkBoxes(Player& attacker, Player& defender) {
 	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
 		for (auto hurtbox : defender.getCurrentFrame().hurtboxes) {
 			// Make new rects offset by players' current positions and orientations
@@ -137,27 +137,21 @@ void CollisionManager::checkBoxes(Player& attacker, Player& defender) {
 				sf::FloatRect tmp(defender.xpos - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defender.ypos, hurtbox.width, hurtbox.height);
 				offsetHurt = tmp;
 			}
-			if (offsetHit.intersects(offsetHurt)) {
-				cout << "!!!" << endl;
-				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
+			sf::FloatRect intersectBox;
+			if (offsetHit.intersects(offsetHurt, intersectBox)) {
+				if (!attacker.getCurrentFrame().hit) {
 					defender.getHit(attacker.getCurrentMove());
-					cout << "blocked?";
+					attacker.getCurrentFrame().hit = true;
+					attacker.xvel = attacker.getCurrentMove()->knockback;
 				}
-				else {
-					//if not blocking, player gets hit
-					if (!attacker.getCurrentFrame().hit) {
-						cout << "hit!" << endl;
-						defender.getHit(attacker.getCurrentMove());
-						attacker.getCurrentFrame().hit = true;
-					}
-					attacker.canCancel = true;
-					return;
-				}
+				attacker.canCancel = true;
+				return &intersectBox;
 			}
 		}
 	}
+	return NULL;
 }
+
 
 
 

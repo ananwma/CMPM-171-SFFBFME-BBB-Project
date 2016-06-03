@@ -138,6 +138,9 @@
     <ClInclude Include="TutorialState.h">
       <Filter>GameStates\Headers</Filter>
     </ClInclude>
+    <ClInclude Include="sfx.h">
+      <Filter>sff headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

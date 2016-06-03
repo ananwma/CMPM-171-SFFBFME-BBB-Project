@@ -17,8 +17,8 @@ using namespace std;
 TutorialState::TutorialState(Game &_game) :
 	game(_game),
 	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70),
-	dust1(10, "sprites/smoke.png", 128, 128, 10),
-	dust2(10, "sprites/smoke.png", 128, 128, 10)
+	dust1(10, "sprites/smoke.png", 128, 128, 10, 0),
+	dust2(10, "sprites/smoke.png", 128, 128, 10, 0)
 
 {
 }

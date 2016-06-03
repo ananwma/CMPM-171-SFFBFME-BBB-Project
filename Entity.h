@@ -6,7 +6,7 @@
 #define BEAT_SPEED 500.0f
 #define GROUND WINDOW_WIDTH / 4
 
-enum direction { LEFT, RIGHT, NEUTRAL };
+enum direction { LEFT = 1, RIGHT = -1, NEUTRAL = 0 };
 
 class Entity {
 

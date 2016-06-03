@@ -76,6 +76,8 @@ private:
 	sf::Clock emitterClock;
 	SpriteEmitter dust1;
 	SpriteEmitter dust2;
+	SpriteEmitter hitspark1;
+	SpriteEmitter hitspark2;
 	bool onBeat;
 	float beat;
 	int intOnBeat;
