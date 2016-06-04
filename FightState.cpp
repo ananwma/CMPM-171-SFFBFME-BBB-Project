@@ -21,8 +21,8 @@ FightState::FightState(Game &_game) :
 	dust2(10, "sprites/smoke.png", 128, 128, 10, 0),
 	hitspark1(10, "sprites/hit_spark2.png", 245, 260, 10, 200),
 	hitspark2(10, "sprites/hit_spark2.png", 245, 260, 10, 200),
-	blockspark1(10, "sprites/block_spark2.png", 122, 130, 10, 100),
-	blockspark2(10, "sprites/block_spark2.png", 122, 130, 10, 100)
+	blockspark1(10, "sprites/block_spark3.png", 245, 260, 10, 100),
+	blockspark2(10, "sprites/block_spark3.png", 245, 260, 10, 100)
 {
 }
 
@@ -557,8 +557,8 @@ void FightState::draw() {
 	game.window.draw(game.currentScreen.stage.front);
 	game.window.draw(game.playerOne.sprite);
 	game.window.draw(game.playerTwo.sprite);
-	drawBoxes(game.playerOne, 0, 0, 0);
-	drawBoxes(game.playerTwo, 0, 0, 0);
+	drawBoxes(game.playerOne, 1, 1, 1);
+	drawBoxes(game.playerTwo, 1, 1, 1);
 
 	//gonna change this later
 	if (game.playerOne.getVelocity().x != 0 || game.playerOne.getVelocity().y != 0) {
