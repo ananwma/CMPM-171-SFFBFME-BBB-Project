@@ -34,6 +34,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>4</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>20</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -70,6 +71,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>6</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>30</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -114,13 +116,14 @@
     <height>548</height>
     <framecount>13</framecount>
     <damage>100</damage>
-    <hitstun>6</hitstun>
+    <hitstun>0</hitstun>
     <blockstun>5</blockstun>
     <velx>0</velx>
     <vely>0</vely>
     <pushx>2</pushx>
     <pushy>0</pushy>
     <knockback>8</knockback>
+    <knocksdown>1</knocksdown>
     <metergain>50</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -195,6 +198,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>4</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>15</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -246,6 +250,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>6</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>35</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -297,6 +302,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>16</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>40</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -348,6 +354,7 @@
     <pushy>-25</pushy>
     <knockback>4</knockback>
     <metergain>60</metergain>
+    <knocksdown>1</knocksdown>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -369,6 +376,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>5</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>60</metergain>
     <inair>1</inair>
     <state>ATTACK_STATE</state>
@@ -457,6 +465,7 @@
     <pushx>15</pushx>
     <pushy>-35</pushy>
     <knockback>0</knockback>
+    <knocksdown>1</knocksdown>
     <metergain>10</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -497,11 +506,12 @@
     <damage>200</damage>
     <hitstun>10</hitstun>
     <blockstun>5</blockstun>
-    <velx>10</velx>
+    <velx>20</velx>
     <vely>0</vely>
     <pushx>20</pushx>
     <pushy>0</pushy>
     <knockback>8</knockback>
+    <knocksdown>1</knocksdown>
     <metergain>0</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
@@ -528,6 +538,7 @@
     <pushy>0</pushy>
     <inair>0</inair>
     <metergain>0</metergain>
+    <knocksdown>0</knocksdown>
     <knockback>0</knockback>
     <state>NO_STATE</state>
     <framedata>
@@ -550,6 +561,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>0</metergain>
     <inair>0</inair>
     <state>WALK_STATE</state>
@@ -590,6 +602,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>0</metergain>
     <inair>0</inair>
     <state>WALK_STATE</state>
@@ -630,6 +643,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>0</metergain>
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
@@ -654,6 +668,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>0</metergain>
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
@@ -678,6 +693,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
     <metergain>0</metergain>
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
@@ -701,6 +717,7 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
+    <knocksdown>0</knocksdown>
     <knockback>0</knockback>
     <metergain>0</metergain>
     <inair>1</inair>
@@ -724,6 +741,7 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
+    <knocksdown>0</knocksdown>
     <knockback>0</knockback>
     <metergain>15</metergain>
     <state>HITSTUN_STATE</state>
@@ -748,6 +766,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <metergain>10</metergain>
+    <knocksdown>0</knocksdown>
     <knockback>0</knockback>
     <inair>0</inair>
     <state>BLOCKSTUN_STATE</state>
@@ -759,11 +778,62 @@
     </framedata>
   </move>
 
-  <move name="blockstun">
-    <sprite>sprites/bach_block.png</sprite>
-    <width>438</width>
-    <height>548</height>
+  <move name="air_kick">
+    <sprite>sprites/bach_air_kick.png</sprite>
+    <width>544</width>
+    <height>428</height>
     <framecount>1</framecount>
+    <damage>30</damage>
+    <hitstun>5</hitstun>
+    <blockstun>4</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <metergain>30</metergain>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <inair>1</inair>
+    <state>AIR_ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="124" userdata="hurt" width="206" x="74" y="65"/>
+      <hitbox color="65280" frame="0" height="134" userdata="hurt" width="444" x="100" y="183"/>
+      <hitbox color="65280" frame="0" height="161" userdata="hurt" width="129" x="147" y="272"/>
+      <hitbox color="16711680" frame="0" height="145" userdata="hit" width="444" x="104" y="193"/>
+      <hitbox color="16776960" frame="0" height="220" userdata="clip" width="158" x="65" y="71"/>
+    </framedata>
+  </move>
+
+  <move name="air_punch">
+    <sprite>sprites/bach_air_punch.png</sprite>
+    <width>528</width>
+    <height>555</height>
+    <framecount>1</framecount>
+    <damage>40</damage>
+    <hitstun>6</hitstun>
+    <blockstun>4</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <metergain>40</metergain>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <inair>1</inair>
+    <state>AIR_ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="294" userdata="hurt" width="154" x="195" y="-2"/>
+      <hitbox color="65280" frame="0" height="261" userdata="hurt" width="129" x="121" y="291"/>
+      <hitbox color="4294967040" frame="0" height="247" userdata="clip" width="107" x="191" y="14"/>
+      <hitbox color="16711680" frame="0" height="268" userdata="hit" width="301" x="238" y="-8"/>
+    </framedata>
+  </move>
+
+  <move name="collapse">
+    <sprite>sprites/bach_collapse.png</sprite>
+    <width>624</width>
+    <height>548</height>
+    <framecount>11</framecount>
     <damage>0</damage>
     <hitstun>0</hitstun>
     <blockstun>0</blockstun>
@@ -771,15 +841,24 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
-    <metergain>10</metergain>
+    <metergain>0</metergain>
     <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
     <inair>0</inair>
-    <state>BLOCKSTUN_STATE</state>
+    <state>COLLAPSED_STATE</state>
     <framedata>
-      <hitbox color="65280" frame="0" height="161" userdata="hurt" width="176" x="183" y="37"/>
-      <hitbox color="65280" frame="0" height="152" userdata="hurt" width="164" x="164" y="190"/>
-      <hitbox color="65280" frame="0" height="237" userdata="hurt" width="217" x="151" y="293"/>
-      <hitbox color="16776960" frame="0" height="394" userdata="clip" width="166" x="178" y="126"/>
+      <hitbox color="16776960" frame="0" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="1" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="2" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="3" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="4" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="5" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="6" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="7" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="8" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="9" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="10" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="11" height="408" userdata="clip" width="160" x="129" y="93"/>
     </framedata>
   </move>
 

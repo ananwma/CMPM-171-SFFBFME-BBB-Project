@@ -23,6 +23,10 @@ private:
 	unordered_map<string, Move> moveMap;
 	Move* currentMove = NULL;
 	unordered_map<string, shared_ptr<sfx>> sfxMap;
+	sf::SoundBuffer hitSoundBuffer;
+	sf::SoundBuffer blockSoundBuffer;
+	sf::Sound hitSound;
+	sf::Sound blockSound;
 
 public:
 	sf::Texture portrait;
@@ -99,7 +103,7 @@ public:
 	void setBeat(float);
 
 	bool loadCharacter(string);
-
+	bool collapse = false;
 	Player();
 	~Player();
 

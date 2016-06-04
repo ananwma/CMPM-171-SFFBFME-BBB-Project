@@ -8,7 +8,7 @@ using namespace std;
 using BoxVec = vector<sf::FloatRect>;
 using FrameVec = vector<Frame>;
 
-enum State { NO_STATE, WALK_STATE, AIRBORNE_STATE, HITSTUN_STATE, ATTACK_STATE, BLOCKSTUN_STATE, GRAB_STATE, FALLING_STATE, COLLAPSED_STATE };
+enum State { NO_STATE, WALK_STATE, AIRBORNE_STATE, HITSTUN_STATE, ATTACK_STATE, BLOCKSTUN_STATE, GRAB_STATE, FALLING_STATE, COLLAPSED_STATE, AIR_ATTACK_STATE };
 
 class Move {
 	friend class Player;
@@ -40,6 +40,7 @@ protected:
 	float pushY = 0;
 	float knockback = 0;
 	bool inAir = 0;
+	bool knocksdown = false;
 	vector<int> cancelMoves;
 	State state;
 };

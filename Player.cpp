@@ -43,7 +43,9 @@ bool Player::loadCharacter(string filename) {
 		{ "AIRBORNE_STATE", AIRBORNE_STATE },
 		{ "HITSTUN_STATE", HITSTUN_STATE },
 		{ "ATTACK_STATE", ATTACK_STATE },
-		{ "BLOCKSTUN_STATE", BLOCKSTUN_STATE } };
+		{ "AIR_ATTACK_STATE", AIR_ATTACK_STATE },
+		{ "BLOCKSTUN_STATE", BLOCKSTUN_STATE },
+		{ "COLLAPSED_STATE", COLLAPSED_STATE } };
 
 	// Load XML File
 	tinyxml2::XMLDocument characterFile;
@@ -92,6 +94,7 @@ bool Player::loadCharacter(string filename) {
 		move.pushX = atof(nextMove->FirstChildElement("pushx")->GetText());
 		move.pushY = atof(nextMove->FirstChildElement("pushy")->GetText());
 		move.knockback = atof(nextMove->FirstChildElement("knockback")->GetText());
+		move.knocksdown = atoi(nextMove->FirstChildElement("knocksdown")->GetText());
 		move.metergain = atoi(nextMove->FirstChildElement("metergain")->GetText());
 		move.inAir = atoi(nextMove->FirstChildElement("inair")->GetText());
 		move.state = stateMap[nextMove->FirstChildElement("state")->GetText()];
@@ -122,6 +125,10 @@ bool Player::loadCharacter(string filename) {
 		nextMove = characterData->FirstChildElement("move");
 	}
 
+	hitSoundBuffer.loadFromFile("sounds/hit.wav");
+	blockSoundBuffer.loadFromFile("sounds/block.wav");
+	hitSound.setBuffer(hitSoundBuffer);
+	blockSound.setBuffer(blockSoundBuffer);
 	return true;
 }
 
@@ -131,7 +138,7 @@ void Player::update() {
 		state = NO_STATE;
 		doMove("idle");
 	}
-	else if (state == AIRBORNE_STATE && ypos == GROUND) {
+	else if ((state == AIRBORNE_STATE || state == AIR_ATTACK_STATE) && ypos == GROUND) {
 		state = NO_STATE;
 		doMove("idle");
 	}
@@ -139,8 +146,11 @@ void Player::update() {
 		doMove("fall");
 	}
 	else if (state == HITSTUN_STATE) {
-		if (hitstunFrames == 0) {
+		if (hitstunFrames <= 0 && ypos == GROUND) {
 			state = NO_STATE;
+			if (collapse) {
+				doMove("collapse");
+			}
 			doMove("idle");
 		}
 	}
@@ -149,6 +159,10 @@ void Player::update() {
 			state = NO_STATE;
 			doMove("idle");
 		}
+	}
+	else if (state == COLLAPSED_STATE && currAnimFrame == numAnimFrames - 1) {
+		state = NO_STATE;
+		doMove("idle");
 	}
 }
 
@@ -172,10 +186,16 @@ void Player::doMove(string moveName) {
 			playSound("toccata");
 	}
 	else if (state == AIRBORNE_STATE) {
+		if (moveName == "short" || moveName == "forward" || moveName == "roundhouse")
+			moveName = "air_kick";
+		else if (moveName == "jab" || moveName == "strong" || moveName == "fierce")
+			moveName = "air_punch";
 		if (moveMap[moveName].inAir) {
 			if (currentMove != &moveMap[moveName]) {
 				currentMove = &moveMap[moveName];
 				setAnimTexture(currentMove->spritesheet, currentMove->width, currentMove->height, currentMove->frameCount);
+				meter += currentMove->metergain;
+				currentMove->setHitFalse();
 			}
 			xvel += currentMove->velX * (500 / beat);
 			yvel += currentMove->velY * (500 / beat);
@@ -186,21 +206,24 @@ void Player::doMove(string moveName) {
 }
 
 void Player::getHit(Move *move) {
-	if (holdingBlock && move->moveName != "grab") {
+	if (holdingBlock && move->moveName != "grab" && move->moveName != "super") {
 		blockstunFrames = move->blockstun;
 		//xvel = move->pushX;
 		//yvel = move->pushY;
+		blockSound.play();
 		doMove("blockstun");
 	}
 	else {
-		if (ypos == GROUND) {
-			hitstunFrames = move->hitstun;
-			health -= move->damage;
-			xvel = move->pushX * (500 / beat);
-			yvel = move->pushY * (500 / beat);
-			state = NO_STATE;
-			doMove("hitstun");
-		}
+		if (ypos != GROUND && move->moveName == "grab")
+			return;
+		hitstunFrames = move->hitstun;
+		health -= move->damage;
+		xvel = move->pushX * (500 / beat);
+		yvel = move->pushY * (500 / beat);
+		state = NO_STATE;
+		collapse = move->knocksdown;
+		hitSound.play();
+		doMove("hitstun");
 	}
 }
 
@@ -223,7 +246,8 @@ void Player::checkSuper(int note) {
 		superIndex++;
 		if (superIndex == super.size()) {
 			state = NO_STATE;
-			doMove("super");
+			if (meter >= 1000)
+				doMove("super");
 			superIndex = 0;
 			meter = 0;
 		}
