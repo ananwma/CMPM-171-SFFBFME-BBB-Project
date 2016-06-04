@@ -94,7 +94,7 @@
       <text>Grab your 
       opponent</text>
       <conditions>
-        <move>11</move>
+        <move>grab</move>
       </conditions>
       <lefticonframes>7 </lefticonframes>
     </task>
@@ -116,7 +116,7 @@
       <text>Perform a 
       special attack</text>
       <conditions>
-        <move>12</move>
+        <move>shoryuken</move>
       </conditions>
       <lefticonframes>0 8</lefticonframes>
     </task>
@@ -135,21 +135,21 @@
     <task id="0">
       <text>Light punch</text>
       <conditions>
-        <move>3</move>
+        <move>jab</move>
       </conditions>
       <lefticonframes>0 1</lefticonframes>
     </task>
     <task id="1">
       <text>Medium punch</text>
       <conditions>
-        <move>2</move>
+        <move>strong</move>
       </conditions>
       <lefticonframes>0 2</lefticonframes>
     </task>
     <task id="2">
       <text>Hard punch</text>
       <conditions>
-        <move>6</move>
+        <move>fierce</move>
       </conditions>
       <lefticonframes>0 3</lefticonframes>
     </task>
@@ -171,7 +171,7 @@
       <text> Play the notes in 
       quick succession</text>
       <conditions>
-        <move>14</move>
+        <move>super</move>
       </conditions>
       <lefticonframes>0 5 1 2 3 4 5 1 0 1 0 0 0 </lefticonframes>
     </task>

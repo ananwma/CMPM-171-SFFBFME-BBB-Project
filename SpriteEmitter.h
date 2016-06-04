@@ -6,9 +6,11 @@
 class SpriteEmitter : public sf::Drawable, public sf::Transformable
 {
 public:
-	SpriteEmitter(int count, std::string filename, int width, int height, int framecount);
+	SpriteEmitter(int count, std::string filename, int width, int height, int framecount, int alpha);
 	void update(sf::Time);
 	void setEmitter(sf::Vector2f position);
+	void setContinuous(bool);
+	void activate();
 	~SpriteEmitter();
 private:
 	int count;
@@ -18,6 +20,8 @@ private:
 	sf::Texture texture;
 	sf::Time maxLifetime;
 	sf::Vector2f emitterPos;
+	int alpha;
+	bool continuous = true;
 
 	// struct to store sprite, velocity, anim data
 	struct Particle {
@@ -27,6 +31,7 @@ private:
 		sf::Time switchClock;
 		float switchFrame;
 		int currFrame = 0;
+		bool active = true;
 	};
 	std::vector<Particle> particleVector;
 

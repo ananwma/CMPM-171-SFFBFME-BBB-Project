@@ -1,4 +1,5 @@
 #pragma once
+
 #include "GameState.h"
 #include "Game.h"
 #include "Player.h"
@@ -6,15 +7,17 @@
 #include "BeatIndicator.h"
 #include "ConcertHallStage.h"
 #include "Bassline.h"
+#include "UI.h"
+#include "SpriteEmitter.h"
 #include "TutorialTask.h"
 #include "TutorialStage.h"
 #include <SFML/Audio.hpp>
-#include <string>
 
 class TutorialState : public GameState {
 public:
 	// CTOR
 	explicit TutorialState(Game&);
+	void initTutorial();
 	~TutorialState();
 
 	// Main game loop functions
@@ -28,9 +31,11 @@ public:
 	virtual void unhookEvent();
 	virtual void hookEvent();
 
+	int BARSIZE = 628;
+
+	sf::View base_view;
 	sf::View camera_view;
 	sf::View HUD;
-	sf::RectangleShape textbox;
 	sf::RectangleShape player_1_HP;
 	sf::RectangleShape player_2_HP;
 	sf::RectangleShape player_1_meter;
@@ -39,6 +44,27 @@ public:
 	sf::RectangleShape player_2_HP_box;
 	sf::RectangleShape player_1_meter_box;
 	sf::RectangleShape player_2_meter_box;
+	sf::CircleShape player_1_round_win_1;
+	sf::CircleShape player_1_round_win_2;
+	sf::CircleShape player_2_round_win_1;
+	sf::CircleShape player_2_round_win_2;
+	sf::Sprite player1portraitart;
+	sf::Sprite player2portraitart;
+	sf::RectangleShape pauseOverlay;
+	sf::RectangleShape timer;
+	sf::Sprite HUDOverlay;
+	sf::Texture HUDTexture;
+	sf::Vector2f camera_center;
+
+	sf::Text timer_text;
+	sf::Font font;
+	float time;
+	sf::RectangleShape player_1_round_wins;
+	sf::RectangleShape player_2_round_wins;
+	void processInput(Player&, vector<int>&);
+
+	//tutorial stuff
+	sf::RectangleShape textbox;
 	sf::RectangleShape overlay;
 	sf::Texture textBorderTex;
 	sf::Sprite textBorder;
@@ -49,13 +75,9 @@ public:
 	int keyboardHeight = 602;
 	sf::RectangleShape task;
 	sf::Text task_text;
-	sf::Text text;
 	sf::RectangleShape dialogue;
 	sf::Text dialogue_text;
-	sf::Font font;
-	sf::RectangleShape player_1_round_wins;
-	sf::RectangleShape player_2_round_wins;
-	void processInput(Player&, vector<int>&);
+	//
 
 private:
 	// Reference to Game struct containing window, input handler, and game state manager
@@ -71,6 +93,13 @@ private:
 	Player *player1;
 	sf::Clock clock;
 	sf::Clock metronome;
+	sf::Clock emitterClock;
+	SpriteEmitter dust1;
+	SpriteEmitter dust2;
+	SpriteEmitter hitspark1;
+	SpriteEmitter hitspark2;
+	SpriteEmitter blockspark1;
+	SpriteEmitter blockspark2;
 	bool onBeat;
 	float beat;
 	int intOnBeat;
@@ -79,18 +108,10 @@ private:
 	bool indicatorFlashOn;
 	bool octave;
 	bool colliding = false;
+	bool acceptingInput = false;
+	bool roundstart = true;
 
-	vector<TutorialStage> tutorial;
-	int current_stage = 0;
-	int current_task_num = 0;
-	int dontUpdateEveryFramePlease = 0;
-	//string current_task;
-	string current_dialogue;
-	stack <string> dialogue_stack;
-	bool inPretext = true;
-	bool inPosttext = false;
-	bool stopState = false;
-	bool waitToChangeState = false;
+	float saveTime = 99.0f;
 
 	bool played;
 	Bassline bassline;
@@ -105,11 +126,23 @@ private:
 	ConcertHallStage chstage;
 	// Should fine tune these numbers at some point
 	float frameCounter = 0, switchFrame = 60, frameSpeed = 1000 * (500 / BEAT_SPEED);
-	void checkBoxes(Player&, Player&);
-	void checkClipBoxes(Player&, Player&);
 	void drawBoxes(Player&, bool, bool, bool);
-	void TutorialState::move_camera(Player&, Player&);
-	void TutorialState::restrict_movement(Player&, Player&);
+	void TutorialState::reset();
+	void drawHud();
+	void doRoundStart();
+	void doRoundEnd();
+	bool roundend = false;
+	sf::Texture round1;
+	sf::Texture round2;
+	sf::Texture KO;
+	sf::Texture timeUp;
+	sf::Texture player1wins;
+	sf::Texture player2wins;
+	sf::Texture tie;
+	sf::Texture roundFinal;
+	sf::Sprite roundText;
+	float inc = 0;
+	//UI timer;
 
 	sf::SoundBuffer metronomeSoundBuffer;
 	sf::Sound metronomeSound;
@@ -117,4 +150,23 @@ private:
 	sf::Sound hitSound;
 	sf::SoundBuffer blockSoundBuffer;
 	sf::Sound blockSound;
+
+	sf::Text text;
+
+	//tutorial stuff
+	vector<TutorialStage> tutorial;
+	int current_stage = 0;
+	int current_task_num = 0;
+	int dontUpdateEveryFramePlease = 0;
+	//string current_task;
+	string current_dialogue;
+	stack <string> dialogue_stack;
+	bool inPretext = true;
+	bool inPosttext = false;
+	bool stopState = false;
+	bool waitToChangeState = false;
+	//
+	sf::Font font2;
+	//sf::Text text;
+	//	sf::Font font;
 };

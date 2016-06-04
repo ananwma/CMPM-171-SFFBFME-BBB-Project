@@ -19,7 +19,7 @@ public:
 	int checkXvelLessThan = INT_MAX;
 	int checkYvelGreaterThan = INT_MIN;
 	int checkYvelLessThan = INT_MAX;
-	int checkMove = -1;
+	string checkMove = "";
 	int checkComplete = 1;
 	int numComplete = 0;
 };

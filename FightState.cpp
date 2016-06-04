@@ -14,29 +14,42 @@
 
 using namespace std;
 
-FightState::FightState(Game &_game) : 
-	game(_game), 
-	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70), 
-	dust1(10, "sprites/smoke.png", 128, 128, 10),
-	dust2(10, "sprites/smoke.png", 128, 128, 10)
-
+FightState::FightState(Game &_game) :
+	game(_game),
+	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70),
+	dust1(10, "sprites/smoke.png", 128, 128, 10, 0),
+	dust2(10, "sprites/smoke.png", 128, 128, 10, 0),
+	hitspark1(10, "sprites/hit_spark2.png", 245, 260, 10, 200),
+	hitspark2(10, "sprites/hit_spark2.png", 245, 260, 10, 200),
+	blockspark1(10, "sprites/block_spark3.png", 245, 260, 10, 100),
+	blockspark2(10, "sprites/block_spark3.png", 245, 260, 10, 100)
 {
 }
 
 void FightState::init() {
+	game.playerOne.meter = 0;
+	game.playerTwo.meter = 0;
+	game.playerOne.state = NO_STATE;
+	game.playerTwo.state = NO_STATE;
 
 	running = true;
 
 	game.currentScreen.setStage(chstage);
-	game.currentScreen.stage.front.move(-(game.currentScreen.stage.window_offset/2), 0);
+	game.currentScreen.stage.front.move(-game.currentScreen.stage.window_offset, 0);
+	//game.currentScreen.stage.base.move(-game.currentScreen.stage.window_offset, 0);
 	game.currentScreen.stage.med.move(-game.currentScreen.stage.window_offset, 0);
 	game.currentScreen.stage.window_offset = 0;
+	//game.currentScreen.stage.base.setPosition(-440, 0);
 
 	// CHANGE LATER // 
 	//game.currentScreen.stage.front.setPosition(-230,WINDOW_HEIGHT-200);
 	//game.currentScreen.stage.med.setPosition(-200,WINDOW_HEIGHT-400);
 	// CHANGE LATER // 
 
+	hitspark1.setContinuous(false);
+	hitspark2.setContinuous(false);
+	blockspark1.setContinuous(false);
+	blockspark2.setContinuous(false);
 
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100 * (BEAT_SPEED / 500);
@@ -46,33 +59,39 @@ void FightState::init() {
 	indicatorFlashOn = false;
 
 	// Later move this to character selection state
-	Bach* bach = new Bach();
-	Bach* bach2 = new Bach();
-	game.playerOne.setCharacter(bach);
-	game.playerOne.character->initMoves();
-	game.playerOne.doMove(IDLE);
-	game.playerOne.character->currentMoveFrame = 0;
-	game.playerOne.setPosition(20, 100);
-	game.playerTwo.setCharacter(bach2);
-	game.playerTwo.character->initMoves();
-	game.playerTwo.doMove(IDLE);
-	game.playerTwo.character->currentMoveFrame = 0;
-	//100 = ground level
+	game.playerOne.loadCharacter("Bach.xml");
+	game.playerOne.doMove("idle");
+
+	game.playerTwo.loadCharacter("Bach.xml");
+	game.playerTwo.doMove("idle");
+
 	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
-	game.playerTwo.setPosition(WINDOW_WIDTH / 1.4, GROUND);
-	game.playerTwo.side = RIGHT;
+	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
 
 	if (!HUDTexture.loadFromFile("UIDraft.png")) {
 		std::cerr << "Could not find image file!\n";
 		exit(EXIT_FAILURE);
 	}
+	round1.loadFromFile("sprites/round1.png");
+	round2.loadFromFile("sprites/round2.png");
+	roundFinal.loadFromFile("sprites/roundFinal.png");
+	KO.loadFromFile("sprites/KO.png");
+	timeUp.loadFromFile("sprites/time.png");
+	player1wins.loadFromFile("sprites/p1win.png");
+	player2wins.loadFromFile("sprites/p2win.png");
+	tie.loadFromFile("sprites/draw.png");
+	roundText.setTexture(round1);
+	roundText.setPosition(WINDOW_WIDTH / 2 - roundText.getGlobalBounds().width/2, WINDOW_HEIGHT / 2 - roundText.getGlobalBounds().height);
+
 	HUDOverlay.setTexture(HUDTexture);
-	
-	player1portraitart.setPosition(70,39);
-	player1portraitart.setTexture(game.playerOne.character->portrait_art);
+
+	player1portraitart.setPosition(70, 39);
+	///////todo
+	player1portraitart.setTexture(game.playerOne.portrait);
 
 	player2portraitart.setPosition(WINDOW_WIDTH - 66, 39);
-	player2portraitart.setTexture(game.playerOne.character->portrait_art);
+	player2portraitart.setTexture(game.playerOne.portrait);
+	///////
 	player2portraitart.scale(sf::Vector2f(-1, 1));
 
 	player_1_HP.setSize(sf::Vector2f(BARSIZE, 28));
@@ -87,7 +106,7 @@ void FightState::init() {
 	player_1_meter.setSize(sf::Vector2f(BARSIZE, 28));
 	player_1_meter.setFillColor(sf::Color(0, 255, 255));
 
-	player_2_meter.setPosition(WINDOW_WIDTH - BARSIZE-151, 116);
+	player_2_meter.setPosition(WINDOW_WIDTH - BARSIZE - 151, 116);
 	player_2_meter.setSize(sf::Vector2f(BARSIZE, 28));
 	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 
@@ -114,20 +133,13 @@ void FightState::init() {
 	player_2_meter_box.setPosition(WINDOW_WIDTH - 400, 35);
 	player_2_meter_box.setFillColor(sf::Color::Transparent);*/
 
-	timer.setSize(sf::Vector2f(175,75));
-	timer.setFillColor(sf::Color(250,250,250));
-	timer.setPosition(WINDOW_WIDTH/2-100, 0);
-
-	game.playerOne.roundWins = 0;
-	game.playerTwo.roundWins = 0;
-	game.playerOne.health = 1000;
-	game.playerTwo.health = 1000;
-	game.playerOne.meter = 0;
-	game.playerTwo.meter = 0;
+	timer.setSize(sf::Vector2f(175, 75));
+	timer.setFillColor(sf::Color(250, 250, 250));
+	timer.setPosition(WINDOW_WIDTH / 2 - 100, 0);
 
 	player_1_round_win_1.setRadius(13);
 	player_1_round_win_1.setPosition(WINDOW_WIDTH / 2 - 170, 169);
-	player_1_round_win_1.setFillColor(sf::Color(255,255,0));
+	player_1_round_win_1.setFillColor(sf::Color(255, 255, 0));
 
 	player_1_round_win_2.setRadius(13);
 	player_1_round_win_2.setPosition(WINDOW_WIDTH / 2 - 125, 169);
@@ -147,7 +159,7 @@ void FightState::init() {
 	}
 	timer_text.setFont(font);
 	timer_text.setColor(sf::Color(250, 250, 250));
-	time = 60.0f;
+	time = 99.0f;
 	char temp[256];
 	sprintf(temp, "%f", time);
 	timer_text.setString(temp);
@@ -160,9 +172,11 @@ void FightState::init() {
 	pauseOverlay.setFillColor(sf::Color(0, 0, 0, 200));
 	pauseOverlay.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 
-	camera_view.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	base_view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	base_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	camera_view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	camera_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-	HUD.setCenter(WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+	HUD.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	HUD.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.window.setView(camera_view);
 
@@ -173,19 +187,6 @@ void FightState::init() {
 	}
 	metronomeSound.setBuffer(metronomeSoundBuffer);
 
-	if (!hitSoundBuffer.loadFromFile("sounds/hit.wav")) {
-		cerr << "Could not load sound!\n";
-		exit(EXIT_FAILURE);
-	}
-	hitSound.setBuffer(hitSoundBuffer);
-
-	if (!blockSoundBuffer.loadFromFile("sounds/block.wav")) {
-		cerr << "Could not load sound!\n";
-		exit(EXIT_FAILURE);
-	}
-	blockSound.setBuffer(blockSoundBuffer);
-
-	hitSound.setVolume(50);
 
 	bassline.setInstrument(32);
 	game.inputHandler->setInstrument(0);
@@ -200,32 +201,77 @@ void FightState::hookEvent() {
 }
 
 void FightState::reset() {
-	game.playerOne.character->initMoves();
-	game.playerOne.doMove(IDLE);
-	game.playerOne.character->currentMoveFrame = 0;
-	game.playerOne.setPosition(20, 100);
-	game.playerTwo.character->initMoves();
-	game.playerTwo.doMove(IDLE);
-	game.playerTwo.character->currentMoveFrame = 0;
+	roundstart = true;
+	acceptingInput = false;
+	inc = 0;
+	game.playerOne.doMove("idle");
+	game.playerTwo.doMove("idle");
 	//100 = ground level
 	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
 	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
-	game.playerTwo.side = RIGHT;
 
-	time = 60.0f;
+	time = 99.0f;
 	char temp[256];
 	sprintf(temp, "%f", time);
 	timer_text.setString(temp);
 	clock.restart();
 
-	game.playerOne.health = 1000;
+	game.playerOne.health = game.playerOne.getMaxHealth();
 	game.playerOne.meter = 0;
-	game.playerTwo.health = 1000;
+	game.playerTwo.health = game.playerOne.getMaxHealth();
 	game.playerTwo.meter = 0;
+	game.beat = 425.0f;
+	beatThreshold = 100 * (game.beat / 500);
+	frameSpeed = 1000 * (500 / game.beat);
+	game.playerOne.setBeat(game.beat);
+	game.playerTwo.setBeat(game.beat);
+	bassline.setBassline({ C1, C2, F1, F2, G1, G2 });
+	phase = 0;
+}
+
+void FightState::doRoundStart() {
+	int round = game.playerOne.roundWins + game.playerTwo.roundWins;
+	if (round == 0) {
+		roundText.setTexture(round1);
+		roundText.setTextureRect(sf::IntRect(0, 0, round1.getSize().x, round1.getSize().y));
+	}
+	else if (round == 1) {
+		roundText.setTexture(round2);
+		roundText.setTextureRect(sf::IntRect(0, 0, round2.getSize().x, round2.getSize().y));
+	}
+	else if (round == 2) {
+		roundText.setTexture(roundFinal);
+		roundText.setTextureRect(sf::IntRect(0, 0, roundFinal.getSize().x, roundFinal.getSize().y));
+	}
+	roundText.setPosition(WINDOW_WIDTH / 2 - roundText.getGlobalBounds().width / 2, WINDOW_HEIGHT / 2 - roundText.getGlobalBounds().height);
+	//roundText.setScale(inc, inc);
+	roundText.setColor(sf::Color(255, 255, 255, 255 - inc));
+	if (inc > 255) {
+		roundstart = false;
+		acceptingInput = true;
+	}
+	inc += 3;
+}
+
+void FightState::doRoundEnd() {
+	if (time <= 0) {
+		roundText.setTexture(timeUp);
+		roundText.setTextureRect(sf::IntRect(0, 0, timeUp.getSize().x, timeUp.getSize().y));
+	}
+	else {
+		roundText.setTexture(KO);
+		roundText.setTextureRect(sf::IntRect(0, 0, KO.getSize().x, KO.getSize().y));
+	}
+	roundText.setPosition(WINDOW_WIDTH / 2 - roundText.getGlobalBounds().width / 2, WINDOW_HEIGHT / 2 - roundText.getGlobalBounds().height);
+	roundText.setColor(sf::Color(255, 255, 255, 255));
+	if (inc > 255) {
+		roundend = false;
+		reset();
+	}
+	inc += 1;
 }
 
 void FightState::update() {
-
 	//cout << "State #1" << endl;
 	if (!running) {
 		PauseState pauseState(game);
@@ -242,15 +288,26 @@ void FightState::update() {
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 		saveTime = time;
-		game.window.draw(pauseOverlay);
+		//game.window.draw(pauseOverlay);
 		unhookEvent();
 		PauseState pauseState(game);
 		game.gsm.pauseState(*this, &pauseState);
 	}
 
+	if (roundstart)
+		doRoundStart();
+	else if (roundend)
+		doRoundEnd();
+
 	// gonna change this later
-	dust1.setEmitter(sf::Vector2f(game.playerOne.xpos, game.playerOne.ypos + 400));
-	dust2.setEmitter(sf::Vector2f(game.playerTwo.xpos, game.playerTwo.ypos + 400));
+	if (game.playerOne.getSide() == LEFT) {
+		dust1.setEmitter(sf::Vector2f(game.playerOne.getPosition().x + 100, game.playerOne.getPosition().y + 400));
+		dust2.setEmitter(sf::Vector2f(game.playerTwo.getPosition().x + 80, game.playerTwo.getPosition().y + 400));
+	}
+	else if (game.playerOne.getSide() == RIGHT) {
+		dust1.setEmitter(sf::Vector2f(game.playerOne.getPosition().x + 80, game.playerOne.getPosition().y + 400));
+		dust2.setEmitter(sf::Vector2f(game.playerTwo.getPosition().x + 100, game.playerTwo.getPosition().y + 400));
+	}
 	sf::Time elapsed = emitterClock.restart();
 	dust1.update(elapsed);
 	dust2.update(elapsed);
@@ -259,7 +316,7 @@ void FightState::update() {
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > game.beat - beatThreshold) {
 		onBeat = true;
-		
+
 	}
 
 
@@ -267,7 +324,7 @@ void FightState::update() {
 		//cout << "game.beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
-		
+
 		if (quarterNote) {
 			bassline.playNextNote();
 			//metronomeSound.play();
@@ -278,100 +335,141 @@ void FightState::update() {
 			game.playerOne.indicator.updateIndicator(NONE);
 			game.playerTwo.indicator.updateIndicator(NONE);
 			quarterNote = false;
-			
+
 		}
 		else {
 			quarterNote = true;
 		}
 	}
-	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
-	processInput(game.playerOne, inputP1);
-	processInput(game.playerTwo, inputP2);
-	//cout << "P1 vel: " << game.playerOne.xvel << endl << "P2 vel: " << game.playerTwo.xvel << endl << endl;
-	checkBoxes(game.playerOne, game.playerTwo);
-	checkBoxes(game.playerTwo, game.playerOne);
-	checkClipBoxes(game.playerOne, game.playerTwo);
-	restrict_movement(game.playerOne, game.playerTwo);
-	restrict_movement(game.playerTwo, game.playerOne);
-	game.playerOne.updatePhysics();
-	game.playerTwo.updatePhysics();
-	//checkMoveBoxes(game.playerOne, game.playerTwo);
 
-	// Camera stuff is kinda rough right now, didn't have time to fully merge Anan's code
+	if (acceptingInput) {
+		processInput(game.playerOne, inputP1);
+		processInput(game.playerTwo, inputP2);
+	}
 
-	//***********************
-	//** TEMP CAMERA STUFF **
-	//***********************
+	//camera controls 
+	camera_center = sf::Vector2f((game.playerOne.getPosition().x + game.playerTwo.getPosition().x + 438) / 2, WINDOW_HEIGHT / 2);
+	if (camera_center.x > WINDOW_WIDTH - 550) camera_center.x = WINDOW_WIDTH - 550;
+	if (camera_center.x < 550) camera_center.x = 550;
+	camera_view.setCenter(camera_center);
 
-	//if (game.playerOne.xpos <= -game.playerOne.character->wall_offset) {
-		//game.currentScreen.move_camera_left(game.currentScreen.stage, game.playerTwo, game.playerOne);
-		//camera_view.move(-1, 0);
-	//}
-	/*
-	if (game.playerOne.xpos + game.playerOne.getSpriteWidth() >= 1280) {
-		game.currentScreen.move_camera_right(game.currentScreen.stage, game.playerTwo, game.playerOne);
-		if (game.playerOne.xpos > 1480)
-			game.playerOne.setPosition(1480, game.playerOne.ypos);
-	}*/
+	//constrain like camera
 
-		collision.flip_sprites(game.playerOne, game.playerTwo);
-		collision.flip_sprites(game.playerTwo, game.playerOne);
+	game.currentScreen.stage.med.setPosition(((game.playerOne.getPosition().x + game.playerTwo.getPosition().x + 438) / 4 - 1000) , 0);
+	if (game.currentScreen.stage.med.getPosition().x > -300) game.currentScreen.stage.med.setPosition(-300, 0);
+	if (game.currentScreen.stage.med.getPosition().x < -700) game.currentScreen.stage.med.setPosition(-700, 0);
 
-		time -= clock.getElapsedTime().asSeconds();
-		if (time < 0) time = 0.0;
-		char temp[256];
-		sprintf(temp, "%d", (int)time);
-		timer_text.setString(temp);
-
-	if (game.playerOne.health <= 0) {
-		game.playerTwo.roundWins++;
-		if (game.playerTwo.roundWins == 2) {
-			game.window.draw(player_2_round_win_2);
-			ResultsState results(game);
-			game.gsm.stopState(*this, &results);
+	//collision and hitsparks
+	sf::FloatRect* p = game.collisionManager.checkBoxes(game.playerOne, game.playerTwo);
+	sf::FloatRect collisionPoint;
+	if (p != NULL) {
+		collisionPoint = *p;
+		hitspark1.setEmitter(sf::Vector2f(collisionPoint.left - 245, collisionPoint.top - 260));
+		blockspark1.setEmitter(sf::Vector2f(collisionPoint.left - 122, collisionPoint.top - 130));
+		if (game.playerTwo.getCurrentMove()->moveName == "hitstun") {
+			hitspark1.activate();
 		}
-		else {
-			reset();
+		else if (game.playerTwo.getCurrentMove()->moveName == "blockstun") {
+			blockspark1.activate();
 		}
 	}
-	else if (game.playerTwo.health <= 0) {
-		game.playerOne.roundWins++;
-		if (game.playerOne.roundWins == 2) {
-			game.window.draw(player_1_round_win_2);
-			ResultsState results(game);
-			game.gsm.stopState(*this, &results);
+	p = game.collisionManager.checkBoxes(game.playerTwo, game.playerOne);
+	if (p != NULL) {
+		collisionPoint = *p;
+		hitspark2.setEmitter(sf::Vector2f(collisionPoint.left - 245, collisionPoint.top - 260));
+		blockspark2.setEmitter(sf::Vector2f(collisionPoint.left - 122, collisionPoint.top - 130));
+		if (game.playerOne.getCurrentMove()->moveName == "hitstun") {
+			hitspark2.activate();
+			if (game.playerTwo.getCurrentFrame().hit == false)
+				hitSound.play();
 		}
-		else {
-			reset();
+		else if (game.playerTwo.getCurrentMove()->moveName == "blockstun") {
+			blockspark2.activate();
+			if (game.playerTwo.getCurrentFrame().hit == false)
+				blockSound.play();
 		}
 	}
-	else if (time <= 0) {
-		cout << "entered loop" << endl;
-		if (game.playerOne.health < game.playerTwo.health) {
-			cout << "sit1" << endl;
+	hitspark1.update(elapsed);
+	hitspark2.update(elapsed);
+	blockspark1.update(elapsed);
+	blockspark2.update(elapsed);
+	game.collisionManager.checkClipBoxes(game.playerOne, game.playerTwo, camera_view.getCenter().x - 988, camera_view.getCenter().x + 988);
+
+	game.playerOne.update();
+	game.playerTwo.update();
+	game.playerOne.updateSide(game.playerTwo);
+	game.playerTwo.updateSide(game.playerOne);
+
+	time -= clock.getElapsedTime().asSeconds();
+	if (time < 0) time = 0.0;
+	char temp[256];
+	sprintf(temp, "%d", (int)time);
+	timer_text.setString(temp);
+
+	if (!roundend) {
+		if (game.playerOne.health <= 0) {
 			game.playerTwo.roundWins++;
-		}
-		else if (game.playerTwo.health < game.playerOne.health) {
-			cout << "sit2" << endl;
-			game.playerOne.roundWins++;
-		}
-		else {
-			cout << "sit3" << endl;
-			game.playerOne.roundWins++;
-			game.playerTwo.roundWins++;
-		}
-		if (game.playerOne.roundWins == 2 || game.playerTwo.roundWins == 2) {
-			if (game.playerOne.roundWins == 2) {
-				game.window.draw(player_1_round_win_2);
-			}
 			if (game.playerTwo.roundWins == 2) {
 				game.window.draw(player_2_round_win_2);
+				ResultsState results(game);
+				game.gsm.stopState(*this, &results);
 			}
-			ResultsState results(game);
-			game.gsm.stopState(*this, &results);
+			else {
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
 		}
-		else {
-			reset();
+		else if (game.playerTwo.health <= 0) {
+			game.playerOne.roundWins++;
+			if (game.playerOne.roundWins == 2) {
+				game.window.draw(player_1_round_win_2);
+				ResultsState results(game);
+				game.gsm.stopState(*this, &results);
+			}
+			else {
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+		}
+		else if (time <= 0) {
+			cout << "entered loop" << endl;
+			if (game.playerOne.health < game.playerTwo.health) {
+				cout << "sit1" << endl;
+				game.playerTwo.roundWins++;
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+			else if (game.playerTwo.health < game.playerOne.health) {
+				cout << "sit2" << endl;
+				game.playerOne.roundWins++;
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+			else {
+				cout << "sit3" << endl;
+				game.playerOne.roundWins++;
+				game.playerTwo.roundWins++;
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+			if (game.playerOne.roundWins == 2 || game.playerTwo.roundWins == 2) {
+				if (game.playerOne.roundWins == 2) {
+					game.window.draw(player_1_round_win_2);
+				}
+				if (game.playerTwo.roundWins == 2) {
+					game.window.draw(player_2_round_win_2);
+				}
+				ResultsState results(game);
+				game.gsm.stopState(*this, &results);
+			}
+			else {
+				reset();
+			}
 		}
 	}
 
@@ -380,8 +478,10 @@ void FightState::update() {
 		game.beat = 425.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
-		game.playerOne.setBeat(game.beat);
-		game.playerTwo.setBeat(game.beat);
+		if (game.playerOne.getPosition().y == GROUND)
+			game.playerOne.setBeat(game.beat);
+		if (game.playerTwo.getPosition().y == GROUND)
+			game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, C1, D1, D1, G1, G1, C2, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 2 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 2) && phase == 1) {
@@ -389,8 +489,10 @@ void FightState::update() {
 		game.beat = 350.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
-		game.playerOne.setBeat(game.beat);
-		game.playerTwo.setBeat(game.beat);
+		if (game.playerOne.getPosition().y == GROUND)
+			game.playerOne.setBeat(game.beat);
+		if (game.playerTwo.getPosition().y == GROUND)
+			game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, G1, E1, C2 });
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
@@ -400,8 +502,10 @@ void FightState::update() {
 		game.beat = 350.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
-		game.playerOne.setBeat(game.beat);
-		game.playerTwo.setBeat(game.beat);
+		if (game.playerOne.getPosition().y == GROUND)
+			game.playerOne.setBeat(game.beat);
+		if (game.playerTwo.getPosition().y == GROUND)
+			game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
 
@@ -410,7 +514,7 @@ void FightState::update() {
 	if (frameCounter >= switchFrame) {
 		frameCounter = 0;
 		if (indicatorFlashOn) {
-		indicatorFlash -= 1;
+			indicatorFlash -= 1;
 		}
 		if (indicatorFlash == 0) {
 			game.playerOne.indicator.updateIndicator(NOBEAT);
@@ -418,12 +522,16 @@ void FightState::update() {
 			indicatorFlashOn = false;
 			indicatorFlash = 5;
 		}
+		game.playerOne.hitstunFrames--;
+		game.playerOne.blockstunFrames--;
+		game.playerTwo.hitstunFrames--;
+		game.playerTwo.blockstunFrames--;
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
 	}
 
-	move_camera(game.playerOne, game.playerTwo);
-	move_camera(game.playerTwo, game.playerOne);
+	//move_camera(game.playerOne, game.playerTwo);
+	//move_camera(game.playerTwo, game.playerOne);
 
 	//cout << "offset" << endl;
 	//cout << game.currentScreen.stage.window_offset << endl;
@@ -446,16 +554,37 @@ void FightState::update() {
 
 void FightState::draw() {
 	game.window.clear();
-	game.window.setView(camera_view);
+	game.window.setView(base_view);
 	game.window.draw(game.currentScreen.stage.base);
+	game.window.setView(camera_view);
 	game.window.draw(game.currentScreen.stage.med);
 	game.window.draw(game.currentScreen.stage.front);
-	game.window.draw(game.playerOne.character->sprite);
-	game.window.draw(game.playerTwo.character->sprite);
+	//game.window.draw(game.currentScreen.stage.shader);
+	game.window.draw(game.playerOne.sprite);
+	game.window.draw(game.playerTwo.sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
 	drawBoxes(game.playerTwo, 0, 0, 0);
-	//game.window.draw(game.currentScreen.stage.shader);
+
+	//gonna change this later
+	if (game.playerOne.getVelocity().x != 0 || game.playerOne.getVelocity().y != 0) {
+		game.window.draw(dust1);
+	}
+	if (game.playerTwo.getVelocity().x != 0 || game.playerTwo.getVelocity().y != 0) {
+		game.window.draw(dust2);
+	}
+	//
+	game.window.draw(hitspark1);
+	game.window.draw(hitspark2);
+	game.window.draw(blockspark1);
+	game.window.draw(blockspark2);
+
 	game.window.setView(HUD);
+	if (roundstart)
+		game.window.draw(roundText);
+	if (roundend) {
+		game.window.draw(roundText);
+	}
+
 	game.window.draw(HUDOverlay);
 	game.window.draw(player_1_HP);
 	game.window.draw(player_2_HP);
@@ -471,15 +600,6 @@ void FightState::draw() {
 	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
-
-	//gonna change this later
-	if (game.playerOne.xvel != 0 || game.playerOne.yvel != 0) {
-		game.window.draw(dust1);
-	}
-	if (game.playerTwo.xvel != 0 || game.playerTwo.yvel != 0) {
-		game.window.draw(dust2);
-	}
-	//
 
 	if (game.playerOne.roundWins > 0) {
 		game.window.draw(player_1_round_win_1);
@@ -503,272 +623,13 @@ void FightState::draw() {
 	game.window.display();
 }
 
-void FightState::move_camera(Player& cp, Player& op){
-	//right
-
-	if ((!(op.xpos + op.character->wall_offset <= game.currentScreen.stage.window_offset))&&(cp.xpos + cp.getSpriteWidth() - cp.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-		camera_view.move(cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset += cp.character->walkspeed;
-		game.currentScreen.stage.base.move(cp.character->walkspeed, 0);
-		game.currentScreen.stage.med.move(cp.character->walkspeed/2, 0);
-	}
-
-	//left
-
-	if ((!(op.xpos + op.getSpriteWidth() - op.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset))&&(cp.xpos + cp.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-		camera_view.move(-cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset -= cp.character->walkspeed;
-		game.currentScreen.stage.base.move(-cp.character->walkspeed, 0);
-		game.currentScreen.stage.med.move(-cp.character->walkspeed/2, 0);
-			
-	}
-
-}
-
-void FightState::restrict_movement(Player& p1, Player& p2) {
-	//right
-
-	if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) &&(p1.xvel>0)){
-		p1.xvel = 0;
-	}
-
-	//left
-
-	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel<0)){
-		p1.xvel = 0;
-	}
-}
-
-
-//Change some copies to moves in future
-void FightState::checkClipBoxes(Player& p1, Player& p2) {
-	if (!p1.getCurrentFrame().clipboxes.empty() && !p2.getCurrentFrame().clipboxes.empty()) {
-		sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
-		sf::FloatRect clipbox2 = p2.getCurrentFrame().clipboxes.at(0);
-		sf::FloatRect offsetClipBox1;
-		sf::FloatRect offsetClipBox2;
-		if (p1.side == LEFT)
-			offsetClipBox1 = sf::FloatRect(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		else if (p1.side == RIGHT)
-			offsetClipBox1 = sf::FloatRect(p1.xpos - clipbox1.width - clipbox1.left + p1.getSpriteWidth(), clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		if (p2.side == LEFT)
-			offsetClipBox2 = sf::FloatRect(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-		else if (p2.side == RIGHT)
-			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-		sf::FloatRect intersectBox;
-		if (offsetClipBox1.intersects(offsetClipBox2)) {
-			// If player 1 is moving in the x direction and player 2 is standing still
-			if (abs(p1.xvel) > 0 && p2.xvel == 0) {
-				if (p1.xvel > 0 && p1.side == LEFT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
-				}
-				else if (p1.xvel < 0 && p1.side == RIGHT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
-				}
-			}
-			// If player 2 is moving in the x direction and player 1 is standing still
-			else if (abs(p2.xvel) > 0 && p1.xvel == 0) {
-				if (p2.xvel > 0 && p2.side == LEFT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
-				}
-				else if (p2.xvel < 0 && p2.side == RIGHT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
-				}
-			}
-			// If both are moving in opposing directions, set both vels to 0
-			else if (abs(p1.xvel) > 0 && abs(p2.xvel) > 0) {
-				if ((p1.xvel > 0) != (p2.xvel > 0)) {
-					p2.xvel = 0;
-					p1.xvel = 0;
-				}
-			}
-
-			if (p2.againstWall && p2.state == WALK_STATE && p1.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
-			}
-			else if (p1.againstWall && p1.state == WALK_STATE && p2.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
-			}
-
-			// Airborne stuff
-			if (abs(p1.yvel) > 0.0f) {
-				float p1Center = (offsetClipBox1.left + offsetClipBox1.width / 2);
-				float p2Center = (offsetClipBox2.left + offsetClipBox2.width / 2);
-				if (p1Center < p2Center) {
-					
-				}
-
-				if (p1.jumpSide == LEFT) {
-					if (p2.side == RIGHT) {
-						p1.xvel = 0;
-						p2.xvel = p1.character->jumpX;
-					}
-					else if (p2.side == LEFT) {
-						p2.xvel = -p1.character->jumpX;
-					}
-			}
-				else if (p1.jumpSide == RIGHT) {
-					if (p2.side == LEFT) {
-				p1.xvel = 0;
-						p2.xvel = -p1.character->jumpX;
-					}
-					else if (p2.side == RIGHT) {
-						p2.xvel = p1.character->jumpX;
-					}
-				}
-			}
-			else if (abs(p2.yvel) > 0.0f) {
-
-				if (p2.jumpSide == LEFT) {
-					if (p1.side == RIGHT) {
-						p2.xvel = 0;
-						p1.xvel = p2.character->jumpX;
-					}
-					else if (p1.side == LEFT) {
-						p1.xvel = -p2.character->jumpX;
-					}
-				}
-				else if (p2.jumpSide == RIGHT) {
-					if (p1.side == LEFT) {
-				p2.xvel = 0;
-						p1.xvel = -p2.character->jumpX;
-					}
-					else if (p1.side == RIGHT) {
-						p1.xvel = p2.character->jumpX;
-					}
-				}
-			}
-		}
-		/*if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
-			if (p1.xvel < 0 && p1.side == LEFT)
-				p1.xvel = 0;
-			if (p1.xvel > 0 && p1.side == RIGHT)
-				p1.xvel = 0;
-			p1.againstWall = true;
-		}
-		else
-			p1.againstWall = false;
-		if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
-			if (p2.xvel < 0 && p2.side == LEFT)
-				p2.xvel = 0;
-			if (p2.xvel > 0 && p2.side == RIGHT)
-				p2.xvel = 0;
-			p2.againstWall = true;
-		}
-		else
-			p2.againstWall = false;
-			*/
-		//change window width to background width
-		if (offsetClipBox1.left < -440 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH + 440) {
-			if (p1.xvel < 0 && p1.side == LEFT)
-				p1.xvel = 0;
-			if (p1.xvel > 0 && p1.side == RIGHT)
-				p1.xvel = 0;
-			p2.againstWall = false;
-			p1.againstWall = true;
-		}
-		else if (offsetClipBox2.left < -440 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH + 440) {
-			if (p2.xvel < 0 && p2.side == LEFT)
-				p2.xvel = 0;
-			if (p2.xvel > 0 && p2.side == RIGHT)
-				p2.xvel = 0;
-			p2.againstWall = true;
-			p1.againstWall = false;
-		}
-		else {
-			p2.againstWall = false;
-			p1.againstWall = false;
-		}
-	}
-
-	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
-		p2.xvel = -p1.character->jumpX;
-	}
-	else if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == RIGHT) {
-		p2.xvel = p1.character->jumpX;
-	}
-	if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == LEFT) {
-		p1.xvel = -p2.character->jumpX;
-	}
-	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
-		p1.xvel = p2.character->jumpX;
-	}
-	/*
-	cout << "p1: " << endl;
-	cout << p1.againstWall << endl;
-	cout << "p2: " << endl;
-	cout << p2.againstWall << endl;*/
-}
-
-void FightState::checkBoxes(Player& attacker, Player& defender) {
-	sf::Vector2f attPos = attacker.character->sprite.getPosition();
-	sf::Vector2f defPos = defender.character->sprite.getPosition();
-	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
-		for (auto hurtbox : defender.getCurrentFrame().hurtboxes) {
-			// Make new rects offset by players' current positions and orientations
-			sf::FloatRect offsetHit;
-			if (attacker.side == LEFT) {
-				sf::FloatRect tmp(hitbox.left + attPos.x, hitbox.top + attPos.y, hitbox.width, hitbox.height);
-				offsetHit = tmp;
-			}
-			else if (attacker.side == RIGHT) {
-				sf::FloatRect tmp(attPos.x - hitbox.width - hitbox.left + attacker.getSpriteWidth(), hitbox.top + attPos.y, hitbox.width, hitbox.height);
-				offsetHit = tmp;
-			}
-
-			sf::FloatRect offsetHurt;
-			if (defender.side == LEFT) {
-				sf::FloatRect tmp(hurtbox.left + defPos.x, hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
-				offsetHurt = tmp;
-			}
-			else if (defender.side == RIGHT) {
-				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
-				offsetHurt = tmp;
-			}
-			if (offsetHit.intersects(offsetHurt)) {
-				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (attacker.state != GRAB_STATE && defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
-					defender.block(attacker.getCurrentMove());
-					blockSound.play();
-				}
-				else if (defender.state == AIRBORNE_STATE && attacker.state == GRAB_STATE) {
-					//nothing happens
-				}
-				else {
-					//if not blocking, player gets hit
-					if (!attacker.getCurrentFrame().hit) {
-						//cout << "hit!" << endl;
-						defender.getHit(attacker.getCurrentMove());
-						attacker.getCurrentFrame().hit = true;
-						hitSound.play();
-					}
-					attacker.canCancel = true;
-					return;
-				}
-			}
-		}
-	}
-}
-
 void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
-	// Anan's super secret math formula
-	sf::Vector2f v = player.character->sprite.getPosition();
 	Frame &frame = player.getCurrentFrame();
 	if (hit) {
 		for (auto box : frame.hitboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -779,8 +640,8 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	if (hurt) {
 		for (auto box : frame.hurtboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -791,8 +652,8 @@ void FightState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	if (clip) {
 		for (auto box : frame.clipboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -806,25 +667,34 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	// Handle every possible combination of movement keys
 	if (player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
-		player.jump(NEUTRAL);
+		player.doMove("njump");
 	}
 	else if (!player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
-		player.jump(RIGHT);
+		if (player.getSide() == LEFT)
+			player.doMove("fjump");
+		else if (player.getSide() == RIGHT)
+			player.doMove("bjump");
 	}
 	else if (player.left && !player.jumping && player.right) {
 		player.holdingBlock = true;
-		player.doMove(IDLE);
+		player.doMove("idle");
 	}
 	else if (player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.jump(LEFT);
+		if (player.getSide() == LEFT)
+			player.doMove("bjump");
+		else if (player.getSide() == RIGHT)
+			player.doMove("fjump");
 	}
 	else if (!player.left && !player.jumping && player.right) {
 
-		player.walk(RIGHT);
+		if (player.getSide() == LEFT)
+			player.doMove("walk");
+		else if (player.getSide() == RIGHT)
+			player.doMove("backwalk");
 		//check if player is holding correct direction to block
-		if (player.side == RIGHT) {
+		if (player.getSide() == RIGHT) {
 			player.holdingBlock = true;
 		}
 		else {
@@ -832,9 +702,12 @@ void FightState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	else if (player.left && !player.jumping && !player.right) {
-		player.walk(LEFT);
+		if (player.getSide() == LEFT)
+			player.doMove("backwalk");
+		else if (player.getSide() == RIGHT)
+			player.doMove("walk");
 		//check if player is holding correct direction to block
-		if (player.side == LEFT) {
+		if (player.getSide() == LEFT) {
 			player.holdingBlock = true;
 		}
 		else {
@@ -843,11 +716,11 @@ void FightState::processInput(Player& player, vector<int>& input) {
 	}
 	else if (!player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.jump(NEUTRAL);
+		player.doMove("njump");
 	}
 	else if (!player.left && !player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.doMove(IDLE);
+		player.doMove("idle");
 	}
 
 	if (!input.empty()) {
@@ -883,60 +756,60 @@ void FightState::processInput(Player& player, vector<int>& input) {
 
 				player.indicator.updateIndicator(ONBEAT);
 
-
 				if (acc == C_NATURAL) {
-					player.doMove(JAB);
+					player.doMove("jab");
 				}
 				else if (acc == D_NATURAL) {
-					player.doMove(STRONG);
+					player.doMove("strong");
 				}
 				else if (acc == E_NATURAL) {
-					player.doMove(FIERCE);
+					player.doMove("fierce");
 				}
 				else if (acc == F_NATURAL) {
-					player.doMove(SHRT);
+					player.doMove("short");
 				}
 				else if (acc == G_NATURAL) {
-					player.doMove(FORWARD);
+					player.doMove("forward");
 				}
 				else if (acc == A_NATURAL) {
-					player.doMove(ROUNDHOUSE);
+					player.doMove("roundhouse");
 				}
 				else if (acc == B_NATURAL) {
-					player.doMove(GRAB);
+					player.doMove("grab");
 				}
 				else if (acc == C_MAJOR) {
-					player.doMove(CMAJ);
+					player.doMove("shoryuken");
 				}
 				else if (acc == C_MAJOR_6) {
-					player.doMove(CMAJ, 2, 4);
-					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+					//todo re add power adjust 
+					player.doMove("shoryuken");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == C_MAJOR_64) {
-					player.doMove(CMAJ, 4, 6);
-					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+					player.doMove("shoryuken");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == F_MAJOR_64) {
-					player.doMove(CMAJ);
+					player.doMove("shoryuken");
 				}
 				else if (acc == G_MAJOR) {
-					player.doMove(GMAJ);
+					player.doMove("tatsu");
 				}
 				else if (acc == G_MAJOR_6) {
-					player.doMove(CMAJ, 0, 3);
-					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+					player.doMove("tatsu");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == G_MAJOR_64) {
-					player.doMove(CMAJ, 0, 5);
-					if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+					player.doMove("tatsu");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				//cheats
 				else if (acc == 0x540) {
-					player.health = 1000;
+					player.health = -1;
 				}
 				else {
 					player.hitstunFrames = 3;
-					player.doMove(HITSTUN);
+					player.doMove("hitstun");
 					player.health -= 50;
 				}
 				if (player.meter > 1000)player.meter = 1000;
@@ -957,10 +830,10 @@ void FightState::receiveKeysDown(int note, int playerId) {
 		else if (note == 55) game.playerOne.right = true;
 		// Attack keys
 		else if (note > 59) {
+			game.playerOne.checkSuper(note % 12);
 			if (onBeat || game.playerOne.isInSuper()) {
 				inputP1.push_back(note);
 				game.inputHandler->playNote(note, 80);
-				game.playerOne.checkSuper(note % 12);
 			}
 		}
 		else if (note == 39) {
@@ -974,10 +847,10 @@ void FightState::receiveKeysDown(int note, int playerId) {
 		else if (note == 55) game.playerTwo.right = true;
 		// Attack keys
 		else if (note > 59) {
+			game.playerTwo.checkSuper(note % 12);
 			if (onBeat || game.playerTwo.isInSuper()) {
 				inputP2.push_back(note);
 				game.inputHandler->playNote(note, 80);
-				game.playerTwo.checkSuper(note % 12);
 			}
 		}
 		else if (note == 39) {
@@ -1017,5 +890,4 @@ void FightState::unhookEvent() {
 }
 
 FightState::~FightState() {
-	//delete player1;
 }

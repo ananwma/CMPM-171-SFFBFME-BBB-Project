@@ -30,6 +30,7 @@ public:
 
 	int BARSIZE = 628;
 
+	sf::View base_view;
 	sf::View camera_view;
 	sf::View HUD;
 	sf::RectangleShape player_1_HP;
@@ -50,6 +51,7 @@ public:
 	sf::RectangleShape timer;
 	sf::Sprite HUDOverlay;
 	sf::Texture HUDTexture;
+	sf::Vector2f camera_center;
 
 	sf::Text timer_text;
 	sf::Font font;
@@ -75,6 +77,10 @@ private:
 	sf::Clock emitterClock;
 	SpriteEmitter dust1;
 	SpriteEmitter dust2;
+	SpriteEmitter hitspark1;
+	SpriteEmitter hitspark2;
+	SpriteEmitter blockspark1;
+	SpriteEmitter blockspark2;
 	bool onBeat;
 	float beat;
 	int intOnBeat;
@@ -83,8 +89,10 @@ private:
 	bool indicatorFlashOn;
 	bool octave;
 	bool colliding = false;
+	bool acceptingInput = false;
+	bool roundstart = true;
 
-	float saveTime = 60.0f;
+	float saveTime = 99.0f;
 
 	bool played;
 	Bassline bassline;
@@ -99,13 +107,22 @@ private:
 	ConcertHallStage chstage;
 	// Should fine tune these numbers at some point
 	float frameCounter = 0, switchFrame = 60, frameSpeed = 1000 * (500 / BEAT_SPEED);
-	void checkBoxes(Player&, Player&);
-	void checkClipBoxes(Player&, Player&);
 	void drawBoxes(Player&, bool, bool, bool);
-	void FightState::move_camera(Player&, Player&);
-	void FightState::restrict_movement(Player&, Player&);
 	void FightState::reset();
 	void drawHud();
+	void doRoundStart();
+	void doRoundEnd();
+	bool roundend = false;
+	sf::Texture round1;
+	sf::Texture round2;
+	sf::Texture KO;
+	sf::Texture timeUp;
+	sf::Texture player1wins;
+	sf::Texture player2wins;
+	sf::Texture tie;
+	sf::Texture roundFinal;
+	sf::Sprite roundText;
+	float inc = 0;
 	//UI timer;
 
 	sf::SoundBuffer metronomeSoundBuffer;

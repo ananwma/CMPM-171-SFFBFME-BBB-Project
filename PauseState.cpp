@@ -77,6 +77,12 @@ void PauseState::update() {
 		game.gsm.resumeLastState();
 	}
 	if (menu) {
+		game.playerOne.roundWins = 0;
+		game.playerTwo.roundWins = 0;
+		game.playerOne.meter = 0;
+		game.playerTwo.meter = 0;
+		game.playerOne.health = 0;
+		game.playerTwo.health = 0;
 		unhookEvent();
 		MainMenuState menuState(game);
 		game.gsm.stopState(*this, &menuState);

@@ -11,6 +11,7 @@
 #include "input.h"
 #include "PlayerSelectState.h"
 #include "GameStateManager.h"
+#include "CollisionManager.h"
 #include "FightState.h"
 #include "PauseState.h"
 #include "Game.h"
@@ -36,14 +37,13 @@ int main()
 	shared_ptr<InputHandler> inputHandler(new InputHandler());
 	inputHandler->prepareDevices();
 	GameStateManager gsm;
+	CollisionManager collisionManager;
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Super Fugue Fighter");
 	//window.setFramerateLimit(60);
-	Game game(gsm, inputHandler, window);
+	Game game(gsm, collisionManager, inputHandler, window);
 
 	// Run the first state
 	PlayerSelectState pss(game);
 	gsm.runState(pss);
-	//FightState fs(game);
-	//gsm.runState(fs);
-	return 0;
+	return  EXIT_SUCCESS;
 }

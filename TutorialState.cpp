@@ -2,38 +2,39 @@
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
-#include <sstream>
-
 #include <bitset>
+#include <sstream>
 
 #include "TutorialState.h"
 #include "PauseState.h"
 #include "ResultsState.h"
-#include "BeatIndicator.h"
 #include "MainMenuState.h"
+#include "BeatIndicator.h"
+#include "UI.h"
 #include "tinyxml2.h"
+
 // tmp
 #include "CharacterBach.h"
 
 using namespace std;
 
-TutorialState::TutorialState(Game &_game) : game(_game), bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70) {
+TutorialState::TutorialState(Game &_game) :
+	game(_game),
+	bassline(game, { C1, C2, F1, F2, G1, G2 }, KEY_CM, 70),
+	dust1(10, "sprites/smoke.png", 128, 128, 10, 0),
+	dust2(10, "sprites/smoke.png", 128, 128, 10, 0),
+	hitspark1(10, "sprites/hit_spark2.png", 245, 260, 10, 200),
+	hitspark2(10, "sprites/hit_spark2.png", 245, 260, 10, 200),
+	blockspark1(10, "sprites/block_spark2.png", 122, 130, 10, 100),
+	blockspark2(10, "sprites/block_spark2.png", 122, 130, 10, 100)
+{
 }
 
-void TutorialState::init() {
-	cout << game.playerOne.playerId << endl;
-	cout << game.playerTwo.playerId << endl;
-	running = true;
-
+void TutorialState::initTutorial() {
 	textbox.setSize(sf::Vector2f(185, 75));
-	textbox.setFillColor(sf::Color(250, 250, 250));
-
-	/*unordered_map<string, unique_ptr<TutorialTask>> taskMap;
-	taskMap["move_back"] = MoveBack();
-	taskMap["move_forward"] = MoveForward();
-	taskMap["move_back"].testTask(Player());
-	taskMap["move_forward"].testTask(Player());*/
-
+	textbox.setFillColor(sf::Color(91, 15, 0));
+	textbox.setOutlineThickness(10);
+	textbox.setOutlineColor(sf::Color(43, 43, 43));
 
 	//////TUTORIAL INIT//////
 	//Load tutorial file
@@ -82,7 +83,7 @@ void TutorialState::init() {
 			if (conditions->FirstChildElement("yvellessthan") != NULL)
 				task.checkYvelLessThan = atoi(conditions->FirstChildElement("yvellessthan")->GetText());
 			if (conditions->FirstChildElement("move") != NULL)
-				task.checkMove = atoi(conditions->FirstChildElement("move")->GetText());
+				task.checkMove = conditions->FirstChildElement("move")->GetText();
 			if (conditions->FirstChildElement("completenum") != NULL)
 				task.checkComplete = atoi(conditions->FirstChildElement("completenum")->GetText());
 			taskQueue.push(task);
@@ -94,14 +95,14 @@ void TutorialState::init() {
 		tutorialData->DeleteChild(nextStage);
 		nextStage = tutorialData->FirstChildElement("stage");
 	}
-
-	task_text.setFont(font);
-	task_text.setColor(sf::Color(0, 0, 0));
+	font2.loadFromFile("fonts/asul.regular.ttf");
+	task_text.setFont(font2);
+	task_text.setColor(sf::Color(255, 174, 1));
 	task_text.setCharacterSize(20);
 	task_text.setPosition(-WINDOW_WIDTH, 0);
 	task_text.setString(tutorial.at(current_stage).getTaskText());
 
-	dialogue_text.setFont(font);
+	dialogue_text.setFont(font2);
 	dialogue_text.setColor(sf::Color(200, 220, 200));
 	dialogue_text.setCharacterSize(30);
 	dialogue_text.setString(tutorial.at(current_stage).popPretext());
@@ -129,11 +130,28 @@ void TutorialState::init() {
 	keyboardIcon.scale(sf::Vector2f(0.2, 0.2));
 	keyboardIcon.setPosition(WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4);
 	////////////////////////
+}
 
+void TutorialState::init() {
 
+	running = true;
+	initTutorial();
 	game.currentScreen.setStage(chstage);
-	game.currentScreen.stage.front.move(-200, 0);
+	game.currentScreen.stage.front.move(-game.currentScreen.stage.window_offset, 0);
+	//game.currentScreen.stage.base.move(-game.currentScreen.stage.window_offset, 0);
+	game.currentScreen.stage.med.move(-game.currentScreen.stage.window_offset, 0);
 	game.currentScreen.stage.window_offset = 0;
+	game.currentScreen.stage.base.setPosition(-440, 0);
+
+	// CHANGE LATER // 
+	//game.currentScreen.stage.front.setPosition(-230, WINDOW_HEIGHT - 200);
+	//game.currentScreen.stage.med.setPosition(-200, WINDOW_HEIGHT - 400);
+	// CHANGE LATER // 
+
+	hitspark1.setContinuous(false);
+	hitspark2.setContinuous(false);
+	blockspark1.setContinuous(false);
+	blockspark2.setContinuous(false);
 
 	// Threshold for acceptable inputs, smaller is harder, also in milliseconds
 	beatThreshold = 100 * (BEAT_SPEED / 500);
@@ -143,82 +161,104 @@ void TutorialState::init() {
 	indicatorFlashOn = false;
 
 	// Later move this to character selection state
-	Bach* bach = new Bach();
-	Bach* bach2 = new Bach();
-	game.playerOne.setCharacter(bach);
-	game.playerOne.character->initMoves();
-	game.playerOne.doMove(IDLE);
-	game.playerOne.character->currentMoveFrame = 0;
-	game.playerOne.setPosition(20, 100);
-	game.playerTwo.setCharacter(bach2);
-	game.playerTwo.character->initMoves();
-	game.playerTwo.doMove(IDLE);
-	game.playerTwo.character->currentMoveFrame = 0;
-	//100 = ground level
+	game.playerOne.loadCharacter("Bach.xml");
+	game.playerOne.doMove("idle");
+
+	game.playerTwo.loadCharacter("Bach.xml");
+	game.playerTwo.doMove("idle");
+
 	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
 	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
-	game.playerTwo.side = RIGHT;
 
-	player_1_HP.setSize(sf::Vector2f(400, 30));
+	if (!HUDTexture.loadFromFile("UIDraft.png")) {
+		std::cerr << "Could not find image file!\n";
+		exit(EXIT_FAILURE);
+	}
+	round1.loadFromFile("sprites/round1.png");
+	round2.loadFromFile("sprites/round2.png");
+	roundFinal.loadFromFile("sprites/roundFinal.png");
+	KO.loadFromFile("sprites/KO.png");
+	timeUp.loadFromFile("sprites/time.png");
+	player1wins.loadFromFile("sprites/p1win.png");
+	player2wins.loadFromFile("sprites/p2win.png");
+	tie.loadFromFile("sprites/draw.png");
+	roundText.setTexture(round1);
+	roundText.setPosition(WINDOW_WIDTH / 2 - roundText.getGlobalBounds().width / 2, WINDOW_HEIGHT / 2 - roundText.getGlobalBounds().height);
+
+	HUDOverlay.setTexture(HUDTexture);
+
+	player1portraitart.setPosition(70, 39);
+	///////todo
+	player1portraitart.setTexture(game.playerOne.portrait);
+
+	player2portraitart.setPosition(WINDOW_WIDTH - 66, 39);
+	player2portraitart.setTexture(game.playerOne.portrait);
+	///////
+	player2portraitart.scale(sf::Vector2f(-1, 1));
+
+	player_1_HP.setSize(sf::Vector2f(BARSIZE, 28));
 	player_1_HP.setFillColor(sf::Color(100, 250, 50));
+	player_1_HP.setPosition(190, 80);
 
-	player_1_HP_box.setSize(sf::Vector2f(400, 30));
-	player_1_HP_box.setOutlineThickness(5);
-	player_1_HP_box.setOutlineColor(sf::Color(250, 250, 250));
-	player_1_HP_box.setFillColor(sf::Color::Transparent);
-
-	player_2_HP.setSize(sf::Vector2f(400, 30));
+	player_2_HP.setSize(sf::Vector2f(BARSIZE, 28));
 	player_2_HP.setFillColor(sf::Color(100, 250, 50));
-	player_2_HP.setPosition(WINDOW_WIDTH - 400, 0);
+	player_2_HP.setPosition(WINDOW_WIDTH - BARSIZE - 188, 80);
 
-	player_2_HP_box.setSize(sf::Vector2f(400, 30));
-	player_2_HP_box.setPosition(WINDOW_WIDTH - 400, 0);
-	player_2_HP_box.setOutlineThickness(5);
-	player_2_HP_box.setOutlineColor(sf::Color(250, 250, 250));
-	player_2_HP_box.setFillColor(sf::Color::Transparent);
+	player_1_meter.setPosition(155, 116);
+	player_1_meter.setSize(sf::Vector2f(BARSIZE, 28));
+	player_1_meter.setFillColor(sf::Color(0, 255, 255));
 
-	task.setSize(sf::Vector2f(175, 75));
-	task.setFillColor(sf::Color(250, 250, 250));
-	task.setPosition(WINDOW_WIDTH / 2 - 100, 0);
+	player_2_meter.setPosition(WINDOW_WIDTH - BARSIZE - 151, 116);
+	player_2_meter.setSize(sf::Vector2f(BARSIZE, 28));
+	player_2_meter.setFillColor(sf::Color(0, 255, 255));
 
-	//dialogue.setSize(sf::Vector2f(300, 300));
-	//dialogue.setFillColor(sf::Color(250, 250, 250));
-//	dialogue.setPosition(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	timer.setSize(sf::Vector2f(175, 75));
+	timer.setFillColor(sf::Color(250, 250, 250));
+	timer.setPosition(WINDOW_WIDTH / 2 - 100, 0);
 
-	if (!font.loadFromFile("fonts/asul.regular.ttf")) {
+	player_1_round_win_1.setRadius(13);
+	player_1_round_win_1.setPosition(WINDOW_WIDTH / 2 - 170, 169);
+	player_1_round_win_1.setFillColor(sf::Color(255, 255, 0));
+
+	player_1_round_win_2.setRadius(13);
+	player_1_round_win_2.setPosition(WINDOW_WIDTH / 2 - 125, 169);
+	player_1_round_win_2.setFillColor(sf::Color(255, 255, 0));
+
+	player_2_round_win_1.setRadius(13);
+	player_2_round_win_1.setPosition(WINDOW_WIDTH / 2 + 147, 169);
+	player_2_round_win_1.setFillColor(sf::Color(255, 255, 0));
+
+	player_2_round_win_2.setRadius(13);
+	player_2_round_win_2.setPosition(WINDOW_WIDTH / 2 + 102, 169);
+	player_2_round_win_2.setFillColor(sf::Color(255, 255, 0));
+
+	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
 		cerr << "Font not found!\n";
 		exit(EXIT_FAILURE);
 	}
+	timer_text.setFont(font);
+	timer_text.setColor(sf::Color(250, 250, 250));
+	time = 99.0f;
+	char temp[256];
+	sprintf(temp, "%f", time);
+	timer_text.setString(temp);
+	timer_text.setCharacterSize(80);
+	timer_text.setPosition(WINDOW_WIDTH / 2 - 30, 42);
 
-	player_1_meter.setPosition(0, 35);
-	player_1_meter.setSize(sf::Vector2f(400, 30));
-	player_1_meter.setFillColor(sf::Color(0, 255, 255));
+	game.playerOne.indicator.bSprite.setPosition(0, 150);
+	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 150, 150);
 
-	player_1_meter_box.setOutlineThickness(5);
-	player_1_meter_box.setOutlineColor(sf::Color(250, 250, 250));
-	player_1_meter_box.setPosition(0, 35);
-	player_1_meter_box.setSize(sf::Vector2f(400, 30));
-	player_1_meter_box.setFillColor(sf::Color::Transparent);
+	pauseOverlay.setFillColor(sf::Color(0, 0, 0, 200));
+	pauseOverlay.setSize(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
 
-	player_2_meter.setSize(sf::Vector2f(400, 30));
-	player_2_meter.setFillColor(sf::Color(0, 255, 255));
-	player_2_meter.setPosition(WINDOW_WIDTH - 400, 35);
 
-	player_2_meter_box.setOutlineThickness(5);
-	player_2_meter_box.setOutlineColor(sf::Color(250, 250, 250));
-	player_2_meter_box.setSize(sf::Vector2f(400, 30));
-	player_2_meter_box.setPosition(WINDOW_WIDTH - 400, 35);
-	player_2_meter_box.setFillColor(sf::Color::Transparent);
-
-	game.playerOne.indicator.bSprite.setPosition(0, 50);
-	game.playerTwo.indicator.bSprite.setPosition(WINDOW_WIDTH - 400, 50);
-
+	base_view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	base_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	camera_view.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	camera_view.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	HUD.setCenter(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 	HUD.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	game.window.setView(camera_view);
-
 
 	// Possibly move this to asset manager in future
 	if (!metronomeSoundBuffer.loadFromFile("sounds/metronome_tick.wav")) {
@@ -242,13 +282,86 @@ void TutorialState::init() {
 	hitSound.setVolume(50);
 
 	bassline.setInstrument(32);
-	
-	game.inputHandler->setInstrument(6);
+	game.inputHandler->setInstrument(0);
+	clock.restart();
 }
 
 void TutorialState::hookEvent() {
+	time = saveTime;
+	clock.restart();
 	__hook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__hook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
+}
+
+void TutorialState::reset() {
+	roundstart = true;
+	acceptingInput = false;
+	inc = 0;
+	game.playerOne.doMove("idle");
+	game.playerTwo.doMove("idle");
+	//100 = ground level
+	game.playerOne.setPosition(WINDOW_WIDTH / 50, GROUND);
+	game.playerTwo.setPosition(WINDOW_WIDTH / 1.2, GROUND);
+
+	time = 99.0f;
+	char temp[256];
+	sprintf(temp, "%f", time);
+	timer_text.setString(temp);
+	clock.restart();
+
+	game.playerOne.health = game.playerOne.getMaxHealth();
+	game.playerOne.meter = 0;
+	game.playerTwo.health = game.playerOne.getMaxHealth();
+	game.playerTwo.meter = 0;
+	game.beat = 425.0f;
+	beatThreshold = 100 * (game.beat / 500);
+	frameSpeed = 1000 * (500 / game.beat);
+	game.playerOne.setBeat(game.beat);
+	game.playerTwo.setBeat(game.beat);
+	bassline.setBassline({ C1, C2, F1, F2, G1, G2 });
+	phase = 0;
+}
+
+void TutorialState::doRoundStart() {
+	int round = game.playerOne.roundWins + game.playerTwo.roundWins;
+	if (round == 0) {
+		roundText.setTexture(round1);
+		roundText.setTextureRect(sf::IntRect(0, 0, round1.getSize().x, round1.getSize().y));
+	}
+	else if (round == 1) {
+		roundText.setTexture(round2);
+		roundText.setTextureRect(sf::IntRect(0, 0, round2.getSize().x, round2.getSize().y));
+	}
+	else if (round == 2) {
+		roundText.setTexture(roundFinal);
+		roundText.setTextureRect(sf::IntRect(0, 0, roundFinal.getSize().x, roundFinal.getSize().y));
+	}
+	roundText.setPosition(WINDOW_WIDTH / 2 - roundText.getGlobalBounds().width / 2, WINDOW_HEIGHT / 2 - roundText.getGlobalBounds().height);
+	//roundText.setScale(inc, inc);
+	roundText.setColor(sf::Color(255, 255, 255, 255 - inc));
+	if (inc > 255) {
+		roundstart = false;
+		acceptingInput = true;
+	}
+	inc += 3;
+}
+
+void TutorialState::doRoundEnd() {
+	if (time <= 0) {
+		roundText.setTexture(timeUp);
+		roundText.setTextureRect(sf::IntRect(0, 0, timeUp.getSize().x, timeUp.getSize().y));
+	}
+	else {
+		roundText.setTexture(KO);
+		roundText.setTextureRect(sf::IntRect(0, 0, KO.getSize().x, KO.getSize().y));
+	}
+	roundText.setPosition(WINDOW_WIDTH / 2 - roundText.getGlobalBounds().width / 2, WINDOW_HEIGHT / 2 - roundText.getGlobalBounds().height);
+	roundText.setColor(sf::Color(255, 255, 255, 255));
+	if (inc > 255) {
+		roundend = false;
+		reset();
+	}
+	inc += 1;
 }
 
 void TutorialState::update() {
@@ -259,10 +372,10 @@ void TutorialState::update() {
 		keyboardIcon.setTexture(keyboardTexSheet2);
 	}
 	if (current_stage == 1) {
-		game.playerTwo.doMove(10);
+		game.playerTwo.doMove("roundhouse");
 	}
 	else {
-		game.playerTwo.doMove(IDLE);
+		game.playerTwo.doMove("idle");
 	}
 	//cout << "State #1" << endl;
 	if (!running) {
@@ -278,6 +391,32 @@ void TutorialState::update() {
 			break;
 		}
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		saveTime = time;
+		game.window.draw(pauseOverlay);
+		unhookEvent();
+		PauseState pauseState(game);
+		game.gsm.pauseState(*this, &pauseState);
+	}
+
+	if (roundstart)
+		doRoundStart();
+	else if (roundend)
+		doRoundEnd();
+
+	// gonna change this later
+	if (game.playerOne.getSide() == LEFT) {
+		dust1.setEmitter(sf::Vector2f(game.playerOne.getPosition().x + 100, game.playerOne.getPosition().y + 400));
+		dust2.setEmitter(sf::Vector2f(game.playerTwo.getPosition().x + 80, game.playerTwo.getPosition().y + 400));
+	}
+	else if (game.playerOne.getSide() == RIGHT) {
+		dust1.setEmitter(sf::Vector2f(game.playerOne.getPosition().x + 80, game.playerOne.getPosition().y + 400));
+		dust2.setEmitter(sf::Vector2f(game.playerTwo.getPosition().x + 100, game.playerTwo.getPosition().y + 400));
+	}
+	sf::Time elapsed = emitterClock.restart();
+	dust1.update(elapsed);
+	dust2.update(elapsed);
+	//
 
 	onBeat = false;
 	if ((metronome.getElapsedTime().asMilliseconds()) < beatThreshold || (metronome.getElapsedTime().asMilliseconds()) > game.beat - beatThreshold) {
@@ -290,15 +429,16 @@ void TutorialState::update() {
 		//cout << "game.beat" << endl;
 		metronome.restart();
 		// Play a note in the bassline on each quarter note
-		//flash indicator???
-		indicatorFlashOn = true;
-		//cout << "indicatorflashon" << endl;
-		indicatorFlash = 5;
-		game.playerOne.indicator.updateIndicator(NONE);
-		game.playerTwo.indicator.updateIndicator(NONE);
+
 		if (quarterNote) {
 			bassline.playNextNote();
 			//metronomeSound.play();
+			//flash indicator???
+			indicatorFlashOn = true;
+			//cout << "indicatorflashon" << endl;
+			indicatorFlash = 5;
+			game.playerOne.indicator.updateIndicator(NONE);
+			game.playerTwo.indicator.updateIndicator(NONE);
 			quarterNote = false;
 
 		}
@@ -306,26 +446,67 @@ void TutorialState::update() {
 			quarterNote = true;
 		}
 	}
-	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
-	//update dialogue
 
-	processInput(game.playerOne, inputP1);
-	//processInput(game.playerTwo, inputP2);
-	//cout << "P1 vel: " << game.playerOne.xvel << endl << "P2 vel: " << game.playerTwo.xvel << endl << endl;
-	checkBoxes(game.playerOne, game.playerTwo);
-	checkBoxes(game.playerTwo, game.playerOne);
-	checkClipBoxes(game.playerOne, game.playerTwo);
-	restrict_movement(game.playerOne, game.playerTwo);
-	restrict_movement(game.playerTwo, game.playerOne);
-	game.playerOne.updatePhysics();
-	game.playerTwo.updatePhysics();
+	if (acceptingInput) {
+		processInput(game.playerOne, inputP1);
+		processInput(game.playerTwo, inputP2);
+	}
 
+	//camera controls 
+	camera_center = sf::Vector2f((game.playerOne.getPosition().x + game.playerTwo.getPosition().x + 438) / 2, WINDOW_HEIGHT / 2);
+	if (camera_center.x > WINDOW_WIDTH - 550) camera_center.x = WINDOW_WIDTH - 550;
+	if (camera_center.x < 550) camera_center.x = 550;
+	camera_view.setCenter(camera_center);
+
+	//constrain like camera
+	//game.currentScreen.stage.med.setPosition((game.playerOne.getPosition().x + game.playerTwo.getPosition().x + 438) / 4 - 1000, WINDOW_HEIGHT - 400);
+
+	//collision and hitsparks
+	sf::FloatRect* p = game.collisionManager.checkBoxes(game.playerOne, game.playerTwo);
+	sf::FloatRect collisionPoint;
+	if (p != NULL) {
+		collisionPoint = *p;
+		hitspark1.setEmitter(sf::Vector2f(collisionPoint.left - 245, collisionPoint.top - 260));
+		blockspark1.setEmitter(sf::Vector2f(collisionPoint.left - 122, collisionPoint.top - 130));
+		if (game.playerTwo.getCurrentMove()->moveName == "hitstun") {
+			hitspark1.activate();
+			hitSound.play();
+		}
+		else if (game.playerTwo.getCurrentMove()->moveName == "blockstun") {
+			blockspark1.activate();
+			blockSound.play();
+		}
+	}
+	p = game.collisionManager.checkBoxes(game.playerTwo, game.playerOne);
+	if (p != NULL) {
+		collisionPoint = *p;
+		hitspark2.setEmitter(sf::Vector2f(collisionPoint.left - 245, collisionPoint.top - 260));
+		blockspark2.setEmitter(sf::Vector2f(collisionPoint.left - 122, collisionPoint.top - 130));
+		if (game.playerOne.getCurrentMove()->moveName == "hitstun") {
+			hitspark2.activate();
+			hitSound.play();
+		}
+		else if (game.playerOne.getCurrentMove()->moveName == "blockstun") {
+			blockspark2.activate();
+			blockSound.play();
+		}
+	}
+	hitspark1.update(elapsed);
+	hitspark2.update(elapsed);
+	blockspark1.update(elapsed);
+	blockspark2.update(elapsed);
+	game.collisionManager.checkClipBoxes(game.playerOne, game.playerTwo, camera_view.getCenter().x - 988, camera_view.getCenter().x + 988);
+
+	game.playerOne.update();
+	game.playerTwo.update();
+	game.playerOne.updateSide(game.playerTwo);
+	game.playerTwo.updateSide(game.playerOne);
 
 	///////TUTORIAL////////
 	dialogue_text.setPosition(WINDOW_WIDTH / 2 - dialogue_text.getLocalBounds().width / 2, WINDOW_HEIGHT / 4);
 	textBorder.setScale(sf::Vector2f(0.1, 0.1));
 	textBorder.setPosition(sf::Vector2f(dialogue_text.getPosition().x - textBorder.getGlobalBounds().width / 4,
-									    dialogue_text.getPosition().y - textBorder.getGlobalBounds().height / 4));
+		dialogue_text.getPosition().y - textBorder.getGlobalBounds().height / 4));
 	if (stopState) {
 		unhookEvent();
 		MainMenuState menu(game);
@@ -348,27 +529,85 @@ void TutorialState::update() {
 	if (game.playerOne.state == NO_STATE) {
 		waitToChangeState = false;
 	}
-	textbox.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
+	textbox.setPosition(game.playerOne.getPosition());
+	task_text.setPosition(game.playerOne.getPosition());
 	game.playerOne.health = 1000;
 	game.playerTwo.health = 1000;
 	game.playerOne.meter = 1000;
 	game.playerTwo.meter = 1000;
 	///////////////////////
 
+	time -= clock.getElapsedTime().asSeconds();
+	if (time < 0) time = 0.0;
+	char temp[256];
+	sprintf(temp, "%d", (int)time);
+	timer_text.setString(temp);
 
-	collision.flip_sprites(game.playerOne, game.playerTwo);
-	collision.flip_sprites(game.playerTwo, game.playerOne);
-
-	if (game.playerOne.health <= 0) {
-		game.playerTwo.roundWins++;
-		ResultsState results(game);
-		game.gsm.stopState(*this, &results);
-	}
-	else if (game.playerTwo.health <= 0) {
-		game.playerOne.roundWins++;
-		ResultsState results(game);
-		game.gsm.stopState(*this, &results);
+	if (!roundend) {
+		if (game.playerOne.health <= 0) {
+			game.playerTwo.roundWins++;
+			if (game.playerTwo.roundWins == 2) {
+				game.window.draw(player_2_round_win_2);
+				ResultsState results(game);
+				game.gsm.stopState(*this, &results);
+			}
+			else {
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+		}
+		else if (game.playerTwo.health <= 0) {
+			game.playerOne.roundWins++;
+			if (game.playerOne.roundWins == 2) {
+				game.window.draw(player_1_round_win_2);
+				ResultsState results(game);
+				game.gsm.stopState(*this, &results);
+			}
+			else {
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+		}
+		else if (time <= 0) {
+			cout << "entered loop" << endl;
+			if (game.playerOne.health < game.playerTwo.health) {
+				cout << "sit1" << endl;
+				game.playerTwo.roundWins++;
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+			else if (game.playerTwo.health < game.playerOne.health) {
+				cout << "sit2" << endl;
+				game.playerOne.roundWins++;
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+			else {
+				cout << "sit3" << endl;
+				game.playerOne.roundWins++;
+				game.playerTwo.roundWins++;
+				inc = 0;
+				acceptingInput = false;
+				roundend = true;
+			}
+			if (game.playerOne.roundWins == 2 || game.playerTwo.roundWins == 2) {
+				if (game.playerOne.roundWins == 2) {
+					game.window.draw(player_1_round_win_2);
+				}
+				if (game.playerTwo.roundWins == 2) {
+					game.window.draw(player_2_round_win_2);
+				}
+				ResultsState results(game);
+				game.gsm.stopState(*this, &results);
+			}
+			else {
+				reset();
+			}
+		}
 	}
 
 	if ((game.playerOne.health < game.playerOne.getMaxHealth() / 1.333f || game.playerTwo.health < game.playerTwo.getMaxHealth() / 1.333f) && phase == 0) {
@@ -391,13 +630,16 @@ void TutorialState::update() {
 	}
 	else if ((game.playerOne.health < game.playerOne.getMaxHealth() / 4 || game.playerTwo.health < game.playerTwo.getMaxHealth() / 4) && phase == 2) {
 		phase = 3;
-		game.beat = 275.0f;
+		//game.beat = 275.0f;
+		//temp fix
+		game.beat = 350.0f;
 		beatThreshold = 100 * (game.beat / 500);
 		frameSpeed = 1000 * (500 / game.beat);
 		game.playerOne.setBeat(game.beat);
 		game.playerTwo.setBeat(game.beat);
 		bassline.setBassline({ C1, F1, E1, F1, G1, A1, C2, B1, A1, B1 });
 	}
+
 
 	frameCounter += frameSpeed * clock.restart().asSeconds();
 	if (frameCounter >= switchFrame) {
@@ -411,9 +653,12 @@ void TutorialState::update() {
 			indicatorFlashOn = false;
 			indicatorFlash = 5;
 		}
+		game.playerOne.hitstunFrames--;
+		game.playerOne.blockstunFrames--;
+		game.playerTwo.hitstunFrames--;
+		game.playerTwo.blockstunFrames--;
 		game.playerTwo.updateAnimFrame();
 		game.playerOne.updateAnimFrame();
-		
 		////TUTORIAL////
 		dontUpdateEveryFramePlease++;
 		if (dontUpdateEveryFramePlease == 5) {
@@ -424,16 +669,16 @@ void TutorialState::update() {
 		////////////////
 	}
 
-	move_camera(game.playerOne, game.playerTwo);
-	move_camera(game.playerTwo, game.playerOne);
+	//move_camera(game.playerOne, game.playerTwo);
+	//move_camera(game.playerTwo, game.playerOne);
 
 	//cout << "offset" << endl;
 	//cout << game.currentScreen.stage.window_offset << endl;
 
-	sf::Vector2<float> p1HP(400.0*(game.playerOne.health / 1000.0), 30);
-	sf::Vector2<float> p2HP(400.0*(game.playerTwo.health / 1000.0), 30);
-	sf::Vector2<float> p1M(400.0*(game.playerOne.meter / 1000.0), 30);
-	sf::Vector2<float> p2M(400.0*(game.playerTwo.meter / 1000.0), 30);
+	sf::Vector2<float> p1HP(BARSIZE*(game.playerOne.health / 1000.0), 30);
+	sf::Vector2<float> p2HP(BARSIZE*(game.playerTwo.health / 1000.0), 30);
+	sf::Vector2<float> p1M(BARSIZE*(game.playerOne.meter / 1000.0), 30);
+	sf::Vector2<float> p2M(BARSIZE*(game.playerTwo.meter / 1000.0), 30);
 	//cout << game.playerOne.meter << endl;
 	//cout << p2HP.x << endl;
 	player_1_HP.setSize(p1HP);
@@ -441,38 +686,77 @@ void TutorialState::update() {
 	player_1_meter.setSize(p1M);
 	player_2_meter.setSize(p2M);
 
-
+	//cout << dec<<game.currentScreen.stage.window_offset << endl;
+	//cout << dec << game.playerTwo.xpos << endl;
+	//cout << game.playerOne.roundWins << endl;
 }
 
 void TutorialState::draw() {
 	game.window.clear();
+	game.window.setView(base_view);
+	game.window.draw(game.currentScreen.stage.base);
 	game.window.setView(camera_view);
+	game.window.draw(game.currentScreen.stage.med);
 	game.window.draw(game.currentScreen.stage.front);
-	game.window.draw(game.playerOne.character->sprite);
-	game.window.draw(game.playerTwo.character->sprite);
+	game.window.draw(game.playerOne.sprite);
+	game.window.draw(game.playerTwo.sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
 	drawBoxes(game.playerTwo, 0, 0, 0);
+
+	//gonna change this later
+	if (game.playerOne.getVelocity().x != 0 || game.playerOne.getVelocity().y != 0) {
+		game.window.draw(dust1);
+	}
+	if (game.playerTwo.getVelocity().x != 0 || game.playerTwo.getVelocity().y != 0) {
+		game.window.draw(dust2);
+	}
+	//
+	game.window.draw(hitspark1);
+	game.window.draw(hitspark2);
+	game.window.draw(blockspark1);
+	game.window.draw(blockspark2);
+
+	//Tutorial
+	game.window.draw(task);
+	game.window.draw(textbox);
+	game.window.draw(task_text);
+	//
+
 	game.window.setView(HUD);
+	if (roundstart)
+		game.window.draw(roundText);
+	if (roundend) {
+		game.window.draw(roundText);
+	}
+
+	game.window.draw(HUDOverlay);
 	game.window.draw(player_1_HP);
 	game.window.draw(player_2_HP);
 	game.window.draw(player_1_meter);
 	game.window.draw(player_2_meter);
-	game.window.draw(player_1_HP_box);
-	game.window.draw(player_2_HP_box);
-	game.window.draw(player_1_meter_box);
-	game.window.draw(player_2_meter_box);
-	game.window.draw(task);
-	game.window.draw(textbox);
-	game.window.draw(task_text);
-	//cout << "currentdialoguetext: " << current_dialogue << endl;
-	//cout << "currenttask: " << tutorial.at(current_stage).tasks.at(current_task_num).task << endl;
-	//cout << "current task true??: " << tutorial.at(current_stage).tasks.at(current_task_num).taskComplete << endl;
-	//cout << "playerstate: " << game.playerOne.state << endl;
-	//cout << "playervel: " << game.playerOne.xvel << endl;
-	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
-	//cout << "(" << onBeat << ", " << metronome.getElapsedTime().asMilliseconds() << ")" << endl;
+	//game.window.draw(player_1_HP_box);
+	//game.window.draw(player_2_HP_box);
+	//game.window.draw(player_1_meter_box);
+	//game.window.draw(player_2_meter_box);
+	//game.window.draw(timer);
+	game.window.draw(player1portraitart);
+	game.window.draw(player2portraitart);
+	game.window.draw(timer_text);
 	game.window.draw(game.playerOne.indicator.bSprite);
 	game.window.draw(game.playerTwo.indicator.bSprite);
+
+	if (game.playerOne.roundWins > 0) {
+		game.window.draw(player_1_round_win_1);
+	}
+	if (game.playerOne.roundWins > 1) {
+		game.window.draw(player_1_round_win_2);
+	}
+	if (game.playerTwo.roundWins > 0) {
+		game.window.draw(player_2_round_win_1);
+	}
+	if (game.playerTwo.roundWins > 1) {
+		game.window.draw(player_2_round_win_2);
+	}
 
 	////TUTORIAL////
 	game.window.draw(keyboardIcon);
@@ -484,240 +768,23 @@ void TutorialState::draw() {
 	}
 	///////////////
 
+	/*
+	game.window.draw(player_1_round_win_1);
+	game.window.draw(player_1_round_win_2);
+	game.window.draw(player_2_round_win_1);
+	game.window.draw(player_2_round_win_2);*/
+
+
 	game.window.display();
 }
 
-void TutorialState::move_camera(Player& cp, Player& op) {
-	//right
-
-	if ((!(op.xpos + op.character->wall_offset <= game.currentScreen.stage.window_offset)) && (cp.xpos + cp.getSpriteWidth() - cp.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset < game.currentScreen.stage.window_limit)) {
-		camera_view.move(cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset += cp.character->walkspeed;
-	}
-
-	//left
-
-	if ((!(op.xpos + op.getSpriteWidth() - op.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset)) && (cp.xpos + cp.character->wall_offset <= game.currentScreen.stage.window_offset) && (game.currentScreen.stage.window_offset > -game.currentScreen.stage.window_limit)) {
-		camera_view.move(-cp.character->walkspeed, 0);
-		game.currentScreen.stage.window_offset -= cp.character->walkspeed;
-	}
-
-}
-
-void TutorialState::restrict_movement(Player& p1, Player& p2) {
-	//right
-
-	if ((p2.xpos + p2.character->wall_offset <= game.currentScreen.stage.window_offset) && (p1.xpos + p1.getSpriteWidth() - p1.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel > 0)) {
-		p1.xvel = 0;
-	}
-
-	//left
-
-	if ((p1.xpos + p1.character->wall_offset <= game.currentScreen.stage.window_offset) && (p2.xpos + p2.getSpriteWidth() - p2.character->wall_offset >= WINDOW_WIDTH + game.currentScreen.stage.window_offset) && (p1.xvel < 0)) {
-		p1.xvel = 0;
-	}
-}
-
-
-//Change some copies to moves in future
-void TutorialState::checkClipBoxes(Player& p1, Player& p2) {
-	if (!p1.getCurrentFrame().clipboxes.empty() && !p2.getCurrentFrame().clipboxes.empty()) {
-		sf::FloatRect clipbox1 = p1.getCurrentFrame().clipboxes.at(0);
-		sf::FloatRect clipbox2 = p2.getCurrentFrame().clipboxes.at(0);
-		sf::FloatRect offsetClipBox1;
-		sf::FloatRect offsetClipBox2;
-		if (p1.side == LEFT)
-			offsetClipBox1 = sf::FloatRect(clipbox1.left + p1.xpos, clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		else if (p1.side == RIGHT)
-			offsetClipBox1 = sf::FloatRect(p1.xpos - clipbox1.width - clipbox1.left + p1.getSpriteWidth(), clipbox1.top + p1.ypos, clipbox1.width, clipbox1.height);
-		if (p2.side == LEFT)
-			offsetClipBox2 = sf::FloatRect(clipbox2.left + p2.xpos, clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-		else if (p2.side == RIGHT)
-			offsetClipBox2 = sf::FloatRect(p2.xpos - clipbox2.width - clipbox2.left + p2.getSpriteWidth(), clipbox2.top + p2.ypos, clipbox2.width, clipbox2.height);
-		sf::FloatRect intersectBox;
-		if (offsetClipBox1.intersects(offsetClipBox2)) {
-			// If player 1 is moving in the x direction and player 2 is standing still
-			if (abs(p1.xvel) > 0 && p2.xvel == 0) {
-				if (p1.xvel > 0 && p1.side == LEFT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
-				}
-				else if (p1.xvel < 0 && p1.side == RIGHT) {
-					p2.xvel = p1.xvel;
-					if (p2.againstWall)
-						p1.xvel = 0;
-				}
-			}
-			// If player 2 is moving in the x direction and player 1 is standing still
-			else if (abs(p2.xvel) > 0 && p1.xvel == 0) {
-				if (p2.xvel > 0 && p2.side == LEFT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
-				}
-				else if (p2.xvel < 0 && p2.side == RIGHT) {
-					p1.xvel = p2.xvel;
-					if (p1.againstWall)
-						p2.xvel = 0;
-				}
-			}
-			// If both are moving in opposing directions, set both vels to 0
-			else if (abs(p1.xvel) > 0 && abs(p2.xvel) > 0) {
-				if ((p1.xvel > 0) != (p2.xvel > 0)) {
-					p2.xvel = 0;
-					p1.xvel = 0;
-				}
-			}
-
-			if (p2.againstWall && p2.state == WALK_STATE && p1.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
-			}
-			else if (p1.againstWall && p1.state == WALK_STATE && p2.state == WALK_STATE) {
-				p2.xvel = 0;
-				p1.xvel = 0;
-			}
-
-			// Airborne stuff
-			if (abs(p1.yvel) > 0.0f) {
-				float p1Center = (offsetClipBox1.left + offsetClipBox1.width / 2);
-				float p2Center = (offsetClipBox2.left + offsetClipBox2.width / 2);
-				if (p1Center < p2Center) {
-
-				}
-
-				if (p1.jumpSide == LEFT) {
-					if (p2.side == RIGHT) {
-						p1.xvel = 0;
-						p2.xvel = p1.character->jumpX;
-					}
-					else if (p2.side == LEFT) {
-						p2.xvel = -p1.character->jumpX;
-					}
-				}
-				else if (p1.jumpSide == RIGHT) {
-					if (p2.side == LEFT) {
-						p1.xvel = 0;
-						p2.xvel = -p1.character->jumpX;
-					}
-					else if (p2.side == RIGHT) {
-						p2.xvel = p1.character->jumpX;
-					}
-				}
-			}
-			else if (abs(p2.yvel) > 0.0f) {
-
-				if (p2.jumpSide == LEFT) {
-					if (p1.side == RIGHT) {
-						p2.xvel = 0;
-						p1.xvel = p2.character->jumpX;
-					}
-					else if (p1.side == LEFT) {
-						p1.xvel = -p2.character->jumpX;
-					}
-				}
-				else if (p2.jumpSide == RIGHT) {
-					if (p1.side == LEFT) {
-						p2.xvel = 0;
-						p1.xvel = -p2.character->jumpX;
-					}
-					else if (p1.side == RIGHT) {
-						p1.xvel = p2.character->jumpX;
-					}
-				}
-			}
-		}
-		if (offsetClipBox1.left < 0 || offsetClipBox1.width + offsetClipBox1.left > WINDOW_WIDTH) {
-			if (p1.xvel < 0 && p1.side == LEFT)
-				p1.xvel = 0;
-			if (p1.xvel > 0 && p1.side == RIGHT)
-				p1.xvel = 0;
-			p1.againstWall = true;
-		}
-		else
-			p1.againstWall = false;
-		if (offsetClipBox2.left < 0 || offsetClipBox2.width + offsetClipBox2.left > WINDOW_WIDTH) {
-			if (p2.xvel < 0 && p2.side == LEFT)
-				p2.xvel = 0;
-			if (p2.xvel > 0 && p2.side == RIGHT)
-				p2.xvel = 0;
-			p2.againstWall = true;
-		}
-		else
-			p2.againstWall = false;
-	}
-
-	if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == LEFT) {
-		p2.xvel = -p1.character->jumpX;
-	}
-	else if (p2.againstWall && p1.againstWall && abs(p1.yvel) > 0 && p1.jumpSide == RIGHT) {
-		p2.xvel = p1.character->jumpX;
-	}
-	if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == LEFT) {
-		p1.xvel = -p2.character->jumpX;
-	}
-	else if (p1.againstWall && p2.againstWall && abs(p2.yvel) > 0 && p2.jumpSide == RIGHT) {
-		p1.xvel = p2.character->jumpX;
-	}
-}
-
-void TutorialState::checkBoxes(Player& attacker, Player& defender) {
-	sf::Vector2f attPos = attacker.character->sprite.getPosition();
-	sf::Vector2f defPos = defender.character->sprite.getPosition();
-	for (auto hitbox : attacker.getCurrentFrame().hitboxes) {
-		for (auto hurtbox : defender.getCurrentFrame().hurtboxes) {
-			// Make new rects offset by players' current positions and orientations
-			sf::FloatRect offsetHit;
-			if (attacker.side == LEFT) {
-				sf::FloatRect tmp(hitbox.left + attPos.x, hitbox.top + attPos.y, hitbox.width, hitbox.height);
-				offsetHit = tmp;
-			}
-			else if (attacker.side == RIGHT) {
-				sf::FloatRect tmp(attPos.x - hitbox.width - hitbox.left + attacker.getSpriteWidth(), hitbox.top + attPos.y, hitbox.width, hitbox.height);
-				offsetHit = tmp;
-			}
-
-			sf::FloatRect offsetHurt;
-			if (defender.side == LEFT) {
-				sf::FloatRect tmp(hurtbox.left + defPos.x, hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
-				offsetHurt = tmp;
-			}
-			else if (defender.side == RIGHT) {
-				sf::FloatRect tmp(defPos.x - hurtbox.width - hurtbox.left + defender.getSpriteWidth(), hurtbox.top + defPos.y, hurtbox.width, hurtbox.height);
-				offsetHurt = tmp;
-			}
-			if (offsetHit.intersects(offsetHurt)) {
-				//on collision, checks first if player getting hit was holding block while being in the correct state
-				if (defender.holdingBlock && defender.state != HITSTUN_STATE && defender.state != ATTACK_STATE && defender.state != AIRBORNE_STATE) {
-					defender.block(attacker.getCurrentMove());
-					blockSound.play();
-				}
-				else {
-					//if not blocking, player gets hit
-					if (!attacker.getCurrentFrame().hit) {
-						//cout << "hit!" << endl;
-						defender.getHit(attacker.getCurrentMove());
-						attacker.getCurrentFrame().hit = true;
-						hitSound.play();
-					}
-					attacker.canCancel = true;
-					return;
-				}
-			}
-		}
-	}
-}
-
 void TutorialState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
-	// Anan's super secret math formula
-	sf::Vector2f v = player.character->sprite.getPosition();
 	Frame &frame = player.getCurrentFrame();
 	if (hit) {
 		for (auto box : frame.hitboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -728,8 +795,8 @@ void TutorialState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	if (hurt) {
 		for (auto box : frame.hurtboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -740,8 +807,8 @@ void TutorialState::drawBoxes(Player& player, bool hit, bool hurt, bool clip) {
 	if (clip) {
 		for (auto box : frame.clipboxes) {
 			sf::RectangleShape drawRect(sf::Vector2f(box.width, box.height));
-			sf::Vector2f v = player.character->sprite.getPosition();
-			if (player.side == LEFT)
+			sf::Vector2f v = player.getPosition();
+			if (player.getSide() == LEFT)
 				drawRect.setPosition(v.x + box.left, v.y + box.top);
 			else
 				drawRect.setPosition(v.x - box.width - box.left + player.getSpriteWidth(), v.y + box.top);
@@ -755,25 +822,34 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 	// Handle every possible combination of movement keys
 	if (player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
-		player.jump(NEUTRAL);
+		player.doMove("njump");
 	}
 	else if (!player.left && player.jumping && player.right) {
 		player.holdingBlock = false;
-		player.jump(RIGHT);
+		if (player.getSide() == LEFT)
+			player.doMove("fjump");
+		else if (player.getSide() == RIGHT)
+			player.doMove("bjump");
 	}
 	else if (player.left && !player.jumping && player.right) {
 		player.holdingBlock = true;
-		player.doMove(IDLE);
+		player.doMove("idle");
 	}
 	else if (player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.jump(LEFT);
+		if (player.getSide() == LEFT)
+			player.doMove("bjump");
+		else if (player.getSide() == RIGHT)
+			player.doMove("fjump");
 	}
 	else if (!player.left && !player.jumping && player.right) {
 
-		player.walk(RIGHT);
+		if (player.getSide() == LEFT)
+			player.doMove("walk");
+		else if (player.getSide() == RIGHT)
+			player.doMove("backwalk");
 		//check if player is holding correct direction to block
-		if (player.side == RIGHT) {
+		if (player.getSide() == RIGHT) {
 			player.holdingBlock = true;
 		}
 		else {
@@ -781,9 +857,12 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 		}
 	}
 	else if (player.left && !player.jumping && !player.right) {
-		player.walk(LEFT);
+		if (player.getSide() == LEFT)
+			player.doMove("backwalk");
+		else if (player.getSide() == RIGHT)
+			player.doMove("walk");
 		//check if player is holding correct direction to block
-		if (player.side == LEFT) {
+		if (player.getSide() == LEFT) {
 			player.holdingBlock = true;
 		}
 		else {
@@ -792,13 +871,12 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 	}
 	else if (!player.left && player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.jump(NEUTRAL);
+		player.doMove("njump");
 	}
 	else if (!player.left && !player.jumping && !player.right) {
 		player.holdingBlock = false;
-		player.doMove(IDLE);
+		player.doMove("idle");
 	}
-
 
 	if (!input.empty()) {
 		if (!inputOpen) {
@@ -810,7 +888,7 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 			/* This code is kind of hard to read; each note starting at 60 (Middle C) is
 			left shifted its distance away from middle C, ie C is 1, D is 10, E is 100,
 			and so on. These numbers are OR'd together to make something like 10010001,
-			which resents a C Major triad. To handle octaves, the number is right shifted
+			which represents a C Major triad. To handle octaves, the number is right shifted
 			12 times again and again until there are at most eleven trailing 0's in the
 			binary number. When that happens, we know the octave has been normalized. */
 			if (input.size() < 5) {
@@ -829,66 +907,73 @@ void TutorialState::processInput(Player& player, vector<int>& input) {
 				while (!(acc & 0xFFF)) acc = acc >> 12;
 				//cout << hex << acc << endl;
 				//cout << "indicatorflashon" << endl;
-
 				indicatorFlashOn = true;
 
 				player.indicator.updateIndicator(ONBEAT);
+
 				if (acc == C_NATURAL) {
-					player.doMove(JAB);
+					player.doMove("jab");
 				}
 				else if (acc == D_NATURAL) {
-					player.doMove(STRONG);
+					player.doMove("strong");
 				}
 				else if (acc == E_NATURAL) {
-					player.doMove(FIERCE);
+					player.doMove("fierce");
 				}
 				else if (acc == F_NATURAL) {
-					player.doMove(SHRT);
+					player.doMove("short");
 				}
 				else if (acc == G_NATURAL) {
-					player.doMove(FORWARD);
+					player.doMove("forward");
 				}
 				else if (acc == A_NATURAL) {
-					player.doMove(ROUNDHOUSE);
+					player.doMove("roundhouse");
 				}
 				else if (acc == B_NATURAL) {
-					player.doMove(GRAB);
+					player.doMove("grab");
 				}
 				else if (acc == C_MAJOR) {
-					player.doMove(CMAJ);
+					player.doMove("shoryuken");
+				}
+				else if (acc == C_MAJOR_6) {
+					//todo re add power adjust 
+					player.doMove("shoryuken");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
+				else if (acc == C_MAJOR_64) {
+					player.doMove("shoryuken");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				else if (acc == F_MAJOR_64) {
-					player.doMove(CMAJ);
+					player.doMove("shoryuken");
 				}
 				else if (acc == G_MAJOR) {
-					player.doMove(GMAJ);
+					player.doMove("tatsu");
+				}
+				else if (acc == G_MAJOR_6) {
+					player.doMove("tatsu");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
+				}
+				else if (acc == G_MAJOR_64) {
+					player.doMove("tatsu");
+					//if (player.meter < 1000)player.meter += player.getCurrentMove()->getMeterGain();
 				}
 				//cheats
 				else if (acc == 0x540) {
-					player.health = 1000;
+					player.health = -1;
 				}
 				else {
 					player.hitstunFrames = 3;
-					player.doMove(HITSTUN);
+					player.doMove("hitstun");
 					player.health -= 50;
 				}
+				if (player.meter > 1000)player.meter = 1000;
 			}
 			else {
 				input.clear();
 			}
 		}
 	}
-	//test current task, if true advance to next one
-
-	/*if (current_task_num < tutorial.at(current_stage).tasks.size()) {
-		task_text.setString(tutorial.at(current_stage).tasks.at(current_task_num).task);
-		tutorial.at(current_stage).tasks.at(current_task_num).testTask(game.playerOne);
-	}
-	task_text.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-	task.setPosition(game.playerOne.xpos, game.playerOne.ypos);
-	if (tutorial.at(current_stage).tasks.at(current_task_num).taskComplete) {
-		current_task_num += 1;
-	}*/
 }
 
 // Everything here is run on its own thread!
@@ -896,7 +981,6 @@ void TutorialState::receiveKeysDown(int note, int playerId) {
 	////Tutorial////
 	if (inPretext || inPosttext) return;
 	///////////////
-
 	if (playerId == game.playerOne.playerId) {
 		// Movement keys
 		if (note == 48) game.playerOne.left = true;
@@ -967,7 +1051,6 @@ void TutorialState::receiveKeysUp(int note, int playerId) {
 		return;
 	}
 	////////////
-
 	if (playerId == game.playerOne.playerId) {
 		// Movement keys
 		if (note == 48) game.playerOne.left = false;
@@ -991,12 +1074,10 @@ void TutorialState::receiveKeysUp(int note, int playerId) {
 }
 
 void TutorialState::unhookEvent() {
-	cout << "FightState events unhooked\n";
+	cout << "TutorialState events unhooked\n";
 	__unhook(&InputHandler::sendKeysDown, game.inputHandler.get(), &GameState::receiveKeysDown);
 	__unhook(&InputHandler::sendKeysUp, game.inputHandler.get(), &GameState::receiveKeysUp);
 }
 
-
 TutorialState::~TutorialState() {
-	//delete player1;
 }

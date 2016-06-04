@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="utf-8"?>
+<character name="bach">
+  <walkspeed>8.0</walkspeed>
+  <jumpX>8.0</jumpX>
+  <jumpY>35.0</jumpY>
+  <health>1000</health>
+  <walloffset>100</walloffset>
+  <super>7 0 2 4 5 7 0 0</super>
+  <portrait>sprites/BachPortrait.png</portrait>
+  <sounds>
+    <sound name="uppercut" file="sounds/uppercut.wav"/>
+    <sound name="toccata" file="sounds/toccata.wav"/>
+    <sound name="minuet_in_c" file="sounds/minuet_in_c.wav"/>
+    <sound name="attack1" file="sounds/attack1.wav"/>
+    <sound name="attack2" file="sounds/attack2.wav"/>
+    <sound name="attack3" file="sounds/attack3.wav"/>
+    <sound name="hit1" file="sounds/hit1.wav"/>
+    <sound name="hit2" file="sounds/hit1.wav"/>
+    <sound name="hit3" file="sounds/hit1.wav"/>
+    <sound name="victory" file="sounds/victory.wav"/>
+    <sound name="defeat" file="sounds/defeat.wav"/>
+  </sounds>
+
+  <move name="jab">
+    <sprite>sprites/bach_jab.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>5</framecount>
+    <damage>500</damage>
+    <hitstun>6</hitstun>
+    <blockstun>1</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>4</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>20</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
+      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="223" x="139" y="289"/>
+      <hitbox color="4278255360" frame="1" height="288" userdata="hurt" width="247" x="114" y="9"/>
+      <hitbox color="65280" frame="1" height="223" userdata="hurt" width="253" x="108" y="296"/>
+      <hitbox color="65280" frame="2" height="280" userdata="hurt" width="173" x="78" y="17"/>
+      <hitbox color="65280" frame="2" height="246" userdata="hurt" width="235" x="110" y="277"/>
+      <hitbox color="16711680" frame="2" height="114" userdata="hit" width="273" x="162" y="75"/>
+      <hitbox color="65280" frame="2" height="227" userdata="hurt" width="259" x="171" y="53"/>
+      <hitbox color="16776960" frame="0" height="411" userdata="clip" width="158" x="139" y="102"/>
+      <hitbox color="16776960" frame="1" height="394" userdata="clip" width="175" x="130" y="98"/>
+      <hitbox color="16711680" frame="1" height="108" userdata="hit" width="197" x="172" y="97"/>
+      <hitbox color="4294967040" frame="2" height="408" userdata="clip" width="161" x="125" y="111"/>
+      <hitbox color="65280" frame="3" height="243" userdata="hurt" width="196" x="108" y="12"/>
+      <hitbox color="65280" frame="3" height="173" userdata="hurt" width="166" x="154" y="181"/>
+      <hitbox color="65280" frame="3" height="176" userdata="hurt" width="242" x="114" y="307"/>
+      <hitbox color="16776960" frame="3" height="405" userdata="clip" width="166" x="138" y="108"/>
+    </framedata>
+  </move>
+
+  <move name="strong">
+    <sprite>sprites/bach_strong.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>7</framecount>
+    <damage>50</damage>
+    <hitstun>5</hitstun>
+    <blockstun>3</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>6</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>30</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
+      <hitbox color="65280" frame="0" height="251" userdata="hurt" width="231" x="120" y="272"/>
+      <hitbox color="4278255360" frame="1" height="109" userdata="hurt" width="143" x="121" y="6"/>
+      <hitbox color="65280" frame="1" height="238" userdata="hurt" width="246" x="108" y="281"/>
+      <hitbox color="65280" frame="2" height="216" userdata="hurt" width="181" x="140" y="105"/>
+      <hitbox color="65280" frame="2" height="201" userdata="hurt" width="244" x="110" y="318"/>
+      <hitbox color="65280" frame="2" height="115" userdata="hurt" width="137" x="148" y="17"/>
+      <hitbox color="65280" frame="0" height="173" userdata="hurt" width="201" x="129" y="104"/>
+      <hitbox color="16776960" frame="0" height="432" userdata="clip" width="154" x="144" y="99"/>
+      <hitbox color="65280" frame="1" height="182" userdata="hurt" width="219" x="113" y="113"/>
+      <hitbox color="16776960" frame="1" height="425" userdata="clip" width="159" x="145" y="103"/>
+      <hitbox color="65280" frame="3" height="111" userdata="hurt" width="142" x="148" y="18"/>
+      <hitbox color="65280" frame="3" height="196" userdata="hurt" width="181" x="139" y="116"/>
+      <hitbox color="65280" frame="3" height="215" userdata="hurt" width="229" x="124" y="305"/>
+      <hitbox color="16776960" frame="2" height="401" userdata="clip" width="150" x="165" y="110"/>
+      <hitbox color="16776960" frame="3" height="401" userdata="clip" width="149" x="159" y="120"/>
+      <hitbox color="65280" frame="4" height="117" userdata="hurt" width="125" x="165" y="44"/>
+      <hitbox color="4294901760" frame="4" height="174" userdata="hit" width="242" x="171" y="54"/>
+      <hitbox color="65280" frame="4" height="127" userdata="hurt" width="244" x="164" y="82"/>
+      <hitbox color="65280" frame="4" height="213" userdata="hurt" width="154" x="161" y="166"/>
+      <hitbox color="65280" frame="4" height="217" userdata="hurt" width="213" x="131" y="306"/>
+      <hitbox color="16776960" frame="4" height="397" userdata="clip" width="137" x="175" y="130"/>
+      <hitbox color="65280" frame="5" height="116" userdata="hurt" width="139" x="148" y="44"/>
+      <hitbox color="65280" frame="5" height="191" userdata="hurt" width="173" x="150" y="164"/>
+      <hitbox color="65280" frame="5" height="115" userdata="hurt" width="245" x="157" y="75"/>
+      <hitbox color="4278255360" frame="5" height="238" userdata="hurt" width="202" x="140" y="292"/>
+      <hitbox color="16776960" frame="5" height="397" userdata="clip" width="154" x="158" y="131"/>
+      <hitbox color="65280" frame="6" height="129" userdata="hurt" width="133" x="154" y="20"/>
+      <hitbox color="65280" frame="6" height="221" userdata="hurt" width="176" x="141" y="109"/>
+      <hitbox color="65280" frame="6" height="231" userdata="hurt" width="249" x="109" y="291"/>
+      <hitbox color="16776960" frame="6" height="398" userdata="clip" width="150" x="152" y="113"/>
+    </framedata>
+  </move>
+
+  <move name="fierce">
+    <sprite>sprites/bach_fierce.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>13</framecount>
+    <damage>100</damage>
+    <hitstun>0</hitstun>
+    <blockstun>5</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>2</pushx>
+    <pushy>0</pushy>
+    <knockback>8</knockback>
+    <knocksdown>1</knocksdown>
+    <metergain>50</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
+      <hitbox color="65280" frame="0" height="251" userdata="hurt" width="231" x="120" y="272"/>
+      <hitbox color="4278255360" frame="1" height="109" userdata="hurt" width="143" x="121" y="6"/>
+      <hitbox color="65280" frame="1" height="238" userdata="hurt" width="246" x="108" y="281"/>
+      <hitbox color="65280" frame="2" height="216" userdata="hurt" width="181" x="140" y="105"/>
+      <hitbox color="65280" frame="2" height="201" userdata="hurt" width="244" x="110" y="318"/>
+      <hitbox color="65280" frame="2" height="115" userdata="hurt" width="137" x="148" y="17"/>
+      <hitbox color="65280" frame="0" height="173" userdata="hurt" width="201" x="129" y="104"/>
+      <hitbox color="16776960" frame="0" height="432" userdata="clip" width="154" x="144" y="99"/>
+      <hitbox color="65280" frame="1" height="182" userdata="hurt" width="219" x="113" y="113"/>
+      <hitbox color="16776960" frame="1" height="425" userdata="clip" width="159" x="145" y="103"/>
+      <hitbox color="65280" frame="3" height="111" userdata="hurt" width="142" x="148" y="18"/>
+      <hitbox color="65280" frame="3" height="196" userdata="hurt" width="181" x="139" y="116"/>
+      <hitbox color="65280" frame="3" height="215" userdata="hurt" width="229" x="124" y="305"/>
+      <hitbox color="16776960" frame="2" height="401" userdata="clip" width="150" x="165" y="110"/>
+      <hitbox color="16776960" frame="3" height="401" userdata="clip" width="149" x="159" y="120"/>
+      <hitbox color="65280" frame="4" height="117" userdata="hurt" width="125" x="165" y="15"/>
+      <hitbox color="65280" frame="4" height="204" userdata="hurt" width="164" x="149" y="122"/>
+      <hitbox color="65280" frame="4" height="217" userdata="hurt" width="213" x="131" y="306"/>
+      <hitbox color="16776960" frame="4" height="397" userdata="clip" width="139" x="160" y="128"/>
+      <hitbox color="65280" frame="5" height="116" userdata="hurt" width="139" x="141" y="11"/>
+      <hitbox color="65280" frame="5" height="191" userdata="hurt" width="150" x="160" y="109"/>
+      <hitbox color="4278255360" frame="5" height="238" userdata="hurt" width="202" x="137" y="278"/>
+      <hitbox color="16776960" frame="5" height="397" userdata="clip" width="154" x="161" y="124"/>
+      <hitbox color="65280" frame="6" height="129" userdata="hurt" width="133" x="182" y="39"/>
+      <hitbox color="65280" frame="6" height="221" userdata="hurt" width="176" x="151" y="111"/>
+      <hitbox color="65280" frame="6" height="231" userdata="hurt" width="249" x="127" y="299"/>
+      <hitbox color="16776960" frame="6" height="398" userdata="clip" width="150" x="172" y="116"/>
+      <hitbox color="65280" frame="6" height="244" userdata="hurt" width="237" x="196" y="60"/>
+      <hitbox color="4278255360" frame="7" height="123" userdata="hurt" width="156" x="152" y="26"/>
+      <hitbox color="4278255360" frame="7" height="274" userdata="hurt" width="289" x="135" y="52"/>
+      <hitbox color="4278255360" frame="7" height="213" userdata="hurt" width="286" x="94" y="314"/>
+      <hitbox color="16776960" frame="7" height="402" userdata="clip" width="137" x="161" y="119"/>
+      <hitbox color="16711680" frame="7" height="254" userdata="hit" width="299" x="129" y="52"/>
+      <hitbox color="65280" frame="8" height="141" userdata="hurt" width="163" x="144" y="25"/>
+      <hitbox color="4278255360" frame="8" height="232" userdata="hurt" width="270" x="156" y="51"/>
+      <hitbox color="65280" frame="8" height="243" userdata="hurt" width="261" x="111" y="274"/>
+      <hitbox color="16776960" frame="8" height="403" userdata="clip" width="156" x="163" y="113"/>
+      <hitbox color="4294967040" frame="9" height="412" userdata="clip" width="139" x="189" y="109"/>
+      <hitbox color="65280" frame="9" height="223" userdata="hurt" width="161" x="187" y="103"/>
+      <hitbox color="65280" frame="9" height="128" userdata="hurt" width="132" x="186" y="11"/>
+      <hitbox color="65280" frame="9" height="244" userdata="hurt" width="239" x="143" y="279"/>
+      <hitbox color="65280" frame="10" height="170" userdata="hurt" width="141" x="175" y="15"/>
+      <hitbox color="65280" frame="10" height="211" userdata="hurt" width="179" x="173" y="112"/>
+      <hitbox color="65280" frame="10" height="235" userdata="hurt" width="251" x="140" y="291"/>
+      <hitbox color="4294967040" frame="10" height="405" userdata="clip" width="138" x="189" y="116"/>
+      <hitbox color="65280" frame="11" height="170" userdata="hurt" width="138" x="183" y="2"/>
+      <hitbox color="65280" frame="11" height="205" userdata="hurt" width="208" x="187" y="108"/>
+      <hitbox color="65280" frame="11" height="252" userdata="hurt" width="239" x="181" y="275"/>
+      <hitbox color="4294967040" frame="11" height="424" userdata="clip" width="155" x="204" y="103"/>
+      <hitbox color="65280" frame="12" height="115" userdata="hurt" width="119" x="141" y="4"/>
+      <hitbox color="65280" frame="12" height="160" userdata="hurt" width="185" x="144" y="104"/>
+      <hitbox color="65280" frame="12" height="274" userdata="hurt" width="243" x="115" y="259"/>
+      <hitbox color="4294967040" frame="12" height="431" userdata="clip" width="156" x="139" y="110"/>
+    </framedata>
+  </move>
+
+  <move name="short">
+    <sprite>sprites/bach_shortb.png</sprite>
+    <width>515</width>
+    <height>548</height>
+    <framecount>4</framecount>
+    <damage>20</damage>
+    <hitstun>2</hitstun>
+    <blockstun>1</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>4</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>15</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
+      <hitbox color="65280" frame="0" height="251" userdata="hurt" width="231" x="120" y="272"/>
+      <hitbox color="4278255360" frame="1" height="109" userdata="hurt" width="143" x="121" y="6"/>
+      <hitbox color="65280" frame="1" height="238" userdata="hurt" width="246" x="108" y="281"/>
+      <hitbox color="65280" frame="2" height="216" userdata="hurt" width="181" x="100" y="102"/>
+      <hitbox color="65280" frame="2" height="183" userdata="hurt" width="332" x="68" y="316"/>
+      <hitbox color="65280" frame="2" height="115" userdata="hurt" width="137" x="106" y="9"/>
+      <hitbox color="65280" frame="0" height="173" userdata="hurt" width="201" x="129" y="104"/>
+      <hitbox color="16776960" frame="0" height="432" userdata="clip" width="154" x="144" y="99"/>
+      <hitbox color="65280" frame="1" height="182" userdata="hurt" width="219" x="113" y="113"/>
+      <hitbox color="16776960" frame="1" height="425" userdata="clip" width="159" x="145" y="103"/>
+      <hitbox color="65280" frame="3" height="111" userdata="hurt" width="142" x="133" y="13"/>
+      <hitbox color="65280" frame="3" height="196" userdata="hurt" width="181" x="146" y="121"/>
+      <hitbox color="16776960" frame="2" height="401" userdata="clip" width="150" x="118" y="130"/>
+      <hitbox color="16776960" frame="3" height="401" userdata="clip" width="149" x="155" y="120"/>
+      <hitbox color="65280" frame="4" height="117" userdata="hurt" width="125" x="113" y="6"/>
+      <hitbox color="65280" frame="4" height="127" userdata="hurt" width="179" x="136" y="91"/>
+      <hitbox color="65280" frame="4" height="213" userdata="hurt" width="152" x="143" y="160"/>
+      <hitbox color="65280" frame="4" height="217" userdata="hurt" width="238" x="104" y="301"/>
+      <hitbox color="16776960" frame="4" height="397" userdata="clip" width="137" x="142" y="125"/>
+      <hitbox color="65280" frame="5" height="116" userdata="hurt" width="139" x="148" y="44"/>
+      <hitbox color="65280" frame="5" height="191" userdata="hurt" width="173" x="150" y="164"/>
+      <hitbox color="65280" frame="5" height="115" userdata="hurt" width="245" x="157" y="75"/>
+      <hitbox color="4278255360" frame="5" height="238" userdata="hurt" width="202" x="140" y="292"/>
+      <hitbox color="16776960" frame="5" height="397" userdata="clip" width="154" x="158" y="131"/>
+      <hitbox color="65280" frame="6" height="129" userdata="hurt" width="133" x="154" y="20"/>
+      <hitbox color="65280" frame="6" height="221" userdata="hurt" width="176" x="141" y="109"/>
+      <hitbox color="65280" frame="6" height="231" userdata="hurt" width="249" x="109" y="291"/>
+      <hitbox color="16776960" frame="6" height="398" userdata="clip" width="150" x="152" y="113"/>
+      <hitbox color="4278255360" frame="3" height="236" userdata="hurt" width="268" x="89" y="281"/>
+      <hitbox color="16711680" frame="2" height="70" userdata="hit" width="190" x="221" y="444"/>
+    </framedata>
+  </move>
+
+  <move name="forward">
+    <sprite>sprites/bach_forward.png</sprite>
+    <width>515</width>
+    <height>548</height>
+    <framecount>6</framecount>
+    <damage>40</damage>
+    <hitstun>5</hitstun>
+    <blockstun>3</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>6</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>35</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="102" userdata="hurt" width="131" x="132" y="3"/>
+      <hitbox color="65280" frame="0" height="251" userdata="hurt" width="231" x="120" y="272"/>
+      <hitbox color="4278255360" frame="1" height="109" userdata="hurt" width="143" x="121" y="6"/>
+      <hitbox color="65280" frame="1" height="238" userdata="hurt" width="246" x="108" y="281"/>
+      <hitbox color="65280" frame="2" height="216" userdata="hurt" width="181" x="100" y="102"/>
+      <hitbox color="65280" frame="2" height="183" userdata="hurt" width="332" x="68" y="316"/>
+      <hitbox color="65280" frame="2" height="115" userdata="hurt" width="137" x="106" y="9"/>
+      <hitbox color="65280" frame="0" height="173" userdata="hurt" width="201" x="129" y="104"/>
+      <hitbox color="16776960" frame="0" height="432" userdata="clip" width="154" x="144" y="99"/>
+      <hitbox color="65280" frame="1" height="182" userdata="hurt" width="219" x="113" y="113"/>
+      <hitbox color="16776960" frame="1" height="425" userdata="clip" width="159" x="145" y="103"/>
+      <hitbox color="65280" frame="3" height="111" userdata="hurt" width="142" x="88" y="1"/>
+      <hitbox color="65280" frame="3" height="196" userdata="hurt" width="181" x="97" y="109"/>
+      <hitbox color="65280" frame="3" height="233" userdata="hurt" width="358" x="76" y="288"/>
+      <hitbox color="16776960" frame="2" height="401" userdata="clip" width="150" x="118" y="130"/>
+      <hitbox color="16776960" frame="3" height="401" userdata="clip" width="149" x="88" y="125"/>
+      <hitbox color="65280" frame="4" height="117" userdata="hurt" width="125" x="113" y="6"/>
+      <hitbox color="65280" frame="4" height="127" userdata="hurt" width="179" x="98" y="95"/>
+      <hitbox color="65280" frame="4" height="213" userdata="hurt" width="152" x="113" y="163"/>
+      <hitbox color="65280" frame="4" height="217" userdata="hurt" width="238" x="104" y="301"/>
+      <hitbox color="16776960" frame="4" height="397" userdata="clip" width="137" x="117" y="130"/>
+      <hitbox color="65280" frame="5" height="116" userdata="hurt" width="139" x="148" y="44"/>
+      <hitbox color="65280" frame="5" height="191" userdata="hurt" width="173" x="150" y="164"/>
+      <hitbox color="65280" frame="5" height="115" userdata="hurt" width="245" x="157" y="75"/>
+      <hitbox color="4278255360" frame="5" height="238" userdata="hurt" width="202" x="140" y="292"/>
+      <hitbox color="16776960" frame="5" height="397" userdata="clip" width="154" x="158" y="131"/>
+      <hitbox color="65280" frame="6" height="129" userdata="hurt" width="133" x="154" y="20"/>
+      <hitbox color="65280" frame="6" height="221" userdata="hurt" width="176" x="141" y="109"/>
+      <hitbox color="65280" frame="6" height="231" userdata="hurt" width="249" x="109" y="291"/>
+      <hitbox color="16776960" frame="6" height="398" userdata="clip" width="150" x="152" y="113"/>
+      <hitbox color="16711680" frame="3" height="201" userdata="hit" width="281" x="170" y="312"/>
+    </framedata>
+  </move>
+
+  <move name="roundhouse">
+    <sprite>sprites/bach_roundhouse.png</sprite>
+    <width>666</width>
+    <height>548</height>
+    <framecount>7</framecount>
+    <damage>80</damage>
+    <hitstun>5</hitstun>
+    <blockstun>4</blockstun>
+    <velx>5</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>16</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>40</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="176" userdata="hurt" width="149" x="212" y="6"/>
+      <hitbox color="65280" frame="0" height="149" userdata="hurt" width="169" x="241" y="128"/>
+      <hitbox color="65280" frame="0" height="257" userdata="hurt" width="261" x="192" y="270"/>
+      <hitbox color="16776960" frame="0" height="432" userdata="clip" width="154" x="144" y="99"/>
+      <hitbox color="65280" frame="1" height="137" userdata="hurt" width="126" x="179" y="8"/>
+      <hitbox color="65280" frame="1" height="141" userdata="hurt" width="236" x="157" y="121"/>
+      <hitbox color="65280" frame="1" height="134" userdata="hurt" width="253" x="220" y="216"/>
+      <hitbox color="65280" frame="1" height="203" userdata="hurt" width="114" x="226" y="335"/>
+      <hitbox color="16776960" frame="1" height="425" userdata="clip" width="159" x="145" y="103"/>
+      <hitbox color="65280" frame="2" height="154" userdata="hurt" width="119" x="151" y="4"/>
+      <hitbox color="4278255360" frame="2" height="143" userdata="hurt" width="332" x="142" y="80"/>
+      <hitbox color="65280" frame="2" height="121" userdata="hurt" width="324" x="184" y="220"/>
+      <hitbox color="65280" frame="2" height="229" userdata="hurt" width="137" x="263" y="305"/>
+      <hitbox color="16776960" frame="2" height="401" userdata="clip" width="150" x="108" y="105"/>
+      <hitbox color="65280" frame="3" height="138" userdata="hurt" width="174" x="159" y="1"/>
+      <hitbox color="4278255360" frame="3" height="148" userdata="hurt" width="333" x="165" y="75"/>
+      <hitbox color="65280" frame="3" height="123" userdata="hurt" width="357" x="176" y="219"/>
+      <hitbox color="65280" frame="3" height="217" userdata="hurt" width="116" x="309" y="315"/>
+      <hitbox color="16776960" frame="3" height="436" userdata="clip" width="149" x="48" y="105"/>
+      <hitbox color="65280" frame="4" height="135" userdata="hurt" width="349" x="47" y="-2"/>
+      <hitbox color="65280" frame="4" height="133" userdata="hurt" width="626" x="38" y="96"/>
+      <hitbox color="65280" frame="4" height="339" userdata="hurt" width="156" x="208" y="187"/>
+      <hitbox color="16711680" frame="4" height="143" userdata="hit" width="556" x="107" y="101"/>
+      <hitbox color="16776960" frame="4" height="397" userdata="clip" width="137" x="126" y="133"/>
+      <hitbox color="65280" frame="5" height="142" userdata="hurt" width="129" x="237" y="-3"/>
+      <hitbox color="65280" frame="5" height="404" userdata="hurt" width="182" x="212" y="127"/>
+      <hitbox color="16776960" frame="5" height="397" userdata="clip" width="154" x="100" y="138"/>
+      <hitbox color="65280" frame="6" height="160" userdata="hurt" width="284" x="204" y="-4"/>
+      <hitbox color="65280" frame="6" height="412" userdata="hurt" width="193" x="225" y="113"/>
+      <hitbox color="16776960" frame="6" height="398" userdata="clip" width="150" x="129" y="136"/>
+    </framedata>
+  </move>
+
+  <move name="shoryuken">
+    <sprite>sprites/bach_furious_fugue_flail.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>7</framecount>
+    <damage>100</damage>
+    <hitstun>8</hitstun>
+    <blockstun>4</blockstun>
+    <velx>3</velx>
+    <vely>-20</vely>
+    <pushx>-20</pushx>
+    <pushy>-25</pushy>
+    <knockback>4</knockback>
+    <metergain>60</metergain>
+    <knocksdown>1</knocksdown>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="16711680" frame="4" height="246" userdata="hit" width="114" x="274" y="5"/>
+      <hitbox color="16711680" frame="1" height="259" userdata="hit" width="141" x="199" y="26"/>
+    </framedata>
+  </move>
+
+  <move name="tatsu">
+    <sprite>sprites/bach_toccata_and_kick_ur_ass_in_d_minor.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>15</framecount>
+    <damage>10</damage>
+    <hitstun>3</hitstun>
+    <blockstun>2</blockstun>
+    <velx>0</velx>
+    <vely>-20</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>5</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>60</metergain>
+    <inair>1</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="241" userdata="hurt" width="182" x="135" y="99"/>
+      <hitbox color="65280" frame="0" height="227" userdata="hurt" width="211" x="115" y="296"/>
+      <hitbox color="4294967040" frame="0" height="407" userdata="clip" width="158" x="129" y="117"/>
+      <hitbox color="65280" frame="1" height="105" userdata="hurt" width="140" x="132" y="10"/>
+      <hitbox color="65280" frame="1" height="250" userdata="hurt" width="183" x="128" y="97"/>
+      <hitbox color="65280" frame="1" height="231" userdata="hurt" width="210" x="129" y="291"/>
+      <hitbox color="16776960" frame="1" height="414" userdata="clip" width="134" x="162" y="106"/>
+      <hitbox color="65280" frame="2" height="172" userdata="hurt" width="155" x="83" y="16"/>
+      <hitbox color="65280" frame="2" height="243" userdata="hurt" width="169" x="109" y="99"/>
+      <hitbox color="65280" frame="2" height="244" userdata="hurt" width="292" x="92" y="292"/>
+      <hitbox color="4294967040" frame="2" height="402" userdata="clip" width="152" x="109" y="128"/>
+      <hitbox color="65280" frame="3" height="148" userdata="hurt" width="161" x="69" y="3"/>
+      <hitbox color="4278255360" frame="3" height="203" userdata="hurt" width="160" x="108" y="96"/>
+      <hitbox color="65280" frame="3" height="255" userdata="hurt" width="392" x="47" y="276"/>
+      <hitbox color="4294967040" frame="3" height="423" userdata="clip" width="142" x="107" y="105"/>
+      <hitbox color="16711680" frame="3" height="234" userdata="hit" width="348" x="89" y="297"/>
+      <hitbox color="4278255360" frame="4" height="159" userdata="hurt" width="156" x="204" y="8"/>
+      <hitbox color="65280" frame="4" height="184" userdata="hurt" width="173" x="175" y="98"/>
+      <hitbox color="4278255360" frame="4" height="297" userdata="hurt" width="371" x="0" y="238"/>
+      <hitbox color="16776960" frame="4" height="426" userdata="clip" width="137" x="191" y="108"/>
+      <hitbox color="16711680" frame="4" height="248" userdata="hit" width="348" x="7" y="283"/>
+      <hitbox color="65280" frame="5" height="148" userdata="hurt" width="161" x="69" y="3"/>
+      <hitbox color="4278255360" frame="5" height="203" userdata="hurt" width="160" x="108" y="96"/>
+      <hitbox color="65280" frame="5" height="255" userdata="hurt" width="392" x="47" y="276"/>
+      <hitbox color="4294967040" frame="5" height="423" userdata="clip" width="142" x="107" y="105"/>
+      <hitbox color="16711680" frame="5" height="234" userdata="hit" width="348" x="89" y="297"/>
+      <hitbox color="4278255360" frame="6" height="159" userdata="hurt" width="156" x="204" y="8"/>
+      <hitbox color="65280" frame="6" height="184" userdata="hurt" width="173" x="175" y="98"/>
+      <hitbox color="4278255360" frame="6" height="297" userdata="hurt" width="371" x="0" y="238"/>
+      <hitbox color="16776960" frame="6" height="426" userdata="clip" width="137" x="191" y="108"/>
+      <hitbox color="16711680" frame="6" height="248" userdata="hit" width="348" x="7" y="283"/>
+      <hitbox color="65280" frame="7" height="148" userdata="hurt" width="161" x="69" y="3"/>
+      <hitbox color="4278255360" frame="7" height="203" userdata="hurt" width="160" x="108" y="96"/>
+      <hitbox color="65280" frame="7" height="255" userdata="hurt" width="392" x="47" y="276"/>
+      <hitbox color="4294967040" frame="7" height="423" userdata="clip" width="142" x="107" y="105"/>
+      <hitbox color="16711680" frame="7" height="234" userdata="hit" width="348" x="89" y="297"/>
+      <hitbox color="4278255360" frame="8" height="159" userdata="hurt" width="156" x="204" y="8"/>
+      <hitbox color="65280" frame="8" height="184" userdata="hurt" width="173" x="175" y="98"/>
+      <hitbox color="4278255360" frame="8" height="297" userdata="hurt" width="371" x="0" y="238"/>
+      <hitbox color="16776960" frame="8" height="426" userdata="clip" width="137" x="191" y="108"/>
+      <hitbox color="16711680" frame="8" height="248" userdata="hit" width="348" x="7" y="283"/>
+      <hitbox color="65280" frame="9" height="148" userdata="hurt" width="161" x="69" y="3"/>
+      <hitbox color="4278255360" frame="9" height="203" userdata="hurt" width="160" x="108" y="96"/>
+      <hitbox color="65280" frame="9" height="255" userdata="hurt" width="392" x="47" y="276"/>
+      <hitbox color="4294967040" frame="9" height="423" userdata="clip" width="142" x="107" y="105"/>
+      <hitbox color="16711680" frame="9" height="234" userdata="hit" width="348" x="89" y="297"/>
+      <hitbox color="4278255360" frame="10" height="159" userdata="hurt" width="156" x="204" y="8"/>
+      <hitbox color="65280" frame="10" height="184" userdata="hurt" width="173" x="175" y="98"/>
+      <hitbox color="4278255360" frame="10" height="297" userdata="hurt" width="371" x="0" y="238"/>
+      <hitbox color="16776960" frame="10" height="426" userdata="clip" width="137" x="191" y="108"/>
+      <hitbox color="16711680" frame="10" height="248" userdata="hit" width="348" x="7" y="283"/>
+      <hitbox color="65280" frame="11" height="148" userdata="hurt" width="161" x="69" y="3"/>
+      <hitbox color="4278255360" frame="11" height="203" userdata="hurt" width="160" x="108" y="96"/>
+      <hitbox color="65280" frame="11" height="255" userdata="hurt" width="392" x="47" y="276"/>
+      <hitbox color="4294967040" frame="11" height="423" userdata="clip" width="142" x="107" y="105"/>
+      <hitbox color="16711680" frame="11" height="234" userdata="hit" width="348" x="89" y="297"/>
+      <hitbox color="65280" frame="12" height="172" userdata="hurt" width="155" x="83" y="16"/>
+      <hitbox color="65280" frame="12" height="243" userdata="hurt" width="169" x="109" y="99"/>
+      <hitbox color="65280" frame="12" height="244" userdata="hurt" width="292" x="92" y="292"/>
+      <hitbox color="4294967040" frame="12" height="402" userdata="clip" width="152" x="109" y="128"/>
+      <hitbox color="65280" frame="13" height="105" userdata="hurt" width="140" x="132" y="10"/>
+      <hitbox color="65280" frame="13" height="250" userdata="hurt" width="183" x="128" y="97"/>
+      <hitbox color="65280" frame="13" height="231" userdata="hurt" width="210" x="129" y="291"/>
+      <hitbox color="16776960" frame="13" height="414" userdata="clip" width="134" x="162" y="106"/>
+      <hitbox color="65280" frame="14" height="241" userdata="hurt" width="182" x="135" y="99"/>
+      <hitbox color="65280" frame="14" height="227" userdata="hurt" width="211" x="115" y="296"/>
+      <hitbox color="4294967040" frame="14" height="407" userdata="clip" width="158" x="129" y="117"/>
+      <hitbox color="65280" frame="14" height="105" userdata="hurt" width="140" x="132" y="10"/>
+    </framedata>
+  </move>
+
+  <move name="grab">
+    <sprite>sprites/bach_grab.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>6</framecount>
+    <damage>40</damage>
+    <hitstun>6</hitstun>
+    <blockstun>1</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>15</pushx>
+    <pushy>-35</pushy>
+    <knockback>0</knockback>
+    <knocksdown>1</knocksdown>
+    <metergain>10</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="221" userdata="hurt" width="139" x="53" y="8"/>
+      <hitbox color="65280" frame="0" height="433" userdata="hurt" width="243" x="24" y="95"/>
+      <hitbox color="65280" frame="1" height="224" userdata="hurt" width="156" x="71" y="20"/>
+      <hitbox color="4278255360" frame="1" height="308" userdata="hurt" width="193" x="63" y="121"/>
+      <hitbox color="65280" frame="1" height="208" userdata="hurt" width="286" x="8" y="314"/>
+      <hitbox color="16776960" frame="0" height="415" userdata="clip" width="169" x="62" y="111"/>
+      <hitbox color="16776960" frame="1" height="401" userdata="clip" width="143" x="88" y="113"/>
+      <hitbox color="65280" frame="2" height="126" userdata="hurt" width="154" x="75" y="52"/>
+      <hitbox color="4278255360" frame="2" height="177" userdata="hurt" width="188" x="77" y="159"/>
+      <hitbox color="4278255360" frame="2" height="215" userdata="hurt" width="295" x="10" y="320"/>
+      <hitbox color="65280" frame="2" height="120" userdata="hurt" width="297" x="38" y="62"/>
+      <hitbox color="16711680" frame="2" height="187" userdata="hit" width="221" x="116" y="60"/>
+      <hitbox color="65280" frame="3" height="133" userdata="hurt" width="153" x="81" y="41"/>
+      <hitbox color="65280" frame="3" height="141" userdata="hurt" width="212" x="110" y="68"/>
+      <hitbox color="65280" frame="3" height="361" userdata="hurt" width="178" x="91" y="160"/>
+      <hitbox color="16776960" frame="2" height="382" userdata="clip" width="139" x="109" y="143"/>
+      <hitbox color="16776960" frame="3" height="381" userdata="clip" width="149" x="96" y="145"/>
+      <hitbox color="65280" frame="4" height="166" userdata="hurt" width="149" x="51" y="37"/>
+      <hitbox color="65280" frame="4" height="346" userdata="hurt" width="245" x="11" y="162"/>
+      <hitbox color="4278255360" frame="4" height="135" userdata="hurt" width="261" x="26" y="52"/>
+      <hitbox color="4294967040" frame="4" height="370" userdata="clip" width="163" x="55" y="133"/>
+      <hitbox color="4294967040" frame="5" height="378" userdata="clip" width="135" x="49" y="141"/>
+      <hitbox color="65280" frame="5" height="120" userdata="hurt" width="166" x="16" y="38"/>
+      <hitbox color="65280" frame="5" height="380" userdata="hurt" width="181" x="25" y="135"/>
+      <hitbox color="4278255360" frame="5" height="144" userdata="hurt" width="293" x="33" y="119"/>
+    </framedata>
+  </move>
+
+  <move name="super">
+    <sprite>sprites/bachs_big_bash.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>16</framecount>
+    <damage>200</damage>
+    <hitstun>10</hitstun>
+    <blockstun>5</blockstun>
+    <velx>20</velx>
+    <vely>0</vely>
+    <pushx>20</pushx>
+    <pushy>0</pushy>
+    <knockback>8</knockback>
+    <knocksdown>1</knocksdown>
+    <metergain>0</metergain>
+    <inair>0</inair>
+    <state>ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="16711680" frame="7" height="482" userdata="hit" width="442" x="4" y="33"/>
+      <hitbox color="4278255360" frame="12" height="493" userdata="hurt" width="216" x="142" y="22"/>
+      <hitbox color="4278255360" frame="13" height="488" userdata="hurt" width="163" x="180" y="13"/>
+      <hitbox color="65280" frame="14" height="529" userdata="hurt" width="183" x="167" y="3"/>
+      <hitbox color="65280" frame="15" height="509" userdata="hurt" width="192" x="153" y="12"/>
+    </framedata>
+  </move>
+
+  <move name="idle">
+    <sprite>sprites/bach_idle.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <inair>0</inair>
+    <metergain>0</metergain>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <state>NO_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="292" userdata="hurt" width="226" x="125" y="3"/>
+      <hitbox color="65280" frame="0" height="239" userdata="hurt" width="233" x="139" y="289"/>
+      <hitbox color="16776960" frame="0" height="423" userdata="clip" width="148" x="155" y="96"/>
+    </framedata>
+  </move>
+
+  <move name="walk">
+    <sprite>sprites/bach_walk.png</sprite>
+    <width>438</width>
+    <height>560</height>
+    <framecount>5</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>8</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>0</metergain>
+    <inair>0</inair>
+    <state>WALK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="0" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="0" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="0" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="1" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="1" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="1" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="1" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="2" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="2" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="2" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="2" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="3" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="3" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="3" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="3" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="4" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="4" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="4" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="4" height="384" userdata="clip" width="172" x="122" y="162"/>
+    </framedata>
+  </move>
+
+  <move name="backwalk">
+    <sprite>sprites/bach_walk.png</sprite>
+    <width>438</width>
+    <height>560</height>
+    <framecount>5</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>-8</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>0</metergain>
+    <inair>0</inair>
+    <state>WALK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="0" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="0" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="0" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="1" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="1" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="1" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="1" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="2" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="2" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="2" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="2" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="3" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="3" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="3" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="3" height="384" userdata="clip" width="172" x="122" y="162"/>
+      <hitbox color="65280" frame="4" height="230" userdata="hurt" width="142" x="114" y="6"/>
+      <hitbox color="65280" frame="4" height="197" userdata="hurt" width="177" x="117" y="103"/>
+      <hitbox color="65280" frame="4" height="243" userdata="hurt" width="228" x="106" y="300"/>
+      <hitbox color="4294967040" frame="4" height="384" userdata="clip" width="172" x="122" y="162"/>
+    </framedata>
+  </move>
+
+  <move name="njump">
+    <sprite>sprites/bach_jump2.png</sprite>
+    <width>438</width>
+    <height>603</height>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>0</velx>
+    <vely>-35</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>0</metergain>
+    <inair>0</inair>
+    <state>AIRBORNE_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="110" userdata="hurt" width="93" x="141" y="-2"/>
+      <hitbox color="65280" frame="0" height="492" userdata="hurt" width="181" x="92" y="98"/>
+      <hitbox color="65280" frame="0" height="267" userdata="hurt" width="144" x="216" y="111"/>
+      <hitbox color="16776960" frame="0" height="125" userdata="clip" width="159" x="112" y="7"/>
+    </framedata>
+  </move>
+
+  <move name="bjump">
+    <sprite>sprites/bach_jump2.png</sprite>
+    <width>438</width>
+    <height>603</height>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>-8</velx>
+    <vely>-35</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>0</metergain>
+    <inair>0</inair>
+    <state>AIRBORNE_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="110" userdata="hurt" width="93" x="141" y="-2"/>
+      <hitbox color="65280" frame="0" height="492" userdata="hurt" width="181" x="92" y="98"/>
+      <hitbox color="65280" frame="0" height="267" userdata="hurt" width="144" x="216" y="111"/>
+      <hitbox color="16776960" frame="0" height="125" userdata="clip" width="159" x="112" y="7"/>
+    </framedata>
+  </move>
+
+  <move name="fjump">
+    <sprite>sprites/bach_jump2.png</sprite>
+    <width>438</width>
+    <height>603</height>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>8</velx>
+    <vely>-35</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
+    <metergain>0</metergain>
+    <inair>0</inair>
+    <state>AIRBORNE_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="110" userdata="hurt" width="93" x="141" y="-2"/>
+      <hitbox color="65280" frame="0" height="492" userdata="hurt" width="181" x="92" y="98"/>
+      <hitbox color="65280" frame="0" height="267" userdata="hurt" width="144" x="216" y="111"/>
+      <hitbox color="16776960" frame="0" height="125" userdata="clip" width="159" x="112" y="7"/>
+    </framedata>
+  </move>
+
+  <move name="fall">
+    <sprite>sprites/bach_fall2.png</sprite>
+    <width>438</width>
+    <height>642</height>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <metergain>0</metergain>
+    <inair>1</inair>
+    <state>AIRBORNE_STATE</state>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="411" userdata="hurt" width="201" x="86" y="6"/>
+      <hitbox color="65280" frame="0" height="311" userdata="hurt" width="132" x="130" y="319"/>
+      <hitbox color="16776960" frame="0" height="367" userdata="clip" width="160" x="114" y="148"/>
+    </framedata>
+  </move>
+
+  <move name="hitstun">
+    <sprite>sprites/bach_hitstun.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <metergain>15</metergain>
+    <state>HITSTUN_STATE</state>
+    <inair>1</inair>
+    <framedata>
+      <hitbox color="4278255360" frame="0" height="284" userdata="hurt" width="221" x="100" y="24"/>
+      <hitbox color="65280" frame="0" height="226" userdata="hurt" width="223" x="148" y="277"/>
+      <hitbox color="16776960" frame="0" height="408" userdata="clip" width="160" x="129" y="93"/>
+    </framedata>
+  </move>
+
+  <move name="blockstun">
+    <sprite>sprites/bach_block.png</sprite>
+    <width>438</width>
+    <height>548</height>
+    <framecount>1</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <metergain>10</metergain>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <inair>0</inair>
+    <state>BLOCKSTUN_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="161" userdata="hurt" width="176" x="183" y="37"/>
+      <hitbox color="65280" frame="0" height="152" userdata="hurt" width="164" x="164" y="190"/>
+      <hitbox color="65280" frame="0" height="237" userdata="hurt" width="217" x="151" y="293"/>
+      <hitbox color="16776960" frame="0" height="394" userdata="clip" width="166" x="178" y="126"/>
+    </framedata>
+  </move>
+
+  <move name="air_kick">
+    <sprite>sprites/bach_air_kick.png</sprite>
+    <width>544</width>
+    <height>428</height>
+    <framecount>1</framecount>
+    <damage>30</damage>
+    <hitstun>5</hitstun>
+    <blockstun>4</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <metergain>30</metergain>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <inair>1</inair>
+    <state>AIR_ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="124" userdata="hurt" width="206" x="74" y="65"/>
+      <hitbox color="65280" frame="0" height="134" userdata="hurt" width="444" x="100" y="183"/>
+      <hitbox color="65280" frame="0" height="161" userdata="hurt" width="129" x="147" y="272"/>
+      <hitbox color="16711680" frame="0" height="145" userdata="hit" width="444" x="104" y="193"/>
+      <hitbox color="16776960" frame="0" height="220" userdata="clip" width="158" x="65" y="71"/>
+    </framedata>
+  </move>
+
+  <move name="air_punch">
+    <sprite>sprites/bach_air_punch.png</sprite>
+    <width>528</width>
+    <height>555</height>
+    <framecount>1</framecount>
+    <damage>40</damage>
+    <hitstun>6</hitstun>
+    <blockstun>4</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <metergain>40</metergain>
+    <knocksdown>0</knocksdown>
+    <knockback>0</knockback>
+    <inair>1</inair>
+    <state>AIR_ATTACK_STATE</state>
+    <framedata>
+      <hitbox color="65280" frame="0" height="294" userdata="hurt" width="154" x="195" y="-2"/>
+      <hitbox color="65280" frame="0" height="261" userdata="hurt" width="129" x="121" y="291"/>
+      <hitbox color="4294967040" frame="0" height="247" userdata="clip" width="107" x="191" y="14"/>
+      <hitbox color="16711680" frame="0" height="268" userdata="hit" width="301" x="238" y="-8"/>
+    </framedata>
+  </move>
+
+  <move name="collapse">
+    <sprite>sprites/bach_collapse.png</sprite>
+    <width>624</width>
+    <height>548</height>
+    <framecount>11</framecount>
+    <damage>0</damage>
+    <hitstun>0</hitstun>
+    <blockstun>0</blockstun>
+    <velx>0</velx>
+    <vely>0</vely>
+    <pushx>0</pushx>
+    <pushy>0</pushy>
+    <metergain>0</metergain>
+    <knockback>0</knockback>
+    <knocksdown>0</knocksdown>
+    <inair>0</inair>
+    <state>COLLAPSED_STATE</state>
+    <framedata>
+      <hitbox color="16776960" frame="0" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="1" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="2" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="3" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="4" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="5" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="6" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="7" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="8" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="9" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="10" height="408" userdata="clip" width="160" x="129" y="93"/>
+      <hitbox color="16776960" frame="11" height="408" userdata="clip" width="160" x="129" y="93"/>
+    </framedata>
+  </move>
+
+</character>

@@ -24,7 +24,7 @@ void MainMenuState::init() {
 	C.scale(0.1, 0.1);
 	E.scale(0.1, 0.1);
 	G.scale(0.1, 0.1);
-	G.setColor(sf::Color(255, 255, 255, 40));
+	G.setColor(sf::Color(255, 255, 255));
 
 	// Load text
 	if (!font.loadFromFile("fonts/Altgotisch.ttf")) {
@@ -36,21 +36,21 @@ void MainMenuState::init() {
 	rect1.setFillColor(sf::Color(255, 174, 1));
 	rect2 = rect1;
 	rect3 = rect1;
-	rect3.setFillColor(sf::Color(255, 174, 1, 40));
+	rect3.setFillColor(sf::Color(255, 174, 1));
 
 	versus.setFont(font);
 	versus.setColor(sf::Color(255, 174, 1));
 	versus.setCharacterSize(100);
 	tutorial = versus;
 	options = versus;
-	options.setColor(sf::Color(255, 174, 1, 40));
+	options.setColor(sf::Color(255, 174, 1));
 	versus.setString("Versus");
 	tutorial.setString("Tutorial");
-	options.setString("Options");
+	options.setString("Quit");
 
 	versus.setPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 4);
 	tutorial.setPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 4 + versus.getLocalBounds().height + PADDING);
-	options.setPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 4 + versus.getLocalBounds().height + tutorial.getLocalBounds().height + PADDING);
+	options.setPosition(WINDOW_WIDTH, WINDOW_HEIGHT / 4 + versus.getLocalBounds().height + tutorial.getLocalBounds().height + PADDING*2);
 
 	versusPos = WINDOW_WIDTH / 2 - versus.getLocalBounds().width / 2;
 	tutorialPos = WINDOW_WIDTH / 2 - tutorial.getLocalBounds().width / 2 + versus.getLocalBounds().width;
@@ -63,8 +63,8 @@ void MainMenuState::init() {
 	//options.setPosition(WINDOW_WIDTH / 2 - options.getLocalBounds().width / 2 + versus.getLocalBounds().width + tutorial.getLocalBounds().width, WINDOW_HEIGHT / 4 + versus.getLocalBounds().height + tutorial.getLocalBounds().height + PADDING);
 
 	rect1.setPosition(WINDOW_WIDTH, versus.getPosition().y + versus.getLocalBounds().height);
-	rect3.setPosition(WINDOW_WIDTH, options.getPosition().y + options.getLocalBounds().height);
 	rect2.setPosition(WINDOW_WIDTH, tutorial.getPosition().y + tutorial.getLocalBounds().height);
+	rect3.setPosition(WINDOW_WIDTH, options.getPosition().y + options.getLocalBounds().height + 20);
 	C.setPosition(WINDOW_WIDTH, versus.getPosition().y + PADDING);
 	E.setPosition(WINDOW_WIDTH, tutorial.getPosition().y + PADDING);
 	G.setPosition(WINDOW_WIDTH, options.getPosition().y+ PADDING);
@@ -84,7 +84,7 @@ void MainMenuState::update() {
 			break;
 		}
 	}
-	if (!versusSelect && !tutorialSelect) {
+	if (!versusSelect && !tutorialSelect && !quitSelect) {
 		if (versus.getPosition().x > versusPos) versus.move(-25, 0);
 		if (tutorial.getPosition().x > tutorialPos) tutorial.move(-25, 0);
 		if (options.getPosition().x > optionsPos) options.move(-25, 0);
@@ -134,6 +134,17 @@ void MainMenuState::update() {
 			game.gsm.stopState(*this, &tutorialState);
 		}
 	}
+
+	else if (quitSelect) {
+		options.move(25, 0);
+		rect3.move(25, 0);
+		G.move(25, 0);
+		options.setColor(sf::Color(255, 200, 1));
+		if (options.getPosition().x > WINDOW_WIDTH) {
+			unhookEvent();
+			game.gsm.stopState(*this);
+		}
+	}
 }
 
 void MainMenuState::draw() {
@@ -158,6 +169,9 @@ void MainMenuState::receiveKeysDown(int note, int playerId) {
 		}
 		else if (note % 12 == 4) {
 			tutorialSelect = true;
+		}
+		else if (note % 12 == 7) {
+			quitSelect = true;
 		}
 	}
 }
