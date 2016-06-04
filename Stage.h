@@ -8,6 +8,8 @@ public:
 	sf::Sprite base;
 	sf::Sprite med;
 	sf::Sprite front;
+	sf::Sprite shader;
+	sf::Texture shadertexture;
 	sf::Texture basetexture;
 	sf::Texture medtexture;
 	sf::Texture fronttexture;

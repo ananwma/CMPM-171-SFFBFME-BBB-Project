@@ -28,13 +28,13 @@ void FightState::init() {
 	running = true;
 
 	game.currentScreen.setStage(chstage);
-	game.currentScreen.stage.front.move(-game.currentScreen.stage.window_offset, 0);
+	game.currentScreen.stage.front.move(-(game.currentScreen.stage.window_offset/2), 0);
 	game.currentScreen.stage.med.move(-game.currentScreen.stage.window_offset, 0);
 	game.currentScreen.stage.window_offset = 0;
 
 	// CHANGE LATER // 
-	game.currentScreen.stage.front.setPosition(-230,WINDOW_HEIGHT-200);
-	game.currentScreen.stage.med.setPosition(-200,WINDOW_HEIGHT-400);
+	//game.currentScreen.stage.front.setPosition(-230,WINDOW_HEIGHT-200);
+	//game.currentScreen.stage.med.setPosition(-200,WINDOW_HEIGHT-400);
 	// CHANGE LATER // 
 
 
@@ -448,12 +448,13 @@ void FightState::draw() {
 	game.window.clear();
 	game.window.setView(camera_view);
 	game.window.draw(game.currentScreen.stage.base);
-	//game.window.draw(game.currentScreen.stage.med);
-	//game.window.draw(game.currentScreen.stage.front);
+	game.window.draw(game.currentScreen.stage.med);
+	game.window.draw(game.currentScreen.stage.front);
 	game.window.draw(game.playerOne.character->sprite);
 	game.window.draw(game.playerTwo.character->sprite);
 	drawBoxes(game.playerOne, 0, 0, 0);
 	drawBoxes(game.playerTwo, 0, 0, 0);
+	//game.window.draw(game.currentScreen.stage.shader);
 	game.window.setView(HUD);
 	game.window.draw(HUDOverlay);
 	game.window.draw(player_1_HP);
