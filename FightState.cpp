@@ -278,7 +278,6 @@ void FightState::doRoundEnd() {
 }
 
 void FightState::update() {
-	cout << inc<<endl;
 	//cout << "State #1" << endl;
 	if (!running) {
 		PauseState pauseState(game);

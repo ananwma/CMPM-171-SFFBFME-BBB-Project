@@ -28,13 +28,6 @@ void TutorialState::init() {
 	textbox.setSize(sf::Vector2f(185, 75));
 	textbox.setFillColor(sf::Color(250, 250, 250));
 
-	/*unordered_map<string, unique_ptr<TutorialTask>> taskMap;
-	taskMap["move_back"] = MoveBack();
-	taskMap["move_forward"] = MoveForward();
-	taskMap["move_back"].testTask(Player());
-	taskMap["move_forward"].testTask(Player());*/
-
-
 	//////TUTORIAL INIT//////
 	//Load tutorial file
 	tinyxml2::XMLDocument tutorialFile;

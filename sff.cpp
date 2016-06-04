@@ -45,6 +45,5 @@ int main()
 	// Run the first state
 	PlayerSelectState pss(game);
 	gsm.runState(pss);
-
 	return  EXIT_SUCCESS;
 }
