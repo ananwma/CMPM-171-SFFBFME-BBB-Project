@@ -142,7 +142,7 @@ sf::FloatRect* CollisionManager::checkBoxes(Player& attacker, Player& defender) 
 				if (!attacker.getCurrentFrame().hit) {
 					defender.getHit(attacker.getCurrentMove());
 					attacker.getCurrentFrame().hit = true;
-					attacker.xvel = attacker.getCurrentMove()->knockback;
+					attacker.xvel = attacker.getCurrentMove()->knockback * -attacker.side;
 				}
 				attacker.canCancel = true;
 				return &intersectBox;

@@ -23,7 +23,7 @@ Player::Player()
 {
 	playerId = -1;
 	hitstunFrames = 0;
-	meter = 1000.0f;
+	meter = 0.0f;
 	gravity = 0.98f;
 	state = NO_STATE;
 	colliding = false;
@@ -92,6 +92,7 @@ bool Player::loadCharacter(string filename) {
 		move.pushX = atof(nextMove->FirstChildElement("pushx")->GetText());
 		move.pushY = atof(nextMove->FirstChildElement("pushy")->GetText());
 		move.knockback = atof(nextMove->FirstChildElement("knockback")->GetText());
+		move.metergain = atoi(nextMove->FirstChildElement("metergain")->GetText());
 		move.inAir = atoi(nextMove->FirstChildElement("inair")->GetText());
 		move.state = stateMap[nextMove->FirstChildElement("state")->GetText()];
 
@@ -161,6 +162,7 @@ void Player::doMove(string moveName) {
 		xvel = currentMove->velX * side * (500 / beat);
 		yvel += currentMove->velY * (500 / beat);
 		state = currentMove->state;
+		meter += currentMove->metergain;
 
 		if (moveName == "jab" || moveName == "strong" || moveName == "fierce" || moveName == "short" || moveName == "forward" || moveName == "roundhouse")
 			playSound("attack" + to_string(rand() % 3 + 1));
@@ -181,29 +183,6 @@ void Player::doMove(string moveName) {
 		}
 	}
 
-	/*if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
-	if (state == WALK_STATE)
-	xvel = 0;
-	if (moveName == IDLE)
-	xvel = 0;
-	character->currentMove = move;
-	getCurrentMove()->setHitFalse();
-	//character->sprite.setTexture(character->moveList.at(move)->spritesheet);
-	setAnimTexture(character->moveList.at(moveName)->spritesheet, 438, 548, character->moveList.at(moveName)->frameCount);
-	character->currentMoveFrame = 0;
-	state = getCurrentMove()->state;
-	yvel = getCurrentMove()->velY * (500 / beat);
-	if (side == LEFT)
-	xvel = getCurrentMove()->velX * (500 / beat);
-	else if (side == RIGHT)
-	xvel = -getCurrentMove()->velX * (500 / beat);
-	}
-	else if (state == ATTACK_STATE && canCancel && moveCancelable(character->currentMove, moveName)) {
-	character->currentMove = moveName;
-	character->sprite.setTexture(character->moveList.at(moveName)->spritesheet);
-	character->currentMoveFrame = 0;
-	state = getCurrentMove()->state;
-	}*/
 }
 
 void Player::getHit(Move *move) {
@@ -214,70 +193,19 @@ void Player::getHit(Move *move) {
 		doMove("blockstun");
 	}
 	else {
-		hitstunFrames = move->hitstun;
-		health -= move->damage;
-		xvel = move->pushX* (500 / beat);
-		yvel = move->pushY* (500 / beat);
-		state = NO_STATE;
-		doMove("hitstun");
+		if (ypos == GROUND) {
+			hitstunFrames = move->hitstun;
+			health -= move->damage;
+			xvel = move->pushX * (500 / beat);
+			yvel = move->pushY * (500 / beat);
+			state = NO_STATE;
+			doMove("hitstun");
+		}
 	}
-	//if (state != BLOCKING) {
-	/*character->currentMove = HITSTUN;
-	character->currentMoveFrame = 0;
-	hitstunFrames = move->hitstun + ezmode;
-	character->sprite.setTexture(character->moveList.at(HITSTUN)->spritesheet);
-	state = HITSTUN_STATE;
-	health -= move->damage;
-	int direction;
-	if (side == RIGHT) {
-	direction = 1;
-	}
-	else {
-	direction = -1;
-	}
-	xvel = move->pushX*direction;
-	yvel = move->pushY;
-	if (yvel < 0 || ypos < GROUND) state = AIRBORNE_STATE;
-	//}
-	/*else {
-	character->currentMove = BLOCKSTUN;
-	character->currentMoveFrame = 0;
-	character->sprite.setTexture(character->moveList.at(BLOCKSTUN)->spritesheet);
-	state = BLOCKSTUN_STATE;
-	health -= move->damage;
-	}*/
 }
 
 void Player::playSound(string name) {
 	sfxMap[name]->play();
-}
-
-void Player::block(Move *move) {
-	//if (state != BLOCKING) {
-	/*character->currentMove = BLOCK;
-	character->currentMoveFrame = 0;
-	blockstunFrames = move->blockstun;
-	character->sprite.setTexture(character->moveList.at(BLOCK)->spritesheet);
-	state = BLOCKSTUN_STATE;
-	//health -= move->damage;
-	int direction;
-	if (side == RIGHT) {
-	direction = 1;
-	}
-	else {
-	direction = -1;
-	}
-	xvel = move->pushX*direction;
-	//yvel = move->pushY;
-	if (yvel < 0 || ypos < GROUND) state = AIRBORNE_STATE;
-	//}
-	/*else {
-	character->currentMove = BLOCKSTUN;
-	character->currentMoveFrame = 0;
-	character->sprite.setTexture(character->moveList.at(BLOCKSTUN)->spritesheet);
-	state = BLOCKSTUN_STATE;
-	health -= move->damage;
-	}*/
 }
 
 bool Player::moveCancelable(int currMove, int newMove) {
@@ -290,52 +218,6 @@ bool Player::moveCancelable(int currMove, int newMove) {
 	return 0;
 }
 
-void Player::walk(direction dir) {
-	// will need to add more later for figuring out which side player is on
-	/*if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
-	character->currentMove = WALK;
-	character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
-	state = WALK_STATE;
-	if (dir == LEFT) {
-	//character->sprite.move(character->walkspeed, 0);
-	//xpos += character->walkspeed;
-	if (!(character->sprite.getPosition().x + character->wall_offset <= -200)) {
-	xvel = -character->walkspeed * (500 / beat);
-	}
-	}
-	else if (dir == RIGHT) {
-	//character->sprite.move(-character->walkspeed, 0);
-	//xpos -= character->walkspeed;
-	if (!(character->sprite.getPosition().x + character->width - character->wall_offset >= WALL_WIDTH + 200)) {
-	xvel = character->walkspeed * (500 / beat);
-	}
-	}
-	}*/
-}
-
-void Player::jump(direction dir) {
-	/*if (state != ATTACK_STATE && state != BLOCKSTUN_STATE && state != HITSTUN_STATE && state != AIRBORNE_STATE) {
-	character->currentMove = WALK;
-	character->sprite.setTexture(character->moveList.at(WALK)->spritesheet);
-	state = AIRBORNE_STATE;
-	if (dir == RIGHT) {
-	yvel = -character->jumpY * (500 / beat);
-	xvel = character->jumpX *  (500 / beat);
-	jumpSide = side;
-	}
-	if (dir == LEFT) {
-	yvel = -character->jumpY * (500 / beat);
-	xvel = -character->jumpX * (500 / beat);
-	jumpSide = side;
-	}
-	if (dir == NEUTRAL) {
-	yvel = -character->jumpY * (500 / beat);
-	// Neutral jump = opposite side for crossunders
-	side == LEFT ? jumpSide = RIGHT : jumpSide = LEFT;
-	}
-	}*/
-}
-
 void Player::checkSuper(int note) {
 	if (super.at(superIndex) == note && superTimeout.restart().asMilliseconds() < SUPER_TIMEOUT) {
 		superIndex++;
@@ -343,6 +225,7 @@ void Player::checkSuper(int note) {
 			state = NO_STATE;
 			doMove("super");
 			superIndex = 0;
+			meter = 0;
 		}
 	}
 	else {

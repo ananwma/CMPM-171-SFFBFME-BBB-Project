@@ -23,9 +23,9 @@ private:
 	unordered_map<string, Move> moveMap;
 	Move* currentMove = NULL;
 	unordered_map<string, shared_ptr<sfx>> sfxMap;
-	sf::Texture portrait;
 
 public:
+	sf::Texture portrait;
 	// No copy constructor
 	Player(const Player&) = delete;
 	BeatIndicator indicator;

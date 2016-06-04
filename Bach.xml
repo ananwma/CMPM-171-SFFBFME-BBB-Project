@@ -26,14 +26,15 @@
     <width>438</width>
     <height>548</height>
     <framecount>5</framecount>
-    <damage>20</damage>
+    <damage>500</damage>
     <hitstun>6</hitstun>
     <blockstun>1</blockstun>
     <velx>0</velx>
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
-    <knockback>1</knockback>
+    <knockback>4</knockback>
+    <metergain>20</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -68,7 +69,8 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
-    <knockback>2</knockback>
+    <knockback>6</knockback>
+    <metergain>30</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -118,7 +120,8 @@
     <vely>0</vely>
     <pushx>2</pushx>
     <pushy>0</pushy>
-    <knockback>3</knockback>
+    <knockback>8</knockback>
+    <metergain>50</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -191,7 +194,8 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
-    <knockback>1</knockback>
+    <knockback>4</knockback>
+    <metergain>15</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -241,7 +245,8 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
-    <knockback>3</knockback>
+    <knockback>6</knockback>
+    <metergain>35</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -291,7 +296,8 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
-    <knockback>3</knockback>
+    <knockback>16</knockback>
+    <metergain>40</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -338,11 +344,12 @@
     <damage>100</damage>
     <hitstun>8</hitstun>
     <blockstun>4</blockstun>
-    <velx>-20</velx>
-    <vely>3</vely>
+    <velx>3</velx>
+    <vely>-20</vely>
     <pushx>-20</pushx>
-    <pushy>-15</pushy>
+    <pushy>-25</pushy>
     <knockback>4</knockback>
+    <metergain>60</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -364,6 +371,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>5</knockback>
+    <metergain>60</metergain>
     <inair>1</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -449,8 +457,9 @@
     <velx>0</velx>
     <vely>0</vely>
     <pushx>15</pushx>
-    <pushy>-15</pushy>
+    <pushy>-35</pushy>
     <knockback>0</knockback>
+    <metergain>10</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -495,6 +504,7 @@
     <pushx>20</pushx>
     <pushy>0</pushy>
     <knockback>8</knockback>
+    <metergain>0</metergain>
     <inair>0</inair>
     <state>ATTACK_STATE</state>
     <framedata>
@@ -519,6 +529,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <inair>0</inair>
+    <metergain>0</metergain>
     <knockback>0</knockback>
     <state>NO_STATE</state>
     <framedata>
@@ -541,6 +552,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <metergain>0</metergain>
     <inair>0</inair>
     <state>WALK_STATE</state>
     <framedata>
@@ -563,6 +575,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <metergain>0</metergain>
     <inair>0</inair>
     <state>WALK_STATE</state>
     <framedata>
@@ -585,6 +598,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <metergain>0</metergain>
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
@@ -608,6 +622,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <metergain>0</metergain>
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
@@ -631,6 +646,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <metergain>0</metergain>
     <inair>0</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
@@ -654,6 +670,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <metergain>0</metergain>
     <inair>1</inair>
     <state>AIRBORNE_STATE</state>
     <framedata>
@@ -676,6 +693,7 @@
     <pushx>0</pushx>
     <pushy>0</pushy>
     <knockback>0</knockback>
+    <metergain>15</metergain>
     <state>HITSTUN_STATE</state>
     <inair>1</inair>
     <framedata>
@@ -697,6 +715,7 @@
     <vely>0</vely>
     <pushx>0</pushx>
     <pushy>0</pushy>
+    <metergain>10</metergain>
     <knockback>0</knockback>
     <inair>0</inair>
     <state>BLOCKSTUN_STATE</state>

@@ -27,6 +27,24 @@ private:
 	// True if state is currently being ran
 	bool running;
 
+	sf::RectangleShape window;
+	sf::Font font1, font2;
+	sf::Text pauseText, resumeText, menuText, restartText;
+	sf::Sprite C;
+	sf::Sprite E;
+	sf::Sprite G;
+	sf::Texture Ctex;
+	sf::Texture Etex;
+	sf::Texture Gtex;
+
+	bool resume = false;
+	bool menu = false;
+	bool restart = false;
+
 	sf::Text text;
 	sf::Font font;
+	sf::Texture p1WinTex;
+	sf::Texture p2WinTex;
+	sf::Texture drawTex;
+	sf::Sprite endText;
 };

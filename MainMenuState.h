@@ -50,6 +50,7 @@ private:
 
 	bool versusSelect = false;
 	bool tutorialSelect = false;
+	bool quitSelect = false;
 
 
 
