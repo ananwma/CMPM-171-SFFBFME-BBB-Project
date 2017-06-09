@@ -88,7 +88,7 @@ void PauseState::update() {
 		game.gsm.stopState(*this, &menuState);
 	}
 	if (restart) {
-		//todo
+		//restart game
 	}
 }
 
