@@ -47,7 +47,7 @@ public:
 	int maxHealth;
 	float meter = 0;
 
-	// change where this is initialized later
+	// change where this is initialized later 
 	float beat = 500.0f;
 	//float gravity = 0.98f * pow((500.0f / 500.0f), 2.0f);
 
