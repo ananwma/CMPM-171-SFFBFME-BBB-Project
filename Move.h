@@ -16,8 +16,6 @@ class Move {
 public:
 	Move() = default;
 	~Move() = default;
-	//virtual void initFrames();
-	//virtual void initCancelMoves();
 	unordered_map<int, Frame> frameMap;
 	int getFrameCount() { return frameCount; };
 	int getDamage() { return damage; };
