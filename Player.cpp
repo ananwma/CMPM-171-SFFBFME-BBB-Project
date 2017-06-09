@@ -51,7 +51,7 @@ bool Player::loadCharacter(string filename) {
 	tinyxml2::XMLDocument characterFile;
 	characterFile.LoadFile(filename.c_str());
 
-	// Parse data from file into class variables
+	// Parse data from file into class variables 
 	tinyxml2::XMLElement* characterData = characterFile.FirstChildElement("character");
 	walkspeed = atof(characterData->FirstChildElement("walkspeed")->GetText());
 	jumpX = atof(characterData->FirstChildElement("jumpX")->GetText());
